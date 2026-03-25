@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="34" viewBox="0 0 22 34">
+  <!-- shadow/outline for light backgrounds -->
+  <path d="M11 1 L17.5 27.5 L11 23 L4.5 27.5 Z" fill="none" stroke="rgba(34,22,22,0.55)" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M4.5 27.5 L0 34 L6 24 Z" fill="none" stroke="rgba(34,22,22,0.4)" stroke-width="1" stroke-linejoin="round"/>
+  <path d="M17.5 27.5 L22 34 L16 24 Z" fill="none" stroke="rgba(34,22,22,0.4)" stroke-width="1" stroke-linejoin="round"/>
+  <!-- body -->
+  <path d="M11 1 L17.5 27.5 L11 23 L4.5 27.5 Z" fill="#d6d0c4"/>
+  <!-- left fin -->
+  <path d="M4.5 27.5 L0 34 L6 24 Z" fill="#a47864"/>
+  <!-- right fin -->
+  <path d="M17.5 27.5 L22 34 L16 24 Z" fill="#a47864"/>
+  <!-- cockpit window -->
+  <ellipse cx="11" cy="13.5" rx="2.4" ry="3.2" fill="#101f2c"/>
+  <!-- cockpit rim glow -->
+  <ellipse cx="11" cy="13.5" rx="2.4" ry="3.2" fill="none" stroke="#a47864" stroke-width="0.7" opacity="0.8"/>
+  <!-- engine glow dot -->
+  <circle cx="11" cy="25.5" r="1.2" fill="#ff8e00" opacity="0.7"/>
+</svg>

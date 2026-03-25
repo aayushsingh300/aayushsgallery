@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIGIL — Tactical Wearable System Case Study</title>
+  <meta name="description" content="Designing a tactical wearable for soldiers who cannot touch a screen, in darkness, under fire, with gloves on. A UX case study.">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site-globals.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* VIGIL Design Tokens */
+      --vigil-bg:        #0A0E14;
+      --vigil-surface:   #141A22;
+      --vigil-elevated:  #1C2533;
+      --vigil-green:     #4ADE80;
+      --vigil-amber:     #FCD34D;
+      --vigil-red:       #F87171;
+      --vigil-blue:      #60A5FA;
+      --vigil-white:     #F1F5F9;
+      --vigil-grey:      #94A3B8;
+      --vigil-border:    rgba(96,165,250,0.12);
+      --vigil-ir:        #FF4500;
+
+      /* Page tokens */
+      --bg-primary:   #0A0E14;
+      --bg-surface:   #141A22;
+      --bg-elevated:  #1C2533;
+      --bg-alt:       #0C1019;
+      --text-primary: #F1F5F9;
+      --text-second:  #94A3B8;
+      --border:       rgba(96,165,250,0.12);
+
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-data: 'Space Mono', monospace;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 60px;
+      background: rgba(10,14,20,0.6);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(96,165,250,0.07);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .nav-scrolled {
+      background: rgba(10,14,20,0.92);
+      border-bottom-color: var(--border);
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none; color: var(--text-second);
+      font-family: var(--font-data); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+    .nav-back:hover { color: var(--vigil-green); }
+    .nav-back svg { transition: transform 0.2s ease; }
+    .nav-back:hover svg { transform: translateX(-3px); }
+    .nav-logo {
+      font-family: var(--font-mono); font-weight: 700;
+      font-size: 15px; letter-spacing: 0.15em;
+      color: var(--vigil-white); text-decoration: none;
+    }
+    .nav-next {
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none; color: var(--text-second);
+      font-family: var(--font-data); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+    .nav-next:hover { color: var(--vigil-green); }
+
+    /* ── Layout ── */
+    .container { max-width: 1360px; margin: 0 auto; padding: 0 60px; }
+    .narrow { max-width: 900px; }
+    .section { padding: 100px 0; }
+    .section.alt { background: var(--bg-alt); }
+
+    .section-label {
+      font-family: var(--font-data); font-size: 11px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--vigil-green); margin-bottom: 16px;
+    }
+    .chapter-num {
+      font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.1em; color: var(--text-second);
+      margin-bottom: 12px; opacity: 0.6;
+    }
+
+    .section h2 {
+      font-family: var(--font-head); font-size: 38px;
+      font-weight: 700; line-height: 1.15; margin-bottom: 24px;
+      letter-spacing: -0.5px;
+    }
+    .section h3 {
+      font-family: var(--font-head); font-size: 22px;
+      font-weight: 600; margin-bottom: 16px; margin-top: 48px;
+      color: var(--text-primary);
+    }
+    .section p {
+      color: var(--text-second); max-width: 820px; margin-bottom: 20px;
+    }
+    .section p strong { color: var(--text-primary); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh; background: var(--vigil-bg);
+      display: flex; flex-direction: column;
+      justify-content: center; position: relative;
+      overflow: hidden; padding: 100px 0 0;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(74,222,128,0.04) 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 20%, rgba(96,165,250,0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+      max-width: 1360px; margin: 0 auto;
+      padding: 0 60px;
+    }
+    .hero-tag {
+      font-family: var(--font-data); font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--vigil-green); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--font-mono); font-size: 80px;
+      font-weight: 700; line-height: 1; letter-spacing: -2px;
+      color: var(--vigil-white); margin-bottom: 8px;
+    }
+    .hero-sub-title {
+      font-family: var(--font-head); font-size: 22px;
+      font-weight: 400; color: var(--text-second);
+      line-height: 1.4; margin-bottom: 28px; max-width: 480px;
+      font-style: italic;
+    }
+    .hero-chips {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 48px;
+    }
+    .hero-chips span {
+      font-family: var(--font-data); font-size: 10px;
+      padding: 5px 12px; border-radius: 2px;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      color: var(--text-second); letter-spacing: 0.08em;
+    }
+
+    /* ── Watch Composition ── */
+    .hero-watch-comp {
+      position: relative; display: flex;
+      align-items: center; justify-content: center;
+      height: 420px;
+    }
+    .watch-frame {
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: #0A0E14;
+      border: 2px solid rgba(96,165,250,0.2);
+      box-shadow: 0 0 0 6px rgba(10,14,20,0.8), 0 0 0 8px rgba(96,165,250,0.08), 0 20px 60px rgba(0,0,0,0.7);
+      overflow: hidden;
+    }
+    .watch-frame.main-w {
+      width: 200px; height: 200px; z-index: 3;
+      box-shadow: 0 0 0 6px rgba(10,14,20,0.8), 0 0 0 8px rgba(74,222,128,0.15),
+                  0 0 40px rgba(74,222,128,0.08), 0 24px 80px rgba(0,0,0,0.8);
+    }
+    .watch-frame.left-w {
+      width: 160px; height: 160px; z-index: 2;
+      left: 20px; top: 60px; opacity: 0.7;
+      transform: perspective(800px) rotateY(20deg);
+    }
+    .watch-frame.right-w {
+      width: 150px; height: 150px; z-index: 2;
+      right: 20px; top: 80px; opacity: 0.6;
+      transform: perspective(800px) rotateY(-20deg);
+    }
+    /* Watch strap */
+    .watch-strap-top, .watch-strap-bot {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      width: 60px; border-radius: 4px;
+      background: linear-gradient(180deg, #1C2533, #141A22);
+      border: 1px solid rgba(96,165,250,0.1);
+    }
+    .watch-strap-top { top: -50px; height: 52px; z-index: 1; }
+    .watch-strap-bot { bottom: -50px; height: 52px; z-index: 1; }
+    .watch-btn {
+      position: absolute; right: -10px; top: 35%;
+      width: 8px; height: 22px;
+      background: #1C2533; border-radius: 3px;
+      border: 1px solid rgba(96,165,250,0.15);
+    }
+    .watch-btn.side { top: 55%; height: 18px; }
+
+    /* ── Hero Stats ── */
+    .hero-stats {
+      display: flex; gap: 40px; justify-content: flex-start;
+      padding: 28px 60px;
+      border-top: 1px solid var(--border);
+      position: relative; z-index: 10; margin-top: auto;
+      max-width: 1360px; margin-left: auto; margin-right: auto;
+      width: 100%;
+    }
+    .hero-stats .stat {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--text-second);
+    }
+    .hero-stats .stat strong { color: var(--vigil-green); font-weight: 700; }
+
+    /* ── Pull Quote ── */
+    .pull-quote {
+      font-family: var(--font-head); font-size: 26px;
+      font-style: italic; color: var(--text-second);
+      line-height: 1.45; max-width: 680px;
+      margin: 40px 0; padding-left: 24px;
+      border-left: 3px solid var(--vigil-green);
+    }
+
+    .crew-quote {
+      font-family: var(--font-data); font-size: 15px;
+      color: var(--text-second); line-height: 1.65;
+      padding: 24px 0 24px 24px;
+      border-left: 3px solid var(--vigil-green);
+      margin: 32px 0;
+    }
+    .crew-quote cite {
+      display: block; margin-top: 10px;
+      font-size: 11px; color: var(--text-second);
+      opacity: 0.55; font-style: normal;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Meta Card ── */
+    .meta-card {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin: 40px 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: 4px;
+      overflow: hidden;
+    }
+    .meta-item {
+      padding: 24px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .meta-item:last-child { border-right: none; }
+    .meta-item:nth-child(n+5) { border-top: 1px solid var(--border); }
+    .meta-label {
+      font-family: var(--font-data); font-size: 9px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-second); margin-bottom: 6px;
+    }
+    .meta-value {
+      font-family: var(--font-mono); font-size: 13px;
+      font-weight: 700; color: var(--text-primary);
+    }
+
+    /* ── Callout Boxes ── */
+    .callout {
+      border-left: 3px solid; border-radius: 0 4px 4px 0;
+      padding: 20px 24px; margin: 32px 0;
+      background: rgba(0,0,0,0.2);
+    }
+    .callout.failed { border-color: var(--vigil-red); background: rgba(248,113,113,0.06); }
+    .callout.change { border-color: var(--vigil-amber); background: rgba(252,211,77,0.06); }
+    .callout.insight { border-color: var(--vigil-green); background: rgba(74,222,128,0.06); }
+
+    .callout-label {
+      font-family: var(--font-data); font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 700; margin-bottom: 10px;
+    }
+    .callout.failed .callout-label { color: var(--vigil-red); }
+    .callout.change .callout-label { color: var(--vigil-amber); }
+    .callout.insight .callout-label { color: var(--vigil-green); }
+
+    .callout p {
+      font-size: 14px; font-style: italic;
+      color: var(--text-second); max-width: none; margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ── Failure Cards ── */
+    .failure-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin: 32px 0;
+    }
+    .failure-card {
+      padding: 24px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: 4px;
+      border-top: 3px solid var(--vigil-red);
+    }
+    .failure-id {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--vigil-red); font-weight: 700;
+      letter-spacing: 0.1em; margin-bottom: 12px;
+    }
+    .failure-card h4 {
+      font-family: var(--font-head); font-size: 14px;
+      font-weight: 600; color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .failure-card p {
+      font-size: 13px; color: var(--text-second);
+      line-height: 1.55; max-width: none; margin: 0;
+    }
+
+    /* ── Protocol Steps ── */
+    .protocol-list {
+      list-style: none; margin: 32px 0; display: flex;
+      flex-direction: column; gap: 12px;
+    }
+    .protocol-list li {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 18px 20px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: 4px;
+    }
+    .protocol-num {
+      font-family: var(--font-mono); font-size: 12px;
+      font-weight: 700; color: var(--vigil-amber);
+      flex-shrink: 0; min-width: 24px;
+    }
+    .protocol-list li span {
+      font-size: 14px; color: var(--text-second); line-height: 1.55;
+    }
+    .protocol-list li span strong { color: var(--text-primary); }
+
+    /* ── Competitive Table ── */
+    .compare-table {
+      width: 100%; border-collapse: collapse; margin: 32px 0;
+    }
+    .compare-table th {
+      font-family: var(--font-data); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-second); padding: 12px 16px;
+      text-align: left; border-bottom: 1px solid var(--border);
+    }
+    .compare-table td {
+      font-size: 14px; padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-second); vertical-align: top; line-height: 1.5;
+    }
+    .compare-table tr:nth-child(even) td { background: rgba(20,26,34,0.5); }
+    .compare-table td:first-child {
+      font-weight: 700; color: var(--text-primary);
+      font-family: var(--font-mono); font-size: 13px;
+    }
+    .compare-table .verdict { color: var(--vigil-green); font-size: 12px; }
+    .compare-table .verdict.bad { color: var(--vigil-red); }
+
+    /* ── Screen Mockups ── */
+    .watch-showcase {
+      display: flex; gap: 32px; align-items: flex-end;
+      margin: 48px 0; flex-wrap: wrap;
+    }
+    .watch-mockup {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .watch-face {
+      width: 180px; height: 180px; border-radius: 50%;
+      background: #0A0E14; position: relative;
+      box-shadow: 0 0 0 5px #0A0E14, 0 0 0 7px rgba(96,165,250,0.15),
+                  0 16px 48px rgba(0,0,0,0.7);
+      overflow: hidden; flex-shrink: 0;
+    }
+    .watch-face.sm { width: 140px; height: 140px; }
+    .watch-face.lg { width: 200px; height: 200px; }
+    .watch-caption {
+      font-family: var(--font-data); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--text-second);
+      text-align: center; text-transform: uppercase;
+      max-width: 180px;
+    }
+    .watch-caption span {
+      display: block; font-size: 9px; opacity: 0.5; margin-top: 2px;
+    }
+
+    /* ── Phone Mockup ── */
+    .phone-showcase {
+      display: flex; gap: 28px; margin: 48px 0;
+      align-items: flex-start; flex-wrap: wrap;
+    }
+    .phone-frame {
+      width: 200px; border-radius: 24px;
+      background: #0A0E14;
+      border: 2px solid rgba(96,165,250,0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+      overflow: hidden; flex-shrink: 0;
+    }
+    .phone-notch {
+      height: 28px; background: #0A0E14;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .phone-notch::after {
+      content: ''; width: 60px; height: 14px;
+      background: #0D1117; border-radius: 0 0 12px 12px;
+    }
+    .phone-screen { background: #0D1117; }
+    .phone-home {
+      height: 20px; background: #0A0E14;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .phone-home::after {
+      content: ''; width: 40px; height: 4px;
+      background: rgba(255,255,255,0.15); border-radius: 2px;
+    }
+    .phone-caption {
+      font-family: var(--font-data); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--text-second);
+      margin-top: 12px; text-transform: uppercase;
+    }
+    .phone-caption span { display: block; font-size: 9px; opacity: 0.5; margin-top: 2px; }
+
+    /* ── Sensor Levels ── */
+    .sensor-levels {
+      display: flex; flex-direction: column; gap: 10px;
+      margin: 28px 0;
+    }
+    .sensor-level {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 14px 18px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: 4px;
+    }
+    .sensor-level .sl-tag {
+      font-family: var(--font-mono); font-size: 11px;
+      font-weight: 700; flex-shrink: 0; min-width: 100px;
+    }
+    .sensor-level .sl-text {
+      font-size: 13px; color: var(--text-second); line-height: 1.5;
+    }
+
+    /* ── What I Got Wrong ── */
+    .wrong-items { display: flex; flex-direction: column; gap: 24px; margin: 32px 0; }
+    .wrong-item {
+      display: flex; gap: 24px; padding: 28px;
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 4px;
+    }
+    .wrong-num {
+      font-family: var(--font-mono); font-size: 32px;
+      font-weight: 700; color: rgba(248,113,113,0.2);
+      flex-shrink: 0; line-height: 1;
+    }
+    .wrong-item h4 {
+      font-family: var(--font-head); font-size: 17px;
+      font-weight: 600; margin-bottom: 10px; color: var(--text-primary);
+    }
+    .wrong-item p {
+      font-size: 14px; color: var(--text-second); max-width: none; margin: 0; line-height: 1.6;
+    }
+
+    /* ── Metrics ── */
+    .metrics-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin: 40px 0;
+      border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+    }
+    .metric-cell {
+      padding: 32px 24px; background: var(--bg-surface);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .metric-cell:nth-child(4n) { border-right: none; }
+    .metric-cell:nth-child(n+5) { border-bottom: none; }
+    .metric-num {
+      font-family: var(--font-mono); font-size: 36px;
+      font-weight: 700; color: var(--vigil-green);
+      display: block; margin-bottom: 6px;
+    }
+    .metric-lbl {
+      font-family: var(--font-data); font-size: 10px;
+      letter-spacing: 0.1em; color: var(--text-second);
+      text-transform: uppercase;
+    }
+
+    /* ── Learnings ── */
+    .learnings { display: flex; flex-direction: column; gap: 0; margin: 40px 0; }
+    .learning {
+      display: flex; gap: 24px; padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .learning:first-child { border-top: 1px solid var(--border); }
+    .learning-num {
+      font-family: var(--font-mono); font-size: 14px;
+      font-weight: 700; color: var(--vigil-green);
+      flex-shrink: 0; min-width: 32px;
+    }
+    .learning p {
+      font-size: 16px; color: var(--text-second);
+      max-width: none; margin: 0; line-height: 1.65;
+    }
+    .learning p strong { color: var(--text-primary); }
+
+    /* ── Decision Cascade ── */
+    .cascade {
+      display: flex; flex-direction: column; gap: 0;
+      margin: 28px 0; padding-left: 20px;
+      border-left: 2px solid var(--vigil-green);
+    }
+    .cascade-item {
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--text-second); padding: 8px 20px;
+      line-height: 1.5;
+    }
+    .cascade-item strong { color: var(--vigil-green); }
+    .cascade-item::before {
+      content: '→ '; color: var(--vigil-green); opacity: 0.5;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-brand {
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--text-second); letter-spacing: 0.1em;
+    }
+    .footer-nav { display: flex; gap: 40px; }
+    .footer-nav a {
+      text-decoration: none; color: var(--text-second);
+      font-family: var(--font-data); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+    .footer-nav a:hover { color: var(--vigil-green); }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-watch-comp { height: 280px; }
+      .meta-card { grid-template-columns: repeat(2, 1fr); }
+      .failure-grid { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .watch-showcase { justify-content: center; }
+      .phone-showcase { justify-content: center; }
+      .nav { padding: 20px 24px; }
+      .container { padding: 0 24px; }
+      .hero-inner { padding: 0 24px; }
+      .hero-stats { padding: 24px; flex-wrap: wrap; gap: 20px; }
+      .section h2 { font-size: 28px; }
+      .footer { padding: 40px 24px; flex-direction: column; gap: 24px; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M12 7H2M2 7L6 3M2 7L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Portfolio
+  </a>
+  <a href="#" class="nav-logo">VIGIL</a>
+  <a href="prahari.html" class="nav-next">
+    Next Project
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-tag">Armis Technologies OÜ · Tallinn, Estonia</p>
+      <h1>VIGIL</h1>
+      <p class="hero-sub-title">Designing a tactical wearable for soldiers who cannot touch a screen, in darkness, under fire, with gloves on.</p>
+      <div class="hero-chips">
+        <span>Wear OS 4.0</span>
+        <span>iOS 17 / Android 14</span>
+        <span>Defense Wearable</span>
+        <span>IoT</span>
+        <span>6 months</span>
+        <span>Lead Designer</span>
+        <span>2025</span>
+      </div>
+    </div>
+
+    <!-- Watch Composition -->
+    <div class="hero-watch-comp">
+      <!-- Left watch: Squad Overview -->
+      <div class="watch-frame left-w" style="position:absolute;left:10px;top:80px;">
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="80" cy="80" r="80" fill="#0A0E14"/>
+          <!-- Mode label -->
+          <text x="80" y="22" font-family="IBM Plex Mono" font-size="7" fill="#4ADE80" text-anchor="middle" letter-spacing="2">SQUAD</text>
+          <!-- Squad dots radial -->
+          <circle cx="80" cy="40" r="3.5" fill="#4ADE80"/>
+          <text x="80" y="37" font-family="IBM Plex Mono" font-size="5.5" fill="#4ADE80" text-anchor="middle">ALF</text>
+          <circle cx="114" cy="52" r="3" fill="#4ADE80"/>
+          <text x="118" y="55" font-family="IBM Plex Mono" font-size="5" fill="#4ADE80" text-anchor="start">BRA</text>
+          <circle cx="128" cy="83" r="3" fill="#FCD34D"/>
+          <text x="132" y="86" font-family="IBM Plex Mono" font-size="5" fill="#FCD34D" text-anchor="start">CHR</text>
+          <circle cx="113" cy="113" r="3" fill="#4ADE80"/>
+          <text x="117" y="118" font-family="IBM Plex Mono" font-size="5" fill="#4ADE80" text-anchor="start">DAV</text>
+          <circle cx="80" cy="126" r="3" fill="#4ADE80"/>
+          <text x="80" y="137" font-family="IBM Plex Mono" font-size="5.5" fill="#4ADE80" text-anchor="middle">EDW</text>
+          <circle cx="46" cy="113" r="3" fill="#F87171"/>
+          <text x="30" y="118" font-family="IBM Plex Mono" font-size="5" fill="#F87171" text-anchor="start">FRA</text>
+          <circle cx="33" cy="83" r="3" fill="#4ADE80"/>
+          <text x="10" y="86" font-family="IBM Plex Mono" font-size="5" fill="#4ADE80" text-anchor="start">GRN</text>
+          <circle cx="46" cy="52" r="3" fill="#4ADE80"/>
+          <text x="30" y="55" font-family="IBM Plex Mono" font-size="5" fill="#4ADE80" text-anchor="start">HAR</text>
+          <!-- Center dot (user) -->
+          <circle cx="80" cy="80" r="5" fill="none" stroke="#60A5FA" stroke-width="1.5"/>
+          <circle cx="80" cy="80" r="2" fill="#60A5FA"/>
+          <!-- Mode label bottom -->
+          <text x="80" y="150" font-family="IBM Plex Mono" font-size="6" fill="#94A3B8" text-anchor="middle" letter-spacing="1">W-05 SQUAD</text>
+        </svg>
+      </div>
+
+      <!-- Center watch: Mission Main (main face) -->
+      <div class="watch-frame main-w" style="position:relative;z-index:3;">
+        <!-- Straps -->
+        <div class="watch-strap-top"></div>
+        <div class="watch-strap-bot"></div>
+        <div class="watch-btn"></div>
+        <div class="watch-btn side"></div>
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="100" fill="#0A0E14"/>
+          <!-- Bearing arc background -->
+          <path d="M 35 100 A 65 65 0 0 1 165 100" stroke="#1C2533" stroke-width="3" fill="none"/>
+          <!-- Bearing arc active -->
+          <path d="M 35 100 A 65 65 0 0 1 155 65" stroke="#60A5FA" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- North indicator -->
+          <circle cx="100" cy="34" r="3" fill="#F1F5F9"/>
+          <text x="100" y="31" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8" text-anchor="middle">N</text>
+          <!-- Waypoint marker on arc -->
+          <circle cx="155" cy="65" r="5" fill="#FF8C00"/>
+          <!-- Elevation top left -->
+          <text x="22" y="58" font-family="IBM Plex Mono" font-size="8" fill="#94A3B8">312 M</text>
+          <text x="22" y="68" font-family="IBM Plex Mono" font-size="6" fill="#94A3B8" opacity="0.6">ASL</text>
+          <!-- Distance center -->
+          <text x="100" y="110" font-family="IBM Plex Mono" font-size="30" fill="#F1F5F9" text-anchor="middle" font-weight="bold">2.4</text>
+          <text x="100" y="126" font-family="IBM Plex Mono" font-size="12" fill="#94A3B8" text-anchor="middle">KM</text>
+          <!-- OBJ label -->
+          <text x="100" y="146" font-family="IBM Plex Mono" font-size="9" fill="#94A3B8" text-anchor="middle" letter-spacing="2">OBJ NORTH</text>
+          <!-- Mission timer bottom left -->
+          <text x="22" y="168" font-family="IBM Plex Mono" font-size="8" fill="#94A3B8">00:47:23</text>
+          <!-- GPS indicator bottom right -->
+          <circle cx="173" cy="165" r="5" fill="#4ADE80"/>
+          <!-- Mode label -->
+          <text x="100" y="185" font-family="IBM Plex Mono" font-size="6" fill="#94A3B8" text-anchor="middle" letter-spacing="1" opacity="0.5">W-01 MISSION</text>
+        </svg>
+      </div>
+
+      <!-- Right watch: Casualty Alert -->
+      <div class="watch-frame right-w" style="position:absolute;right:10px;top:90px;">
+        <svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="75" cy="75" r="75" fill="#0A0E14"/>
+          <!-- Red overlay -->
+          <circle cx="75" cy="75" r="75" fill="#F87171" opacity="0.12"/>
+          <!-- Alert ring -->
+          <circle cx="75" cy="75" r="70" stroke="#F87171" stroke-width="2" opacity="0.4" stroke-dasharray="6 4"/>
+          <!-- Countdown ring partial -->
+          <path d="M75 8 A67 67 0 0 1 138 90" stroke="#F87171" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Casualty label -->
+          <text x="75" y="36" font-family="IBM Plex Mono" font-size="9" fill="#F87171" text-anchor="middle" font-weight="bold" letter-spacing="2">CASUALTY</text>
+          <!-- Soldier ID -->
+          <text x="75" y="68" font-family="IBM Plex Mono" font-size="14" fill="#F1F5F9" text-anchor="middle" font-weight="bold">BRAVO-4</text>
+          <!-- Biometrics -->
+          <text x="75" y="86" font-family="IBM Plex Mono" font-size="7.5" fill="#94A3B8" text-anchor="middle">HR: 42 BPM ↓</text>
+          <text x="75" y="98" font-family="IBM Plex Mono" font-size="7.5" fill="#94A3B8" text-anchor="middle">SpO₂: 81% ↓</text>
+          <!-- Countdown -->
+          <text x="75" y="118" font-family="IBM Plex Mono" font-size="7" fill="#F87171" text-anchor="middle" letter-spacing="1">8s TO BEACON</text>
+          <!-- Cancel -->
+          <text x="75" y="134" font-family="IBM Plex Mono" font-size="5.5" fill="#94A3B8" text-anchor="middle" opacity="0.5">PRESS TOP TO CANCEL</text>
+          <!-- Mode label -->
+          <text x="75" y="146" font-family="IBM Plex Mono" font-size="5" fill="#94A3B8" text-anchor="middle" opacity="0.4">W-07 ALERT</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="hero-stats">
+    <div class="stat"><strong>67</strong> screens designed</div>
+    <div class="stat"><strong>84</strong> components</div>
+    <div class="stat"><strong>3</strong> design rounds</div>
+    <div class="stat"><strong>14</strong> testing sessions</div>
+    <div class="stat"><strong>32</strong> watch screens · <strong>35</strong> mobile screens</div>
+  </div>
+</section>
+
+
+<!-- SECTION 01: THE MAP THAT SHOULDN'T HAVE EXISTED -->
+<section class="section alt" id="ch01">
+  <div class="container narrow">
+    <p class="chapter-num">Chapter 01</p>
+    <p class="section-label">Origin</p>
+    <h2>The Map That Shouldn't Have Existed</h2>
+
+    <p>In November 2017, Strava released a global activity heatmap — 3 trillion GPS data points from fitness trackers around the world. It was beautiful. And it was a disaster.</p>
+    <p>Analysts noticed within days. Bright lines of jogging routes carved through remote desert in Afghanistan. Systematic oval patterns appearing in locations that weren't supposed to be on any map. Forward Operating Base Kamp Lemonnier in Djibouti. A suspected CIA black site in Somalia. Every soldier who had gone for a morning run while wearing a Fitbit had contributed to a map that enemy intelligence could now read.</p>
+
+    <figure style="margin: 48px 0;">
+      <img src="images/vigil/vigil_strava_heatmap_1773646969868.png" alt="Concept: Digital heatmap glowing over dark terrain" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Conceptual visualization: The Strava heatmap vulnerability</figcaption>
+    </figure>
+
+    <div class="pull-quote">"It wasn't a cybersecurity breach. It was a design breach. The data was doing exactly what it was designed to do — aggregate, visualize, publish. Nobody had asked whether it should."</div>
+
+    <p>NATO's emergency review found what most people already suspected: there was no purpose-built, OPSEC-compliant wearable at the infantry squad level. The market had consumer devices on one end — Garmin, Fitbit, Apple Watch, all designed around cloud sync as a feature — and full soldier-digitization programs on the other, like IVAS, too expensive and complex for general issue. The gap was large and obvious.</p>
+    <p>Armis Technologies, a defense-tech firm founded in Tallinn with deep ties to NATO's Cooperative Cyber Defence Centre of Excellence, commissioned VIGIL to fill that gap. I was brought in as lead designer eight weeks into the project, after the first design attempt — a lightly reskinned Garmin-style interface — was rejected by the client's military advisor on first review.</p>
+
+    <div class="callout failed">
+      <div class="callout-label">What went wrong — The first design was built on the wrong assumption</div>
+      <p>The previous attempt treated OPSEC as a settings menu — a toggle the soldier could turn on or off. The military advisor's feedback was immediate: 'OPSEC isn't a preference. It's the default state. Design it that way.' That single piece of feedback restructured everything. I spent the first two weeks not designing screens, but rewriting the brief.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 02: WHAT SOLDIERS ACTUALLY EXPERIENCE -->
+<section class="section" id="ch02">
+  <div class="container narrow">
+    <p class="chapter-num">Chapter 02</p>
+    <p class="section-label">User Research</p>
+    <h2>What Soldiers Actually Experience</h2>
+
+    <p>I had no direct access to soldiers in deployment — Armis's security protocols prevented any primary research with active-duty personnel until later in the project. What I had was secondary research: documented incident reports, training fatality reviews, exercise after-action reports from NATO member states, and direct interviews with four military veterans: a medic, a light infantry platoon commander, a signals operator, and a veteran of urban operations in Eastern Europe.</p>
+
+    <h3>The Tachypsychia Problem</h3>
+    <p>The most important research finding wasn't about technology at all. It was about human physiology under adrenaline.</p>
+    <p>Tachypsychia is the distortion of time perception that occurs in high-stress situations. Heart rate spikes above 145 BPM: fine motor skills degrade. Above 175 BPM: complex cognitive processing becomes unreliable. A soldier in contact may have a heart rate of 160–190 BPM. Fine motor movements — typing a PIN, selecting from a nested menu, scrolling through options — become nearly impossible.</p>
+    <p>Consumer wearable interfaces are designed for a user with 85 BPM, warm hands, a stable position, ambient light, and 30 seconds to spare. The VIGIL user might have 185 BPM, gloved hands, prone position, darkness, and 3 seconds to spare. These are not variations of the same design problem. They are different problems.</p>
+
+    <div class="callout insight">
+      <div class="callout-label">Insight — The constraint is the design principle</div>
+      <p>Any interaction that requires more than one physical input in sequence was automatically disqualified from being a primary action. This ruled out: swipe gestures, touch and hold, any multi-tap shortcut. Physical crown + single button press only.</p>
+    </div>
+
+    <h3>The Glove Problem</h3>
+    <p>Standard NATO combat gloves have a palm thickness of approximately 4mm. Thin tactical gloves are 2mm. Capacitive touchscreens stop registering touch at approximately 1.5mm of non-conductive material above the screen. Military advisors were consistent: in operational conditions, soldiers don't carry styluses. They have whatever gloves they issued that morning.</p>
+
+    <figure style="margin: 48px 0;">
+      <img src="images/vigil/vigil_glove_interaction_1773646986941.png" alt="Soldier's hand in thick tactical glove pressing a glowing smartwatch in darkness" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Tactical glove constraint testing: Touchscreens fail under field thickness</figcaption>
+    </figure>
+
+    <div class="callout failed">
+      <div class="callout-label">What went wrong — Week 3: I designed touch as a secondary input method</div>
+      <p>My initial architecture had physical controls as primary and touch as secondary. Testing with borrowed tactical gloves showed that 'secondary' became 'unavailable.' If the interface degraded gracefully when touch was unavailable, fine. If it degraded when you removed touch, several flows I'd designed became dead ends. The entire navigation model had to be rebuilt.</p>
+    </div>
+
+    <h3>Medic Interviews — The Casualty Visibility Gap</h3>
+    <p>The most emotionally weighted interview was with a former combat medic who had served in Mosul. He described a specific failure mode he'd experienced repeatedly: a soldier goes down on the other side of a building. The medic has no visibility, no comms, and has to make a triage decision — move toward them and potentially expose the squad, or hold position and risk a delayed response.</p>
+
+    <div class="crew-quote">"Thirty seconds is the difference between a casualty and a fatality. And thirty seconds of not knowing is the longest thirty seconds there is."
+      <cite>— Combat medic, 12 years service (anonymous)</cite>
+    </div>
+
+    <p>The medic wasn't asking for a miracle — they were asking for earlier signal. Not a diagnosis, not a precise reading. Just: <em>this person might be down. Look toward them.</em> That's the design problem the W-07 Casualty Alert and the Medical Dashboard were built to solve.</p>
+  </div>
+</section>
+
+
+<!-- SECTION 03: THE REAL DESIGN PROBLEM -->
+<section class="section alt" id="ch03">
+  <div class="container narrow">
+    <p class="chapter-num">Chapter 03</p>
+    <p class="section-label">Framing</p>
+    <h2>The Real Design Problem Is Not The Interface</h2>
+
+    <p>Three weeks into research, I wrote a framing document that I made the engineering team and the client read before I showed them a single wireframe. It started with one sentence:</p>
+
+    <div class="pull-quote">"The problem isn't that soldiers don't have a good wearable. It's that every existing wearable treats data security as a feature, and we need to treat it as an axiom."</div>
+
+    <p>A feature can be toggled off. An axiom cannot. The design decision cascade from treating security as an axiom looks like this:</p>
+
+    <figure style="margin: 48px 0;">
+      <img src="images/vigil/vigil_opsec_sketch_1773647004502.png" alt="Tactical notebook showing mesh network sketch" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Early architecture sketch: Rebuilding the mesh network protocol for OPSEC</figcaption>
+    </figure>
+
+    <div class="cascade">
+      <div class="cascade-item">No persistent cloud sync <strong>→</strong> no background data upload <strong>→</strong> no Strava problem</div>
+      <div class="cascade-item">No background upload <strong>→</strong> local encrypted storage only <strong>→</strong> key held by unit, not vendor</div>
+      <div class="cascade-item">Local storage <strong>→</strong> offline-first architecture <strong>→</strong> GPS-denied navigation must work</div>
+      <div class="cascade-item">Offline first <strong>→</strong> mesh networking for squad data <strong>→</strong> peer-to-peer, no server</div>
+      <div class="cascade-item">Peer-to-peer mesh <strong>→</strong> limited range <strong>→</strong> squad-scale only, not battalion</div>
+      <div class="cascade-item">Squad-scale <strong>→</strong> 1–12 nodes <strong>→</strong> UI scale constraint: squad view never needs to show &gt; 12</div>
+    </div>
+
+    <p>Every feature scope decision in the project flowed from that axiom. The brief wasn't a list of features to implement — it was the logical consequences of a single design principle applied consistently.</p>
+
+    <h3>Competitive Landscape Audit</h3>
+    <p>Before designing anything, I audited every wearable currently used in military or law enforcement contexts.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Hardware</th>
+          <th>Critical Gap</th>
+          <th>VIGIL Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Garmin Tactix</td>
+          <td>Best-in-class ruggedness</td>
+          <td>Syncs to Garmin Connect cloud. No squad mesh. No biometric sharing. No haptic vocabulary.</td>
+          <td class="verdict">Not competing — different architecture</td>
+        </tr>
+        <tr>
+          <td>Apple Watch Ultra</td>
+          <td>Excellent hardware resilience</td>
+          <td>iOS-locked. Siri is a liability in an operational context. Zero squad integration.</td>
+          <td class="verdict">Not competing — consumer architecture</td>
+        </tr>
+        <tr>
+          <td>IVAS</td>
+          <td>Actually solves the problem</td>
+          <td>$400,000/unit. Requires 20 min to don. Needs a trained operator. Not for general issue.</td>
+          <td class="verdict">Not competing — cost tier</td>
+        </tr>
+        <tr>
+          <td>VIGIL</td>
+          <td>Purpose-built rugged</td>
+          <td>Squad-level, affordable enough for general issue, OPSEC-native by architecture.</td>
+          <td class="verdict">Fills the gap</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- SECTION 04: ROUND 1 -->
+<section class="section" id="ch04">
+  <div class="container">
+    <div class="narrow">
+      <p class="chapter-num">Chapter 04</p>
+      <p class="section-label">Design Round 1</p>
+      <h2>The Design That Felt Right and Was Wrong</h2>
+      <p>Round 1 was built on sound foundations: IBM Plex Mono for military data aesthetics, a rigorous dark color system, physical-control-only primary navigation. The five modes were defined and designed. The casualty alert flow was prototyped in Figma. I presented it to the Armis team and the military advisor at week 8.</p>
+      <p>The feedback session lasted ninety minutes. What the military advisor said at the end became the most useful design critique I've received in eight years:</p>
+    </div>
+
+    <div class="narrow">
+      <div class="crew-quote">"This is a good consumer wearable designed by someone who read about soldiers. You've got the visual right. You haven't got the logic right."
+        <cite>— NATO Signals Officer, VIGIL advisory session</cite>
+      </div>
+    </div>
+
+    <!-- Watch mockups Row 1 -->
+    <div class="watch-showcase">
+      <div class="watch-mockup">
+        <div class="watch-face">
+          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+            <circle cx="90" cy="90" r="90" fill="#0A0E14"/>
+            <!-- R1: 3-state dot (just a dot, no context) -->
+            <path d="M 30 90 A 60 60 0 0 1 150 90" stroke="#1C2533" stroke-width="3" fill="none"/>
+            <path d="M 30 90 A 60 60 0 0 1 140 60" stroke="#60A5FA" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="90" cy="30" r="3" fill="#F1F5F9"/>
+            <circle cx="140" cy="60" r="5" fill="#FF8C00"/>
+            <!-- Distance -->
+            <text x="90" y="103" font-family="IBM Plex Mono" font-size="28" fill="#F1F5F9" text-anchor="middle" font-weight="bold">2.4</text>
+            <text x="90" y="117" font-family="IBM Plex Mono" font-size="11" fill="#94A3B8" text-anchor="middle">KM</text>
+            <text x="90" y="134" font-family="IBM Plex Mono" font-size="8.5" fill="#94A3B8" text-anchor="middle" letter-spacing="2">OBJ NORTH</text>
+            <text x="18" y="155" font-family="IBM Plex Mono" font-size="7.5" fill="#94A3B8">00:47:23</text>
+            <!-- R1 flaw: just a color dot, no label -->
+            <circle cx="160" cy="152" r="5" fill="#F87171"/>
+            <text x="90" y="172" font-family="IBM Plex Mono" font-size="5.5" fill="#94A3B8" text-anchor="middle" opacity="0.5">R1 — W-01 MISSION</text>
+          </svg>
+        </div>
+        <div class="watch-caption">W-01 Mission Main
+          <span>Round 1 — GPS: color dot only</span>
+        </div>
+      </div>
+
+      <div class="watch-mockup">
+        <div class="watch-face">
+          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+            <circle cx="90" cy="90" r="90" fill="#0A0E14"/>
+            <circle cx="90" cy="90" r="90" fill="#F87171" opacity="0.1"/>
+            <circle cx="90" cy="90" r="84" stroke="#F87171" stroke-width="2" opacity="0.35" stroke-dasharray="6 4"/>
+            <!-- R1 countdown ring — 10s (original) -->
+            <path d="M90 7 A83 83 0 0 1 172 113" stroke="#F87171" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <text x="90" y="36" font-family="IBM Plex Mono" font-size="9" fill="#F87171" text-anchor="middle" font-weight="bold" letter-spacing="2">CASUALTY</text>
+            <text x="90" y="63" font-family="IBM Plex Mono" font-size="13" fill="#F1F5F9" text-anchor="middle" font-weight="bold">SGT KOWALSKI</text>
+            <text x="90" y="82" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8" text-anchor="middle">HR: 42 BPM ↓  SpO₂: 81% ↓</text>
+            <!-- R1 flaw: 10 second countdown too short -->
+            <text x="90" y="114" font-family="IBM Plex Mono" font-size="9" fill="#F87171" text-anchor="middle" letter-spacing="1">10s TO BEACON</text>
+            <text x="90" y="130" font-family="IBM Plex Mono" font-size="6" fill="#94A3B8" text-anchor="middle" opacity="0.5">PRESS TOP TO CANCEL</text>
+            <!-- R1: full name label -->
+            <text x="90" y="160" font-family="IBM Plex Mono" font-size="5.5" fill="#94A3B8" text-anchor="middle" opacity="0.4">R1 — W-07 CASUALTY</text>
+          </svg>
+        </div>
+        <div class="watch-caption">W-07 Casualty Alert
+          <span>Round 1 — 10s countdown, full names</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <h3 style="margin-top: 0;">Four Specific Failures</h3>
+    </div>
+
+    <div class="failure-grid">
+      <div class="failure-card">
+        <div class="failure-id">R1 — F01 · FAILED</div>
+        <h4>GPS quality: color dot with no label</h4>
+        <p>A dot with no label is unreadable under stress in under 1 second. Soldiers need to know what degraded means, not just that it is degraded. What action do I take? The dot gave none of that.</p>
+      </div>
+      <div class="failure-card">
+        <div class="failure-id">R1 — F02 · FAILED</div>
+        <h4>Casualty countdown was 10 seconds</h4>
+        <p>10 seconds is not long enough for a conscious soldier to respond if they're injured and disoriented. Research on confusion states post-injury suggests 15–20 seconds is the minimum. Changed to 15 seconds.</p>
+      </div>
+      <div class="failure-card">
+        <div class="failure-id">R1 — F03 · FAILED</div>
+        <h4>Mode switching used swipe gestures</h4>
+        <p>Testing with tactical gloves: completely unavailable in gloves. Mode switching moved entirely to crown rotation. Swipe gestures removed from all primary flows.</p>
+      </div>
+      <div class="failure-card">
+        <div class="failure-id">R1 — F04 · FAILED</div>
+        <h4>Squad mode showed full soldier names</h4>
+        <p>At night, on a 1.4-inch screen, full name labels made the squad view unreadable at a glance. 3-character callsigns (KOW, BRA, ALF) are readable in 200ms. Full names require 600ms to parse.</p>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <div class="callout failed">
+        <div class="callout-label">Root cause — Cascade failure: testing in the wrong conditions</div>
+        <p>I had been testing the prototype in a bright room, sitting at a desk, without gloves, with no time pressure. The conditions that broke it — darkness, gloves, motion, stress — I hadn't simulated. Round 2 started with a testing protocol change, not a design change.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 05: TESTING PROTOCOL -->
+<section class="section alt" id="ch05">
+  <div class="container narrow">
+    <p class="chapter-num">Chapter 05</p>
+    <p class="section-label">Methodology</p>
+    <h2>The Testing Protocol Pivot</h2>
+
+    <p>Before beginning Round 2 design, I spent one week redesigning how we were testing. This is the work that doesn't show up in case studies, because it's not visual. But it's the work that made everything after it trustworthy.</p>
+
+    <ol class="protocol-list">
+      <li>
+        <span class="protocol-num">01</span>
+        <span><strong>Gloves on, always.</strong> All testing done with standard commercial tactical gloves on both hands. No exceptions for 'just checking something quickly.'</span>
+      </li>
+      <li>
+        <span class="protocol-num">02</span>
+        <span><strong>Red lamp only.</strong> Ambient light: single red headlamp only (simulates nighttime field conditions). Testing in full office light flagged as 'lab conditions only — not validation.'</span>
+      </li>
+      <li>
+        <span class="protocol-num">03</span>
+        <span><strong>Physical stress first.</strong> 3 minutes of vigorous exercise (jumping jacks, burpees) immediately before any test of primary interactions. Heart rate &gt; 130 BPM target before beginning test.</span>
+      </li>
+      <li>
+        <span class="protocol-num">04</span>
+        <span><strong>5-second timer.</strong> All task tests given with a countdown timer. Standard: 5 seconds to complete primary action. Catches anything that requires 'thinking time.'</span>
+      </li>
+      <li>
+        <span class="protocol-num">05</span>
+        <span><strong>Verbal distraction.</strong> Tester asks questions during interaction tasks. Models the cognitive load of processing radio communications while interacting with watch.</span>
+      </li>
+    </ol>
+
+    <figure style="margin: 48px 0;">
+      <img src="images/vigil/vigil_red_lamp_test_1773647021910.png" alt="Testing the wearable in pitch darkness with a red tactical light" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Protocol 02 validation: Ambient light testing restricted to single red headlamp</figcaption>
+    </figure>
+
+    <div class="callout insight">
+      <div class="callout-label">Insight — Testing in wrong conditions is worse than not testing</div>
+      <p>Round 1 passed my own testing because I was testing in good conditions. If I hadn't been testing at all, the advisory session would have revealed the same problems. The false confidence of 'I tested this' was actively harmful. I also began adversarial simulation — giving the prototype to people unfamiliar with the design and deliberately creating uncomfortable test conditions. Stress reveals what calm conceals.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 06: ROUND 2 -->
+<section class="section" id="ch06">
+  <div class="container">
+    <div class="narrow">
+      <p class="chapter-num">Chapter 06</p>
+      <p class="section-label">Design Round 2</p>
+      <h2>Getting the Interactions Right</h2>
+      <p>Round 2 focused narrowly on fixing the four failures from Round 1 and validating each fix under the new testing protocol before moving on. This made the round slower and more disciplined.</p>
+    </div>
+
+    <!-- GPS Indicator Redesign -->
+    <div class="narrow">
+      <h3>The GPS Indicator Redesign</h3>
+      <p>The dot became a banner. When GPS degrades, a strip appears at the top of W-01 with two pieces of information: <strong>what has happened</strong> (DR ACTIVE) and <strong>what it means</strong> (confidence radius). The dot remains as a quick glance indicator, but degraded states now always surface actionable information, not just status.</p>
+    </div>
+
+    <div class="watch-showcase">
+      <div class="watch-mockup">
+        <div class="watch-face lg">
+          <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="100" fill="#0A0E14"/>
+            <!-- DR Banner at top -->
+            <rect x="30" y="26" width="140" height="18" rx="2" fill="#FCD34D" opacity="0.12"/>
+            <text x="100" y="38" font-family="IBM Plex Mono" font-size="7.5" fill="#FCD34D" text-anchor="middle" font-weight="bold" letter-spacing="1.5">DR ACTIVE · ±180M</text>
+            <!-- Bearing arc -->
+            <path d="M 30 100 A 70 70 0 0 1 170 100" stroke="#1C2533" stroke-width="2.5" fill="none"/>
+            <path d="M 30 100 A 70 70 0 0 1 162 70" stroke="#FCD34D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <circle cx="100" cy="30" r="3" fill="#F1F5F9"/>
+            <circle cx="162" cy="70" r="5" fill="#FF8C00"/>
+            <!-- Distance (amber in DR mode) -->
+            <text x="100" y="115" font-family="IBM Plex Mono" font-size="29" fill="#FCD34D" text-anchor="middle" font-weight="bold">2.4</text>
+            <text x="100" y="129" font-family="IBM Plex Mono" font-size="11" fill="#FCD34D" opacity="0.7" text-anchor="middle">KM ±180M</text>
+            <text x="100" y="148" font-family="IBM Plex Mono" font-size="8.5" fill="#94A3B8" text-anchor="middle" letter-spacing="2">OBJ NORTH</text>
+            <!-- Last fix -->
+            <text x="100" y="162" font-family="IBM Plex Mono" font-size="7" fill="#FCD34D" text-anchor="middle" opacity="0.8">LAST FIX 04:23 AGO</text>
+            <text x="18" y="175" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8">00:47:23</text>
+            <!-- GPS amber pulse dot -->
+            <circle cx="178" cy="172" r="5" fill="#FCD34D"/>
+            <text x="100" y="190" font-family="IBM Plex Mono" font-size="6" fill="#94A3B8" text-anchor="middle" opacity="0.5">W-03 GPS DEGRADED</text>
+          </svg>
+        </div>
+        <div class="watch-caption">W-03 GPS Degraded Banner
+          <span>Round 2 — Actionable context, not just status</span>
+        </div>
+      </div>
+
+      <div class="watch-mockup">
+        <div class="watch-face lg">
+          <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="100" fill="#0A0E14"/>
+            <!-- Radial squad layout -->
+            <text x="100" y="22" font-family="IBM Plex Mono" font-size="7" fill="#4ADE80" text-anchor="middle" letter-spacing="2">SQUAD MODE</text>
+            <!-- 8 soldiers radially -->
+            <circle cx="100" cy="42" r="4" fill="#4ADE80"/>
+            <text x="100" y="39" font-family="IBM Plex Mono" font-size="6.5" fill="#4ADE80" text-anchor="middle">ALF</text>
+            <circle cx="137" cy="54" r="4" fill="#4ADE80"/>
+            <text x="144" y="58" font-family="IBM Plex Mono" font-size="6" fill="#4ADE80">BRA</text>
+            <circle cx="155" cy="90" r="4" fill="#FCD34D"/>
+            <text x="162" y="94" font-family="IBM Plex Mono" font-size="6" fill="#FCD34D">CHR</text>
+            <circle cx="140" cy="128" r="4" fill="#4ADE80"/>
+            <text x="147" y="133" font-family="IBM Plex Mono" font-size="6" fill="#4ADE80">DAV</text>
+            <circle cx="100" cy="148" r="4" fill="#4ADE80"/>
+            <text x="100" y="163" font-family="IBM Plex Mono" font-size="6.5" fill="#4ADE80" text-anchor="middle">EDW</text>
+            <circle cx="60" cy="128" r="4" fill="#F87171"/>
+            <circle cx="60" cy="128" r="7" fill="none" stroke="#F87171" stroke-width="1" opacity="0.5"/>
+            <text x="36" y="133" font-family="IBM Plex Mono" font-size="6" fill="#F87171">FRA</text>
+            <circle cx="44" cy="90" r="4" fill="#4ADE80"/>
+            <text x="20" y="94" font-family="IBM Plex Mono" font-size="6" fill="#4ADE80">GRN</text>
+            <circle cx="60" cy="54" r="4" fill="#4ADE80"/>
+            <text x="36" y="58" font-family="IBM Plex Mono" font-size="6" fill="#4ADE80">HAR</text>
+            <!-- Center user dot -->
+            <circle cx="100" cy="93" r="6" fill="none" stroke="#60A5FA" stroke-width="1.5"/>
+            <circle cx="100" cy="93" r="2.5" fill="#60A5FA"/>
+            <text x="100" y="112" font-family="IBM Plex Mono" font-size="5.5" fill="#60A5FA" text-anchor="middle" opacity="0.7">YOU</text>
+            <!-- Bearing lines to each squad member -->
+            <line x1="100" y1="93" x2="100" y2="46" stroke="#4ADE80" stroke-width="0.4" opacity="0.2"/>
+            <line x1="100" y1="93" x2="137" y2="58" stroke="#4ADE80" stroke-width="0.4" opacity="0.2"/>
+            <line x1="100" y1="93" x2="155" y2="90" stroke="#FCD34D" stroke-width="0.4" opacity="0.2"/>
+            <line x1="100" y1="93" x2="60" y2="128" stroke="#F87171" stroke-width="0.4" opacity="0.3"/>
+            <text x="100" y="188" font-family="IBM Plex Mono" font-size="6" fill="#94A3B8" text-anchor="middle" opacity="0.5">W-05 SQUAD OVERVIEW</text>
+          </svg>
+        </div>
+        <div class="watch-caption">W-05 Squad Overview
+          <span>Round 2 — Callsigns replace full names</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <div class="callout change">
+        <div class="callout-label">Round 2 → Round 3 — Design change</div>
+        <p>The first version of the DR banner used red text on a dark background. Testing showed that any red on screen in a non-alert context desensitizes soldiers to red alerts. Changed DR banner to amber. Red reserved exclusively for life-critical alerts (casualty, CBRN).</p>
+      </div>
+
+      <h3>The Countdown Timer Recalibration</h3>
+      <p>The casualty alert countdown was extended to 15 seconds, with haptic pulses every 3 seconds. Testing showed something unexpected: the haptic pulses served as a consciousness check, not just a timer. Participants who were groggy or disoriented responded to the haptic pattern even when they didn't initially notice the visual display. This became an explicit design principle: <strong>haptic patterns should communicate, not just accompany.</strong></p>
+
+      <h3>Round 2 Remaining Issue — The Haptic Vocabulary</h3>
+      <p>Round 2 resolved the four Round 1 failures. But adversarial testing introduced a new problem: nobody could remember the haptic dictionary. The first 3–4 signals (Halt, Move, Danger, Acknowledge) were remembered reliably. Beyond that, recall collapsed under stress.</p>
+
+      <div class="callout failed">
+        <div class="callout-label">What went wrong — 8 signals is too many</div>
+        <p>Research on tactile memory and haptic disambiguation under stress suggested 4–6 distinct patterns as the reliable upper limit for untrained users. We were asking soldiers to learn and recall 8 under high stress. The haptic plan builder was redesigned to cap at 6 signals by default, with a hard maximum of 8 and an explicit warning when approaching the limit.</p>
+      </div>
+    </div>
+
+    <!-- M-08 Haptic Plan mobile mockup -->
+    <div class="phone-showcase">
+      <div>
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <svg width="200" height="380" viewBox="0 0 200 380" fill="none">
+              <rect width="200" height="380" fill="#0D1117"/>
+              <!-- Header -->
+              <rect width="200" height="44" fill="#161B22"/>
+              <text x="12" y="28" font-family="IBM Plex Mono" font-size="11" fill="#E6EDF3" font-weight="bold">HAPTIC PLAN</text>
+              <text x="188" y="28" font-family="IBM Plex Mono" font-size="9" fill="#4ADE80" text-anchor="end">SAVE</text>
+              <!-- OPSEC bar -->
+              <rect y="44" width="200" height="16" fill="#161B22" opacity="0.7"/>
+              <circle cx="10" cy="52" r="3" fill="#4ADE80"/>
+              <text x="18" y="56" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8">ENCRYPTED · MISSION ACTIVE</text>
+              <!-- Signal cards -->
+              <!-- HALT -->
+              <rect x="12" y="68" width="176" height="52" rx="3" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+              <text x="22" y="82" font-family="IBM Plex Mono" font-size="8" fill="#E6EDF3" font-weight="bold">HALT</text>
+              <text x="22" y="94" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8">2 × LONG</text>
+              <!-- Pulse circles -->
+              <circle cx="100" cy="90" r="9" fill="#4ADE80" opacity="0.8"/>
+              <circle cx="124" cy="90" r="9" fill="#4ADE80" opacity="0.8"/>
+              <circle cx="172" cy="90" r="8" fill="none" stroke="#4ADE80" stroke-width="1" opacity="0.4"/>
+              <text x="172" y="93" font-family="IBM Plex Mono" font-size="7" fill="#4ADE80" text-anchor="middle">▶</text>
+              <!-- MOVE -->
+              <rect x="12" y="128" width="176" height="52" rx="3" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+              <text x="22" y="142" font-family="IBM Plex Mono" font-size="8" fill="#E6EDF3" font-weight="bold">MOVE</text>
+              <text x="22" y="154" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8">3 × SHORT</text>
+              <circle cx="100" cy="150" r="5" fill="#58A6FF" opacity="0.8"/>
+              <circle cx="114" cy="150" r="5" fill="#58A6FF" opacity="0.8"/>
+              <circle cx="128" cy="150" r="5" fill="#58A6FF" opacity="0.8"/>
+              <circle cx="172" cy="150" r="8" fill="none" stroke="#58A6FF" stroke-width="1" opacity="0.4"/>
+              <text x="172" y="153" font-family="IBM Plex Mono" font-size="7" fill="#58A6FF" text-anchor="middle">▶</text>
+              <!-- DANGER -->
+              <rect x="12" y="188" width="176" height="52" rx="3" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+              <text x="22" y="202" font-family="IBM Plex Mono" font-size="8" fill="#E6EDF3" font-weight="bold">DANGER</text>
+              <text x="22" y="214" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8">LONG · SHORT · LONG</text>
+              <circle cx="96" cy="210" r="9" fill="#F85149" opacity="0.8"/>
+              <circle cx="114" cy="210" r="5" fill="#F85149" opacity="0.8"/>
+              <circle cx="130" cy="210" r="9" fill="#F85149" opacity="0.8"/>
+              <circle cx="172" cy="210" r="8" fill="none" stroke="#F85149" stroke-width="1" opacity="0.4"/>
+              <text x="172" y="213" font-family="IBM Plex Mono" font-size="7" fill="#F85149" text-anchor="middle">▶</text>
+              <!-- Confusion matrix warning -->
+              <rect x="12" y="252" width="176" height="40" rx="3" fill="#D29922" opacity="0.1" stroke="#D29922" stroke-width="1" opacity="0.4"/>
+              <text x="22" y="267" font-family="IBM Plex Mono" font-size="7" fill="#D29922" font-weight="bold">⚠  SIMILARITY WARNING</text>
+              <text x="22" y="280" font-family="IBM Plex Mono" font-size="6.5" fill="#D29922" opacity="0.7">Signals 4 &amp; 6 may be confused</text>
+              <!-- Bottom action -->
+              <rect x="12" y="302" width="176" height="36" rx="4" fill="#1C2533" stroke="#30363D" stroke-width="1"/>
+              <text x="100" y="325" font-family="IBM Plex Mono" font-size="9" fill="#58A6FF" text-anchor="middle">+ ADD SIGNAL</text>
+              <!-- Load to watches -->
+              <rect x="12" y="346" width="176" height="28" rx="4" fill="#4ADE80" opacity="0.15" stroke="#4ADE80" stroke-width="1" opacity="0.4"/>
+              <text x="100" y="364" font-family="IBM Plex Mono" font-size="8.5" fill="#4ADE80" text-anchor="middle">LOAD TO WATCHES (8/8)</text>
+            </svg>
+          </div>
+          <div class="phone-home"></div>
+        </div>
+        <div class="phone-caption">M-08 Haptic Plan Builder
+          <span>Round 2 — Confusion matrix added</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 07: CBRN -->
+<section class="section alt" id="ch07">
+  <div class="container">
+    <div class="narrow">
+      <p class="chapter-num">Chapter 07</p>
+      <p class="section-label">Design Round 3</p>
+      <h2>The CBRN Problem</h2>
+
+      <p>Round 3 introduced the CBRN alert system. I had considered it a straightforward extension of the existing alert hierarchy. I was wrong.</p>
+      <p>CBRN is categorically different from every other alert in the system. A casualty alert is about another person. A GPS degradation alert is about a navigation problem. CBRN is about your own immediate survival. The response time is different. The cognitive state is different. The design problem is different.</p>
+
+      <h3>The Information Hierarchy Problem</h3>
+      <p>My first design of W-13 CBRN Active showed six pieces of information: threat type, detection confidence, wind direction, wind speed, evacuation bearing, distance to safe zone. A medical officer I consulted looked at it and said: <em>'When someone smells gas, they stop reading.'</em></p>
+      <p><strong>CBRN alert redesign principle: one number, one action.</strong> The evacuation bearing is the only thing that matters in the first three seconds. Everything else is secondary. The design reduced to: bearing (large), direction arrow (large), threat type (small, below).</p>
+    </div>
+
+    <figure style="margin: 48px 0;">
+      <img src="images/vigil/vigil_cbrn_concept_1773647038676.png" alt="Military gas mask and a glowing rugged smartwatch resting on a crate" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">CBRN Context: The cognitive state during a chemical threat is fundamentally different</figcaption>
+    </figure>
+
+    <!-- CBRN watch mockup -->
+    <div class="watch-showcase">
+      <div class="watch-mockup">
+        <div class="watch-face lg">
+          <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="100" fill="#0A0E14"/>
+            <!-- Amber/red pulsing border ring -->
+            <circle cx="100" cy="100" r="94" stroke="#FCD34D" stroke-width="2.5" opacity="0.35" stroke-dasharray="8 5"/>
+            <circle cx="100" cy="100" r="88" stroke="#F87171" stroke-width="1" opacity="0.2"/>
+            <!-- CBRN label top -->
+            <text x="100" y="30" font-family="IBM Plex Mono" font-size="9" fill="#F87171" text-anchor="middle" font-weight="bold" letter-spacing="3">CBRN</text>
+            <text x="100" y="46" font-family="IBM Plex Mono" font-size="8" fill="#FCD34D" text-anchor="middle" letter-spacing="1.5">CHEMICAL</text>
+            <!-- Large bearing arc -->
+            <path d="M 25 100 A 75 75 0 0 1 175 100" stroke="#1C2533" stroke-width="2" fill="none"/>
+            <path d="M 25 100 A 75 75 0 0 1 100 25" stroke="#F87171" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Bearing number — DOMINANT -->
+            <text x="100" y="115" font-family="IBM Plex Mono" font-size="40" fill="#F1F5F9" text-anchor="middle" font-weight="bold">247°</text>
+            <!-- Direction arrow -->
+            <polygon points="100,130 93,148 100,144 107,148" fill="#F87171"/>
+            <line x1="100" y1="148" x2="100" y2="155" stroke="#F87171" stroke-width="2"/>
+            <!-- Wind info small -->
+            <text x="100" y="170" font-family="IBM Plex Mono" font-size="7" fill="#94A3B8" text-anchor="middle">WIND 185° · 12 KPH</text>
+            <!-- Haptic indicator -->
+            <text x="100" y="186" font-family="IBM Plex Mono" font-size="6" fill="#F87171" text-anchor="middle" opacity="0.7">● CONTINUOUS HAPTIC ACTIVE</text>
+          </svg>
+        </div>
+        <div class="watch-caption">W-13 CBRN Active
+          <span>Round 3 — One number. One action.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <div class="callout change">
+        <div class="callout-label">Round 3 → Round 4 — Design change</div>
+        <p>Initial CBRN design had 'UNKNOWN' as the threat type when sensor couldn't identify the agent. Testing showed 'UNKNOWN' increased panic and decision freeze in participants. Changed to 'EVACUATE — TYPE UNCONFIRMED'. The word 'EVACUATE' tells you what to do. 'UNKNOWN' tells you nothing useful.</p>
+      </div>
+
+      <h3>The Sensor Integration Challenge</h3>
+      <p>CBRN alert requires an optional sensor pod. This introduced a problem I hadn't anticipated: what does the UI do when the sensor pod is present but not calibrated? When it gives a false positive? False positives were a critical concern — sensors in early prototype testing triggered on diesel exhaust twice and cleaning product once. A false CBRN alert causes the squad to break formation and potentially expose themselves to actual threat.</p>
+    </div>
+
+    <div class="sensor-levels">
+      <div class="sensor-level">
+        <span class="sl-tag" style="color:var(--vigil-grey);">Absent</span>
+        <span class="sl-text">CBRN mode disabled entirely. Screen W-13 inaccessible.</span>
+      </div>
+      <div class="sensor-level">
+        <span class="sl-tag" style="color:var(--vigil-amber);">Uncalibrated</span>
+        <span class="sl-text">CBRN alert locked out. 'SENSOR NOT CALIBRATED' shown in Medical Mode.</span>
+      </div>
+      <div class="sensor-level">
+        <span class="sl-tag" style="color:var(--vigil-amber);">&lt; 80% conf.</span>
+        <span class="sl-text">Alert possible but flagged as 'SENSOR CONFIDENCE LOW'. Different haptic pattern. Does not auto-transmit to squad.</span>
+      </div>
+      <div class="sensor-level">
+        <span class="sl-tag" style="color:var(--vigil-green);">≥ 80% conf.</span>
+        <span class="sl-text">Full CBRN alert. Auto-transmit to squad. Continuous haptic cannot be disabled from watch.</span>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <div class="callout insight">
+        <div class="callout-label">Insight — The UI must communicate uncertainty, not suppress it</div>
+        <p>The instinct was to simplify the CBRN alert by hiding confidence levels. But the military advisors were clear: a soldier who knows they have a low-confidence alert makes better decisions than one who doesn't know. Trust in the system depends on the system being honest about what it knows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 08: COMPANION APP -->
+<section class="section" id="ch08">
+  <div class="container">
+    <div class="narrow">
+      <p class="chapter-num">Chapter 08</p>
+      <p class="section-label">VIGIL Mobile</p>
+      <h2>The Companion App That Almost Wasn't</h2>
+
+      <p>VIGIL Mobile was nearly cut from scope in week 14. The Armis engineering team raised a legitimate concern: a companion app doubles the development effort, and the watch is the mission-critical product. The argument that won was not about features — it was about the system.</p>
+
+      <div class="pull-quote">"A watch without a command interface is a gadget. A watch with a command interface is a system. Armis is selling a system."</div>
+
+      <h3>Mission Builder — Three Rounds to Get Right</h3>
+      <p>The first version was too powerful — a full GIS interface with layer controls, vector editing, and coordinate transformations. The feedback from a former platoon commander during a user session was blunt: <em>'I'm not a cartographer. I need to drop pins on a map, give them names, and push a button.'</em></p>
+      <p>The third version found the right level: map interaction for spatial thinking, list interaction for sequence editing, separate flows for threat markers and haptic plans.</p>
+    </div>
+
+    <!-- Phone mockups side by side -->
+    <div class="phone-showcase">
+      <!-- M-04 Mission Builder -->
+      <div>
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <svg width="200" height="380" viewBox="0 0 200 380" fill="none">
+              <!-- Map background -->
+              <rect width="200" height="380" fill="#0D1117"/>
+              <rect width="200" height="380" fill="#0D1520" opacity="0.7"/>
+              <!-- Topographic contour lines (subtle) -->
+              <path d="M0 90 Q50 80 100 95 Q150 110 200 88" stroke="#1C2533" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M0 130 Q60 120 110 135 Q160 148 200 128" stroke="#1C2533" stroke-width="1" fill="none" opacity="0.5"/>
+              <path d="M0 175 Q55 165 105 178 Q158 192 200 170" stroke="#1C2533" stroke-width="1" fill="none" opacity="0.5"/>
+              <!-- Top bar -->
+              <rect width="200" height="44" fill="#0D1117" opacity="0.92"/>
+              <text x="12" y="17" font-family="IBM Plex Mono" font-size="8" fill="#94A3B8">OP THUNDER · 8h · 8 SOLDIERS</text>
+              <!-- OPSEC bar -->
+              <rect y="24" width="200" height="14" fill="#161B22" opacity="0.9"/>
+              <circle cx="10" cy="31" r="2.5" fill="#3FB950"/>
+              <text x="17" y="35" font-family="IBM Plex Mono" font-size="6" fill="#8B949E">ENCRYPTED · MISSION ACTIVE</text>
+              <text x="188" y="35" font-family="IBM Plex Mono" font-size="6" fill="#58A6FF" text-anchor="end">↑ SYNC</text>
+
+              <!-- Route line -->
+              <polyline points="55,80 95,110 130,145 105,190 145,240" stroke="#58A6FF" stroke-width="1.5" fill="none" stroke-dasharray="4 3" opacity="0.6"/>
+
+              <!-- Waypoint markers -->
+              <!-- WP1 -->
+              <polygon points="55,68 48,82 55,78 62,82" fill="#FCD34D" opacity="0.9"/>
+              <text x="55" y="66" font-family="IBM Plex Mono" font-size="7" fill="#FCD34D" text-anchor="middle" font-weight="bold">1</text>
+              <text x="63" y="72" font-family="IBM Plex Mono" font-size="6" fill="#FCD34D">OBJ NORTH</text>
+              <!-- WP2 -->
+              <polygon points="95,98 88,112 95,108 102,112" fill="#FCD34D" opacity="0.9"/>
+              <text x="95" y="96" font-family="IBM Plex Mono" font-size="7" fill="#FCD34D" text-anchor="middle" font-weight="bold">2</text>
+              <!-- WP3 -->
+              <polygon points="130,133 123,147 130,143 137,147" fill="#FCD34D" opacity="0.9"/>
+              <text x="130" y="131" font-family="IBM Plex Mono" font-size="7" fill="#FCD34D" text-anchor="middle" font-weight="bold">3</text>
+              <!-- WP4 -->
+              <polygon points="105,178 98,192 105,188 112,192" fill="#FCD34D" opacity="0.9"/>
+              <text x="105" y="176" font-family="IBM Plex Mono" font-size="7" fill="#FCD34D" text-anchor="middle" font-weight="bold">4</text>
+              <!-- WP5 ERV -->
+              <polygon points="145,228 138,242 145,238 152,242" fill="#4ADE80" opacity="0.9"/>
+              <text x="145" y="226" font-family="IBM Plex Mono" font-size="7" fill="#4ADE80" text-anchor="middle" font-weight="bold">5</text>
+              <text x="154" y="236" font-family="IBM Plex Mono" font-size="6" fill="#4ADE80">ERV</text>
+
+              <!-- Threat zone (red circle exclusion) -->
+              <circle cx="68" cy="155" r="28" fill="#F85149" opacity="0.08" stroke="#F85149" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>
+              <text x="68" y="158" font-family="IBM Plex Mono" font-size="6" fill="#F85149" text-anchor="middle">IED RISK</text>
+
+              <!-- Route distance chip -->
+              <rect x="52" y="252" width="100" height="18" rx="2" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+              <text x="102" y="264" font-family="IBM Plex Mono" font-size="7" fill="#E6EDF3" text-anchor="middle">TOTAL ROUTE: 14.2 KM</text>
+
+              <!-- Bottom sheet (collapsed) -->
+              <rect x="0" y="288" width="200" height="92" rx="12" fill="#161B22"/>
+              <rect x="84" y="296" width="32" height="3" rx="1.5" fill="#30363D"/>
+              <text x="12" y="314" font-family="IBM Plex Mono" font-size="8" fill="#E6EDF3" font-weight="bold">WAYPOINTS</text>
+              <text x="188" y="314" font-family="IBM Plex Mono" font-size="7" fill="#58A6FF" text-anchor="end">↑ EXPAND</text>
+              <!-- Waypoint mini list -->
+              <text x="12" y="332" font-family="IBM Plex Mono" font-size="7" fill="#8B949E">1 · OBJ NORTH · 2.1 km</text>
+              <text x="12" y="346" font-family="IBM Plex Mono" font-size="7" fill="#8B949E">2 · WP-2 · 1.8 km</text>
+              <text x="12" y="360" font-family="IBM Plex Mono" font-size="7" fill="#8B949E">3 · WP-3 · 3.4 km  +3 more...</text>
+
+              <!-- FAB -->
+              <circle cx="172" cy="270" r="16" fill="#58A6FF"/>
+              <text x="172" y="274" font-family="IBM Plex Mono" font-size="14" fill="#0D1117" text-anchor="middle" font-weight="bold">+</text>
+            </svg>
+          </div>
+          <div class="phone-home"></div>
+        </div>
+        <div class="phone-caption">M-04 Mission Builder — Map
+          <span>Final version — Round 3</span>
+        </div>
+      </div>
+
+      <!-- M-12 Medical Dashboard -->
+      <div>
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <svg width="200" height="380" viewBox="0 0 200 380" fill="none">
+              <rect width="200" height="380" fill="#0D1117"/>
+              <!-- Header -->
+              <rect width="200" height="52" fill="#161B22"/>
+              <text x="12" y="22" font-family="IBM Plex Mono" font-size="10" fill="#E6EDF3" font-weight="bold">SQUAD HEALTH</text>
+              <text x="188" y="22" font-family="IBM Plex Mono" font-size="8" fill="#8B949E" text-anchor="end">T+02:34:12</text>
+              <!-- OPSEC -->
+              <rect y="28" width="200" height="14" fill="#161B22"/>
+              <circle cx="10" cy="35" r="2.5" fill="#3FB950"/>
+              <text x="17" y="39" font-family="IBM Plex Mono" font-size="6" fill="#8B949E">ENCRYPTED · MISSION ACTIVE</text>
+              <!-- Alert banner -->
+              <rect y="52" width="200" height="22" fill="#F85149" opacity="0.15"/>
+              <rect y="52" width="3" height="22" fill="#F85149"/>
+              <text x="10" y="67" font-family="IBM Plex Mono" font-size="7.5" fill="#F85149" font-weight="bold">ACTIVE ALERT — FRA — TAP TO VIEW</text>
+              <!-- Filter row -->
+              <rect x="12" y="82" width="38" height="18" rx="2" fill="#1C2533" stroke="#58A6FF" stroke-width="1"/>
+              <text x="31" y="94" font-family="IBM Plex Mono" font-size="7" fill="#58A6FF" text-anchor="middle">ALL</text>
+              <rect x="56" y="82" width="48" height="18" rx="2" fill="#1C2533"/>
+              <text x="80" y="94" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">CRITICAL</text>
+              <rect x="110" y="82" width="46" height="18" rx="2" fill="#1C2533"/>
+              <text x="133" y="94" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">CAUTION</text>
+              <rect x="162" y="82" width="26" height="18" rx="2" fill="#1C2533"/>
+              <text x="175" y="94" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">OK</text>
+              <!-- Soldier Grid — 2 columns -->
+              <!-- Card 1 ALF - OK -->
+              <rect x="12" y="108" width="82" height="72" rx="3" fill="#161B22" stroke="#3FB950" stroke-width="1.5"/>
+              <text x="22" y="122" font-family="IBM Plex Mono" font-size="7" fill="#3FB950">CPL ALF</text>
+              <!-- SRS ring -->
+              <circle cx="72" cy="128" r="14" fill="none" stroke="#1C2533" stroke-width="3"/>
+              <path d="M72 114 A14 14 0 1 1 71.9 114" stroke="#3FB950" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <text x="72" y="132" font-family="IBM Plex Mono" font-size="8" fill="#3FB950" text-anchor="middle" font-weight="bold">92</text>
+              <text x="22" y="138" font-family="IBM Plex Mono" font-size="7.5" fill="#E6EDF3" font-weight="bold">72 BPM</text>
+              <text x="22" y="150" font-family="IBM Plex Mono" font-size="6.5" fill="#8B949E">SpO₂ 98%</text>
+              <text x="22" y="162" font-family="IBM Plex Mono" font-size="5.5" fill="#8B949E">0:32 ago</text>
+              <!-- Card 2 BRA - CAUTION -->
+              <rect x="106" y="108" width="82" height="72" rx="3" fill="#161B22" stroke="#D29922" stroke-width="1.5"/>
+              <text x="116" y="122" font-family="IBM Plex Mono" font-size="7" fill="#D29922">SGT BRA</text>
+              <circle cx="166" cy="128" r="14" fill="none" stroke="#1C2533" stroke-width="3"/>
+              <path d="M166 114 A14 14 0 0 1 177 136" stroke="#D29922" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <text x="166" y="132" font-family="IBM Plex Mono" font-size="8" fill="#D29922" text-anchor="middle" font-weight="bold">61</text>
+              <text x="116" y="138" font-family="IBM Plex Mono" font-size="7.5" fill="#E6EDF3" font-weight="bold">88 BPM</text>
+              <text x="116" y="150" font-family="IBM Plex Mono" font-size="6.5" fill="#8B949E">SpO₂ 96%</text>
+              <text x="116" y="162" font-family="IBM Plex Mono" font-size="5.5" fill="#8B949E">1:04 ago</text>
+              <!-- Card 3 CHR - OK -->
+              <rect x="12" y="188" width="82" height="72" rx="3" fill="#161B22" stroke="#3FB950" stroke-width="1.5"/>
+              <text x="22" y="202" font-family="IBM Plex Mono" font-size="7" fill="#3FB950">PFC CHR</text>
+              <circle cx="72" cy="210" r="14" fill="none" stroke="#1C2533" stroke-width="3"/>
+              <path d="M72 196 A14 14 0 1 1 71.9 196" stroke="#3FB950" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <text x="72" y="214" font-family="IBM Plex Mono" font-size="8" fill="#3FB950" text-anchor="middle" font-weight="bold">85</text>
+              <text x="22" y="220" font-family="IBM Plex Mono" font-size="7.5" fill="#E6EDF3" font-weight="bold">68 BPM</text>
+              <text x="22" y="232" font-family="IBM Plex Mono" font-size="6.5" fill="#8B949E">SpO₂ 99%</text>
+              <text x="22" y="244" font-family="IBM Plex Mono" font-size="5.5" fill="#8B949E">0:45 ago</text>
+              <!-- Card 4 FRA - CRITICAL (pulsing border) -->
+              <rect x="106" y="188" width="82" height="72" rx="3" fill="#161B22" stroke="#F85149" stroke-width="2"/>
+              <text x="116" y="202" font-family="IBM Plex Mono" font-size="7" fill="#F85149">CPL FRA !</text>
+              <circle cx="166" cy="210" r="14" fill="none" stroke="#1C2533" stroke-width="3"/>
+              <path d="M166 196 A14 14 0 0 1 170 224" stroke="#F85149" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <text x="166" y="214" font-family="IBM Plex Mono" font-size="8" fill="#F85149" text-anchor="middle" font-weight="bold">23</text>
+              <text x="116" y="220" font-family="IBM Plex Mono" font-size="7.5" fill="#F85149" font-weight="bold">42 BPM</text>
+              <text x="116" y="232" font-family="IBM Plex Mono" font-size="6.5" fill="#F85149">SpO₂ 81%</text>
+              <text x="116" y="244" font-family="IBM Plex Mono" font-size="5.5" fill="#8B949E">ALERT</text>
+              <!-- Bottom aggregate bar -->
+              <rect y="340" width="200" height="40" fill="#161B22" stroke="#30363D" stroke-width="1"/>
+              <text x="12" y="357" font-family="IBM Plex Mono" font-size="7" fill="#8B949E">AVG SRS</text>
+              <text x="12" y="370" font-family="IBM Plex Mono" font-size="9" fill="#E6EDF3" font-weight="bold">76</text>
+              <text x="80" y="357" font-family="IBM Plex Mono" font-size="7" fill="#8B949E">LOWEST</text>
+              <text x="80" y="370" font-family="IBM Plex Mono" font-size="9" fill="#F85149" font-weight="bold">23</text>
+              <text x="148" y="357" font-family="IBM Plex Mono" font-size="7" fill="#8B949E">ALERTS</text>
+              <text x="148" y="370" font-family="IBM Plex Mono" font-size="9" fill="#F85149" font-weight="bold">1</text>
+            </svg>
+          </div>
+          <div class="phone-home"></div>
+        </div>
+        <div class="phone-caption">M-12 Medical — Squad Overview
+          <span>Final version — Triage-first design</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <div class="callout change">
+        <div class="callout-label">Final design decision — Triage-first information reduction</div>
+        <p>SRS ring is the dominant element on each card. Everything else is secondary. Color of card border encodes triage tier: green / amber / red pulse. This is the only information the medic needs to do initial triage. Detail available on tap. The reduction of visible information was the most counterintuitive design decision in the project — and the right one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 09: WHAT I STILL GOT WRONG -->
+<section class="section alt" id="ch09">
+  <div class="container narrow">
+    <p class="chapter-num">Chapter 09</p>
+    <p class="section-label">Honest Post-Mortem</p>
+    <h2>What I Still Got Wrong</h2>
+    <p>Four things in the final design I'm not satisfied with, and what I would do differently with more time.</p>
+
+    <div class="wrong-items">
+      <div class="wrong-item">
+        <div class="wrong-num">1</div>
+        <div>
+          <h4>The AAR Scrubber Is Underdesigned</h4>
+          <p>The After Action Review timeline scrubber (M-20) works. It does what it needs to do. But it's the least thoughtfully designed screen in the product. The potential of that data — GPS tracks, biometric timelines, event markers, squad positions — is enormous for training improvement and incident investigation. The scrubber I shipped is functional, not excellent. A second pass would explore overlay density controls, synchronized biometric detail, and event-clustering to make the timeline scannable at mission-length scale.</p>
+        </div>
+      </div>
+      <div class="wrong-item">
+        <div class="wrong-num">2</div>
+        <div>
+          <h4>The Haptic System Has No Training Mode</h4>
+          <p>The haptic dictionary is loaded before a mission. But there's no mechanism for soldiers to practice recognizing signals before they need to use them under stress. A training mode — where the watch randomly fires signals and the soldier has to identify them — would dramatically improve recall reliability. I identified this problem in Round 2 and didn't have time to design the solution before the project deadline.</p>
+        </div>
+      </div>
+      <div class="wrong-item">
+        <div class="wrong-num">3</div>
+        <div>
+          <h4>The OPSEC Status Bar Became Visual Noise</h4>
+          <p>The OPSECStatusBar in VIGIL Mobile was designed to provide persistent awareness of encryption posture. In testing, within 2 days of use, participants stopped looking at it entirely — it became wallpaper. Persistent status indicators suffer from habituation. The right solution is probably a change-detection model: invisible when everything is correct, surfaces only when something changes. I designed it as always-visible because I was worried about hiding safety information. I should have trusted the user more.</p>
+        </div>
+      </div>
+      <div class="wrong-item">
+        <div class="wrong-num">4</div>
+        <div>
+          <h4>Offline Map Caching Is Invisible</h4>
+          <p>The Mission Builder requires the map to be cached before deployment. The prompt for this is buried in the pre-mission OPSEC check and doesn't surface until the user tries to sync to watches. A first-time user would not know to cache the map until they hit the error. This is an onboarding failure. Map caching should be surfaced immediately when a mission is created, not at the point of failure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 10: WHAT WAS BUILT -->
+<section class="section" id="ch10">
+  <div class="container">
+    <div class="narrow">
+      <p class="chapter-num">Chapter 10</p>
+      <p class="section-label">Output</p>
+      <h2>What Was Built and What It Means</h2>
+      <p>VIGIL went from brief to complete design in 6 months. The output was 67 screens, 84 components, a dual-track design system, and a 90-page product specification document. Engineering began Q2 2025.</p>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-cell">
+        <span class="metric-num">67</span>
+        <span class="metric-lbl">Screens Designed</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">84</span>
+        <span class="metric-lbl">Components</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">3+</span>
+        <span class="metric-lbl">Design Rounds</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">14</span>
+        <span class="metric-lbl">Testing Sessions</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">32</span>
+        <span class="metric-lbl">Watch Screens</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">35</span>
+        <span class="metric-lbl">Mobile Screens</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">6mo</span>
+        <span class="metric-lbl">Duration</span>
+      </div>
+      <div class="metric-cell">
+        <span class="metric-num">Q2</span>
+        <span class="metric-lbl">Build Start 2025</span>
+      </div>
+    </div>
+
+    <div class="narrow">
+      <p>What makes this project useful as a design artifact isn't the final UI. It's the specific design decisions that trace directly back to real operational constraints: the 15-second countdown built on injury confusion-state research, the triage-first Medical Dashboard built on medic mental models, the crown-only navigation built on glove testing, the confidence-radius dead reckoning built on GPS jamming doctrine.</p>
+      <div class="crew-quote">"Good design for high-stakes contexts doesn't look different. It just has much better reasons for every decision."</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 11: WHAT I LEARNED -->
+<section class="section alt" id="ch11">
+  <div class="container narrow">
+    <p class="chapter-num">Chapter 11</p>
+    <p class="section-label">Principles</p>
+    <h2>What I Learned</h2>
+    <p>Six things I would take into the next project.</p>
+
+    <div class="learnings">
+      <div class="learning">
+        <span class="learning-num">01</span>
+        <p><strong>Test in the conditions the product will actually be used in.</strong> Not vaguely similar conditions. Exact conditions. If the product is for hands in gloves, design with gloves on from day one.</p>
+      </div>
+      <div class="learning">
+        <span class="learning-num">02</span>
+        <p><strong>Rewrite the brief before designing anything.</strong> The first design attempt failed not because of execution but because it was solving the wrong problem. Reframing the OPSEC constraint from feature to axiom changed everything downstream.</p>
+      </div>
+      <div class="learning">
+        <span class="learning-num">03</span>
+        <p><strong>Less information, earlier, is better than more information, later.</strong> The Medical Dashboard, the CBRN alert, and Squad Mode all became better by removing information that seemed important but wasn't actionable in the first three seconds.</p>
+      </div>
+      <div class="learning">
+        <span class="learning-num">04</span>
+        <p><strong>The most important design work is the work nobody sees.</strong> The testing protocol redesign after Round 1 didn't produce any screens. It produced trustworthy testing. That's the foundation everything else was built on.</p>
+      </div>
+      <div class="learning">
+        <span class="learning-num">05</span>
+        <p><strong>What you don't design is as important as what you do.</strong> The decision to make the ambient watch face contain only a mission clock — and nothing else — was a deliberate omission. The impulse is always to add. The discipline is in what you remove.</p>
+      </div>
+      <div class="learning">
+        <span class="learning-num">06</span>
+        <p><strong>Name the failures.</strong> Documenting Round 1 failures explicitly, by number, made them correctable. Unnamed problems get worked around rather than fixed. Round 2 would have been a repeat of Round 1 if I hadn't been honest about what Round 1 failed to do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER / NEXT PROJECT -->
+<footer class="footer">
+  <div class="footer-brand">VIGIL · Armis Technologies OÜ · Tallinn · 2025</div>
+  <nav class="footer-nav">
+    <a href="index.html">← Portfolio</a>
+    <a href="prahari.html">Next: PRAHARI →</a>
+  </nav>
+</footer>
+
+
+<script>
+  // Nav scroll behavior
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('nav-scrolled', window.scrollY > 60);
+  });
+
+  // ── Liquid Ripple Effect ────────────────────────────────
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('a, button, input, select, textarea, .nav')) return;
+    const x = e.clientX, y = e.clientY;
+
+    // Central burst
+    const center = document.createElement('div');
+    center.className = 'liquid-ripple-center';
+    center.style.cssText = `left:${x}px;top:${y}px;`;
+    document.body.appendChild(center);
+    setTimeout(() => center.remove(), 500);
+
+    // 3 expanding rings
+    ['', 'ring-2', 'ring-3'].forEach((cls, i) => {
+      const ring = document.createElement('div');
+      ring.className = 'liquid-ripple-ring' + (cls ? ' ' + cls : '');
+      ring.style.cssText = `left:${x}px;top:${y}px;animation-delay:${i * 0.1}s;`;
+      document.body.appendChild(ring);
+      setTimeout(() => ring.remove(), 1100);
+    });
+  });
+</script>
+
+</body>
+</html>

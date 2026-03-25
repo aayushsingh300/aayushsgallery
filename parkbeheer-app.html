@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkbeheer NL — Car Park Management</title>
+  <meta name="description"
+    content="Parkbeheer NL: Enterprise car park management system for the Dutch National Enterprise Agency (RVO). Monitor, manage and enforce 923,000+ parking spaces across the Netherlands.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+     SCREEN 6 — ONBOARDING (full page, no sidebar)
+     ═══════════════════════════════════════════════════════ -->
+  <div id="screen-onboarding" class="screen">
+    <div class="onboarding-bg">
+      <div class="onboarding-card">
+        <div class="logo-section">
+          <div class="logo-mark"
+            style="width:36px;height:36px;background:var(--accent);border-radius:var(--radius-card);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;">
+            P</div>
+          <span style="font-weight:700;font-size:16px;color:var(--primary);">Parkbeheer NL</span>
+        </div>
+        <h2>Welcome back, Wen Li</h2>
+        <p class="subtitle">Here's where you left off. Complete your setup to get full access.</p>
+        <div class="progress-dots">
+          <div class="dot completed"></div>
+          <div class="dot current"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <ul class="checklist">
+          <li class="completed">
+            <span class="check-icon done">✓</span>
+            Create your account
+          </li>
+          <li class="completed">
+            <span class="check-icon done">✓</span>
+            Verify your email
+          </li>
+          <li>
+            <span class="check-icon pending"></span>
+            Set your zone preferences
+            <button class="btn btn-primary continue-btn" onclick="navigateTo('overview')">Continue →</button>
+          </li>
+          <li>
+            <span class="check-icon pending"></span>
+            Complete team profile
+          </li>
+        </ul>
+        <p class="help-link">Need help? <a href="#">Contact support →</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     SCREEN 7 — DATA VIZ GUIDELINES (full page, no sidebar)
+     ═══════════════════════════════════════════════════════ -->
+  <div id="screen-dataviz" class="screen">
+    <div class="app-shell">
+      <!-- Sidebar -->
+      <nav class="sidebar" id="sidebar-dataviz"></nav>
+      <div class="main-area">
+        <header class="header">
+          <div class="breadcrumb">
+            <a href="#" onclick="navigateTo('overview')">Overview</a>
+            <span>/</span>
+            <span class="current">Data Visualisation Guidelines</span>
+          </div>
+          <div class="header-right">
+            <span class="last-updated">v1.2 · Last updated: 3 days ago</span>
+          </div>
+        </header>
+        <div class="content" style="background:#fff;">
+          <div class="dataviz-spread">
+            <!-- Page 1: Cover -->
+            <div class="doc-page cover">
+              <div style="margin-top:40px;">
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;margin-bottom:12px;">
+                  Parkbeheer NL</div>
+                <h4 style="font-size:16px;line-height:1.3;">Data Visualisation Guidelines</h4>
+                <div style="font-size:11px;opacity:0.6;margin-top:8px;">v1.2</div>
+              </div>
+              <div class="page-content" style="margin-top:30px;">
+                <div style="font-size:10px;line-height:1.8;">
+                  1. Introduction<br>
+                  2. Principles<br>
+                  3. General guidelines<br>
+                  4. Bar charts<br>
+                  5. Line charts<br>
+                  6. Donuts<br>
+                  7. Accessibility
+                </div>
+              </div>
+            </div>
+            <!-- Page 2: Principles -->
+            <div class="doc-page">
+              <h4>Principles</h4>
+              <div class="principle-card">
+                <h5>Relevant</h5>
+                <p>Show only data that serves the user's goal</p>
+              </div>
+              <div class="principle-card">
+                <h5>Accurate</h5>
+                <p>Never distort scale or truncate axes</p>
+              </div>
+              <div class="principle-card">
+                <h5>Accessible</h5>
+                <p>WCAG AA contrast minimum for all elements</p>
+              </div>
+            </div>
+            <!-- Page 3: General -->
+            <div class="doc-page">
+              <h4>General Guidelines</h4>
+              <div style="display:flex;gap:12px;margin:12px 0;">
+                <div style="text-align:center;">
+                  <svg width="60" height="60" viewBox="0 0 60 60">
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="#E5E7EB" stroke-width="8" />
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="#0F2044" stroke-width="8"
+                      stroke-dasharray="100 38.27" stroke-dashoffset="0" transform="rotate(-90 30 30)" />
+                    <text x="30" y="34" text-anchor="middle" fill="#0F2044" font-size="10" font-weight="600">72%</text>
+                  </svg>
+                  <div style="font-size:9px;color:#22C55E;margin-top:4px;">✓ Correct</div>
+                </div>
+                <div style="text-align:center;">
+                  <svg width="60" height="60" viewBox="0 0 60 60">
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="#0F2044" stroke-width="8"
+                      stroke-dasharray="20 10 30 10 40 28" transform="rotate(-90 30 30)" />
+                  </svg>
+                  <div style="font-size:9px;color:#EF4444;margin-top:4px;">✗ Incorrect</div>
+                </div>
+              </div>
+              <p style="font-size:10px;color:var(--text-muted);line-height:1.5;">Always show the total in the center.
+                Never use more than 5 segments.</p>
+            </div>
+            <!-- Page 4: Bar Charts -->
+            <div class="doc-page">
+              <h4>Bar Charts</h4>
+              <div style="display:flex;align-items:flex-end;gap:6px;height:80px;margin:12px 0;">
+                <div style="width:16px;background:#0F2044;height:70px;border-radius:2px 2px 0 0;"></div>
+                <div style="width:16px;background:#2563EB;height:50px;border-radius:2px 2px 0 0;"></div>
+                <div style="width:16px;background:#0F2044;height:60px;border-radius:2px 2px 0 0;"></div>
+                <div style="width:16px;background:#2563EB;height:40px;border-radius:2px 2px 0 0;"></div>
+                <div style="width:16px;background:#0F2044;height:80px;border-radius:2px 2px 0 0;"></div>
+                <div style="width:16px;background:#2563EB;height:55px;border-radius:2px 2px 0 0;"></div>
+              </div>
+              <div style="font-size:10px;color:var(--text-muted);line-height:1.5;">
+                <div style="color:#22C55E;margin-bottom:4px;">✓ Do: Use consistent spacing and scale</div>
+                <div style="color:#EF4444;">✗ Don't: Mix 3D effects or rotations</div>
+              </div>
+            </div>
+            <!-- Page 5: Accessibility -->
+            <div class="doc-page">
+              <h4>Accessibility</h4>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:10px 0;">
+                <div style="height:24px;background:#0F2044;border-radius:2px;"></div>
+                <div style="height:24px;background:#1E3A8A;border-radius:2px;"></div>
+                <div style="height:24px;background:#2563EB;border-radius:2px;"></div>
+                <div style="height:24px;background:#22C55E;border-radius:2px;"></div>
+                <div style="height:24px;background:#F59E0B;border-radius:2px;"></div>
+                <div style="height:24px;background:#9CA3AF;border-radius:2px;"></div>
+              </div>
+              <div style="font-size:10px;color:var(--text-muted);line-height:1.5;">
+                <div style="margin-bottom:4px;">4.5:1 — AA contrast ratio minimum</div>
+                <div style="margin-bottom:8px;">Works for 8% of users with colour blindness</div>
+                <div style="display:flex;gap:6px;">
+                  <div
+                    style="width:20px;height:20px;background:repeating-linear-gradient(45deg,#0F2044,#0F2044 2px,transparent 2px,transparent 4px);border-radius:2px;">
+                  </div>
+                  <div
+                    style="width:20px;height:20px;background:repeating-linear-gradient(0deg,#2563EB,#2563EB 2px,transparent 2px,transparent 4px);border-radius:2px;">
+                  </div>
+                  <div
+                    style="width:20px;height:20px;background:repeating-linear-gradient(90deg,#22C55E,#22C55E 2px,transparent 2px,transparent 4px);border-radius:2px;">
+                  </div>
+                </div>
+                <div style="font-size:9px;margin-top:4px;">Pattern alternatives</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     SCREEN 8 — INFORMATION ARCHITECTURE
+     ═══════════════════════════════════════════════════════ -->
+  <div id="screen-ia" class="screen">
+    <div class="app-shell">
+      <nav class="sidebar" id="sidebar-ia"></nav>
+      <div class="main-area">
+        <header class="header">
+          <div class="breadcrumb">
+            <a href="#" onclick="navigateTo('overview')">Overview</a>
+            <span>/</span>
+            <span class="current">Information Architecture</span>
+          </div>
+        </header>
+        <div class="content" style="background:#fff;">
+          <div class="ia-container" id="ia-tree">
+            <!-- Built by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     APP SHELL — Screens with sidebar
+     ═══════════════════════════════════════════════════════ -->
+  <div id="app-shell" class="app-shell screen">
+
+    <!-- ── Sidebar ── -->
+    <nav class="sidebar" id="sidebar-main">
+      <div class="sidebar-logo">
+        <div class="logo-mark">P</div>
+        <span class="logo-text">Parkbeheer NL</span>
+      </div>
+      <div class="sidebar-nav">
+        <a href="#" data-screen="overview" class="active" onclick="navigateTo('overview')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+          </svg>
+          Overview
+        </a>
+        <a href="#" data-screen="map" onclick="navigateTo('map')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z" />
+            <path d="M8 2v16" />
+            <path d="M16 6v16" />
+          </svg>
+          Map
+        </a>
+        <a href="#" data-screen="notifications">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 01-3.46 0" />
+          </svg>
+          Notifications
+        </a>
+        <a href="#" data-screen="history">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          History
+        </a>
+        <a href="#" data-screen="dataviz" onclick="navigateTo('dataviz')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
+          </svg>
+          Knowledge Base
+        </a>
+        <a href="#" data-screen="ia" onclick="navigateTo('ia')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
+          Help
+        </a>
+        <a href="#" data-screen="settings" onclick="navigateTo('settings')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+          </svg>
+          Settings
+        </a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="avatar">WL</div>
+        <span class="user-name">Wen Li Tay</span>
+        <button class="logout-btn" title="Logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ── Main Area ── -->
+    <div class="main-area">
+
+      <!-- ── Header ── -->
+      <header class="header" id="main-header">
+        <div class="breadcrumb" id="main-breadcrumb">
+          <span class="current">Overview</span>
+        </div>
+        <div class="header-right">
+          <span class="last-updated">Last updated: 3 days ago · <a href="#">View history ↗</a></span>
+          <button class="notif-btn" title="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 01-3.46 0" />
+            </svg>
+            <span class="badge"></span>
+          </button>
+          <div class="avatar avatar-sm">WL</div>
+        </div>
+      </header>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 1 — DASHBOARD
+         ═══════════════════════════════════════ -->
+      <div id="view-overview" class="content screen active">
+
+        <!-- Stats Row -->
+        <div class="stats-grid">
+          <!-- Card 1: Car Parks Donut -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Car parks</h3>
+              <p>Overall number of car parks in Netherlands</p>
+            </div>
+            <div class="card-body">
+              <div class="donut-container">
+                <div class="donut-wrapper">
+                  <svg viewBox="0 0 160 160">
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#E5E7EB" stroke-width="20" />
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#0F2044" stroke-width="20"
+                      stroke-dasharray="352 25.7" stroke-dashoffset="0" />
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#9CA3AF" stroke-width="20"
+                      stroke-dasharray="18.85 358.85" stroke-dashoffset="-352" />
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#EF4444" stroke-width="20"
+                      stroke-dasharray="5.6 372" stroke-dashoffset="-370.85" />
+                  </svg>
+                  <div class="donut-center">923,021</div>
+                </div>
+                <div class="donut-legend">
+                  <span class="legend-item"><span class="legend-dot" style="background:#0F2044"></span> Active:
+                    861,321</span>
+                  <span class="legend-item"><span class="legend-dot" style="background:#9CA3AF"></span> Inactive:
+                    46,148</span>
+                  <span class="legend-item"><span class="legend-dot" style="background:#EF4444"></span> Terminated:
+                    14,852</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Zones -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Zones</h3>
+              <p>Overall number of car parks categorised by zone</p>
+            </div>
+            <div class="card-body">
+              <ul class="zone-list">
+                <li>
+                  <span class="zone-name"><span class="zone-bar" style="background:#2563EB"></span> Central Zone</span>
+                  <span class="zone-count">41,806</span>
+                </li>
+                <li>
+                  <span class="zone-name"><span class="zone-bar" style="background:#0F2044"></span> East Zone</span>
+                  <span class="zone-count">193,001</span>
+                </li>
+                <li>
+                  <span class="zone-name"><span class="zone-bar" style="background:#22C55E"></span> North-East
+                    Zone</span>
+                  <span class="zone-count">321,003</span>
+                </li>
+                <li>
+                  <span class="zone-name"><span class="zone-bar" style="background:#F59E0B"></span> North Zone</span>
+                  <span class="zone-count">80,002</span>
+                </li>
+                <li>
+                  <span class="zone-name"><span class="zone-bar" style="background:#9CA3AF"></span> West Zone</span>
+                  <span class="zone-count">70,008</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card 3: Types -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Types</h3>
+              <p>Overall number of car parks categorised by type</p>
+            </div>
+            <div class="card-body">
+              <div class="bar-chart">
+                <div class="bar-col">
+                  <div class="bar" style="height:85%;background:#0F2044"></div>
+                  <div class="bar-label">Multi</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar" style="height:60%;background:#0F2044"></div>
+                  <div class="bar-label">Surface</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar" style="height:45%;background:#9CA3AF"></div>
+                  <div class="bar-label">Under</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar" style="height:30%;background:#0F2044"></div>
+                  <div class="bar-label">Mech</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar" style="height:70%;background:#0F2044"></div>
+                  <div class="bar-label">Basement</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar" style="height:20%;background:#9CA3AF"></div>
+                  <div class="bar-label">Precinct</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar" style="height:15%;background:#9CA3AF"></div>
+                  <div class="bar-label">Other</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="card">
+          <div class="card-body">
+            <div class="table-controls">
+              <div class="table-controls-left">
+                <input type="text" class="search-input" placeholder="Search...">
+                <select class="filter-select">
+                  <option>Zone ▾</option>
+                  <option>CZ</option>
+                  <option>EZ</option>
+                  <option>NEZ</option>
+                  <option>NZ</option>
+                  <option>WZ</option>
+                </select>
+                <select class="filter-select">
+                  <option>Type ▾</option>
+                  <option>MS</option>
+                  <option>US</option>
+                  <option>BG</option>
+                </select>
+                <select class="filter-select">
+                  <option>Status ▾</option>
+                  <option>Active</option>
+                  <option>Inactive</option>
+                  <option>Terminated</option>
+                </select>
+              </div>
+              <button class="btn btn-primary">+ Add car park</button>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:36px"><input type="checkbox"></th>
+                  <th>Number ↕</th>
+                  <th>Location ↕</th>
+                  <th>Zone ↕</th>
+                  <th>Type ↕</th>
+                  <th>Status ↕</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A1</td>
+                  <td>Blk 315 Ang Mo Kio St 22</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-active">Active</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A10</td>
+                  <td>Blk 307 Ang Mo Kio St 22</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-active">Active</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A100</td>
+                  <td>Blk 051 Ang Mo Kio St 81</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-inactive">Inactive</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A11</td>
+                  <td>Blk 231/232/328A Ang Mo Kio St 22</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-active">Active</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A12</td>
+                  <td>Blk 232 Ang Mo Kio St 21</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-active">Active</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A13</td>
+                  <td>Blk 266 Ang Mo Kio St 22</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-active">Active</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A154</td>
+                  <td>226A Ang Mo Kio St 22</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-inactive">Inactive</span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox"></td>
+                  <td>A6</td>
+                  <td>Blk 258 Ang Mo Kio St 21</td>
+                  <td>NEZ</td>
+                  <td>US</td>
+                  <td><span class="pill pill-active">Active</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Get Started Panel -->
+        <div class="get-started">
+          <div>
+            <strong>Get started</strong>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Start your journey with the brand new
+              Parkit app</div>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 2 — CAR PARK DETAIL (Lots Tab)
+         ═══════════════════════════════════════ -->
+      <div id="view-detail" class="content screen">
+        <div class="header-detail" style="margin-bottom:var(--space-md);">
+          <span class="status-chip active"><span class="status-dot"></span> Active</span>
+        </div>
+        <div class="tabs">
+          <button class="tab" onclick="navigateTo('overview')">Overview</button>
+          <button class="tab">Maps & boundaries</button>
+          <button class="tab active">Lots</button>
+          <button class="tab">Building features</button>
+          <button class="tab">Enforcement</button>
+          <button class="tab">Land & building</button>
+          <button class="tab">Log sheet</button>
+        </div>
+        <div class="two-col">
+          <div>
+            <h3 class="section-title">Lots</h3>
+            <div class="lot-summary">
+              <span class="lot-stat"><span class="dot" style="background:#2563EB"></span> Cars: 227</span>
+              <span class="lot-stat"><span class="dot" style="background:#0EA5E9"></span> Motorcycles: 34</span>
+              <span class="lot-stat"><span class="dot" style="background:#F59E0B"></span> Lorry: 4</span>
+              <span class="lot-stat"><span class="dot" style="background:#9CA3AF"></span> Others: 21</span>
+            </div>
+            <div style="display:flex;gap:var(--space-xl);margin-bottom:var(--space-lg);">
+              <div class="donut-container">
+                <div class="donut-wrapper small">
+                  <svg viewBox="0 0 160 160">
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#E5E7EB" stroke-width="18" />
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#2563EB" stroke-width="18"
+                      stroke-dasharray="303 74.7" stroke-dashoffset="0" />
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#0EA5E9" stroke-width="18"
+                      stroke-dasharray="45.4 332.3" stroke-dashoffset="-303" />
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#F59E0B" stroke-width="18"
+                      stroke-dasharray="5.35 372.35" stroke-dashoffset="-348.4" />
+                    <circle cx="80" cy="80" r="60" fill="none" stroke="#9CA3AF" stroke-width="18"
+                      stroke-dasharray="23.95 353.8" stroke-dashoffset="-353.75" />
+                  </svg>
+                  <div class="donut-center">282</div>
+                </div>
+                <p style="font-size:11px;color:var(--text-muted);margin-top:8px;">Total number of lots: 282</p>
+              </div>
+            </div>
+            <div class="card" style="box-shadow:none;border:1px solid var(--border);">
+              <div class="card-header">
+                <h3>Cars — Breakdown</h3>
+              </div>
+              <div class="card-body" style="padding:0;">
+                <table class="detail-table">
+                  <tr>
+                    <td>Blue zone</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>30-minute</td>
+                    <td>288</td>
+                  </tr>
+                  <tr>
+                    <td>Car wash</td>
+                    <td>2</td>
+                  </tr>
+                  <tr>
+                    <td>EV-charging</td>
+                    <td>25</td>
+                  </tr>
+                  <tr>
+                    <td>Family</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>Winter</td>
+                    <td>189</td>
+                  </tr>
+                  <tr>
+                    <td>Red zone</td>
+                    <td>34</td>
+                  </tr>
+                  <tr>
+                    <td>Handicap</td>
+                    <td>4</td>
+                  </tr>
+                  <tr style="font-weight:700;border-top:2px solid var(--border);">
+                    <td>Total car lots</td>
+                    <td>321</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="sidebar-card">
+              <div class="sc-body">
+                <span class="tag">T2</span>
+                <h4>Compare car parks</h4>
+                <p>Compare allocation, building features, enforcement content and more</p>
+                <a href="#" class="read-more">Read more →</a>
+              </div>
+              <div class="sc-divider"></div>
+              <div class="sc-image"
+                style="background:linear-gradient(135deg,#E5E7EB 0%,#D1D5DB 100%);display:flex;align-items:center;justify-content:center;">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                  <rect x="5" y="30" width="50" height="25" rx="3" fill="#9CA3AF" />
+                  <rect x="15" y="10" width="6" height="20" rx="1" fill="#6B7280" />
+                  <rect x="25" y="15" width="6" height="15" rx="1" fill="#6B7280" />
+                  <circle cx="18" cy="8" r="3" fill="#22C55E" />
+                  <circle cx="28" cy="13" r="3" fill="#2563EB" />
+                </svg>
+              </div>
+              <div class="sc-body">
+                <p style="font-weight:600;font-size:12px;color:var(--text);margin-bottom:4px;">Singapore EV-charging
+                  plan 2030</p>
+                <p>The Singapore Green Plan 2030 or the Green Plan is a...</p>
+                <a href="#" class="read-more">Read more →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 3 — FILTERED LIST
+         ═══════════════════════════════════════ -->
+      <div id="view-list" class="content screen">
+        <div class="table-controls">
+          <div class="table-controls-left">
+            <input type="text" class="search-input" placeholder="Search...">
+            <span class="filter-chip">NEZ <span class="remove-chip">×</span></span>
+            <span class="filter-chip">US <span class="remove-chip">×</span></span>
+            <select class="filter-select">
+              <option>Status ▾</option>
+            </select>
+          </div>
+          <button class="btn btn-primary">+ Add car park</button>
+        </div>
+        <div class="bulk-bar">
+          <span class="count">1 selected</span>
+          <button class="btn btn-outline" style="padding:4px 12px;">Edit</button>
+          <button class="btn btn-outline" style="padding:4px 12px;">Delete</button>
+          <button class="btn btn-outline" style="padding:4px 12px;">Export</button>
+        </div>
+        <div class="card" style="box-shadow:none;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:36px"><input type="checkbox"></th>
+                <th>Number ↕</th>
+                <th>Location ↕</th>
+                <th>Zone ↕</th>
+                <th>Type ↕</th>
+                <th>Status ↕</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selected">
+                <td><input type="checkbox" checked></td>
+                <td>A1</td>
+                <td>Blk 315 Ang Mo Kio St 22</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A10</td>
+                <td>Blk 307 Ang Mo Kio St 22</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A100</td>
+                <td>Blk 051 Ang Mo Kio St 81</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-inactive">Inactive</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A11</td>
+                <td>Blk 231/232/328A Ang Mo Kio St 22</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A12</td>
+                <td>Blk 232 Ang Mo Kio St 21</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A13</td>
+                <td>Blk 266 Ang Mo Kio St 22</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A154</td>
+                <td>226A Ang Mo Kio St 22</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-inactive">Inactive</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A6</td>
+                <td>Blk 258 Ang Mo Kio St 21</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A7</td>
+                <td>Blk 201 Ang Mo Kio St 23</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A8</td>
+                <td>Blk 340 Ang Mo Kio Ave 1</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-inactive">Inactive</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A9</td>
+                <td>Blk 152 Ang Mo Kio Ave 5</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>A15</td>
+                <td>Blk 333 Ang Mo Kio Ave 1</td>
+                <td>NEZ</td>
+                <td>US</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span>Showing 1–12 of 478</span>
+          <div class="page-nums">
+            <button class="page-btn">‹</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn" style="pointer-events:none;">…</button>
+            <button class="page-btn">40</button>
+            <button class="page-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 4 — MAP
+         ═══════════════════════════════════════ -->
+      <div id="view-map" class="screen" style="display:none;">
+        <div class="map-container">
+          <!-- Netherlands Map SVG -->
+          <svg class="map-svg-area" viewBox="0 0 800 700" preserveAspectRatio="xMidYMid meet">
+            <!-- Water background -->
+            <rect width="800" height="700" fill="#E8ECF0" />
+            <!-- Netherlands outline (simplified) -->
+            <path class="nl-map-path" d="
+            M340,50 L360,45 L390,55 L420,48 L440,60 L460,52 L480,58 L490,70
+            L510,75 L520,90 L530,110 L535,130 L540,150 L538,170 L530,190
+            L528,210 L535,230 L540,250 L545,270 L550,290 L555,310
+            L560,330 L555,350 L545,370 L535,390 L520,410 L505,430
+            L490,445 L475,455 L460,460 L445,470 L425,480 L410,490
+            L395,495 L380,500 L365,505 L345,510 L320,515 L300,510
+            L280,500 L265,490 L250,475 L240,460 L230,440 L225,420
+            L220,400 L218,380 L220,360 L225,340 L228,320 L230,300
+            L235,280 L240,260 L248,240 L255,220 L260,200 L268,180
+            L275,160 L280,140 L290,120 L298,100 L310,80 L325,65 Z
+            M350,100 L365,95 L380,105 L395,98 L410,110 L420,120
+            L425,135 L420,150 L410,160 L395,155 L380,150 L365,145
+            L355,135 L348,120 Z
+          " />
+            <!-- Province boundaries (subtle) -->
+            <path d="M300,200 L400,180 L450,250" fill="none" stroke="#C0C6CE" stroke-width="0.5"
+              stroke-dasharray="4,4" />
+            <path d="M280,350 L380,300 L450,350" fill="none" stroke="#C0C6CE" stroke-width="0.5"
+              stroke-dasharray="4,4" />
+            <path d="M350,250 L350,400" fill="none" stroke="#C0C6CE" stroke-width="0.5" stroke-dasharray="4,4" />
+            <!-- Roads (thin lines) -->
+            <path d="M380,130 L400,200 L380,300 L350,400 L320,470" fill="none" stroke="#B8BFC8" stroke-width="1.5" />
+            <path d="M280,280 L380,260 L480,300" fill="none" stroke="#B8BFC8" stroke-width="1.5" />
+            <path d="M320,180 L420,250 L500,320" fill="none" stroke="#B8BFC8" stroke-width="1" />
+          </svg>
+
+          <!-- Cluster Markers -->
+          <div class="cluster-marker large" style="top:130px;left:42%;" id="cluster-amsterdam">
+            421
+            <div class="cluster-tooltip">
+              <div style="font-weight:600;margin-bottom:2px;">421 car parks</div>
+              <div style="color:var(--text-muted);">Central Zone · Click to explore</div>
+            </div>
+          </div>
+          <div class="cluster-marker large" style="top:380px;left:32%;">278</div>
+          <div class="cluster-marker medium" style="top:340px;left:28%;">162</div>
+          <div class="cluster-marker large" style="top:240px;left:42%;">281</div>
+          <div class="cluster-marker medium" style="top:410px;left:45%;">192</div>
+          <div class="cluster-marker small" style="top:110px;left:55%;">71</div>
+          <div class="cluster-marker medium" style="top:430px;left:36%;">127</div>
+          <div class="cluster-marker small" style="top:400px;left:40%;">52</div>
+          <div class="cluster-marker small" style="top:280px;left:55%;">98</div>
+
+          <!-- Map Search -->
+          <div class="map-search">
+            <input type="text" placeholder="Search...">
+          </div>
+
+          <!-- Layers Panel -->
+          <div class="map-layers">
+            <h4>Layers</h4>
+            <div class="layer-row">
+              <span>CCTV</span>
+              <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+            </div>
+            <div class="layer-row">
+              <span>CPG gantry</span>
+              <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+            </div>
+          </div>
+
+          <!-- Zoom Controls -->
+          <div class="map-zoom">
+            <button class="zoom-btn">+</button>
+            <button class="zoom-btn">−</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 5 — LOTS ALLOCATION EXPANDED
+         ═══════════════════════════════════════ -->
+      <div id="view-lots" class="content screen">
+        <div class="alert-banner warning">
+          ⚠️ EV charging capacity below target for Q4 2018 — <a href="#">Review allocation →</a>
+        </div>
+        <div class="header-detail" style="margin-bottom:var(--space-md);">
+          <span class="status-chip active"><span class="status-dot"></span> Active</span>
+        </div>
+        <div class="tabs">
+          <button class="tab">Overview</button>
+          <button class="tab">Maps & boundaries</button>
+          <button class="tab active">Lots</button>
+          <button class="tab">Building features</button>
+          <button class="tab">Enforcement</button>
+          <button class="tab">Land & building</button>
+          <button class="tab">Log sheet</button>
+        </div>
+        <h3 class="section-title">Lots Allocation — Full Breakdown</h3>
+        <div class="lot-summary">
+          <span class="lot-stat"><span class="dot" style="background:#2563EB"></span> Cars: 227</span>
+          <span class="lot-stat"><span class="dot" style="background:#0EA5E9"></span> Motorcycles: 34</span>
+          <span class="lot-stat"><span class="dot" style="background:#F59E0B"></span> Lorry: 4</span>
+          <span class="lot-stat"><span class="dot" style="background:#9CA3AF"></span> Others: 21</span>
+        </div>
+        <div class="card" style="box-shadow:none;border:1px solid var(--border);">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Lot Type</th>
+                <th>Count</th>
+                <th style="width:180px">Proportion</th>
+                <th>Zone</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Blue zone</td>
+                <td>0</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:0%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">0%</span>
+                  </div>
+                </td>
+                <td>CZ</td>
+                <td><span class="pill pill-inactive">—</span></td>
+              </tr>
+              <tr>
+                <td>30-minute</td>
+                <td>288</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:90%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">90%</span>
+                  </div>
+                </td>
+                <td>All</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>Car wash</td>
+                <td>2</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:1%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">1%</span>
+                  </div>
+                </td>
+                <td>NEZ</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr class="highlight" style="background:#FEF3C7;">
+                <td style="font-weight:600;">⚠ EV-charging</td>
+                <td>25</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar" style="background:#FDE68A;">
+                      <div class="fill" style="width:8%;background:#F59E0B"></div>
+                    </div><span style="font-size:11px;color:#92400E">8%</span>
+                  </div>
+                </td>
+                <td>NEZ</td>
+                <td><span class="pill" style="background:#FEF3C7;color:#92400E;">Review</span></td>
+              </tr>
+              <tr>
+                <td>Family</td>
+                <td>0</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:0%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">0%</span>
+                  </div>
+                </td>
+                <td>—</td>
+                <td><span class="pill pill-inactive">—</span></td>
+              </tr>
+              <tr>
+                <td>Winter</td>
+                <td>189</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:59%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">59%</span>
+                  </div>
+                </td>
+                <td>All</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>Red zone</td>
+                <td>34</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:11%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">11%</span>
+                  </div>
+                </td>
+                <td>EZ</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>Handicap</td>
+                <td>4</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:1%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">1%</span>
+                  </div>
+                </td>
+                <td>All</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>Motorcycle</td>
+                <td>34</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:11%;background:#0EA5E9"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">11%</span>
+                  </div>
+                </td>
+                <td>NEZ</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>Lorry</td>
+                <td>4</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:1%;background:#F59E0B"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">1%</span>
+                  </div>
+                </td>
+                <td>NEZ</td>
+                <td><span class="pill pill-active">Active</span></td>
+              </tr>
+              <tr style="font-weight:700;border-top:2px solid var(--border);">
+                <td>Total lots</td>
+                <td>321</td>
+                <td>
+                  <div class="inline-bar-wrap">
+                    <div class="inline-bar">
+                      <div class="fill" style="width:100%"></div>
+                    </div><span style="font-size:11px;color:var(--text-muted)">100%</span>
+                  </div>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 9 — GUIDED TOUR (overlay on overview)
+         ═══════════════════════════════════════ -->
+      <div id="view-tour" class="content screen" style="position:relative;padding:0;">
+        <!-- Tour overlay (fixed so it covers the full viewport incl sidebar) -->
+        <div class="tour-overlay">
+          <!-- Spotlight: highlights the stats cards area -->
+          <div class="tour-spotlight" style="top:68px;left:232px;width:804px;height:218px;"></div>
+          <!-- Tooltip: positioned below the spotlight -->
+          <div class="tour-tooltip" style="top:300px;left:232px;">
+            <div class="tour-step-row">
+              <span class="tour-step-label">Step 2 of 4</span>
+              <div class="tour-dots">
+                <div class="tour-dot done"></div>
+                <div class="tour-dot active"></div>
+                <div class="tour-dot"></div>
+                <div class="tour-dot"></div>
+              </div>
+            </div>
+            <div class="tour-tooltip-title">Your three command cards</div>
+            <div class="tour-tooltip-body">Status at a glance — 923,021 spaces, split by active/inactive/terminated. Zone bars surface capacity issues. Type breakdown shows your fleet mix. All in one view.</div>
+            <div class="tour-actions">
+              <button class="tour-skip-btn" onclick="navigateTo('overview')">Skip tour</button>
+              <button class="tour-next-btn" onclick="navigateTo('overview')">Got it →</button>
+            </div>
+          </div>
+        </div>
+        <!-- Background: the actual overview content shown through the spotlight -->
+        <div style="padding:var(--space-lg);">
+          <div class="stats-grid">
+            <div class="card">
+              <div class="card-header"><h3>Car parks</h3><p>Overall number of car parks in Netherlands</p></div>
+              <div class="card-body">
+                <div class="donut-container">
+                  <div class="donut-wrapper">
+                    <svg viewBox="0 0 160 160">
+                      <circle cx="80" cy="80" r="60" fill="none" stroke="#E5E7EB" stroke-width="20"/>
+                      <circle cx="80" cy="80" r="60" fill="none" stroke="#0F2044" stroke-width="20" stroke-dasharray="352 25.7" stroke-dashoffset="0"/>
+                      <circle cx="80" cy="80" r="60" fill="none" stroke="#9CA3AF" stroke-width="20" stroke-dasharray="18.85 358.85" stroke-dashoffset="-352"/>
+                      <circle cx="80" cy="80" r="60" fill="none" stroke="#EF4444" stroke-width="20" stroke-dasharray="5.6 372" stroke-dashoffset="-370.85"/>
+                    </svg>
+                    <div class="donut-center">923,021</div>
+                  </div>
+                  <div class="donut-legend">
+                    <span class="legend-item"><span class="legend-dot" style="background:#0F2044"></span> Active: 861,321</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#9CA3AF"></span> Inactive: 46,148</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#EF4444"></span> Terminated: 14,852</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Zones</h3><p>Overall number of car parks categorised by zone</p></div>
+              <div class="card-body">
+                <ul class="zone-list">
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#2563EB"></span> Central Zone</span><span class="zone-count">41,806</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#0F2044"></span> East Zone</span><span class="zone-count">193,001</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#22C55E"></span> North-East Zone</span><span class="zone-count">321,003</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#F59E0B"></span> North Zone</span><span class="zone-count">80,002</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#9CA3AF"></span> West Zone</span><span class="zone-count">70,008</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><h3>Types</h3><p>Overall number of car parks categorised by type</p></div>
+              <div class="card-body">
+                <div class="bar-chart">
+                  <div class="bar-col"><div class="bar" style="height:85%;background:#0F2044"></div><div class="bar-label">Multi</div></div>
+                  <div class="bar-col"><div class="bar" style="height:60%;background:#0F2044"></div><div class="bar-label">Surface</div></div>
+                  <div class="bar-col"><div class="bar" style="height:45%;background:#9CA3AF"></div><div class="bar-label">Under</div></div>
+                  <div class="bar-col"><div class="bar" style="height:30%;background:#0F2044"></div><div class="bar-label">Mech</div></div>
+                  <div class="bar-col"><div class="bar" style="height:70%;background:#0F2044"></div><div class="bar-label">Basement</div></div>
+                  <div class="bar-col"><div class="bar" style="height:20%;background:#9CA3AF"></div><div class="bar-label">Precinct</div></div>
+                  <div class="bar-col"><div class="bar" style="height:15%;background:#9CA3AF"></div><div class="bar-label">Other</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <div class="table-controls">
+                <div class="table-controls-left">
+                  <input type="text" class="search-input" placeholder="Search...">
+                  <select class="filter-select"><option>Zone ▾</option></select>
+                  <select class="filter-select"><option>Type ▾</option></select>
+                  <select class="filter-select"><option>Status ▾</option></select>
+                </div>
+                <button class="btn btn-primary">+ Add car park</button>
+              </div>
+              <table class="data-table">
+                <thead><tr>
+                  <th style="width:36px"><input type="checkbox"></th>
+                  <th>Number ↕</th><th>Location ↕</th><th>Zone ↕</th><th>Type ↕</th><th>Status ↕</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td><input type="checkbox"></td><td>A1</td><td>Blk 315 Ang Mo Kio St 22</td><td>NEZ</td><td>US</td><td><span class="pill pill-active">Active</span></td></tr>
+                  <tr><td><input type="checkbox"></td><td>A10</td><td>Blk 307 Ang Mo Kio St 22</td><td>NEZ</td><td>US</td><td><span class="pill pill-active">Active</span></td></tr>
+                  <tr><td><input type="checkbox"></td><td>A100</td><td>Blk 051 Ang Mo Kio St 81</td><td>NEZ</td><td>US</td><td><span class="pill pill-inactive">Inactive</span></td></tr>
+                  <tr><td><input type="checkbox"></td><td>A11</td><td>Blk 231/232 Ang Mo Kio St 22</td><td>NEZ</td><td>US</td><td><span class="pill pill-active">Active</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 10 — SETTINGS
+         ═══════════════════════════════════════ -->
+      <div id="view-settings" class="content screen" style="padding:0;">
+        <div class="settings-layout">
+
+          <!-- Settings nav sidebar -->
+          <nav class="settings-nav">
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">Account</div>
+              <a class="settings-nav-item active">Profile &amp; Account</a>
+              <a class="settings-nav-item">Team &amp; Permissions</a>
+              <a class="settings-nav-item">Security</a>
+            </div>
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">Preferences</div>
+              <a class="settings-nav-item">Zone Preferences</a>
+              <a class="settings-nav-item">Notifications</a>
+              <a class="settings-nav-item">Appearance</a>
+              <a class="settings-nav-item">Language &amp; Region</a>
+              <a class="settings-nav-item">Accessibility</a>
+            </div>
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">Data</div>
+              <a class="settings-nav-item">Data &amp; Export</a>
+              <a class="settings-nav-item">Integrations</a>
+              <a class="settings-nav-item">API Access</a>
+            </div>
+            <div class="settings-nav-group">
+              <div class="settings-nav-label">System</div>
+              <a class="settings-nav-item">Audit Log</a>
+              <a class="settings-nav-item">Compliance Rules</a>
+              <a class="settings-nav-item">Webhooks</a>
+            </div>
+          </nav>
+
+          <!-- Settings content panel -->
+          <div class="settings-content">
+
+            <!-- Profile section -->
+            <div class="settings-section">
+              <h3>Profile &amp; Account</h3>
+              <div class="settings-avatar-row">
+                <div class="settings-avatar">WL</div>
+                <div class="settings-avatar-info">
+                  <strong>Wen Li Tay</strong>
+                  <span>Parking Operations Officer · North-East Zone</span>
+                </div>
+                <button class="settings-change-photo">Change photo</button>
+              </div>
+              <div class="settings-row">
+                <div class="settings-field">
+                  <label>First name</label>
+                  <input class="settings-input" value="Wen Li" type="text">
+                </div>
+                <div class="settings-field">
+                  <label>Last name</label>
+                  <input class="settings-input" value="Tay" type="text">
+                </div>
+              </div>
+              <div class="settings-field">
+                <label>Display name</label>
+                <input class="settings-input" value="Wen Li Tay" type="text">
+                <div class="field-hint">Shown in the activity log and team directory.</div>
+              </div>
+              <div class="settings-field">
+                <label>Email address</label>
+                <input class="settings-input" value="wenli.tay@rvo.nl" type="email">
+              </div>
+              <div class="settings-field">
+                <label>Phone (optional)</label>
+                <input class="settings-input" value="+31 6 1234 5678" type="text">
+              </div>
+              <div class="settings-row" style="margin-bottom:24px;">
+                <div class="settings-field">
+                  <label>Role</label>
+                  <input class="settings-input" value="Parking Operations Officer" type="text" disabled>
+                  <div class="field-hint">Contact your administrator to change your role.</div>
+                </div>
+                <div class="settings-field">
+                  <label>Primary Zone</label>
+                  <select class="settings-select">
+                    <option>North-East Zone (NEZ)</option>
+                    <option>Central Zone (CZ)</option>
+                    <option>East Zone (EZ)</option>
+                    <option>North Zone (NZ)</option>
+                    <option>West Zone (WZ)</option>
+                  </select>
+                </div>
+              </div>
+              <button class="settings-save">Save changes</button>
+            </div>
+
+            <!-- Zone Preferences section preview -->
+            <div class="settings-section">
+              <h4>Zone Monitoring Preferences</h4>
+              <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Select the zones you actively monitor. Dashboard and notification defaults will reflect these choices.</p>
+              <div class="settings-tag-list">
+                <span class="settings-tag">North-East Zone</span>
+                <span class="settings-tag">Central Zone</span>
+                <span class="settings-tag add-tag">+ Add zone</span>
+              </div>
+            </div>
+
+            <!-- Notification Preferences -->
+            <div class="settings-section">
+              <h4>Notification Preferences</h4>
+              <div class="settings-toggle-row">
+                <div class="settings-toggle-info">
+                  <strong>EV quota breach alerts</strong>
+                  <span>Notified immediately when a zone falls below the EV-charging target</span>
+                </div>
+                <button class="settings-toggle"></button>
+              </div>
+              <div class="settings-toggle-row">
+                <div class="settings-toggle-info">
+                  <strong>Weekly summary email</strong>
+                  <span>Monday 07:00 — zone status digest with compliance flags</span>
+                </div>
+                <button class="settings-toggle"></button>
+              </div>
+              <div class="settings-toggle-row">
+                <div class="settings-toggle-info">
+                  <strong>Car park status changes</strong>
+                  <span>Alert when a car park in your zone switches to Inactive or Terminated</span>
+                </div>
+                <button class="settings-toggle off"></button>
+              </div>
+              <div class="settings-toggle-row">
+                <div class="settings-toggle-info">
+                  <strong>Bulk export completed</strong>
+                  <span>Email when a large CSV export finishes processing</span>
+                </div>
+                <button class="settings-toggle off"></button>
+              </div>
+            </div>
+
+            <!-- Team members preview -->
+            <div class="settings-section">
+              <h4>Team &amp; Permissions</h4>
+              <div class="settings-member-list">
+                <div class="settings-member-row">
+                  <div class="settings-member-avatar">JV</div>
+                  <div class="settings-member-info">
+                    <strong>Jan de Vries</strong>
+                    <span>jan.devries@rvo.nl · Central Zone</span>
+                  </div>
+                  <span class="settings-role-pill admin">Admin</span>
+                </div>
+                <div class="settings-member-row">
+                  <div class="settings-member-avatar">WL</div>
+                  <div class="settings-member-info">
+                    <strong>Wen Li Tay</strong>
+                    <span>wenli.tay@rvo.nl · North-East Zone</span>
+                  </div>
+                  <span class="settings-role-pill">Officer</span>
+                </div>
+                <div class="settings-member-row">
+                  <div class="settings-member-avatar" style="background:#1E3A8A;">KP</div>
+                  <div class="settings-member-info">
+                    <strong>Klara Pietersen</strong>
+                    <span>k.pietersen@rvo.nl · West Zone</span>
+                  </div>
+                  <span class="settings-role-pill">Officer</span>
+                </div>
+                <div class="settings-member-row">
+                  <div class="settings-member-avatar" style="background:#22C55E;color:#fff;">MH</div>
+                  <div class="settings-member-info">
+                    <strong>Mehmet Haak</strong>
+                    <span>m.haak@rvo.nl · East Zone</span>
+                  </div>
+                  <span class="settings-role-pill">Read only</span>
+                </div>
+              </div>
+              <button class="settings-save" style="margin-top:16px;">Invite team member</button>
+            </div>
+
+            <!-- Danger zone -->
+            <div class="settings-section">
+              <h4 style="color:var(--text);">Data &amp; Export Preferences</h4>
+              <div class="settings-field">
+                <label>Default export format</label>
+                <select class="settings-select" style="max-width:200px;">
+                  <option>CSV (comma-separated)</option>
+                  <option>XLSX</option>
+                  <option>JSON</option>
+                </select>
+              </div>
+              <div class="settings-field">
+                <label>Date format</label>
+                <select class="settings-select" style="max-width:200px;">
+                  <option>DD/MM/YYYY</option>
+                  <option>MM/DD/YYYY</option>
+                  <option>YYYY-MM-DD (ISO 8601)</option>
+                </select>
+              </div>
+              <div class="settings-toggle-row" style="border-top:1px solid var(--border);padding-top:16px;margin-top:8px;">
+                <div class="settings-toggle-info">
+                  <strong>Scheduled weekly export</strong>
+                  <span>Auto-export zone data every Monday at 06:00 to the shared RVO drive</span>
+                </div>
+                <button class="settings-toggle"></button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-area -->
+  </div><!-- /app-shell -->
+
+  <script src="parkbeheer-app.js"></script>
+</body>
+
+</html>

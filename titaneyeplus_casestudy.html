@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITAN EYEPLUS — Omnichannel Journey Case Study</title>
+    <meta name="description"
+        content="Redefining the journey of an online spectacle buyer. A UX case study.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="site-globals.css">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Portfolio Dark Theme Variables */
+            --bg-primary: #0D0F14;
+            --bg-surface: #161A22;
+            --bg-elevated: #1E2430;
+            --bg-alt: #0F1119;
+            --ofl: #4A9EFF;
+            --occ: #FF8C42;
+            --oe: #7BC67E;
+            --accent: #F27830; /* Titan Orange adapted to Dark Mode */
+            --alert-amber: #FFB800;
+            --alert-red: #FF4444;
+            --alert-green: #3DD68C;
+            --text-primary: #F0F2F5;
+            --text-secondary: #8B95A6;
+            --border: #2A3142;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-data: 'Space Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.7;
+            font-size: 17px;
+            overflow-x: hidden;
+        }
+
+        /* ── Nav (Merged from site-globals but restyled here if needed) ── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+        .nav-logo {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* ── Layout ── */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .narrow {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        /* ── Sections ── */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section.alt {
+            background: var(--bg-alt);
+        }
+
+        .section-label {
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .section h2 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin-bottom: 20px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            background: #0A0C10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 140px 0 0;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 80%, rgba(242, 120, 48, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            max-width: 800px;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 680px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .hero-chips {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .hero-chips span {
+            font-family: var(--font-data);
+            font-size: 11px;
+            padding: 6px 16px;
+            border-radius: 4px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .hero-comp {
+            position: relative;
+            height: 600px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image-wrapper {
+            position: absolute;
+            bottom: 0;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            background: var(--bg-surface);
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            display: block;
+            opacity: 0.9;
+        }
+
+        /* ── Metadata Card ── */
+        .meta-card {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            padding: 32px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 48px 0;
+        }
+
+        .meta-card > div {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meta-card .meta-label {
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .meta-card .meta-value {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ── Screen Embed ── */
+        .screen-embed {
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 64px 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 12px 60px rgba(0, 0, 0, 0.4);
+            background: var(--bg-surface);
+        }
+
+        .screen-embed .chrome {
+            background: var(--bg-elevated);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .screen-embed .chrome .d {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .screen-embed .chrome .d:nth-child(1) { background: #FF5F57; }
+        .screen-embed .chrome .d:nth-child(2) { background: #FFBD2E; }
+        .screen-embed .chrome .d:nth-child(3) { background: #28CA41; }
+
+        .screen-embed .chrome .url {
+            flex: 1;
+            margin-left: 16px;
+            font-family: var(--font-data);
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 6px 16px;
+            border-radius: 4px;
+            text-align: left;
+            border: 1px solid var(--border);
+            max-width: 400px;
+        }
+
+        .screen-embed img {
+            width: 100%;
+            display: block;
+        }
+
+        .screen-caption {
+            font-family: var(--font-data);
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 16px;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── Two-column ── */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin: 64px 0;
+        }
+
+        .two-col img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        /* ── Pull Quote ── */
+        .pull-quote {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            max-width: 680px;
+            margin: 60px auto;
+            text-align: center;
+        }
+        .pull-quote strong {
+            color: var(--text-primary);
+        }
+
+        /* ── Metrics Cards ── */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .metric-card {
+            padding: 40px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .metric-num {
+            font-family: var(--font-heading);
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .metric-label {
+            font-family: var(--font-data);
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .metric-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: none;
+        }
+
+        /* ── Comparison Grid ── */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 64px 0;
+        }
+        .comparison-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .comparison-header {
+            padding: 16px 24px;
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+        .comparison-header.before {
+            color: var(--text-secondary);
+            background: var(--bg-alt);
+        }
+        .comparison-header.after {
+            color: var(--accent);
+            background: rgba(242, 120, 48, 0.05);
+        }
+        .comparison-card img {
+            width: 100%;
+            display: block;
+        }
+
+        /* ── Footer / Next Nav ── */
+        .proj-nav {
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-top: 100px;
+        }
+        .proj-nav-link {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 60px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .proj-nav-link:hover { background: var(--bg-elevated); }
+        .proj-nav-link.next { border-left: 1px solid var(--border); text-align: right; align-items: flex-end; }
+        .proj-nav-label {
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+        .proj-nav-title {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer a {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .footer-sub {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="images/hero/signag.svg" alt="Aayush" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:0.9;">
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="all-works.html" class="active" style="opacity:1;">All Works</a>
+            <a href="about.html">About Me</a>
+            <a href="resume.html" target="_blank">Resume</a>
+        </div>
+    </nav>
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="hero">
+        <div class="container" style="position:relative;z-index:2;text-align:center;">
+            <div class="hero-tag">TITAN EYEPLUS · CONSUMER RETAIL · 2021</div>
+            <h1 style="margin-left:auto;margin-right:auto;">Redefining the journey of an <em>online spectacle buyer</em></h1>
+            <p class="hero-sub" style="margin-left:auto;margin-right:auto;">
+                Titan Eyeplus is the largest eyewear retailer in India. We overhauled their digital experience to bridge the gap between their premium physical stores and their previously disjointed online presence, creating a unified phygital journey.
+            </p>
+            <div class="hero-chips" style="justify-content:center;">
+                <span>UX Design</span>
+                <span>E-commerce</span>
+                <span>Omnichannel</span>
+            </div>
+            <div class="hero-comp">
+                <div class="hero-image-wrapper">
+                    <div class="screen-embed" style="margin:0;border:none;box-shadow:none;border-radius:0;">
+                        <div class="chrome" style="background:#161A22;border-bottom:1px solid #2A3142;">
+                            <div class="d"></div><div class="d"></div><div class="d"></div>
+                            <div class="url">titaneyeplus.com/collection</div>
+                        </div>
+                        <img src="images/ tep_files/Nz0SmuYQRG2ypsET5RHeYmI8.png" alt="Titan Eyeplus Redesigned Interface">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ QUICK INTRO ═══════ -->
+    <section style="padding: 0;">
+        <div class="container">
+            <div style="border-left: 3px solid var(--accent); padding: 24px 32px; background: var(--bg-surface); border-radius: 0 8px 8px 0; margin-top: -32px; margin-bottom: 0; font-size: 15px; line-height: 1.7; color: var(--text-secondary); position: relative; z-index: 10;">
+                <strong style="color: var(--text-primary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; display: block;">The Context</strong>
+                In twelve years, Titan Eyeplus grew to dominate the Indian offline eyewear industry. However, even after years of rapid retail expansion, their mobile and web traffic failed to reflect the stature of the brand. The software felt outdated, the purchasing flow was convoluted, and the trust necessary to buy prescription lenses online was completely absent. We were brought in to completely rethink the e-commerce portal from the ground up.
+            </div>
+
+            <div class="meta-card">
+                <div>
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">UX Designer</div>
+                </div>
+                <div>
+                    <div class="meta-label">Platform</div>
+                    <div class="meta-value">Web & Mobile Web</div>
+                </div>
+                <div>
+                    <div class="meta-label">Client</div>
+                    <div class="meta-value">Titan Eyeplus</div>
+                </div>
+                <div>
+                    <div class="meta-label">Year</div>
+                    <div class="meta-value">2021</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ CHAPTER 01 ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 01 · THE RETAIL DISCONNECT</div>
+            <h2>A stark contrast in brand perception</h2>
+            
+            <p>Imagine stepping into a beautifully designed Titan Eyeplus physical store. You are immediately surrounded by sleek displays, expert optometrist advice, and an overriding feeling of refined quality.</p>
+            <p>Now, imagine experiencing the old online store. The contrast was jarring. Users were greeted by cluttered UI, confusing navigation, and an aesthetic that failed to communicate the premium nature of the brand.</p>
+
+            <div class="two-col" style="margin: 48px 0;">
+                <div>
+                    <img src="images/ tep_files/asyBWUG0jDjbrLDPNNmbjlYSr4.png" alt="Titan Eyeplus Store Interior 1">
+                </div>
+                <div>
+                    <img src="images/ tep_files/sylz9u53E3CXncpaA0fHgqT0W0.png" alt="Titan Eyeplus Store Interior 2">
+                </div>
+            </div>
+            
+            <p class="narrow" style="text-align: center; margin-top: 24px;">
+                Our mission wasn't simply to "improve" the website; it was to successfully translate the essence of the in-store experience into the digital realm. Every interaction needed to project trust, premium quality, and modern sophistication.
+            </p>
+
+            <div class="pull-quote">
+                "The digital experience must be an extension of our flagship stores. Right now, <strong>we are diluting trust the moment a user lands online.</strong>"
+            </div>
+
+            <div class="screen-embed">
+                <div class="chrome">
+                    <div class="d"></div><div class="d"></div><div class="d"></div>
+                    <div class="url">titaneyeplus.com (Legacy Interface)</div>
+                </div>
+                <img src="images/ tep_files/1_LlkgYGvT3nMTOHr7Pg7xjQ.png" alt="The cluttered legacy experience" style="opacity: 0.8; filter: grayscale(20%);">
+                <div class="screen-caption">The old experience: Cluttered hierarchy, disparate styling, and overwhelming visual noise.</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════ CHAPTER 02 ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 02 · USER RESEARCH</div>
+            <h2>Understanding the eyes behind the screens</h2>
+            <p>We immersed ourselves in understanding the specific behavioral patterns of online eyewear shoppers. Buying spectacles is inherently high-friction: it requires a medical prescription, precise fit, and a significant aesthetic commitment.</p>
+            <p>Through our discovery phase, we mapped our users into two dominant archetypes, each requiring a fundamentally different journey to conversion.</p>
+
+            <div class="screen-embed" style="margin-top: 48px;">
+                <img src="images/ tep_files/GCBm8q6q5mRi4nOemC5Y33h0LvY.png" alt="User Persona Archetypes">
+                <div class="screen-caption">Archetype Mapping: Priya (The methodical, prescription-driven buyer) and Ravi (The trend-conscious, exploratory buyer).</div>
+            </div>
+            
+            <p style="margin-top: 40px; color: var(--text-primary); font-weight: 500;">
+                The central challenge: Design an architecture that allows Priya to efficiently upload her prescription and find exact replacements, while providing Ravi with rich discovery tools and virtual try-ons.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- ═══════ CHAPTER 03 ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 03 · THE CORE JOURNEY</div>
+            <h2>From confusion to absolute confidence</h2>
+            <p>We mapped the entire customer journey, treating the architecture not as a set of pages, but as an ascending narrative of trust. We broke the core flow down into four distinct acts.</p>
+
+            <!-- ACT I -->
+            <h3 style="font-family: var(--font-heading); font-size: 24px; color: var(--text-primary); margin: 64px 0 16px;">Act I: The First Impression (Homepage)</h3>
+            <p>This was our chance to immediately establish the new brand identity. We deployed a clean, modern grid that echoed the in-store aesthetic. The flow became category and browsing-driven, eliminating the cognitive overload of the previous mega-menus. Large, high-fidelity hero imagery set the tone.</p>
+            
+            <div class="screen-embed">
+                <div class="chrome">
+                    <div class="d"></div><div class="d"></div><div class="d"></div>
+                    <div class="url">titaneyeplus.com</div>
+                </div>
+                <img src="images/ tep_files/QovpVKlSTB2TBdpizA04ALjO8.png" alt="Redesigned Homepage">
+            </div>
+
+            <!-- ACT II -->
+            <h3 style="font-family: var(--font-heading); font-size: 24px; color: var(--text-primary); margin: 80px 0 16px;">Act II: The Exploration (Catalog & Filters)</h3>
+            <p>Spectacle catalogs are massive. We simplified the navigation by creating highly intuitive categories and a powerful, contextual filtering engine (shape, material, brand, price). We increased the size of the product thumbnails and ensured consistent, clinical photography to highlight hardware details.</p>
+
+            <div class="screen-embed">
+                <div class="chrome">
+                    <div class="d"></div><div class="d"></div><div class="d"></div>
+                    <div class="url">titaneyeplus.com/eyeglasses</div>
+                </div>
+                <img src="images/ tep_files/OvPlJghT9NWBRsoVLRLgo5hmbyM.png" alt="Product Browsing and Filtering">
+            </div>
+
+            <!-- ACT III -->
+            <h3 style="font-family: var(--font-heading); font-size: 24px; color: var(--text-primary); margin: 80px 0 16px;">Act III: The Decision (Product Detail Page)</h3>
+            <p>The PDP is where trust is either won or lost. We focused on providing all the technical specifications a customer needed: frame dimensions, material weight, and lens compatibility. We emphasized trust signals like return policies, secure payment options, and clear prescription upload instructions.</p>
+
+            <div class="screen-embed">
+                <div class="chrome">
+                    <div class="d"></div><div class="d"></div><div class="d"></div>
+                    <div class="url">titaneyeplus.com/eyeglasses/titan-rimless</div>
+                </div>
+                <img src="images/ tep_files/SkAIqvJ5vWRGosA9Kwpk6LyOUlw.png" alt="Product Detail Page">
+            </div>
+
+            <!-- ACT IV -->
+            <h3 style="font-family: var(--font-heading); font-size: 24px; color: var(--text-primary); margin: 80px 0 16px;">Act IV: The Commitment (Checkout)</h3>
+            <p>A streamlined, secure, and user-friendly checkout process. We drastically reduced the number of form fields, offered persistent order summaries, and elegantly separated the lens selection logic from the payment logic to reduce friction.</p>
+
+            <div class="screen-embed">
+                <div class="chrome">
+                    <div class="d"></div><div class="d"></div><div class="d"></div>
+                    <div class="url">titaneyeplus.com/checkout/secure</div>
+                </div>
+                <img src="images/ tep_files/WnON15MUg2E8AHQrzSm0yYzeBU.png" alt="Checkout Flow">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════ CHAPTER 04 ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 04 · FEATURE HIGHLIGHT</div>
+            <h2>Closing the physical gap with Virtual Try-On</h2>
+            <div class="two-col">
+                <div>
+                    <p>The single biggest barrier to buying glasses online is the inability to answer: <em>"How will this actually look on my face?"</em></p>
+                    <p>To directly address this, we integrated an advanced AR Virtual Try-On (VTO) feature natively into the web experience. No apps required. Users could instantly overlay 3D models of frames onto their live camera feed, drastically reducing purchase anxiety and significantly lowering return rates.</p>
+                </div>
+                <div>
+                     <img src="images/ tep_files/ZIvT0VxAloLov7rV3x6mwyC1w.png" alt="Virtual Try-On Feature in Action" style="border: none; box-shadow: none;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ CHAPTER 05 ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 05 · DESIGN SYSTEM</div>
+            <h2>Scalable foundations for omnichannel growth</h2>
+            <p>To ensure long-term consistency across the web, mobile app, and in-store kiosks, we built a comprehensive design system. Every element, from typography and color semantics to complex specialized components (like prescription configuration modals), was rigorously documented and tokenized.</p>
+            
+            <div class="screen-embed" style="margin-top: 48px;">
+                <img src="images/ tep_files/TWAkOHcV8bJL2aBUhn8PpFCpnCY.png" alt="Design System & Component Guidelines">
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- ═══════ RESULTS ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">BUSINESS IMPACT</div>
+            <h2>Results that speak for themselves</h2>
+            <p>The redesign successfully translated the premium Titan Eyeplus experience into the digital space, resulting in significant improvements across all key performance indicators.</p>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Conversion Rate</div>
+                    <div class="metric-num">+25%</div>
+                    <div class="metric-desc">A clearer, more structured purchasing flow directly led to a higher volume of completed orders.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Session Duration</div>
+                    <div class="metric-num">+30%</div>
+                    <div class="metric-desc">Users engaged significantly deeper with the catalog, utilizing filters and the AR Try-On feature.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Bounce Rate</div>
+                    <div class="metric-num">-15%</div>
+                    <div class="metric-desc">The modern, trustworthy homepage retained far more traffic than the cluttered legacy interface.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Brand Consistency</div>
+                    <div class="metric-num">+45%</div>
+                    <div class="metric-desc">User surveys indicated a vastly stronger alignment between the offline and online brand perception.</div>
+                </div>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <div class="comparison-header before">Legacy Experience (Before)</div>
+                    <img src="images/ tep_files/7Z3f0A3S4SUgNoGvdHIOtP3dAFM.png" alt="Old Interface">
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-header after">Redesigned Experience (After)</div>
+                    <img src="images/ tep_files/CjHl4d2N1u6nJOrk1JN1iiJmwA.png" alt="New Interface">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════ NAV FOOTER ═══════ -->
+    <div class="proj-nav">
+        <a href="vigil.html" class="proj-nav-link prev">
+            <div class="proj-nav-label">Previous Project</div>
+            <div class="proj-nav-title">VIGIL</div>
+        </a>
+        <a href="parkin.html" class="proj-nav-link next">
+            <div class="proj-nav-label">Next Project</div>
+            <div class="proj-nav-title">Parkin</div>
+        </a>
+    </div>
+
+    <!-- ═══════ SCRIPTS ═══════ -->
+    <script>
+        // ── Liquid Ripple Effect ────────────────────────────────
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('a, button, input, select, textarea, .nav')) return;
+            const x = e.clientX, y = e.clientY;
+
+            const center = document.createElement('div');
+            center.className = 'liquid-ripple-center';
+            center.style.cssText = `left:${x}px;top:${y}px;`;
+            document.body.appendChild(center);
+            setTimeout(() => center.remove(), 500);
+
+            ['', 'ring-2', 'ring-3'].forEach((cls, i) => {
+                const ring = document.createElement('div');
+                ring.className = 'liquid-ripple-ring' + (cls ? ' ' + cls : '');
+                ring.style.cssText = `left:${x}px;top:${y}px;animation-delay:${i * 0.1}s;`;
+                document.body.appendChild(ring);
+                setTimeout(() => ring.remove(), 1100);
+            });
+        });
+    </script>
+</body>
+
+</html>

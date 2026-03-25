@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAHARI — C-UAS Command & Control</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --bg-primary: #0D0F12;
+            --bg-secondary: #111318;
+            --bg-tertiary: #15181F;
+            --bg-elevated: #1C1F27;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-default: rgba(255, 255, 255, 0.15);
+            --text-primary: #F2F2F7;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #48484A;
+            --act-now: #FF3B30;
+            --tracking: #FF9500;
+            --cleared: #3A3A3C;
+            --friendly: #30D158;
+            --accent-info: #0A84FF;
+            --nominal: #30D158;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased
+        }
+
+        /* ── App Shell ── */
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh
+        }
+
+        /* ── Status Bar ── */
+        .status-bar {
+            height: 48px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 16px;
+            flex-shrink: 0;
+            z-index: 100
+        }
+
+        .status-bar .logo {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text-primary)
+        }
+
+        .status-bar .divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border-default)
+        }
+
+        .status-bar .operator {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary)
+        }
+
+        .status-bar .operator strong {
+            color: var(--text-primary);
+            font-weight: 500
+        }
+
+        .status-bar .shift-time {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary)
+        }
+
+        .sensor-row {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .sensor-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-secondary)
+        }
+
+        .sensor-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%
+        }
+
+        .sensor-dot.nominal {
+            background: var(--nominal)
+        }
+
+        .sensor-dot.degraded {
+            background: var(--tracking);
+            animation: pulse-slow 2s ease-in-out infinite
+        }
+
+        .sensor-dot.offline {
+            background: var(--act-now);
+            animation: pulse-fast 0.8s ease-in-out infinite
+        }
+
+        .status-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 16px
+        }
+
+        .jammer-status {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--tracking);
+            animation: pulse-slow 2s ease-in-out infinite
+        }
+
+        .jammer-status.inactive {
+            color: var(--text-tertiary);
+            animation: none
+        }
+
+        .sys-clock {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-secondary)
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2px;
+            margin-left: 16px
+        }
+
+        .nav-tab {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s
+        }
+
+        .nav-tab:hover {
+            color: var(--text-secondary);
+            background: var(--bg-elevated)
+        }
+
+        .nav-tab.active {
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+            border-color: var(--border-default)
+        }
+
+        @keyframes pulse-slow {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0.4
+            }
+        }
+
+        @keyframes pulse-fast {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0.3
+            }
+        }
+
+        @keyframes marker-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.6
+            }
+
+            100% {
+                transform: scale(2.2);
+                opacity: 0
+            }
+        }
+
+        /* ── Main Content ── */
+        .main-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative
+        }
+
+        /* ── Map Canvas ── */
+        .map-canvas {
+            flex: 1;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden
+        }
+
+        .map-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 40% 50%, rgba(10, 132, 255, 0.03) 0%, transparent 70%)
+        }
+
+        .map-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+            background-size: 80px 80px;
+            opacity: 0.3
+        }
+
+        .formation-boundary {
+            position: absolute;
+            top: 15%;
+            left: 10%;
+            width: 75%;
+            height: 70%;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 8px
+        }
+
+        .formation-label {
+            position: absolute;
+            top: -18px;
+            left: 12px;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-tertiary)
+        }
+
+        .sensor-zone {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.06;
+            background: var(--accent-info)
+        }
+
+        .jammer-zone {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            background: var(--tracking);
+            transition: opacity 0.6s
+        }
+
+        .jammer-zone.active {
+            opacity: 0.1
+        }
+
+        /* Contact Markers */
+        .contact-marker {
+            position: absolute;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.15s
+        }
+
+        .contact-marker:hover {
+            transform: scale(1.3)
+        }
+
+        .marker-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            position: relative
+        }
+
+        .marker-dot.act-now {
+            background: var(--act-now)
+        }
+
+        .marker-dot.tracking {
+            background: var(--tracking)
+        }
+
+        .marker-dot.cleared {
+            background: var(--cleared);
+            opacity: 0.6
+        }
+
+        .marker-dot.friendly {
+            background: var(--friendly);
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            transform: rotate(45deg)
+        }
+
+        .marker-pulse {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--act-now);
+            animation: marker-pulse 2s ease-out infinite
+        }
+
+        .marker-id {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+            padding: 2px 6px;
+            border-radius: 3px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.15s;
+            pointer-events: none
+        }
+
+        .contact-marker:hover .marker-id,
+        .contact-marker.selected .marker-id {
+            opacity: 1
+        }
+
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-tertiary)
+        }
+
+        .map-legend span {
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+
+        .map-legend .ld {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%
+        }
+
+        .map-north {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: var(--font-mono);
+            font-size: 18px;
+            color: var(--text-tertiary)
+        }
+
+        .map-zoom {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px
+        }
+
+        .map-zoom button {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: var(--font-mono)
+        }
+
+        /* ── Triage Queue ── */
+        .triage-panel {
+            width: 320px;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            flex-shrink: 0;
+            transition: transform 0.2s ease-out
+        }
+
+        .triage-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .triage-title {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary)
+        }
+
+        .triage-count {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            background: var(--bg-elevated);
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: var(--text-secondary)
+        }
+
+        .triage-section-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 12px 20px 6px;
+            font-weight: 600
+        }
+
+        .triage-section-label.act-now {
+            color: var(--act-now)
+        }
+
+        .triage-section-label.tracking-label {
+            color: var(--tracking)
+        }
+
+        .triage-section-label.cleared-label {
+            color: var(--cleared)
+        }
+
+        .triage-row {
+            padding: 12px 20px;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            flex-direction: column;
+            gap: 4px
+        }
+
+        .triage-row:hover {
+            background: rgba(255, 255, 255, 0.03)
+        }
+
+        .triage-row.act-now-row {
+            border-left-color: var(--act-now)
+        }
+
+        .triage-row.tracking-row {
+            border-left-color: var(--tracking)
+        }
+
+        .triage-row.cleared-row {
+            border-left-color: var(--cleared)
+        }
+
+        .triage-row.selected {
+            background: rgba(255, 255, 255, 0.06);
+            border-left-width: 4px
+        }
+
+        .triage-row-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .triage-row .contact-id {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary)
+        }
+
+        .triage-row .source-badges {
+            display: flex;
+            gap: 4px
+        }
+
+        .source-badge {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            background: var(--bg-elevated);
+            color: var(--text-secondary)
+        }
+
+        .triage-row-bottom {
+            display: flex;
+            gap: 12px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary)
+        }
+
+        .area-clear {
+            padding: 20px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-tertiary)
+        }
+
+        /* ── Contact Detail Panel ── */
+        .detail-panel {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 320px;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-subtle);
+            transform: translateX(100%);
+            transition: transform 0.2s ease-out;
+            z-index: 50;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column
+        }
+
+        .detail-panel.open {
+            transform: translateX(0)
+        }
+
+        .detail-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between
+        }
+
+        .detail-contact-id {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 600
+        }
+
+        .detail-close {
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px
+        }
+
+        .state-badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-weight: 600;
+            margin-top: 4px
+        }
+
+        .state-badge.act-now-badge {
+            background: rgba(255, 59, 48, 0.15);
+            color: var(--act-now)
+        }
+
+        .state-badge.tracking-badge {
+            background: rgba(255, 149, 0, 0.15);
+            color: var(--tracking)
+        }
+
+        .state-badge.cleared-badge {
+            background: rgba(58, 58, 60, 0.3);
+            color: var(--text-secondary)
+        }
+
+        .detail-section {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-subtle)
+        }
+
+        .detail-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 10px
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .detail-field label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em
+        }
+
+        .detail-field .val {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-top: 2px
+        }
+
+        .confidence-bar {
+            height: 4px;
+            background: var(--bg-elevated);
+            border-radius: 2px;
+            margin-top: 6px;
+            overflow: hidden
+        }
+
+        .confidence-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s
+        }
+
+        .confidence-fill.high {
+            background: var(--nominal)
+        }
+
+        .confidence-fill.medium {
+            background: var(--tracking)
+        }
+
+        .confidence-fill.low {
+            background: var(--act-now)
+        }
+
+        .classification-select {
+            width: 100%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-default);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 8px 10px;
+            border-radius: 4px;
+            margin-top: 6px;
+            cursor: pointer
+        }
+
+        .classification-select option {
+            background: var(--bg-secondary)
+        }
+
+        .btn-update {
+            width: 100%;
+            padding: 8px;
+            background: var(--accent-info);
+            color: #fff;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: opacity 0.2s
+        }
+
+        .btn-update:hover {
+            opacity: 0.85
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto
+        }
+
+        .action-btn {
+            width: 100%;
+            height: 44px;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.15s
+        }
+
+        .action-btn .shortcut {
+            font-size: 10px;
+            opacity: 0.5
+        }
+
+        .btn-monitor {
+            background: #1C1C1E;
+            color: #8E8E93
+        }
+
+        .btn-monitor:hover {
+            color: var(--text-primary)
+        }
+
+        .btn-softkill {
+            background: var(--tracking);
+            color: #000
+        }
+
+        .btn-softkill:hover {
+            filter: brightness(0.9)
+        }
+
+        .btn-escalate {
+            background: transparent;
+            border: 1.5px solid var(--act-now);
+            color: var(--act-now)
+        }
+
+        .btn-escalate:hover {
+            background: rgba(255, 59, 48, 0.1)
+        }
+
+        /* ── Modal ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .modal {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-default);
+            border-radius: 8px;
+            padding: 28px;
+            width: 400px;
+            max-width: 90vw;
+            transform: scale(0.97);
+            transition: transform 0.15s
+        }
+
+        .modal-overlay.open .modal {
+            transform: scale(1)
+        }
+
+        .modal h3 {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--act-now);
+            margin-bottom: 16px
+        }
+
+        .modal-info {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px
+        }
+
+        .modal-info strong {
+            color: var(--text-primary)
+        }
+
+        .modal-log {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-tertiary);
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            margin-bottom: 20px
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px
+        }
+
+        .modal-actions button {
+            flex: 1;
+            height: 40px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s
+        }
+
+        .btn-confirm {
+            background: var(--act-now);
+            color: #fff;
+            border: none
+        }
+
+        .btn-confirm:hover {
+            filter: brightness(0.9)
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid var(--border-default);
+            color: var(--text-secondary)
+        }
+
+        .btn-cancel:hover {
+            border-color: var(--text-secondary)
+        }
+
+        /* ── Screen: Handover ── */
+        .screen {
+            display: none;
+            flex-direction: column;
+            height: 100%
+        }
+
+        .screen.active {
+            display: flex
+        }
+
+        #screen-handover, #screen-log, #screen-sensors {
+            height: auto;
+        }
+
+        .handover-content {
+            flex: 0 0 auto;
+            background: var(--bg-tertiary);
+            padding: 32px
+        }
+
+        .handover-title {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-primary)
+        }
+
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px
+        }
+
+        .stat-card .stat-num {
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary)
+        }
+
+        .stat-card .stat-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-top: 4px
+        }
+
+        .stat-card .stat-detail {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 8px
+        }
+
+        .handover-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px
+        }
+
+        .handover-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px
+        }
+
+        .handover-section h3 {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 16px
+        }
+
+        .handover-contact {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle)
+        }
+
+        .handover-contact:last-child {
+            border-bottom: none
+        }
+
+        .hc-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .hc-id {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 500;
+            flex: 1
+        }
+
+        .hc-meta {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-tertiary)
+        }
+
+        .timeline-entry {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            display: flex;
+            gap: 12px;
+            color: var(--text-secondary)
+        }
+
+        .timeline-entry:last-child {
+            border-bottom: none
+        }
+
+        .timeline-entry .te-time {
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            width: 50px
+        }
+
+        .timeline-entry .te-action {
+            color: var(--text-primary)
+        }
+
+        .handover-sig {
+            margin-top: 24px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-tertiary)
+        }
+
+        /* ── Screen: Log ── */
+        .log-content {
+            flex: 0 0 auto;
+            background: var(--bg-primary);
+            padding: 24px
+        }
+
+        .log-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap
+        }
+
+        .log-filter {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            padding: 6px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            cursor: pointer
+        }
+
+        .log-filter.active {
+            border-color: var(--accent-info);
+            color: var(--accent-info)
+        }
+
+        .log-export {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            padding: 6px 14px;
+            background: var(--accent-info);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 0.06em;
+            text-transform: uppercase
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .log-table th {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle)
+        }
+
+        .log-table td {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            vertical-align: top
+        }
+
+        .log-table tr:hover td {
+            background: var(--bg-secondary)
+        }
+
+        .log-table .action-tag {
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600
+        }
+
+        .action-tag.soft-kill {
+            background: rgba(255, 149, 0, 0.15);
+            color: var(--tracking)
+        }
+
+        .action-tag.escalated {
+            background: rgba(255, 59, 48, 0.15);
+            color: var(--act-now)
+        }
+
+        .action-tag.classified {
+            background: rgba(10, 132, 255, 0.15);
+            color: var(--accent-info)
+        }
+
+        .action-tag.cleared-tag {
+            background: rgba(58, 58, 60, 0.3);
+            color: var(--text-secondary)
+        }
+
+        .action-tag.monitoring {
+            background: rgba(48, 209, 88, 0.15);
+            color: var(--nominal)
+        }
+
+        /* ── Screen: Sensors ── */
+        .sensors-content {
+            flex: 0 0 auto;
+            background: var(--bg-primary);
+            padding: 24px
+        }
+
+        .sensors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px
+        }
+
+        .sensor-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px
+        }
+
+        .sensor-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px
+        }
+
+        .sensor-unit-id {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600
+        }
+
+        .sensor-type-badge {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            background: var(--bg-elevated);
+            color: var(--text-secondary)
+        }
+
+        .sensor-status-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .sensor-status-text {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600
+        }
+
+        .sensor-status-text.nominal {
+            color: var(--nominal)
+        }
+
+        .sensor-status-text.degraded {
+            color: var(--tracking)
+        }
+
+        .sensor-status-text.offline {
+            color: var(--act-now)
+        }
+
+        .sensor-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-top: 1px solid var(--border-subtle);
+            font-family: var(--font-mono);
+            font-size: 11px
+        }
+
+        .sensor-detail-row .sdk {
+            color: var(--text-tertiary)
+        }
+
+        .sensor-detail-row .sdv {
+            color: var(--text-secondary)
+        }
+    </style>
+</head>
+
+<body>
+    <!-- App Shell -->
+    <div class="app">
+
+        <!-- ═══ STATUS BAR ═══ -->
+        <div class="status-bar">
+            <div class="logo">PRAHARI</div>
+            <div class="divider"></div>
+            <div class="operator"><strong>Capt. R. Mehta</strong></div>
+            <div class="shift-time">Shift since 22:00 IST</div>
+            <div class="divider"></div>
+            <div class="sensor-row">
+                <div class="sensor-badge">
+                    <div class="sensor-dot nominal"></div>RF
+                </div>
+                <div class="sensor-badge">
+                    <div class="sensor-dot nominal"></div>RADAR
+                </div>
+                <div class="sensor-badge">
+                    <div class="sensor-dot degraded"></div>OPTICAL
+                </div>
+            </div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showScreen('ops')">OPS</button>
+                <button class="nav-tab" onclick="showScreen('handover')">HANDOVER</button>
+                <button class="nav-tab" onclick="showScreen('log')">LOG</button>
+                <button class="nav-tab" onclick="showScreen('sensors')">SENSORS</button>
+            </div>
+            <div class="status-right">
+                <div class="jammer-status">● J-2 ACTIVE</div>
+                <div class="divider"></div>
+                <div class="sys-clock" id="sysClock">UTC 16:30 · IST 22:00</div>
+            </div>
+        </div>
+
+        <!-- ═══ SCREEN: OPS ═══ -->
+        <div class="screen active" id="screen-ops">
+            <div class="main-content">
+
+                <!-- Map Canvas -->
+                <div class="map-canvas" id="mapCanvas">
+                    <div class="map-bg"></div>
+                    <div class="map-grid"></div>
+                    <div class="formation-boundary">
+                        <div class="formation-label">14 CORPS · AREA OF RESPONSIBILITY</div>
+                    </div>
+                    <!-- Sensor zones -->
+                    <div class="sensor-zone" style="width:300px;height:300px;top:20%;left:15%"></div>
+                    <div class="sensor-zone" style="width:250px;height:250px;top:30%;left:50%"></div>
+                    <div class="sensor-zone" style="width:200px;height:200px;top:45%;left:35%"></div>
+                    <!-- Jammer zone -->
+                    <div class="jammer-zone active" id="jammerZone" style="width:200px;height:200px;top:28%;left:32%">
+                    </div>
+                    <!-- Contact markers (positioned via JS) -->
+                    <div id="markersContainer"></div>
+                    <!-- Legend -->
+                    <div class="map-legend">
+                        <span>
+                            <div class="ld" style="background:var(--act-now)"></div>Act Now
+                        </span>
+                        <span>
+                            <div class="ld" style="background:var(--tracking)"></div>Tracking
+                        </span>
+                        <span>
+                            <div class="ld" style="background:var(--cleared)"></div>Cleared
+                        </span>
+                        <span>
+                            <div class="ld"
+                                style="background:var(--friendly);border-radius:2px;transform:rotate(45deg);width:7px;height:7px">
+                            </div>Friendly
+                        </span>
+                    </div>
+                    <div class="map-north">⬆ N</div>
+                    <div class="map-zoom"><button>+</button><button>−</button></div>
+                </div>
+
+                <!-- Triage Queue -->
+                <div class="triage-panel" id="triagePanel">
+                    <div class="triage-header">
+                        <span class="triage-title">CONTACTS</span>
+                        <span class="triage-count" id="triageCount">5</span>
+                    </div>
+                    <div id="triageList"></div>
+                </div>
+
+                <!-- Contact Detail Panel -->
+                <div class="detail-panel" id="detailPanel">
+                    <div class="detail-header">
+                        <div>
+                            <div class="detail-contact-id" id="detailId">UA-047</div>
+                            <div class="state-badge act-now-badge" id="detailBadge">ACT NOW</div>
+                            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-tertiary);margin-top:6px"
+                                id="detailTimes">Detected 4m ago · Updated 12s ago</div>
+                        </div>
+                        <button class="detail-close" onclick="closeDetail()">✕</button>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">SENSOR DATA</div>
+                        <div id="detailSources" style="display:flex;gap:4px;margin-bottom:10px"></div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                            <span
+                                style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary)">Confidence:</span>
+                            <span style="font-family:var(--font-mono);font-size:13px;font-weight:600"
+                                id="detailConfidence">87% HIGH</span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill high" id="confBar" style="width:87%"></div>
+                        </div>
+                        <div class="detail-grid" style="margin-top:14px">
+                            <div class="detail-field"><label>Bearing</label>
+                                <div class="val" id="detailBearing">224°</div>
+                            </div>
+                            <div class="detail-field"><label>Distance</label>
+                                <div class="val" id="detailDist">1.8 km</div>
+                            </div>
+                            <div class="detail-field"><label>Altitude</label>
+                                <div class="val" id="detailAlt">85m AGL</div>
+                            </div>
+                            <div class="detail-field"><label>Speed</label>
+                                <div class="val" id="detailSpeed">58 km/h</div>
+                            </div>
+                            <div class="detail-field"><label>Heading</label>
+                                <div class="val" id="detailHeading">↗ 042°</div>
+                            </div>
+                            <div class="detail-field"><label>Last Update</label>
+                                <div class="val" id="detailLastUpdate">12s ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-section">
+                        <div class="detail-label">CLASSIFICATION</div>
+                        <select class="classification-select" id="classSelect">
+                            <option>Unclassified</option>
+                            <option>Unknown</option>
+                            <option>Civilian (Probable)</option>
+                            <option>Civilian (Confirmed)</option>
+                            <option>Hostile (Probable)</option>
+                            <option selected>Hostile (Confirmed)</option>
+                            <option>Friendly</option>
+                        </select>
+                        <button class="btn-update" onclick="updateClassification()">UPDATE CLASSIFICATION</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn btn-monitor" onclick="actionMonitor()">Monitor <span
+                                class="shortcut">[M]</span></button>
+                        <button class="action-btn btn-softkill" onclick="openSoftKill()">Soft-Kill <span
+                                class="shortcut">[S]</span></button>
+                        <button class="action-btn btn-escalate" onclick="actionEscalate()">Escalate <span
+                                class="shortcut">[E]</span></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══ SCREEN: HANDOVER ═══ -->
+        <div class="screen" id="screen-handover">
+            <div class="handover-content">
+                <div class="handover-title">SHIFT HANDOVER DASHBOARD</div>
+                <div class="stat-cards">
+                    <div class="stat-card">
+                        <div class="stat-num">3</div>
+                        <div class="stat-label">Active Contacts</div>
+                        <div class="stat-detail">1 Act Now · 2 Tracking</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">1</div>
+                        <div class="stat-label">Pending Classifications</div>
+                        <div class="stat-detail">UA-052 unclassified</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">4</div>
+                        <div class="stat-label">Engagements (4 hrs)</div>
+                        <div class="stat-detail">2 Soft-Kill · 1 Escalation</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" style="color:var(--tracking)">1 ⚠</div>
+                        <div class="stat-label">Sensor Status</div>
+                        <div class="stat-detail">OPT-3 degraded</div>
+                    </div>
+                </div>
+                <div class="handover-grid">
+                    <div class="handover-section">
+                        <h3>Active Contacts</h3>
+                        <div class="handover-contact">
+                            <div class="hc-dot" style="background:var(--act-now)"></div>
+                            <div class="hc-id">UA-047</div>
+                            <div class="hc-meta">RF+RAD · 4m · Hostile Prob.</div>
+                        </div>
+                        <div class="handover-contact">
+                            <div class="hc-dot" style="background:var(--tracking)"></div>
+                            <div class="hc-id">UA-052</div>
+                            <div class="hc-meta">RF · 18m · Unclassified</div>
+                        </div>
+                        <div class="handover-contact">
+                            <div class="hc-dot" style="background:var(--tracking)"></div>
+                            <div class="hc-id">UA-039</div>
+                            <div class="hc-meta">RAD+OPT · 42m · Civ. Prob.</div>
+                        </div>
+                    </div>
+                    <div class="handover-section">
+                        <h3>Recent Activity</h3>
+                        <div class="timeline-entry"><span class="te-time">21:47</span><span>Capt. Mehta</span><span
+                                class="te-action">UA-041 SOFT-KILL J-2</span></div>
+                        <div class="timeline-entry"><span class="te-time">21:32</span><span>Capt. Mehta</span><span
+                                class="te-action">UA-041 CLASSIFIED → Hostile Prob.</span></div>
+                        <div class="timeline-entry"><span class="te-time">21:15</span><span>Capt. Mehta</span><span
+                                class="te-action">UA-038 ESCALATED to CO</span></div>
+                        <div class="timeline-entry"><span class="te-time">20:58</span><span>Lt. Singh</span><span
+                                class="te-action">UA-033 CLEARED</span></div>
+                        <div class="timeline-entry"><span class="te-time">20:44</span><span>Lt. Singh</span><span
+                                class="te-action">UA-033 SOFT-KILL J-1</span></div>
+                        <div class="timeline-entry"><span class="te-time">20:21</span><span>Lt. Singh</span><span
+                                class="te-action">UA-029 MONITORING SET</span></div>
+                        <div style="text-align:center;margin-top:12px"><a href="#"
+                                style="font-family:var(--font-mono);font-size:10px;color:var(--accent-info);text-decoration:none"
+                                onclick="showScreen('log')">View Full Log →</a></div>
+                    </div>
+                </div>
+                <div class="handover-sig">Handover prepared by: Capt. R. Mehta, Signals, at 21:55 IST</div>
+            </div>
+        </div>
+
+        <!-- ═══ SCREEN: LOG ═══ -->
+        <div class="screen" id="screen-log">
+            <div class="log-content">
+                <div class="log-filters">
+                    <button class="log-filter active">All</button>
+                    <button class="log-filter">Soft-Kill</button>
+                    <button class="log-filter">Escalations</button>
+                    <button class="log-filter">Classifications</button>
+                    <button class="log-filter">Cleared</button>
+                    <button class="log-export">Export for AAR ↓</button>
+                </div>
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Operator</th>
+                            <th>Contact</th>
+                            <th>Action</th>
+                            <th>Outcome</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>21:47:12</td>
+                            <td>Capt. Mehta</td>
+                            <td>UA-041</td>
+                            <td><span class="action-tag soft-kill">SOFT-KILL</span></td>
+                            <td>J-2 activated · Sector 4</td>
+                        </tr>
+                        <tr>
+                            <td>21:32:08</td>
+                            <td>Capt. Mehta</td>
+                            <td>UA-041</td>
+                            <td><span class="action-tag classified">CLASSIFIED</span></td>
+                            <td>Unknown → Hostile (Probable)</td>
+                        </tr>
+                        <tr>
+                            <td>21:15:44</td>
+                            <td>Capt. Mehta</td>
+                            <td>UA-038</td>
+                            <td><span class="action-tag escalated">ESCALATED</span></td>
+                            <td>Routed to CO · Pending response</td>
+                        </tr>
+                        <tr>
+                            <td>20:58:31</td>
+                            <td>Lt. Singh</td>
+                            <td>UA-033</td>
+                            <td><span class="action-tag cleared-tag">CLEARED</span></td>
+                            <td>Contact lost · No further action</td>
+                        </tr>
+                        <tr>
+                            <td>20:44:17</td>
+                            <td>Lt. Singh</td>
+                            <td>UA-033</td>
+                            <td><span class="action-tag soft-kill">SOFT-KILL</span></td>
+                            <td>J-1 activated · Sector 2</td>
+                        </tr>
+                        <tr>
+                            <td>20:21:05</td>
+                            <td>Lt. Singh</td>
+                            <td>UA-029</td>
+                            <td><span class="action-tag monitoring">MONITORING</span></td>
+                            <td>Set to Tracking state</td>
+                        </tr>
+                        <tr>
+                            <td>19:55:42</td>
+                            <td>Lt. Singh</td>
+                            <td>UA-029</td>
+                            <td><span class="action-tag classified">CLASSIFIED</span></td>
+                            <td>Unclassified → Civilian (Probable)</td>
+                        </tr>
+                        <tr>
+                            <td>19:33:18</td>
+                            <td>Hav. Kumar</td>
+                            <td>UA-025</td>
+                            <td><span class="action-tag escalated">ESCALATED</span></td>
+                            <td>CO approved stand down</td>
+                        </tr>
+                        <tr>
+                            <td>19:12:07</td>
+                            <td>Hav. Kumar</td>
+                            <td>UA-025</td>
+                            <td><span class="action-tag soft-kill">SOFT-KILL</span></td>
+                            <td>J-3 activated · Sector 1</td>
+                        </tr>
+                        <tr>
+                            <td>18:48:55</td>
+                            <td>Hav. Kumar</td>
+                            <td>UA-022</td>
+                            <td><span class="action-tag cleared-tag">CLEARED</span></td>
+                            <td>Confirmed friendly · Cleared</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ═══ SCREEN: SENSORS ═══ -->
+        <div class="screen" id="screen-sensors">
+            <div class="sensors-content">
+                <div
+                    style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:20px">
+                    SENSOR MANAGEMENT</div>
+                <div class="sensors-grid">
+                    <div class="sensor-card">
+                        <div class="sensor-card-header"><span class="sensor-unit-id">RF-1</span><span
+                                class="sensor-type-badge">RF</span></div>
+                        <div class="sensor-status-row">
+                            <div class="sensor-dot nominal"></div><span
+                                class="sensor-status-text nominal">NOMINAL</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Sector</span><span
+                                class="sdv">North-East</span></div>
+                        <div class="sensor-detail-row"><span class="sdk">Confidence</span><span class="sdv">94%</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Last Ping</span><span class="sdv">2s ago</span>
+                        </div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-card-header"><span class="sensor-unit-id">RF-2</span><span
+                                class="sensor-type-badge">RF</span></div>
+                        <div class="sensor-status-row">
+                            <div class="sensor-dot nominal"></div><span
+                                class="sensor-status-text nominal">NOMINAL</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Sector</span><span
+                                class="sdv">South-West</span></div>
+                        <div class="sensor-detail-row"><span class="sdk">Confidence</span><span class="sdv">91%</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Last Ping</span><span class="sdv">3s ago</span>
+                        </div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-card-header"><span class="sensor-unit-id">RAD-1</span><span
+                                class="sensor-type-badge">RADAR</span></div>
+                        <div class="sensor-status-row">
+                            <div class="sensor-dot nominal"></div><span
+                                class="sensor-status-text nominal">NOMINAL</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Sector</span><span class="sdv">Full
+                                Coverage</span></div>
+                        <div class="sensor-detail-row"><span class="sdk">Confidence</span><span class="sdv">96%</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Last Ping</span><span class="sdv">1s ago</span>
+                        </div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-card-header"><span class="sensor-unit-id">RAD-2</span><span
+                                class="sensor-type-badge">RADAR</span></div>
+                        <div class="sensor-status-row">
+                            <div class="sensor-dot nominal"></div><span
+                                class="sensor-status-text nominal">NOMINAL</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Sector</span><span class="sdv">North</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Confidence</span><span class="sdv">89%</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Last Ping</span><span class="sdv">4s ago</span>
+                        </div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-card-header"><span class="sensor-unit-id">OPT-1</span><span
+                                class="sensor-type-badge">OPTICAL</span></div>
+                        <div class="sensor-status-row">
+                            <div class="sensor-dot nominal"></div><span
+                                class="sensor-status-text nominal">NOMINAL</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Sector</span><span class="sdv">East</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Confidence</span><span class="sdv">82%</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Last Ping</span><span class="sdv">2s ago</span>
+                        </div>
+                    </div>
+                    <div class="sensor-card" style="border-color:rgba(255,149,0,0.3)">
+                        <div class="sensor-card-header"><span class="sensor-unit-id">OPT-3</span><span
+                                class="sensor-type-badge">OPTICAL</span></div>
+                        <div class="sensor-status-row">
+                            <div class="sensor-dot degraded"></div><span
+                                class="sensor-status-text degraded">DEGRADED</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Sector</span><span class="sdv">West</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Confidence</span><span class="sdv">38%</span>
+                        </div>
+                        <div class="sensor-detail-row"><span class="sdk">Last Ping</span><span class="sdv">12s
+                                ago</span></div>
+                        <div style="margin-top:10px;font-family:var(--font-mono);font-size:10px;color:var(--tracking)">⚠
+                            Low visibility — fog detected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ MODAL: SOFT-KILL ═══ -->
+        <div class="modal-overlay" id="softKillModal">
+            <div class="modal">
+                <h3>ACTIVATE SOFT-KILL</h3>
+                <div class="modal-info">
+                    <strong>Contact:</strong> <span id="modalContactId">UA-047</span> · Bearing <span
+                        id="modalBearing">224°</span> · Distance <span id="modalDist">1.8 km</span><br>
+                    <strong>Jammer:</strong> Unit J-2 will be activated<br>
+                    <strong>Sector:</strong> Sector 4 — RF suppression in 2.4 km radius
+                </div>
+                <div class="modal-log">This action will be logged: <span id="modalTimestamp">21:55:12</span> · Capt.
+                    Mehta · <span id="modalLogContact">UA-047</span> · SOFT-KILL · J-2</div>
+                <div class="modal-actions">
+                    <button class="btn-confirm" onclick="confirmSoftKill()">CONFIRM SOFT-KILL</button>
+                    <button class="btn-cancel" onclick="closeSoftKill()">CANCEL</button>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /app -->
+
+    <script>
+        // ── Data ──
+        const contacts = [
+            { id: 'UA-047', state: 'ACT_NOW', classification: 'Hostile (Confirmed)', sources: ['RF', 'RADAR'], confidence: 87, bearing: 224, distance: 1.8, altitude: 85, speed: 58, heading: 42, x: 38, y: 35, detected: '4m ago', updated: '12s ago' },
+            { id: 'UA-052', state: 'ACT_NOW', classification: 'Unclassified', sources: ['RF'], confidence: 62, bearing: 187, distance: 3.2, altitude: 120, speed: 45, heading: 310, x: 55, y: 60, detected: '18m ago', updated: '45s ago' },
+            { id: 'UA-039', state: 'TRACKING', classification: 'Civilian (Probable)', sources: ['RADAR', 'OPTICAL'], confidence: 74, bearing: 45, distance: 5.1, altitude: 200, speed: 32, heading: 180, x: 70, y: 25, detected: '42m ago', updated: '2m ago' },
+            { id: 'UA-041', state: 'TRACKING', classification: 'Hostile (Probable)', sources: ['RF', 'RADAR', 'OPTICAL'], confidence: 91, bearing: 312, distance: 2.4, altitude: 60, speed: 0, heading: 0, x: 28, y: 55, detected: '1h ago', updated: '5m ago' },
+            { id: 'UA-033', state: 'CLEARED', classification: 'Civilian (Confirmed)', sources: ['RADAR'], confidence: 45, bearing: 90, distance: 8.7, altitude: 350, speed: 120, heading: 270, x: 82, y: 42, detected: '2h ago', updated: '34m ago' }
+        ];
+
+        let selectedContact = null;
+
+        // ── Render Markers ──
+        function renderMarkers() {
+            const c = document.getElementById('markersContainer');
+            c.innerHTML = '';
+            contacts.forEach(ct => {
+                const m = document.createElement('div');
+                m.className = 'contact-marker' + (selectedContact && selectedContact.id === ct.id ? ' selected' : '');
+                m.style.left = ct.x + '%';
+                m.style.top = ct.y + '%';
+                m.onclick = () => selectContact(ct);
+                const cls = ct.state === 'ACT_NOW' ? 'act-now' : ct.state === 'TRACKING' ? 'tracking' : 'cleared';
+                m.innerHTML = '<div class="marker-dot ' + cls + '">' + (ct.state === 'ACT_NOW' ? '<div class="marker-pulse"></div>' : '') + '</div><div class="marker-id">' + ct.id + '</div>';
+                c.appendChild(m);
+            });
+        }
+
+        // ── Render Triage ──
+        function renderTriage() {
+            const list = document.getElementById('triageList');
+            const groups = { ACT_NOW: [], TRACKING: [], CLEARED: [] };
+            contacts.forEach(c => groups[c.state].push(c));
+            let html = '';
+            if (groups.ACT_NOW.length) {
+                html += '<div class="triage-section-label act-now">ACT NOW — ' + groups.ACT_NOW.length + '</div>';
+                groups.ACT_NOW.forEach(c => html += triageRow(c, 'act-now-row'));
+            }
+            if (groups.TRACKING.length) {
+                html += '<div class="triage-section-label tracking-label">TRACKING — ' + groups.TRACKING.length + '</div>';
+                groups.TRACKING.forEach(c => html += triageRow(c, 'tracking-row'));
+            }
+            if (groups.CLEARED.length) {
+                html += '<div class="triage-section-label cleared-label">CLEARED — ' + groups.CLEARED.length + '</div>';
+                groups.CLEARED.forEach(c => html += triageRow(c, 'cleared-row'));
+            }
+            list.innerHTML = html;
+        }
+
+        function triageRow(c, cls) {
+            const sel = selectedContact && selectedContact.id === c.id ? ' selected' : '';
+            const badges = c.sources.map(s => '<span class="source-badge">' + s + '</span>').join('');
+            return '<div class="triage-row ' + cls + sel + '" onclick="selectContact(contacts.find(x=>x.id===\'' + c.id + '\'))">' +
+                '<div class="triage-row-top"><span class="contact-id">' + c.id + '</span><div class="source-badges">' + badges + '</div></div>' +
+                '<div class="triage-row-bottom"><span>' + c.detected + '</span><span>' + c.distance + ' km</span></div></div>';
+        }
+
+        // ── Contact Detail ──
+        function selectContact(c) {
+            selectedContact = c;
+            const p = document.getElementById('detailPanel');
+            document.getElementById('detailId').textContent = c.id;
+            const cls = c.state === 'ACT_NOW' ? 'act-now-badge' : c.state === 'TRACKING' ? 'tracking-badge' : 'cleared-badge';
+            const label = c.state.replace('_', ' ');
+            document.getElementById('detailBadge').className = 'state-badge ' + cls;
+            document.getElementById('detailBadge').textContent = label;
+            document.getElementById('detailTimes').textContent = 'Detected ' + c.detected + ' · Updated ' + c.updated;
+            document.getElementById('detailSources').innerHTML = c.sources.map(s => '<span class="source-badge">' + s + '</span>').join('');
+            const confCls = c.confidence >= 80 ? 'high' : c.confidence >= 50 ? 'medium' : 'low';
+            const confLabel = c.confidence >= 80 ? 'HIGH' : c.confidence >= 50 ? 'MEDIUM' : 'LOW';
+            document.getElementById('detailConfidence').textContent = c.confidence + '% ' + confLabel;
+            document.getElementById('detailConfidence').style.color = confCls === 'high' ? 'var(--nominal)' : confCls === 'medium' ? 'var(--tracking)' : 'var(--act-now)';
+            document.getElementById('confBar').style.width = c.confidence + '%';
+            document.getElementById('confBar').className = 'confidence-fill ' + confCls;
+            document.getElementById('detailBearing').textContent = c.bearing + '°';
+            document.getElementById('detailDist').textContent = c.distance + ' km';
+            document.getElementById('detailAlt').textContent = c.altitude + 'm AGL';
+            document.getElementById('detailSpeed').textContent = c.speed + ' km/h';
+            document.getElementById('detailHeading').textContent = '↗ ' + String(c.heading).padStart(3, '0') + '°';
+            document.getElementById('detailLastUpdate').textContent = c.updated;
+            // Set classification dropdown
+            const sel = document.getElementById('classSelect');
+            for (let i = 0; i < sel.options.length; i++) { if (sel.options[i].text === c.classification) sel.selectedIndex = i; }
+            p.classList.add('open');
+            document.getElementById('triagePanel').style.transform = 'translateX(100%)';
+            renderMarkers();
+            renderTriage();
+        }
+
+        function closeDetail() {
+            selectedContact = null;
+            document.getElementById('detailPanel').classList.remove('open');
+            document.getElementById('triagePanel').style.transform = '';
+            renderMarkers();
+            renderTriage();
+        }
+
+        function updateClassification() {
+            if (!selectedContact) return;
+            selectedContact.classification = document.getElementById('classSelect').value;
+        }
+
+        function actionMonitor() {
+            if (!selectedContact) return;
+            selectedContact.state = 'TRACKING';
+            closeDetail();
+        }
+
+        function openSoftKill() {
+            if (!selectedContact) return;
+            document.getElementById('modalContactId').textContent = selectedContact.id;
+            document.getElementById('modalBearing').textContent = selectedContact.bearing + '°';
+            document.getElementById('modalDist').textContent = selectedContact.distance + ' km';
+            document.getElementById('modalLogContact').textContent = selectedContact.id;
+            const now = new Date();
+            document.getElementById('modalTimestamp').textContent = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('softKillModal').classList.add('open');
+        }
+
+        function confirmSoftKill() {
+            if (selectedContact) selectedContact.state = 'TRACKING';
+            closeSoftKill();
+            closeDetail();
+        }
+
+        function closeSoftKill() {
+            document.getElementById('softKillModal').classList.remove('open');
+        }
+
+        function actionEscalate() {
+            if (!selectedContact) return;
+            alert('Contact ' + selectedContact.id + ' escalated to Commanding Officer.');
+        }
+
+        // ── Screen Nav ──
+        function showScreen(name) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + name).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => { if (t.textContent.trim().toLowerCase() === name) t.classList.add('active'); });
+        }
+
+        // ── Hash routing ──
+        function handleHash() {
+            const h = location.hash.replace('#', '') || 'ops';
+            showScreen(h);
+        }
+        window.addEventListener('hashchange', handleHash);
+
+        // ── Keyboard ──
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('softKillModal').classList.contains('open')) {
+                if (e.key === 'Enter') { e.preventDefault(); confirmSoftKill(); }
+                if (e.key === 'Escape') { closeSoftKill(); }
+                return;
+            }
+            if (e.key === 'Escape') { closeDetail(); }
+            if (e.key === 's' || e.key === 'S') { if (selectedContact) openSoftKill(); }
+            if (e.key === 'e' || e.key === 'E') { if (selectedContact) actionEscalate(); }
+            if (e.key === 'm' || e.key === 'M') { if (selectedContact) actionMonitor(); }
+            if (e.key === 'c' || e.key === 'C') { if (selectedContact) { selectedContact.state = 'CLEARED'; closeDetail(); } }
+            if (e.key === 'h' || e.key === 'H') { showScreen('handover'); }
+        });
+
+        // ── Clock ──
+        function updateClock() {
+            const now = new Date();
+            const utc = String(now.getUTCHours()).padStart(2, '0') + ':' + String(now.getUTCMinutes()).padStart(2, '0');
+            const ist = new Date(now.getTime() + 5.5 * 3600000);
+            const istStr = String(ist.getUTCHours()).padStart(2, '0') + ':' + String(ist.getUTCMinutes()).padStart(2, '0');
+            document.getElementById('sysClock').textContent = 'UTC ' + utc + ' · IST ' + istStr;
+        }
+        setInterval(updateClock, 10000);
+        updateClock();
+
+        // ── Init ──
+        handleHash();
+        renderMarkers();
+        renderTriage();
+    </script>
+</body>
+
+</html>

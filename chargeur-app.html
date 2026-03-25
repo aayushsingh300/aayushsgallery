@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHARGEUR — App Views</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0D0F14;
+            --bg-surface: #161A22;
+            --bg-elevated: #1E2430;
+            --bg-alt: #0F1119;
+            --ofl: #4A9EFF;
+            --occ: #FF8C42;
+            --oe: #7BC67E;
+            --alert-amber: #FFB800;
+            --alert-red: #FF4444;
+            --alert-green: #3DD68C;
+            --text-primary: #F0F2F5;
+            --text-secondary: #8B95A6;
+            --border: #2A3142;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-data: 'Space Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Views ── */
+        .view {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .view.active { display: flex; }
+
+        /* ── Shared top bar ── */
+        .topbar {
+            height: 44px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .topbar-logo {
+            font-family: var(--font-data);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+        }
+
+        .topbar-sep {
+            width: 1px;
+            height: 20px;
+            background: var(--border);
+        }
+
+        .topbar-stat {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .topbar-stat span {
+            color: var(--text-primary);
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .system-ok {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--alert-green);
+            letter-spacing: 0.05em;
+        }
+
+        /* ═══════════════════════════════════════════════
+           VIEW A — COMMANDER / VEHICLE
+        ═══════════════════════════════════════════════ */
+        .cmd-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .cmd-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .ammo-label {
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .ammo-type-display {
+            font-family: var(--font-heading);
+            font-size: 96px;
+            font-weight: 700;
+            color: var(--ofl);
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .ammo-name {
+            font-family: var(--font-data);
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            letter-spacing: 0.08em;
+        }
+
+        .status-pill {
+            margin-top: 20px;
+            padding: 8px 24px;
+            background: rgba(61, 214, 140, 0.12);
+            border: 1px solid var(--alert-green);
+            border-radius: 4px;
+            font-family: var(--font-data);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--alert-green);
+            letter-spacing: 0.12em;
+        }
+
+        .match-row {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .match-row em {
+            color: var(--alert-green);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        /* Count bars */
+        .count-bars {
+            display: flex;
+            gap: 12px;
+        }
+
+        .count-bar-item {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .count-bar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .count-bar-type {
+            font-family: var(--font-data);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .count-bar-num {
+            font-family: var(--font-data);
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .bar-track {
+            height: 6px;
+            background: var(--bg-elevated);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .ofl-color { color: var(--ofl); }
+        .occ-color { color: var(--occ); }
+        .oe-color  { color: var(--oe); }
+        .ofl-bg    { background: var(--ofl); }
+        .occ-bg    { background: var(--occ); }
+        .oe-bg     { background: var(--oe); }
+
+        .count-bar-label {
+            font-family: var(--font-data);
+            font-size: 10px;
+            color: var(--text-secondary);
+            letter-spacing: 0.08em;
+        }
+
+        /* ═══════════════════════════════════════════════
+           VIEW B — GUNNER (Radar)
+        ═══════════════════════════════════════════════ */
+        .gunner-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 0;
+            overflow: hidden;
+        }
+
+        .radar-panel {
+            background: #06080B;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .radar-svg {
+            width: 100%;
+            height: 100%;
+            max-width: 520px;
+            max-height: 520px;
+        }
+
+        .radar-grid-label {
+            font-family: var(--font-data);
+            font-size: 9px;
+            fill: rgba(74, 158, 255, 0.3);
+        }
+
+        .radar-sweep {
+            transform-origin: center;
+            animation: sweep 3s linear infinite;
+        }
+
+        @keyframes sweep {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        .gunner-sidebar {
+            background: var(--bg-surface);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-section {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-title {
+            font-family: var(--font-data);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .chambered-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chambered-mini-type {
+            font-family: var(--font-heading);
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--ofl);
+            line-height: 1;
+        }
+
+        .chambered-mini-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .chambered-mini-name {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .chambered-mini-status {
+            font-family: var(--font-data);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--alert-green);
+        }
+
+        /* Contact list */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(42,49,66,0.6);
+        }
+
+        .contact-item:last-child { border-bottom: none; }
+
+        .contact-threat {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .threat-high   { background: var(--alert-red); box-shadow: 0 0 6px var(--alert-red); }
+        .threat-medium { background: var(--alert-amber); }
+        .threat-low    { background: var(--text-secondary); }
+
+        .contact-id {
+            font-family: var(--font-data);
+            font-size: 12px;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .contact-dist {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .contact-class {
+            font-size: 10px;
+            font-family: var(--font-data);
+            padding: 2px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.06em;
+        }
+
+        .class-hostile {
+            background: rgba(255,68,68,0.15);
+            color: var(--alert-red);
+            border: 1px solid rgba(255,68,68,0.3);
+        }
+
+        .class-unknown {
+            background: rgba(255,184,0,0.12);
+            color: var(--alert-amber);
+            border: 1px solid rgba(255,184,0,0.3);
+        }
+
+        .class-neutral {
+            background: rgba(139,149,166,0.15);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        /* ═══════════════════════════════════════════════
+           VIEW C — FLEET MAP
+        ═══════════════════════════════════════════════ */
+        .fleet-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            overflow: hidden;
+        }
+
+        .map-area {
+            background: #080C12;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(42,49,66,0.25) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(42,49,66,0.25) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .map-label {
+            position: absolute;
+            font-family: var(--font-data);
+            font-size: 9px;
+            color: rgba(139,149,166,0.35);
+            letter-spacing: 0.08em;
+        }
+
+        /* NATO diamond markers */
+        .vehicle-marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: default;
+        }
+
+        .diamond {
+            width: 36px;
+            height: 36px;
+            transform: rotate(45deg);
+            border: 2px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .diamond-inner {
+            transform: rotate(-45deg);
+            font-family: var(--font-data);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .v-nominal  .diamond { border-color: var(--alert-green); background: rgba(61,214,140,0.1); color: var(--alert-green); }
+        .v-low      .diamond { border-color: var(--alert-amber); background: rgba(255,184,0,0.1);  color: var(--alert-amber); }
+        .v-critical .diamond { border-color: var(--alert-red);   background: rgba(255,68,68,0.15); color: var(--alert-red); animation: pulse-critical 1.5s ease-in-out infinite; }
+
+        @keyframes pulse-critical {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,68,68,0); }
+            50%       { box-shadow: 0 0 0 6px rgba(255,68,68,0.2); }
+        }
+
+        .vm-label {
+            position: absolute;
+            top: 42px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-data);
+            font-size: 9px;
+            white-space: nowrap;
+            color: var(--text-secondary);
+        }
+
+        .fleet-sidebar {
+            background: var(--bg-surface);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .fleet-sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .fleet-sidebar-title {
+            font-family: var(--font-data);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .fleet-summary-counts {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .fleet-count-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .dot-green  { width: 8px; height: 8px; border-radius: 50%; background: var(--alert-green); }
+        .dot-amber  { width: 8px; height: 8px; border-radius: 50%; background: var(--alert-amber); }
+        .dot-red    { width: 8px; height: 8px; border-radius: 50%; background: var(--alert-red); }
+
+        .fleet-vehicle-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+
+        .fleet-vehicle-row {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(42,49,66,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fleet-vehicle-row:last-child { border-bottom: none; }
+
+        .fvr-diamond {
+            width: 20px;
+            height: 20px;
+            transform: rotate(45deg);
+            border: 1.5px solid;
+            flex-shrink: 0;
+        }
+
+        .fvr-nominal { border-color: var(--alert-green); background: rgba(61,214,140,0.1); }
+        .fvr-low     { border-color: var(--alert-amber); background: rgba(255,184,0,0.1); }
+        .fvr-critical{ border-color: var(--alert-red);   background: rgba(255,68,68,0.15); }
+
+        .fvr-info { flex: 1; }
+
+        .fvr-id {
+            font-family: var(--font-data);
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .fvr-ammo {
+            font-family: var(--font-data);
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .fvr-status {
+            font-family: var(--font-data);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .fvr-nominal-t  { color: var(--alert-green); }
+        .fvr-low-t      { color: var(--alert-amber); }
+        .fvr-critical-t { color: var(--alert-red); }
+
+        /* ═══════════════════════════════════════════════
+           VIEW D — PRIORITY QUEUE
+        ═══════════════════════════════════════════════ */
+        .queue-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .queue-header-bar {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .queue-title-text {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .queue-subtitle {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .queue-dispatch-btn {
+            background: rgba(74,158,255,0.15);
+            border: 1px solid var(--ofl);
+            color: var(--ofl);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-family: var(--font-data);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+        }
+
+        .queue-cols {
+            display: grid;
+            grid-template-columns: 40px 1fr 80px 80px 80px 140px;
+            gap: 0;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .queue-col-label {
+            font-family: var(--font-data);
+            font-size: 10px;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 12px 8px;
+        }
+
+        .queue-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .queue-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 80px 80px 80px 140px;
+            align-items: center;
+            padding: 0 24px;
+            border-bottom: 1px solid rgba(42,49,66,0.5);
+            min-height: 64px;
+        }
+
+        .queue-row:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .queue-priority {
+            font-family: var(--font-data);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 8px;
+        }
+
+        .p1 { color: var(--alert-red); }
+        .p2 { color: var(--alert-amber); }
+        .p3 { color: var(--text-secondary); }
+
+        .queue-vehicle-id {
+            font-family: var(--font-data);
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 700;
+            padding: 8px;
+        }
+
+        .queue-vehicle-unit {
+            font-family: var(--font-data);
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .queue-cell {
+            font-family: var(--font-data);
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 8px;
+        }
+
+        .queue-cell-count {
+            font-family: var(--font-data);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 8px;
+        }
+
+        .count-critical { color: var(--alert-red); }
+        .count-low      { color: var(--alert-amber); }
+        .count-ok       { color: var(--alert-green); }
+
+        .assign-btn {
+            margin: 8px;
+            padding: 8px 14px;
+            background: rgba(61,214,140,0.1);
+            border: 1px solid var(--alert-green);
+            border-radius: 4px;
+            font-family: var(--font-data);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--alert-green);
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .assign-btn.dispatched {
+            background: rgba(42,49,66,0.4);
+            border-color: var(--border);
+            color: var(--text-secondary);
+            cursor: default;
+        }
+
+        .queue-row.complete {
+            opacity: 0.5;
+        }
+
+        .queue-status-bar {
+            padding: 12px 24px;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .q-stat {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .q-stat strong {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ VIEW A: COMMANDER (vehicle) ═══ -->
+    <div id="vehicle-view" class="view">
+        <div class="topbar">
+            <div class="topbar-logo">CHARGEUR · V4</div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">VICTOR 4 · <span>SRC-880</span></div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">BRL TMP: <span>142°C</span></div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">TGT DIST: <span>1,240 m</span></div>
+            <div class="topbar-right">
+                <div class="system-ok">■ SYS NOMINAL</div>
+            </div>
+        </div>
+        <div class="cmd-body">
+            <div class="cmd-main">
+                <div class="ammo-label">CHAMBERED TYPE</div>
+                <div class="ammo-type-display">OFL</div>
+                <div class="ammo-name">OFL-105 · ARMOR-PIERCING DISCARDING SABOT</div>
+                <div class="status-pill">READY TO FIRE</div>
+                <div class="match-row">COMMANDER → GUNNER SYNC: <em>MATCHED ✓</em></div>
+            </div>
+            <div class="count-bars">
+                <div class="count-bar-item">
+                    <div class="count-bar-header">
+                        <div class="count-bar-type ofl-color">OFL</div>
+                        <div class="count-bar-num ofl-color">12</div>
+                    </div>
+                    <div class="bar-track"><div class="bar-fill ofl-bg" style="width:60%;"></div></div>
+                    <div class="count-bar-label">ARMOR-PIERCING</div>
+                </div>
+                <div class="count-bar-item">
+                    <div class="count-bar-header">
+                        <div class="count-bar-type occ-color">OCC</div>
+                        <div class="count-bar-num occ-color">8</div>
+                    </div>
+                    <div class="bar-track"><div class="bar-fill occ-bg" style="width:40%;"></div></div>
+                    <div class="count-bar-label">SHAPED CHARGE</div>
+                </div>
+                <div class="count-bar-item">
+                    <div class="count-bar-header">
+                        <div class="count-bar-type oe-color">OE</div>
+                        <div class="count-bar-num oe-color">10</div>
+                    </div>
+                    <div class="bar-track"><div class="bar-fill oe-bg" style="width:50%;"></div></div>
+                    <div class="count-bar-label">HIGH EXPLOSIVE</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ VIEW B: GUNNER (vehicle/gunner) ═══ -->
+    <div id="gunner-view" class="view">
+        <div class="topbar">
+            <div class="topbar-logo">CHARGEUR · GUNNER</div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">RANGE: <span>0–2,000 m</span></div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">CONTACTS: <span style="color:var(--alert-amber);">3</span></div>
+            <div class="topbar-right">
+                <div class="system-ok">■ SENSOR LIVE</div>
+            </div>
+        </div>
+        <div class="gunner-body">
+            <!-- Radar -->
+            <div class="radar-panel">
+                <svg class="radar-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Grid rings -->
+                    <circle cx="250" cy="250" r="200" fill="none" stroke="rgba(74,158,255,0.08)" stroke-width="1"/>
+                    <circle cx="250" cy="250" r="150" fill="none" stroke="rgba(74,158,255,0.08)" stroke-width="1"/>
+                    <circle cx="250" cy="250" r="100" fill="none" stroke="rgba(74,158,255,0.08)" stroke-width="1"/>
+                    <circle cx="250" cy="250" r="50"  fill="none" stroke="rgba(74,158,255,0.08)" stroke-width="1"/>
+                    <!-- Cross hairs -->
+                    <line x1="250" y1="50"  x2="250" y2="450" stroke="rgba(74,158,255,0.06)" stroke-width="1"/>
+                    <line x1="50"  y1="250" x2="450" y2="250" stroke="rgba(74,158,255,0.06)" stroke-width="1"/>
+                    <!-- Distance labels -->
+                    <text x="255" y="106" class="radar-grid-label">500m</text>
+                    <text x="255" y="156" class="radar-grid-label">1000m</text>
+                    <text x="255" y="206" class="radar-grid-label">1500m</text>
+                    <!-- Animated sweep -->
+                    <g class="radar-sweep" style="transform-origin:250px 250px">
+                        <defs>
+                            <radialGradient id="sweepGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="rgba(74,158,255,0.0)"/>
+                                <stop offset="100%" stop-color="rgba(74,158,255,0.18)"/>
+                            </radialGradient>
+                        </defs>
+                        <path d="M250,250 L250,50 A200,200 0 0,1 450,250 Z" fill="url(#sweepGrad)"/>
+                        <line x1="250" y1="250" x2="250" y2="50" stroke="rgba(74,158,255,0.7)" stroke-width="1.5"/>
+                    </g>
+                    <!-- Contact blips -->
+                    <!-- Hostile 1 — 760m NW -->
+                    <circle cx="170" cy="180" r="5" fill="var(--alert-red)" opacity="0.9">
+                        <animate attributeName="opacity" values="0.9;0.4;0.9" dur="1.2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="170" cy="180" r="10" fill="none" stroke="rgba(255,68,68,0.3)" stroke-width="1">
+                        <animate attributeName="r" values="5;14;5" dur="1.2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.6;0;0.6" dur="1.2s" repeatCount="indefinite"/>
+                    </circle>
+                    <text x="182" y="176" font-family="monospace" font-size="9" fill="rgba(255,68,68,0.8)">H-01</text>
+                    <!-- Hostile 2 — 1200m NE -->
+                    <circle cx="340" cy="152" r="4" fill="var(--alert-red)" opacity="0.7">
+                        <animate attributeName="opacity" values="0.7;0.3;0.7" dur="1.8s" repeatCount="indefinite"/>
+                    </circle>
+                    <text x="348" y="148" font-family="monospace" font-size="9" fill="rgba(255,68,68,0.7)">H-02</text>
+                    <!-- Unknown — 1800m E -->
+                    <circle cx="390" cy="265" r="4" fill="var(--alert-amber)" opacity="0.7">
+                        <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2.4s" repeatCount="indefinite"/>
+                    </circle>
+                    <text x="398" y="261" font-family="monospace" font-size="9" fill="rgba(255,184,0,0.7)">U-01</text>
+                    <!-- Own position marker -->
+                    <polygon points="250,242 256,258 244,258" fill="var(--alert-green)" opacity="0.9"/>
+                    <circle cx="250" cy="250" r="12" fill="none" stroke="rgba(61,214,140,0.3)" stroke-width="1"/>
+                </svg>
+            </div>
+            <!-- Sidebar -->
+            <div class="gunner-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">CHAMBERED</div>
+                    <div class="chambered-mini">
+                        <div class="chambered-mini-type">OFL</div>
+                        <div class="chambered-mini-detail">
+                            <div class="chambered-mini-name">ARMOR-PIERCING</div>
+                            <div class="chambered-mini-status">■ READY</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-title">ACTIVE CONTACTS (3)</div>
+                    <div class="contact-item">
+                        <div class="contact-threat threat-high"></div>
+                        <div class="contact-id">H-01</div>
+                        <div class="contact-dist">760 m</div>
+                        <div class="contact-class class-hostile">HOSTILE</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-threat threat-high"></div>
+                        <div class="contact-id">H-02</div>
+                        <div class="contact-dist">1,240 m</div>
+                        <div class="contact-class class-hostile">HOSTILE</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-threat threat-medium"></div>
+                        <div class="contact-id">U-01</div>
+                        <div class="contact-dist">1,800 m</div>
+                        <div class="contact-class class-unknown">UNKNOWN</div>
+                    </div>
+                </div>
+                <div class="sidebar-section" style="flex:1;">
+                    <div class="sidebar-title">PROXIMITY ALERT</div>
+                    <div style="padding:12px;background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.3);border-radius:6px;">
+                        <div style="font-family:var(--font-data);font-size:10px;color:var(--alert-red);font-weight:700;letter-spacing:0.1em;margin-bottom:6px;">■ THREAT IN RANGE</div>
+                        <div style="font-family:var(--font-data);font-size:11px;color:var(--text-secondary);">H-01 within 800m engagement radius</div>
+                        <div style="font-family:var(--font-data);font-size:11px;color:var(--text-secondary);margin-top:4px;">Vector: 312° NW · Speed: 18 km/h</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ VIEW C: FLEET MAP (fleet) ═══ -->
+    <div id="fleet-view" class="view">
+        <div class="topbar">
+            <div class="topbar-logo">CHARGEUR · FLEET</div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">SECTOR: <span>CHAMPAGNE-ARDENNE · GRID 4F</span></div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">VEHICLES: <span>8 ACTIVE</span></div>
+            <div class="topbar-right">
+                <div class="system-ok">■ LIVE TELEMETRY</div>
+            </div>
+        </div>
+        <div class="fleet-body">
+            <div class="map-area">
+                <div class="map-grid"></div>
+                <!-- Grid reference labels -->
+                <div class="map-label" style="top:12px;left:20px;">GRID 4F · CHAMPAGNE-ARDENNE</div>
+                <div class="map-label" style="bottom:12px;right:20px;">SCALE 1:50,000</div>
+
+                <!-- Victor 1 — nominal — top-left -->
+                <div class="vehicle-marker v-nominal" style="top:22%;left:20%;">
+                    <div class="diamond"><div class="diamond-inner">V1</div></div>
+                    <div class="vm-label">VICTOR 1 · OK</div>
+                </div>
+                <!-- Victor 2 — nominal -->
+                <div class="vehicle-marker v-nominal" style="top:35%;left:42%;">
+                    <div class="diamond"><div class="diamond-inner">V2</div></div>
+                    <div class="vm-label">VICTOR 2 · OK</div>
+                </div>
+                <!-- Victor 3 — low -->
+                <div class="vehicle-marker v-low" style="top:18%;left:60%;">
+                    <div class="diamond"><div class="diamond-inner">V3</div></div>
+                    <div class="vm-label">VICTOR 3 · LOW</div>
+                </div>
+                <!-- Victor 4 — nominal -->
+                <div class="vehicle-marker v-nominal" style="top:55%;left:28%;">
+                    <div class="diamond"><div class="diamond-inner">V4</div></div>
+                    <div class="vm-label">VICTOR 4 · OK</div>
+                </div>
+                <!-- Victor 5 — critical -->
+                <div class="vehicle-marker v-critical" style="top:62%;left:55%;">
+                    <div class="diamond"><div class="diamond-inner">V5</div></div>
+                    <div class="vm-label">VICTOR 5 · CRIT</div>
+                </div>
+                <!-- Victor 6 — nominal -->
+                <div class="vehicle-marker v-nominal" style="top:70%;left:75%;">
+                    <div class="diamond"><div class="diamond-inner">V6</div></div>
+                    <div class="vm-label">VICTOR 6 · OK</div>
+                </div>
+                <!-- Victor 7 — low -->
+                <div class="vehicle-marker v-low" style="top:80%;left:35%;">
+                    <div class="diamond"><div class="diamond-inner">V7</div></div>
+                    <div class="vm-label">VICTOR 7 · LOW</div>
+                </div>
+                <!-- Victor 8 — nominal -->
+                <div class="vehicle-marker v-nominal" style="top:45%;left:80%;">
+                    <div class="diamond"><div class="diamond-inner">V8</div></div>
+                    <div class="vm-label">VICTOR 8 · OK</div>
+                </div>
+            </div>
+            <div class="fleet-sidebar">
+                <div class="fleet-sidebar-header">
+                    <div class="fleet-sidebar-title">FLEET STATUS</div>
+                    <div style="font-family:var(--font-data);font-size:12px;color:var(--text-primary);font-weight:700;">8 Vehicles</div>
+                    <div class="fleet-summary-counts">
+                        <div class="fleet-count-item"><div class="dot-green"></div>5 NOMINAL</div>
+                        <div class="fleet-count-item"><div class="dot-amber"></div>2 LOW</div>
+                        <div class="fleet-count-item"><div class="dot-red"></div>1 CRIT</div>
+                    </div>
+                </div>
+                <div class="fleet-vehicle-list">
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-critical"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 5</div>
+                            <div class="fvr-ammo">OFL: 2 · OCC: 0 · OE: 1</div>
+                        </div>
+                        <div class="fvr-status fvr-critical-t">CRITICAL</div>
+                    </div>
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-low"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 3</div>
+                            <div class="fvr-ammo">OFL: 5 · OCC: 3 · OE: 2</div>
+                        </div>
+                        <div class="fvr-status fvr-low-t">LOW</div>
+                    </div>
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-low"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 7</div>
+                            <div class="fvr-ammo">OFL: 4 · OCC: 4 · OE: 3</div>
+                        </div>
+                        <div class="fvr-status fvr-low-t">LOW</div>
+                    </div>
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-nominal"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 1</div>
+                            <div class="fvr-ammo">OFL: 12 · OCC: 8 · OE: 10</div>
+                        </div>
+                        <div class="fvr-status fvr-nominal-t">NOMINAL</div>
+                    </div>
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-nominal"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 2</div>
+                            <div class="fvr-ammo">OFL: 10 · OCC: 7 · OE: 9</div>
+                        </div>
+                        <div class="fvr-status fvr-nominal-t">NOMINAL</div>
+                    </div>
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-nominal"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 4</div>
+                            <div class="fvr-ammo">OFL: 11 · OCC: 8 · OE: 8</div>
+                        </div>
+                        <div class="fvr-status fvr-nominal-t">NOMINAL</div>
+                    </div>
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-nominal"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 6</div>
+                            <div class="fvr-ammo">OFL: 13 · OCC: 9 · OE: 11</div>
+                        </div>
+                        <div class="fvr-status fvr-nominal-t">NOMINAL</div>
+                    </div>
+                    <div class="fleet-vehicle-row">
+                        <div class="fvr-diamond fvr-nominal"></div>
+                        <div class="fvr-info">
+                            <div class="fvr-id">VICTOR 8</div>
+                            <div class="fvr-ammo">OFL: 12 · OCC: 10 · OE: 9</div>
+                        </div>
+                        <div class="fvr-status fvr-nominal-t">NOMINAL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ VIEW E: MISMATCH ALERT (vehicle/mismatch) ═══ -->
+    <div id="mismatch-view" class="view" style="background:#0D0F14;">
+        <div class="topbar" style="background:rgba(255,184,0,0.12);border-bottom:1px solid rgba(255,184,0,0.4);">
+            <div class="topbar-logo" style="color:var(--alert-amber);">CHARGEUR · V4</div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">VICTOR 4 · <span>SRC-880</span></div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">SYS ID: <span>TS-FD-04-WS-03</span></div>
+            <div class="topbar-right">
+                <div style="font-family:var(--font-data);font-size:11px;color:var(--alert-amber);letter-spacing:0.05em;animation:pulse-critical 1.2s ease-in-out infinite;">⚠ MISMATCH DETECTED</div>
+            </div>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:40px;">
+            <div style="width:100%;max-width:680px;">
+                <!-- Alert header banner -->
+                <div style="background:rgba(255,184,0,0.15);border:1px solid var(--alert-amber);border-radius:6px 6px 0 0;padding:18px 24px;display:flex;align-items:center;gap:14px;">
+                    <span style="font-size:22px;">⚠</span>
+                    <span style="font-family:var(--font-data);font-size:16px;font-weight:700;letter-spacing:0.12em;color:var(--alert-amber);">AMMUNITION MISMATCH DETECTED</span>
+                </div>
+                <!-- Alert body -->
+                <div style="background:var(--bg-surface);border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;padding:28px 24px;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;">
+                        <span style="font-family:var(--font-heading);font-size:15px;font-weight:600;color:var(--text-primary);letter-spacing:0.05em;">ALERT SYSTEM</span>
+                        <span style="font-family:var(--font-data);font-size:11px;color:var(--text-secondary);">TAC-SYS V.4.9</span>
+                    </div>
+                    <div style="font-family:var(--font-heading);font-size:22px;font-weight:700;color:var(--alert-amber);margin-bottom:12px;">CRITICAL ALERT</div>
+                    <div style="font-family:var(--font-data);font-size:12px;color:var(--text-primary);line-height:1.9;margin-bottom:24px;">
+                        IMMEDIATE ATTENTION REQUIRED:<br>
+                        FORWARD DEPLOYMENT UNIT 04 - WEAPON SYSTEM 03<br><br>
+                        UNITS AFFECTED: STRIKE TEAM ALPHA<br>
+                        SYSTEM ID: TS-FD-04-WS-03<br>
+                        LAST CHECK: 14:02:18 UTC<br>
+                        <span style="color:var(--alert-amber);">DETECTED LOADOUT: OCC — SHAPED CHARGE</span><br>
+                        <span style="color:var(--ofl);">EXPECTED LOADOUT: OFL — ARMOR-PIERCING DISCARDING SABOT</span>
+                    </div>
+                    <!-- Two-up comparison -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+                        <div style="padding:14px;background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.3);border-radius:4px;">
+                            <div style="font-family:var(--font-data);font-size:10px;letter-spacing:0.1em;color:var(--text-secondary);margin-bottom:6px;">CHAMBERED (ACTUAL)</div>
+                            <div style="font-family:var(--font-heading);font-size:20px;font-weight:700;color:var(--alert-red);">OCC</div>
+                            <div style="font-family:var(--font-data);font-size:11px;color:var(--text-secondary);margin-top:4px;">SHAPED CHARGE</div>
+                        </div>
+                        <div style="padding:14px;background:rgba(74,158,255,0.08);border:1px solid rgba(74,158,255,0.3);border-radius:4px;">
+                            <div style="font-family:var(--font-data);font-size:10px;letter-spacing:0.1em;color:var(--text-secondary);margin-bottom:6px;">REQUESTED (EXPECTED)</div>
+                            <div style="font-family:var(--font-heading);font-size:20px;font-weight:700;color:var(--ofl);">OFL</div>
+                            <div style="font-family:var(--font-data);font-size:11px;color:var(--text-secondary);margin-top:4px;">ARMOR-PIERCING</div>
+                        </div>
+                    </div>
+                    <!-- Action buttons -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+                        <button style="padding:14px;background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--text-primary);font-family:var(--font-data);font-size:12px;letter-spacing:0.08em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">✕ ABORT &amp; RECYCLE</button>
+                        <button style="padding:14px;background:rgba(255,184,0,0.15);border:1px solid var(--alert-amber);border-radius:4px;color:var(--alert-amber);font-family:var(--font-data);font-size:12px;letter-spacing:0.08em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">✓ CONFIRM OVERRIDE</button>
+                    </div>
+                    <!-- Status bar -->
+                    <div style="font-family:var(--font-data);font-size:10px;color:var(--text-secondary);border-top:1px solid var(--border);padding-top:12px;letter-spacing:0.06em;">
+                        STATUS: <span style="color:var(--alert-red);">SEVERE MISMATCH</span> &nbsp;|&nbsp; TIME: 14:03:09 UTC &nbsp;|&nbsp; USER: CDR. J. RAMIREZ &nbsp;|&nbsp; SECURE CHANNEL: <span style="color:var(--alert-green);">ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ VIEW D: PRIORITY QUEUE (fleet/queue) ═══ -->
+    <div id="queue-view" class="view">
+        <div class="topbar">
+            <div class="topbar-logo">CHARGEUR · RESUPPLY</div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">TRUCKS AVAILABLE: <span style="color:var(--alert-green);">2</span></div>
+            <div class="topbar-sep"></div>
+            <div class="topbar-stat">CRITICAL: <span style="color:var(--alert-red);">1</span></div>
+            <div class="topbar-right">
+                <div class="system-ok">■ QUEUE LIVE</div>
+            </div>
+        </div>
+        <div class="queue-body">
+            <div class="queue-header-bar">
+                <div>
+                    <div class="queue-title-text">Priority Resupply Queue</div>
+                    <div class="queue-subtitle">Sorted by criticality · Updated 14:32:05Z</div>
+                </div>
+                <button class="queue-dispatch-btn">DISPATCH ALL CRITICAL →</button>
+            </div>
+            <!-- Column headers -->
+            <div class="queue-cols">
+                <div class="queue-col-label">PRI</div>
+                <div class="queue-col-label">VEHICLE</div>
+                <div class="queue-col-label">OFL</div>
+                <div class="queue-col-label">OCC</div>
+                <div class="queue-col-label">OE</div>
+                <div class="queue-col-label">ACTION</div>
+            </div>
+            <div class="queue-list">
+                <!-- P1: Victor 5 critical -->
+                <div class="queue-row">
+                    <div class="queue-priority p1">P1</div>
+                    <div class="queue-vehicle-id">
+                        VICTOR 5
+                        <div class="queue-vehicle-unit">SRC-112 · GRID 4F-55</div>
+                    </div>
+                    <div class="queue-cell-count count-critical">2</div>
+                    <div class="queue-cell-count count-critical">0</div>
+                    <div class="queue-cell-count count-critical">1</div>
+                    <button class="assign-btn" onclick="dispatchVehicle(this, 'VICTOR 5')">ASSIGN TRUCK →</button>
+                </div>
+                <!-- P2: Victor 3 low -->
+                <div class="queue-row">
+                    <div class="queue-priority p2">P2</div>
+                    <div class="queue-vehicle-id">
+                        VICTOR 3
+                        <div class="queue-vehicle-unit">SRC-880 · GRID 4F-23</div>
+                    </div>
+                    <div class="queue-cell-count count-low">5</div>
+                    <div class="queue-cell-count count-low">3</div>
+                    <div class="queue-cell-count count-low">2</div>
+                    <button class="assign-btn" onclick="dispatchVehicle(this, 'VICTOR 3')">ASSIGN TRUCK →</button>
+                </div>
+                <!-- P3: Victor 7 low -->
+                <div class="queue-row">
+                    <div class="queue-priority p3">P3</div>
+                    <div class="queue-vehicle-id">
+                        VICTOR 7
+                        <div class="queue-vehicle-unit">SRC-441 · GRID 4F-78</div>
+                    </div>
+                    <div class="queue-cell-count count-low">4</div>
+                    <div class="queue-cell-count count-low">4</div>
+                    <div class="queue-cell-count count-low">3</div>
+                    <button class="assign-btn" onclick="dispatchVehicle(this, 'VICTOR 7')">ASSIGN TRUCK →</button>
+                </div>
+                <!-- Nominal vehicles (faded) -->
+                <div class="queue-row complete">
+                    <div class="queue-priority p3" style="color:var(--text-secondary)">—</div>
+                    <div class="queue-vehicle-id" style="color:var(--text-secondary)">
+                        VICTOR 1
+                        <div class="queue-vehicle-unit">SRC-220 · GRID 4F-12</div>
+                    </div>
+                    <div class="queue-cell-count count-ok">12</div>
+                    <div class="queue-cell-count count-ok">8</div>
+                    <div class="queue-cell-count count-ok">10</div>
+                    <div class="queue-cell" style="padding:8px;font-family:var(--font-data);font-size:11px;color:var(--alert-green);">■ NOMINAL</div>
+                </div>
+                <div class="queue-row complete">
+                    <div class="queue-priority p3" style="color:var(--text-secondary)">—</div>
+                    <div class="queue-vehicle-id" style="color:var(--text-secondary)">
+                        VICTOR 2
+                        <div class="queue-vehicle-unit">SRC-334 · GRID 4F-31</div>
+                    </div>
+                    <div class="queue-cell-count count-ok">10</div>
+                    <div class="queue-cell-count count-ok">7</div>
+                    <div class="queue-cell-count count-ok">9</div>
+                    <div class="queue-cell" style="padding:8px;font-family:var(--font-data);font-size:11px;color:var(--alert-green);">■ NOMINAL</div>
+                </div>
+                <div class="queue-row complete">
+                    <div class="queue-priority p3" style="color:var(--text-secondary)">—</div>
+                    <div class="queue-vehicle-id" style="color:var(--text-secondary)">
+                        VICTOR 4
+                        <div class="queue-vehicle-unit">SRC-880 · GRID 4F-44</div>
+                    </div>
+                    <div class="queue-cell-count count-ok">11</div>
+                    <div class="queue-cell-count count-ok">8</div>
+                    <div class="queue-cell-count count-ok">8</div>
+                    <div class="queue-cell" style="padding:8px;font-family:var(--font-data);font-size:11px;color:var(--alert-green);">■ NOMINAL</div>
+                </div>
+                <div class="queue-row complete">
+                    <div class="queue-priority p3" style="color:var(--text-secondary)">—</div>
+                    <div class="queue-vehicle-id" style="color:var(--text-secondary)">
+                        VICTOR 6
+                        <div class="queue-vehicle-unit">SRC-119 · GRID 4F-67</div>
+                    </div>
+                    <div class="queue-cell-count count-ok">13</div>
+                    <div class="queue-cell-count count-ok">9</div>
+                    <div class="queue-cell-count count-ok">11</div>
+                    <div class="queue-cell" style="padding:8px;font-family:var(--font-data);font-size:11px;color:var(--alert-green);">■ NOMINAL</div>
+                </div>
+                <div class="queue-row complete">
+                    <div class="queue-priority p3" style="color:var(--text-secondary)">—</div>
+                    <div class="queue-vehicle-id" style="color:var(--text-secondary)">
+                        VICTOR 8
+                        <div class="queue-vehicle-unit">SRC-775 · GRID 4F-82</div>
+                    </div>
+                    <div class="queue-cell-count count-ok">12</div>
+                    <div class="queue-cell-count count-ok">10</div>
+                    <div class="queue-cell-count count-ok">9</div>
+                    <div class="queue-cell" style="padding:8px;font-family:var(--font-data);font-size:11px;color:var(--alert-green);">■ NOMINAL</div>
+                </div>
+            </div>
+            <div class="queue-status-bar">
+                <div class="q-stat">TRUCKS DISPATCHED: <strong>0 / 2</strong></div>
+                <div class="q-stat">ETA TO SECTOR: <strong>~18 min</strong></div>
+                <div class="q-stat">LAST SYNC: <strong>14:32:05Z</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hash-based router
+        function updateRoute() {
+            const hash = window.location.hash.replace('#', '') || 'vehicle';
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            const routeMap = {
+                'vehicle':          'vehicle-view',
+                'vehicle/gunner':   'gunner-view',
+                'vehicle/mismatch': 'mismatch-view',
+                'fleet':            'fleet-view',
+                'fleet/queue':      'queue-view',
+            };
+            const targetId = routeMap[hash] || 'vehicle-view';
+            const el = document.getElementById(targetId);
+            if (el) el.classList.add('active');
+        }
+
+        window.addEventListener('hashchange', updateRoute);
+        updateRoute();
+
+        // Dispatch interaction
+        function dispatchVehicle(btn, vehicleName) {
+            btn.textContent = '■ DISPATCHED';
+            btn.classList.add('dispatched');
+            btn.closest('.queue-row').style.opacity = '0.45';
+        }
+    </script>
+</body>
+
+</html>

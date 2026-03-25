@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me — Aayush R</title>
+  <meta name="description" content="Product Designer with 8+ years of experience across healthcare, enterprise, and consumer products.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Questrial&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site-globals.css">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:       #d6d0c4;
+      --bg-dark:   #221616;
+      --bg-navy:   #101f2c;
+      --orange:    #ff8e00;
+      --coral:     #a47864;
+      --border:    rgba(244,244,244,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 80px;
+      background: rgba(34, 22, 22, 0.55);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(214,208,196,0.07);
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+    .nav-scrolled {
+      background: rgba(34, 22, 22, 0.88);
+      border-bottom-color: rgba(214,208,196,0.12);
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo-svg { height: 30px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 14px; font-weight: 500;
+      letter-spacing: 0.04em; color: rgba(214,208,196,0.7); transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-menu { display: flex; align-items: center; gap: 12px; }
+    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--ink); }
+
+    /* ─── GLOBAL GRAIN ──────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
+      opacity: 0.022;
+      pointer-events: none;
+      z-index: 9001;
+      mix-blend-mode: overlay;
+    }
+
+    /* ─── PAGE HERO ────────────────────────────── */
+    .page-hero {
+      position: relative;
+      min-height: 720px;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      background: linear-gradient(135deg, #221616 0%, #1a1010 60%, #1e1212 100%);
+    }
+    /* ambient orbs */
+    .page-hero-bg {
+      display: block;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page-hero-bg::before {
+      content: '';
+      position: absolute;
+      right: 360px; top: -80px;
+      width: 550px; height: 550px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(164,120,100,0.09) 0%, transparent 65%);
+    }
+    .page-hero-bg::after {
+      content: '';
+      position: absolute;
+      left: -60px; bottom: -60px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,142,0,0.04) 0%, transparent 65%);
+    }
+    .page-hero-gradient { display: none; }
+    .page-hero-orb { display: none; }
+
+    /* left content */
+    .page-hero-content {
+      position: relative;
+      z-index: 3;
+      padding: 140px 80px 80px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* right portrait column */
+    .page-hero-portrait {
+      width: 400px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      background: #1a1212;
+    }
+    .page-hero-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    /* subtle gradient overlay to blend into bg */
+    .page-hero-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(34,22,22,0.45) 0%, transparent 35%),
+                  linear-gradient(0deg, rgba(34,22,22,0.6) 0%, transparent 30%);
+    }
+    /* decorative corner lines */
+    .page-hero-portrait::before {
+      content: '';
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 60px; height: 60px;
+      border-top: 1px solid rgba(164,120,100,0.4);
+      border-right: 1px solid rgba(164,120,100,0.4);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .page-hero-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 20px;
+    }
+    .page-hero-title {
+      font-size: clamp(52px, 7vw, 96px); font-weight: 600;
+      line-height: 0.95; letter-spacing: -1px; color: var(--ink); margin-bottom: 32px;
+    }
+    .page-hero-bio {
+      font-size: 18px; font-weight: 400; line-height: 1.7;
+      color: rgba(214,208,196,0.72); max-width: 540px;
+    }
+    .hero-stat-row {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .hero-stat-num {
+      font-size: 36px; font-weight: 600; color: var(--ink); line-height: 1;
+      display: block; margin-bottom: 4px;
+    }
+    .hero-stat-lbl {
+      font-size: 11px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.12em; color: rgba(214,208,196,0.4);
+    }
+
+    /* ─── SKILLS STRIP ─────────────────────────── */
+    .skills-strip {
+      background: linear-gradient(180deg, #1c1411 0%, #221616 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .skills-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(214,208,196,0.08);
+    }
+    .skill-group {
+      padding: 48px 52px;
+      background: var(--bg-dark);
+      transition: background 0.25s ease;
+    }
+    .skill-group:hover {
+      background: rgba(164,120,100,0.06);
+    }
+    .skill-group-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(214,208,196,0.35); margin-bottom: 18px;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      font-size: 13px; font-weight: 500; padding: 6px 14px;
+      border-radius: 100px; border: 1px solid rgba(214,208,196,0.18);
+      color: rgba(214,208,196,0.72);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .skill-group:hover .skill-tag {
+      border-color: rgba(164,120,100,0.35);
+      color: rgba(214,208,196,0.9);
+    }
+
+    /* ─── TIMELINE ─────────────────────────────── */
+    .experience {
+      padding: 80px 80px 100px;
+      background: linear-gradient(180deg, #221616 0%, #1d1311 100%);
+    }
+    .section-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 48px;
+    }
+    .timeline { position: relative; max-width: 820px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item {
+      position: relative; padding-left: 32px; margin-bottom: 56px;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -4px; top: 7px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--coral); box-shadow: 0 0 12px rgba(164,120,100,0.4);
+    }
+    .timeline-date {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(214,208,196,0.4); margin-bottom: 5px;
+    }
+    .timeline-role { font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+    .timeline-company { font-size: 15px; font-weight: 500; color: var(--coral); margin-bottom: 4px; }
+    .timeline-location { font-size: 12px; color: rgba(214,208,196,0.35); margin-bottom: 14px; }
+    .timeline-desc {
+      font-size: 15px; font-weight: 400; line-height: 1.7; color: rgba(214,208,196,0.6);
+    }
+    .timeline-bullets { list-style: none; margin-top: 10px; }
+    .timeline-bullets li {
+      font-size: 14px; line-height: 1.65; color: rgba(214,208,196,0.55);
+      padding-left: 16px; position: relative; margin-bottom: 5px;
+    }
+    .timeline-bullets li::before {
+      content: '·'; position: absolute; left: 0; color: var(--coral);
+    }
+
+    /* ─── FOOTER ───────────────────────────────── */
+    .footer-strip {
+      padding: 48px 80px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-strip a { color: var(--orange); text-decoration: none; font-size: 14px; font-weight: 500; }
+    .footer-copy { font-size: 13px; color: rgba(214,208,196,0.3); }
+
+    @media (max-width: 900px) {
+      .nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .page-hero { flex-direction: column-reverse; min-height: auto; }
+      .page-hero-content { padding: 60px 24px 60px; }
+      .page-hero-portrait { width: 100%; height: 360px; }
+      .hero-stat-row { gap: 24px; flex-wrap: wrap; }
+      .skills-inner { grid-template-columns: 1fr; }
+      .skill-group { padding: 32px 24px; }
+      .experience { padding: 60px 24px 80px; }
+      .footer-strip { padding: 40px 24px; flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <img src="images/hero/Aayushsign.svg" alt="Aayush" class="nav-logo-svg">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="all-works.html">All Works</a></li>
+    <li><a href="about.html" class="active">About Me</a></li>
+    <li><a href="resume.html">Resume</a></li>
+  </ul>
+  <div class="nav-menu">
+    <div class="hamburger" aria-label="Menu"><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <p class="page-hero-label">About Me</p>
+    <h1 class="page-hero-title">Designing for<br>people who<br>actually use it.</h1>
+    <p class="page-hero-bio">
+      I'm Aayush — a product designer based in Bengaluru, India, with 8+ years building digital products across healthcare, enterprise software, consumer retail, and defense. I care about the intersection of clarity and craft: systems that hold up under pressure, and interfaces people reach for on instinct.
+    </p>
+    <div class="hero-stat-row">
+      <div>
+        <span class="hero-stat-num">8+</span>
+        <span class="hero-stat-lbl">Years</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">30+</span>
+        <span class="hero-stat-lbl">Projects</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">5</span>
+        <span class="hero-stat-lbl">Domains</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">12</span>
+        <span class="hero-stat-lbl">Clients</span>
+      </div>
+    </div>
+  </div>
+  <div class="page-hero-portrait">
+    <img src="images/hero/Aayuhs dp.jpg" alt="Aayush R">
+  </div>
+</section>
+
+<!-- ── SKILLS ─────────────────────────────────── -->
+<div class="skills-strip">
+  <div class="skills-inner">
+    <div class="skill-group">
+      <p class="skill-group-label">Design</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Product Design</span>
+        <span class="skill-tag">UX Research</span>
+        <span class="skill-tag">Interaction Design</span>
+        <span class="skill-tag">Design Systems</span>
+        <span class="skill-tag">Prototyping</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-label">Tools</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Framer</span>
+        <span class="skill-tag">Principle</span>
+        <span class="skill-tag">Maze</span>
+        <span class="skill-tag">HTML / CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-label">Domains</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Healthcare</span>
+        <span class="skill-tag">Enterprise B2G</span>
+        <span class="skill-tag">Defense</span>
+        <span class="skill-tag">FinTech</span>
+        <span class="skill-tag">Retail</span>
+        <span class="skill-tag">SaaS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── EXPERIENCE TIMELINE ──────────────────────── -->
+<section class="experience">
+  <p class="section-label">Experience</p>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <p class="timeline-date">Jul 2025 — Present · 8 mos</p>
+      <h3 class="timeline-role">Senior Product Experience Designer</h3>
+      <p class="timeline-company">Narayana Health · Full-time</p>
+      <p class="timeline-location">Bengaluru, Karnataka, India</p>
+      <p class="timeline-desc">
+        Designing patient-facing apps and internal clinical tools at one of India's largest hospital networks — with a focus on accessibility, care coordination, and health data clarity.
+      </p>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-date">Nov 2021 — Jun 2025 · 3 yrs 8 mos</p>
+      <h3 class="timeline-role">Product Design Lead</h3>
+      <p class="timeline-company">314e Corporation · Full-time</p>
+      <p class="timeline-location">Bengaluru, Karnataka, India</p>
+      <p class="timeline-desc">
+        Led design across a portfolio of healthcare and enterprise-grade software products.
+      </p>
+      <ul class="timeline-bullets">
+        <li>AI-powered Training Platform for EHRs / EMRs</li>
+        <li>Healthcare Document Management System</li>
+        <li>Clinical Data Repository Platform</li>
+        <li>Healthcare ATS</li>
+        <li>Data integration platform &amp; more</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-date">Jan 2019 — Dec 2021 · 3 yrs</p>
+      <h3 class="timeline-role">Product Designer</h3>
+      <p class="timeline-company">Titan Company Limited · Full-time</p>
+      <p class="timeline-location">Bengaluru, Karnataka, India</p>
+      <ul class="timeline-bullets">
+        <li>Smart devices: Apps for iOS and Android</li>
+        <li>E-commerce — Optical lenses and product buying experiences</li>
+        <li>Retail experiences — Endless Isle UX, interactive display apps</li>
+        <li>Live AR Virtual try-on for Eyewear</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-date">Dec 2018 — Dec 2019 · 1 yr 1 mo</p>
+      <h3 class="timeline-role">Design Consultant</h3>
+      <p class="timeline-company">Glenmark Pharmaceuticals · Part-time</p>
+      <p class="timeline-location">Bengaluru, Karnataka, India</p>
+      <ul class="timeline-bullets">
+        <li>Warehouse, inventory &amp; logistics management software</li>
+        <li>Factory-specific ATS &amp; onboarding setup</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-date">Jun 2017 — Aug 2018 · 1 yr 3 mos</p>
+      <h3 class="timeline-role">Junior UX Designer</h3>
+      <p class="timeline-company">PurpleCrest: Business Transformation Partner · Part-time</p>
+      <p class="timeline-location">Greater Bengaluru Area</p>
+      <ul class="timeline-bullets">
+        <li>B2C experience design for several clients</li>
+        <li>Android and iOS apps focused on guided meditation and wellbeing</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-date">Aug 2017 — Sep 2017 · 2 mos</p>
+      <h3 class="timeline-role">Ad Photographer</h3>
+      <p class="timeline-company">PETA · Freelance</p>
+      <p class="timeline-location">Bengaluru, Karnataka, India</p>
+      <p class="timeline-desc">Campaign and ad photography via Lowe Lintas.</p>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-date">Apr 2015 — Aug 2015 · 5 mos</p>
+      <h3 class="timeline-role">Brand and UX Designer</h3>
+      <p class="timeline-company">Explorelifetraveling · Internship</p>
+      <p class="timeline-location">Greater Bengaluru Area</p>
+      <ul class="timeline-bullets">
+        <li>Web and UI Design intern</li>
+        <li>UI, Brand design and content creation</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer-strip">
+  <a href="resume.html">View Full Resume →</a>
+  <p class="footer-copy">aayushsingh300@gmail.com · +91 9031585962</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkbeheer NL — Case Study</title>
+    <meta name="description"
+        content="Parkbeheer NL case study: Designing an enterprise car park management system for the Dutch government. 923,000+ parking spaces, 2018.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F2044;
+            --secondary: #1E3A8A;
+            --accent: #2563EB;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --text: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --bg: #FFFFFF;
+            --surface: #F9FAFB;
+        }
+
+        body.dark {
+            --bg: #0D0F14;
+            --surface: #161A22;
+            --text: #EAEDF1;
+            --text-muted: #8B95A6;
+            --border: #2A2D35;
+            --primary: #0F2044;
+            --secondary: #1E3A8A;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* ── Theme Toggle ── */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: var(--primary);
+            color: white;
+            padding: 80px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+        }
+
+        .hero .overline {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-meta .meta-item {
+            font-size: 12px;
+        }
+
+        .hero-meta .meta-label {
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .hero-meta .meta-value {
+            font-weight: 600;
+        }
+
+        /* ── Section ── */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section.alt {
+            background: var(--surface);
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-header .overline {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 640px;
+        }
+
+        /* ── Screen Display ── */
+        .screen-showcase {
+            margin-bottom: 64px;
+        }
+
+        .screen-showcase:last-child {
+            margin-bottom: 0;
+        }
+
+        .screen-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .screen-frame {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .screen-frame .browser-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .browser-bar .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        .browser-bar .dot:nth-child(1) {
+            background: #EF4444;
+        }
+
+        .browser-bar .dot:nth-child(2) {
+            background: #F59E0B;
+        }
+
+        .browser-bar .dot:nth-child(3) {
+            background: #22C55E;
+        }
+
+        .browser-bar .url-bar {
+            flex: 1;
+            margin-left: 12px;
+            padding: 4px 12px;
+            background: var(--surface);
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .screen-frame iframe {
+            width: 100%;
+            border: none;
+            display: block;
+        }
+
+        .screen-frame img {
+            width: 100%;
+            display: block;
+        }
+
+        /* ── Image Grid ── */
+        .img-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .img-grid.three-col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .img-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .img-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .img-card .caption {
+            padding: 12px 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .img-card .caption strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* ── Stats Row ── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 32px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+        }
+
+        .stat-card .stat-num {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+        }
+
+        /* ── Hero Mockup ── */
+        .hero-mockup {
+            margin-top: 56px;
+            position: relative;
+            height: 520px;
+        }
+
+        .hero-mockup::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140%;
+            height: 600px;
+            background: radial-gradient(ellipse at center top, rgba(37, 99, 235, 0.2) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-screen {
+            position: absolute;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+
+        .hero-screen .screen-chrome {
+            background: #e5e7eb;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-screen .screen-chrome .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .hero-screen .screen-chrome .dot:nth-child(1) {
+            background: #EF4444;
+        }
+
+        .hero-screen .screen-chrome .dot:nth-child(2) {
+            background: #F59E0B;
+        }
+
+        .hero-screen .screen-chrome .dot:nth-child(3) {
+            background: #22C55E;
+        }
+
+        .hero-screen .screen-chrome .url {
+            flex: 1;
+            margin-left: 8px;
+            font-size: 10px;
+            color: #6B7280;
+            background: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+        }
+
+        .hero-screen iframe {
+            width: 1280px;
+            height: 860px;
+            border: none;
+            display: block;
+            transform-origin: top left;
+            transform: scale(0.625);
+        }
+
+        .hero-screen.main {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 564px;
+            z-index: 2;
+        }
+
+        .hero-screen.left {
+            left: -20px;
+            top: 60px;
+            width: 340px;
+            height: 250px;
+            z-index: 1;
+            transform: rotate(-3deg);
+        }
+
+        .hero-screen.left iframe {
+            transform: scale(0.265);
+            width: 1280px;
+            height: 860px;
+        }
+
+        .hero-screen.right {
+            right: -20px;
+            top: 80px;
+            width: 340px;
+            height: 250px;
+            z-index: 1;
+            transform: rotate(3deg);
+        }
+
+        .hero-screen.right iframe {
+            transform: scale(0.265);
+            width: 1280px;
+            height: 860px;
+        }
+
+        /* ── CTA Section ── */
+        .cta-section {
+            background: var(--primary);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cta-section h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 28px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--accent);
+            color: white;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: #1D4ED8;
+        }
+
+        /* ── Prev/Next Nav ── */
+        .proj-nav {
+            background: var(--primary);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .proj-nav-link {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 40px 60px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .proj-nav-link:hover { background: var(--secondary); }
+        .proj-nav-link.next { border-left: 1px solid rgba(255,255,255,0.1); text-align: right; align-items: flex-end; }
+        .proj-nav-label {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            font-family: 'Inter', sans-serif;
+        }
+        .proj-nav-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+        }
+        .proj-nav-arrow {
+            font-size: 20px;
+            color: #60A5FA;
+            line-height: 1;
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── Process Steps ── */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .process-step {
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .process-step .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .process-step h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ── Full-width image ── */
+        .full-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ── Timeline ── */
+        .timeline {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            position: relative;
+            padding: 20px 0 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 42px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--border);
+        }
+
+        .timeline-phase {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            position: relative;
+            z-index: 1;
+            border: 3px solid var(--surface);
+            box-shadow: 0 0 0 2px var(--border);
+        }
+
+        .timeline-phase:nth-child(1) .timeline-dot {
+            background: #0F2044;
+        }
+
+        .timeline-phase:nth-child(2) .timeline-dot {
+            background: #1E3A8A;
+        }
+
+        .timeline-phase:nth-child(3) .timeline-dot {
+            background: #2563EB;
+        }
+
+        .timeline-pill {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-phase:nth-child(1) .timeline-pill {
+            background: #0F2044;
+        }
+
+        .timeline-phase:nth-child(2) .timeline-pill {
+            background: #1E3A8A;
+        }
+
+        .timeline-phase:nth-child(3) .timeline-pill {
+            background: #2563EB;
+        }
+
+        .timeline-dates {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* ── Exploration Grid ── */
+        .explore-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .explore-grid h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .explore-grid p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        /* ── Feature Highlights ── */
+        .feature-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 64px;
+        }
+
+        .feature-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .feature-card.reverse {
+            direction: rtl;
+        }
+
+        .feature-card.reverse>* {
+            direction: ltr;
+        }
+
+        .feature-text {
+            padding: 8px 0;
+        }
+
+        .feature-text .overline {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-text h3 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 12px;
+        }
+
+        .feature-text p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .feature-text .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .feature-text .feature-tag {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-muted);
+        }
+
+        .feature-img {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-img:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-img img {
+            width: 100%;
+            display: block;
+        }
+
+        /* ── Figma Gallery ── */
+        .figma-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .figma-gallery.three-up {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .figma-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+
+        .figma-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+        }
+
+        .figma-card img {
+            width: 100%;
+            display: block;
+        }
+
+        .figma-card .figma-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .figma-card .figma-label span {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        /* ── Unified Screen Annotation System ── */
+        .screen-embed {
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            position: relative;
+            background: var(--surface);
+        }
+
+        .screen-embed .browser-bar {
+            position: relative;
+            z-index: 1;
+        }
+
+        .screen-embed iframe {
+            width: 1280px;
+            height: 860px;
+            border: none;
+            display: block;
+            transform-origin: top left;
+            transform: scale(0.666);
+            margin-bottom: -287px;
+        }
+
+        .ann-svg {
+            position: absolute;
+            top: 0; /* overridden by JS to sit below browser bar */
+            left: 0;
+            pointer-events: none;
+        }
+
+        .screen-caption {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 10px 16px;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .screen-annotated {
+            position: relative;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .screen-annotated .screen-embed {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .ann-sidebar {
+            width: 160px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 33px;
+        }
+
+        .ann-note {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .ann-note-title {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .ann-note-body {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .aux-screens-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 72px;
+        }
+
+        .screen-section-header {
+            margin-top: 72px;
+            margin-bottom: 16px;
+        }
+
+        .screen-section-header .overline {
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .screen-section-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+
+        .screen-section-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 640px;
+            line-height: 1.6;
+        }
+
+        /* ── Photo Placeholders ── */
+        .photo-placeholder {
+            background: var(--surface);
+            border: 1.5px dashed var(--border);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #9CA3AF;
+            min-height: 200px;
+        }
+
+        .photo-placeholder svg {
+            opacity: 0.4;
+        }
+
+        .photo-placeholder-label {
+            font-size: 11px;
+            color: #9CA3AF;
+            font-weight: 500;
+            text-align: center;
+            max-width: 180px;
+            line-height: 1.5;
+        }
+
+        .photo-placeholder-tag {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #D1D5DB;
+        }
+
+        /* ── Persona Cards ── */
+        .personas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 0;
+        }
+
+        .persona-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .persona-header {
+            background: var(--primary);
+            color: white;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .persona-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            flex-shrink: 0;
+            letter-spacing: -1px;
+        }
+
+        .persona-meta strong {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .persona-meta span {
+            font-size: 12px;
+            opacity: 0.65;
+        }
+
+        .persona-quote {
+            padding: 16px 24px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            font-style: italic;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .persona-body {
+            padding: 20px 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .persona-col-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .persona-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .persona-list li {
+            font-size: 12px;
+            color: var(--text);
+            line-height: 1.4;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .persona-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 10px;
+        }
+
+        .persona-list.frustrations li::before {
+            content: '×';
+            color: #EF4444;
+        }
+
+        .persona-footer {
+            padding: 12px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ── Empathy Map ── */
+        .empathy-map {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 32px;
+        }
+
+        .empathy-header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .empathy-header strong {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .empathy-header span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .empathy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .empathy-quadrant {
+            padding: 20px 24px;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .empathy-quadrant:nth-child(2),
+        .empathy-quadrant:nth-child(4) {
+            border-right: none;
+        }
+
+        .empathy-quadrant:nth-child(3),
+        .empathy-quadrant:nth-child(4) {
+            border-bottom: none;
+        }
+
+        .empathy-q-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .empathy-item {
+            font-size: 12px;
+            color: var(--text);
+            padding: 6px 10px;
+            background: var(--surface);
+            border-radius: 4px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--border);
+            line-height: 1.4;
+        }
+
+        .empathy-item.says { border-left-color: #2563EB; }
+        .empathy-item.thinks { border-left-color: #0F2044; }
+        .empathy-item.does { border-left-color: #22C55E; }
+        .empathy-item.feels { border-left-color: #F59E0B; }
+
+        /* ── User Journey Map ── */
+        .journey-section {
+            margin-top: 56px;
+        }
+
+        .journey-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .journey-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .journey-row.before { border-color: #FECACA; }
+        .journey-row.after { border-color: #BBF7D0; }
+
+        .journey-stage {
+            padding: 16px;
+            border-right: 1px solid var(--border);
+            position: relative;
+        }
+
+        .journey-row.before .journey-stage { border-right-color: #FECACA; background: #FFF8F8; }
+        .journey-row.after .journey-stage { border-right-color: #BBF7D0; background: #F0FDF4; }
+
+        .journey-stage:last-child { border-right: none; }
+
+        .journey-stage-num {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .journey-stage-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .journey-stage-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .journey-emotion {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        /* ── Live Design System Tokens ── */
+        .ds-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .ds-block {
+            margin-bottom: 24px;
+        }
+
+        .ds-block-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .color-swatch-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .color-swatch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .swatch-chip {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .swatch-info strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .swatch-info span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'SFMono-Regular', 'Consolas', monospace;
+        }
+
+        .type-specimen-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .type-specimen {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .type-specimen-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            width: 40px;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .spacing-bar-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .spacing-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .spacing-bar-fill {
+            background: var(--accent);
+            height: 10px;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        .spacing-bar-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ── Team callout ── */
+        .team-callout {
+            margin-top: 32px;
+            padding: 24px;
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .team-member-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .team-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: #fff;
+        }
+
+        .team-member-info strong { display: block; font-size: 13px; font-weight: 600; }
+        .team-member-info span { font-size: 11px; color: var(--text-muted); }
+    </style>
+</head>
+
+<body>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">☀</button>
+
+    <!-- ════════════ HERO ════════════ -->
+    <section class="hero">
+        <div class="container">
+            <div class="overline">Case Study · 2018</div>
+            <h1>Parkbeheer NL</h1>
+            <p class="subtitle">My first enterprise government contract. I was the junior on a three-person agency team — responsible for screen design, interaction patterns, and weekly officer feedback sessions. We replaced a 20-year-old spreadsheet operation with a platform 120+ officers now use daily.</p>
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Client</div>
+                    <div class="meta-value">RVO Netherlands</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Junior Product Designer</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Agency</div>
+                    <div class="meta-value">Bakker & Van Houten, AMS</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">8 months</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Type</div>
+                    <div class="meta-value">Government Platform</div>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-num">923K</div>
+                    <div class="stat-label">Parking spaces managed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">40%</div>
+                    <div class="stat-label">Faster task completion</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">0</div>
+                    <div class="stat-label">Training sessions needed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">42</div>
+                    <div class="stat-label">Municipalities served</div>
+                </div>
+            </div>
+            <div class="hero-mockup">
+                <!-- Main dashboard -->
+                <div class="hero-screen main">
+                    <div class="screen-chrome">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="url">parkbeheer.rvo.nl/overview</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#overview" tabindex="-1"></iframe>
+                </div>
+                <!-- Left: Map -->
+                <div class="hero-screen left">
+                    <div class="screen-chrome">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="url">parkbeheer.rvo.nl/map</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#map" tabindex="-1"></iframe>
+                </div>
+                <!-- Right: Detail -->
+                <div class="hero-screen right">
+                    <div class="screen-chrome">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="url">parkbeheer.rvo.nl/car-parks/AM80</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#detail" tabindex="-1"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ QUICK INTRO ════════════ -->
+    <section style="padding: 0;">
+        <div class="container">
+            <div style="border-left: 3px solid var(--accent, #2563EB); padding: 20px 24px; background: var(--surface); border-radius: 0 8px 8px 0; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-muted);">
+                <strong style="color: var(--text); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">What you're about to read</strong><br style="margin-bottom: 8px;">
+                The Dutch government manages over 923,000 parking spaces across 42 cities — and until 2018, the entire operation ran on shared Excel files and a DOS-era terminal system. As the junior designer on a three-person agency team, I helped design a modern platform that replaced the spreadsheets. You'll see the problem through the eyes of two real officers, the design process, and the ten screens that now run the operation.
+                <span style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-muted); opacity: 0.7;">Reading time: ~12 minutes</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ THE PROBLEM ════════════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">The Problem</div>
+                <h2>"We print 40 pages of spreadsheets every Monday morning."</h2>
+                <p>That's how Jan de Vries, a senior parking officer in Amsterdam, described his weekly routine. The
+                    Dutch National Enterprise Agency (RVO) manages over 923,000 parking spaces across 42 municipalities
+                    — and until 2018, the entire operation ran on shared Excel files, email chains, and a legacy DOS-era
+                    terminal system that hadn't been updated since 1997.</p>
+            </div>
+            <div class="img-grid">
+                <div class="img-card">
+                    <img src="images/parkbeheer_field_research_1_1773213037112.png" alt="Field research session">
+                    <div class="caption"><strong>Discovery Sessions</strong> — We spent 3 weeks interviewing 14 parking officers, 4 zone managers, and 2 policy directors across 5 municipalities.</div>
+                </div>
+                <div class="img-card">
+                    <img src="images/parkbeheer_brand_identity_2_1773213057611.png" alt="Brand identity">
+                    <div class="caption"><strong>Parkbeheer NL Brand</strong> — Created alongside the product. The navy "P" mark became the symbol of the modernisation effort.</div>
+                </div>
+            </div>
+            <div
+                style="margin-top:40px;padding:32px;background:var(--surface);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;">
+                <p style="font-size:18px;font-style:italic;color:var(--text);line-height:1.6;margin-bottom:12px;">"I
+                    have 3 browser tabs, 2 Excel files, and a paper notebook open just to check if one car park's EV
+                    chargers are compliant. There has to be a better way."</p>
+                <p style="font-size:13px;color:var(--text-muted);font-weight:600;">— Wen Li Tay, Parking Operations
+                    Officer, North-East Zone</p>
+            </div>
+            <div style="margin-top:40px;">
+                <h3 style="font-size:18px;font-weight:600;margin-bottom:16px;">Key pain points uncovered</h3>
+                <div class="process-steps" style="grid-template-columns:repeat(4,1fr);">
+                    <div class="process-step">
+                        <div class="step-num" style="background:#EF4444;">!</div>
+                        <h4>Context switching</h4>
+                        <p>Officers toggled between 5+ tools daily. Average time to answer a simple query: 12 minutes.
+                        </p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-num" style="background:#EF4444;">!</div>
+                        <h4>No spatial awareness</h4>
+                        <p>No map view existed. Officers couldn't see which zones had capacity issues without manual
+                            counting.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-num" style="background:#F59E0B;">!</div>
+                        <h4>Compliance blind spots</h4>
+                        <p>EV-charging quotas were tracked in a separate spreadsheet. Two zones missed their Q3 targets
+                            entirely.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-num" style="background:#F59E0B;">!</div>
+                        <h4>Bulk operations impossible</h4>
+                        <p>Updating status for 50 car parks meant 50 individual edits. No bulk select, no export, no
+                            audit trail.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ PERSONAS ════════════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">Users</div>
+                <h2>Who We Were Designing For</h2>
+                <p>Every design decision maps back to two people. Jan and Wen Li aren't composite archetypes — they're real officers who were in our testing sessions from week three. Their names are on the feedback sticky notes in our archive.</p>
+            </div>
+
+            <div class="personas-grid">
+
+                <!-- Persona 1: Jan -->
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="persona-avatar">JV</div>
+                        <div class="persona-meta">
+                            <strong>Jan de Vries, 54</strong>
+                            <span>Senior Parking Officer · Central Zone, Amsterdam</span>
+                        </div>
+                    </div>
+                    <div class="persona-quote">"I know this city's parking better than my own kitchen — but this system is slower than 1997."</div>
+                    <div class="persona-body">
+                        <div>
+                            <div class="persona-col-title">Goals</div>
+                            <ul class="persona-list">
+                                <li>Monday overview done in under 10 minutes</li>
+                                <li>Catch EV quota shortfalls before quarterly review</li>
+                                <li>Not call Amsterdam South for basic data</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="persona-col-title">Frustrations</div>
+                            <ul class="persona-list frustrations">
+                                <li>Prints 40 pages every Monday. Has done since 2001.</li>
+                                <li>Can't see all zones in one view</li>
+                                <li>50 car parks = 50 individual status edits</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="persona-footer">Windows 7 · Excel 2013 · Two monitors · Prints everything · 23 years at RVO</div>
+                </div>
+
+                <!-- Persona 2: Wen Li -->
+                <div class="persona-card">
+                    <div class="persona-header" style="background:#1E3A8A;">
+                        <div class="persona-avatar">WL</div>
+                        <div class="persona-meta">
+                            <strong>Wen Li Tay, 31</strong>
+                            <span>Parking Operations Officer · North-East Zone</span>
+                        </div>
+                    </div>
+                    <div class="persona-quote">"If I can't export it, I can't report it. And if I can't report it, nothing ever changes."</div>
+                    <div class="persona-body">
+                        <div>
+                            <div class="persona-col-title">Goals</div>
+                            <ul class="persona-list">
+                                <li>Run Q4 EV compliance export in 3 clicks or fewer</li>
+                                <li>One source of truth — no cross-referencing</li>
+                                <li>Data ready for policy meetings, not just for ops</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="persona-col-title">Frustrations</div>
+                            <ul class="persona-list frustrations">
+                                <li>Compliance data lives in a separate spreadsheet</li>
+                                <li>No bulk export — manually copy-pasting rows</li>
+                                <li>Three browser tabs to answer one question</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="persona-footer">Chrome · 10+ tabs open · Spreadsheet-native · 3 years at RVO · Wants everything integrated</div>
+                </div>
+
+            </div>
+
+            <!-- Empathy Map -->
+            <div class="empathy-map">
+                <div class="empathy-header">
+                    <strong>Empathy Map · Wen Li Tay</strong>
+                    <span>— Quarterly EV compliance check · As-is state</span>
+                </div>
+                <div class="empathy-grid">
+                    <div class="empathy-quadrant">
+                        <div class="empathy-q-label">Says</div>
+                        <div class="empathy-item says">"I have to open three tabs just to check one thing."</div>
+                        <div class="empathy-item says">"Why isn't this in one place?"</div>
+                        <div class="empathy-item says">"Can you just send me the Excel file?"</div>
+                    </div>
+                    <div class="empathy-quadrant">
+                        <div class="empathy-q-label">Thinks</div>
+                        <div class="empathy-item thinks">This will take me 40 minutes and I'll probably miss something.</div>
+                        <div class="empathy-item thinks">I shouldn't need a separate system for compliance data.</div>
+                        <div class="empathy-item thinks">My manager expects this report by 3pm and it's already 1.</div>
+                    </div>
+                    <div class="empathy-quadrant">
+                        <div class="empathy-q-label">Does</div>
+                        <div class="empathy-item does">Opens 3 browser tabs + 2 Excel files simultaneously</div>
+                        <div class="empathy-item does">Manually counts non-compliant lots row by row</div>
+                        <div class="empathy-item does">Emails herself screenshots as a backup record</div>
+                    </div>
+                    <div class="empathy-quadrant">
+                        <div class="empathy-q-label">Feels</div>
+                        <div class="empathy-item feels">Frustrated that simple tasks are this complex</div>
+                        <div class="empathy-item feels">Anxious she'll miss a non-compliant zone in the data</div>
+                        <div class="empathy-item feels">Resigned — "this is just how it is"</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ════════════ PROCESS ════════════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">Process</div>
+                <h2>From Field Rides to Final Screens</h2>
+                <p>I joined the project three weeks after kickoff. Sanne, our senior designer, had already completed the stakeholder interviews. Dirk, the UX lead, was deep in information architecture. My brief: turn the research findings into screens that officers could actually react to. The fieldwork they'd done shaped everything I designed.</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-num">1</div>
+                    <h4>Discovery — 8 weeks</h4>
+                    <p>14 stakeholder interviews. 6 field ride-alongs with parking officers. Competitive audit of 3
+                        international parking systems (Singapore, Copenhagen, Melbourne). Mapped 47 distinct user tasks
+                        into 5 critical workflows.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">2</div>
+                    <h4>Design & Build — 16 weeks</h4>
+                    <p>Core dashboard, car park detail pages, lot allocation tracking. We designed for data density —
+                        these screens needed to replace physical printouts, so every pixel earned its place. Weekly
+                        reviews with the RVO operations team.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">3</div>
+                    <h4>Scale & Iterate — 8 weeks</h4>
+                    <p>Added the interactive map after officers requested spatial context. Built data viz guidelines
+                        when we realized 4 teams were creating charts inconsistently. Documented the design system for
+                        the development handoff.</p>
+                </div>
+            </div>
+            <div style="margin-top:40px;">
+                <div class="timeline">
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-pill">Discovery</div>
+                        <div class="timeline-dates">Jan – Mar 2018</div>
+                        <div class="timeline-desc">Stakeholder interviews, field research, competitive analysis</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-pill">Design & Build</div>
+                        <div class="timeline-dates">Apr – Sep 2018</div>
+                        <div class="timeline-desc">Dashboard, car park management, lot allocation</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-pill">Scale & Iterate</div>
+                        <div class="timeline-dates">Oct – Dec 2018</div>
+                        <div class="timeline-desc">Map view, data viz guidelines, design system handoff</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-callout">
+                <div class="team-member-chip">
+                    <div class="team-avatar" style="background:#0F2044;">SB</div>
+                    <div class="team-member-info">
+                        <strong>Sanne Bakker</strong>
+                        <span>Senior Designer · Led discovery, stakeholder workshops, officer interviews</span>
+                    </div>
+                </div>
+                <div class="team-member-chip">
+                    <div class="team-avatar" style="background:#1E3A8A;">DvH</div>
+                    <div class="team-member-info">
+                        <strong>Dirk van Houten</strong>
+                        <span>UX Lead · Information architecture, design system, dev handoff</span>
+                    </div>
+                </div>
+                <div class="team-member-chip">
+                    <div class="team-avatar" style="background:#2563EB;">Me</div>
+                    <div class="team-member-info">
+                        <strong>Me (Junior Designer)</strong>
+                        <span>Screen design, wireframes, interaction patterns, usability sessions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ EXPLORATION ════════════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">Early Thinking</div>
+                <h2>From Notebook to Figma</h2>
+                <p>Sanne kept saying "make it stupider" every time I over-complicated a layout. These are from early April 2018, after the first officer interviews — sketched on trains, in meeting rooms, and at my desk at the agency. The dashboard went through six versions before we felt right about it.</p>
+            </div>
+            <div class="img-grid">
+                <div class="img-card">
+                    <img src="images/parkbeheer_notebook_sketches_3_1773213074897.png" alt="Notebook sketches">
+                    <div class="caption"><strong>Notebook sketches</strong> — Sidebar placement, chart hierarchy, data table positioning. The coffee stain on page 3 is real.</div>
+                </div>
+                <div class="img-card">
+                    <img src="images/parkbeheer_mid_fid_wireframes_4_1773213090119.png" alt="Mid-fidelity wireframes">
+                    <div class="caption"><strong>Mid-fidelity wireframes</strong> — Three layouts tested with officers in 20-minute guerrilla sessions. One of them immediately scrolled past the charts to the table.</div>
+                </div>
+                <div class="img-card">
+                    <img src="images/parkbeheer_visual_language_5_1773213105805.png" alt="Visual language">
+                    <div class="caption"><strong>Visual language</strong> — Navy (#0F2044) because officers said brighter UIs caused eye strain on 8-hour shifts. We tested four colour systems.</div>
+                </div>
+            </div>
+
+            <!-- Design Variations + Before/After side by side -->
+            <div class="explore-grid">
+                <div>
+                    <h3>Three layout directions</h3>
+                    <p>Option A — sidebar + top cards — won. Officers needed the data table immediately visible, not below a fold. Their most frequent task was finding a specific car park by number, so the search had to be in the viewport on load.</p>
+                    <img src="images/parkbeheer_three_layouts_6_1773213162993.png" alt="Three layout directions" class="full-img" style="margin-top:16px;">
+                </div>
+                <div>
+                    <h3>The data table: v1 → v2</h3>
+                    <p>V1 was a plain HTML table. Officers couldn't filter, select, or export. V2 added filter chips, status pills, bulk select, and pagination. Average "find a car park" time: 12 minutes → 90 seconds.</p>
+                    <img src="images/parkbeheer_data_table_7_1773213179106.png" alt="Data table v1 vs v2" class="full-img" style="margin-top:16px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ DESIGN SYSTEM ════════════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">Foundation</div>
+                <h2>The Design Language — Live</h2>
+                <p>Dirk built the design system. My job was to apply it consistently across every screen. When I audited the existing internal tools at the start, I found 14 different shades of blue across departments. The system below is extracted directly from the live prototype — every token, every colour, every spacing value is what's actually running in the app above.</p>
+            </div>
+
+            <img src="images/parkbeheer_design_system_8_1773213194598.png" alt="Design system component sheet" class="full-img" style="margin-bottom:48px;">
+
+            <div class="ds-grid">
+
+                <!-- Colour Palette -->
+                <div>
+                    <div class="ds-block">
+                        <div class="ds-block-title">Brand Colours</div>
+                        <div class="color-swatch-row">
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#0F2044;"></div>
+                                <div class="swatch-info"><strong>Primary / Navy</strong><span>#0F2044</span></div>
+                            </div>
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#1E3A8A;"></div>
+                                <div class="swatch-info"><strong>Secondary / Blue</strong><span>#1E3A8A</span></div>
+                            </div>
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#2563EB;"></div>
+                                <div class="swatch-info"><strong>Accent / CTA Blue</strong><span>#2563EB</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ds-block">
+                        <div class="ds-block-title">Semantic Colours</div>
+                        <div class="color-swatch-row">
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#22C55E;"></div>
+                                <div class="swatch-info"><strong>Success / Active</strong><span>#22C55E</span></div>
+                            </div>
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#F59E0B;"></div>
+                                <div class="swatch-info"><strong>Warning / Review</strong><span>#F59E0B</span></div>
+                            </div>
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#EF4444;"></div>
+                                <div class="swatch-info"><strong>Danger / Terminated</strong><span>#EF4444</span></div>
+                            </div>
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#9CA3AF;"></div>
+                                <div class="swatch-info"><strong>Muted / Inactive</strong><span>#9CA3AF</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ds-block">
+                        <div class="ds-block-title">Surfaces</div>
+                        <div class="color-swatch-row">
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#FFFFFF;border:1px solid #E5E7EB;"></div>
+                                <div class="swatch-info"><strong>Canvas</strong><span>#FFFFFF</span></div>
+                            </div>
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#F9FAFB;"></div>
+                                <div class="swatch-info"><strong>Surface</strong><span>#F9FAFB</span></div>
+                            </div>
+                            <div class="color-swatch">
+                                <div class="swatch-chip" style="background:#E5E7EB;"></div>
+                                <div class="swatch-info"><strong>Border</strong><span>#E5E7EB</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typography -->
+                <div>
+                    <div class="ds-block">
+                        <div class="ds-block-title">Type Scale — Inter</div>
+                        <div class="type-specimen-row">
+                            <div class="type-specimen">
+                                <div class="type-specimen-label">32px</div>
+                                <div style="font-size:28px;font-weight:800;letter-spacing:-1px;line-height:1.1;color:#111827;">Overview</div>
+                            </div>
+                            <div class="type-specimen">
+                                <div class="type-specimen-label">24px</div>
+                                <div style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:#111827;">Car parks</div>
+                            </div>
+                            <div class="type-specimen">
+                                <div class="type-specimen-label">16px</div>
+                                <div style="font-size:16px;font-weight:600;color:#111827;">Section title</div>
+                            </div>
+                            <div class="type-specimen">
+                                <div class="type-specimen-label">14px</div>
+                                <div style="font-size:14px;font-weight:400;color:#111827;">Body text — data-dense by default</div>
+                            </div>
+                            <div class="type-specimen">
+                                <div class="type-specimen-label">12px</div>
+                                <div style="font-size:12px;font-weight:400;color:#6B7280;">Caption · label · helper text</div>
+                            </div>
+                            <div class="type-specimen">
+                                <div class="type-specimen-label">11px</div>
+                                <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#6B7280;">OVERLINE / TABLE HEADER</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacing + Components -->
+                <div>
+                    <div class="ds-block">
+                        <div class="ds-block-title">Spacing Scale</div>
+                        <div class="spacing-bar-row">
+                            <div class="spacing-bar"><div class="spacing-bar-fill" style="width:4px;"></div><div class="spacing-bar-label">4px — xs</div></div>
+                            <div class="spacing-bar"><div class="spacing-bar-fill" style="width:8px;"></div><div class="spacing-bar-label">8px — sm</div></div>
+                            <div class="spacing-bar"><div class="spacing-bar-fill" style="width:16px;"></div><div class="spacing-bar-label">16px — md</div></div>
+                            <div class="spacing-bar"><div class="spacing-bar-fill" style="width:24px;"></div><div class="spacing-bar-label">24px — lg</div></div>
+                            <div class="spacing-bar"><div class="spacing-bar-fill" style="width:32px;"></div><div class="spacing-bar-label">32px — xl</div></div>
+                            <div class="spacing-bar"><div class="spacing-bar-fill" style="width:48px;"></div><div class="spacing-bar-label">48px — 2xl</div></div>
+                        </div>
+                    </div>
+                    <div class="ds-block" style="margin-top:24px;">
+                        <div class="ds-block-title">Key Component States</div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                                <span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#DCFCE7;color:#166534;">Active</span>
+                                <span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#F3F4F6;color:#6B7280;">Inactive</span>
+                                <span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#FEE2E2;color:#991B1B;">Terminated</span>
+                            </div>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+                                <button style="padding:6px 14px;background:#0F2044;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;">Primary</button>
+                                <button style="padding:6px 14px;background:#fff;color:#111827;border:1px solid #E5E7EB;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;">Outline</button>
+                                <button style="padding:6px 14px;background:#2563EB;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;">CTA</button>
+                            </div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">
+                                <span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(37,99,235,0.08);color:#2563EB;border:1px solid rgba(37,99,235,0.2);">NEZ ×</span>
+                                <span style="padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(37,99,235,0.08);color:#2563EB;border:1px solid rgba(37,99,235,0.2);">US ×</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Journey Map -->
+            <div class="journey-section">
+                <div class="section-header" style="margin-bottom:24px;">
+                    <div class="overline">User Journey · Before → After</div>
+                    <h2>Wen Li's Monday Compliance Check</h2>
+                    <p>This is the task that defined the product. Five stages, two realities.</p>
+                </div>
+
+                <div class="journey-label" style="color:#EF4444;">Before — As-is (average 47 minutes)</div>
+                <div class="journey-row before">
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">01</div>
+                        <div class="journey-stage-title">Find last week's data</div>
+                        <div class="journey-stage-desc">Open email archive, search inbox for last month's zone report</div>
+                        <div class="journey-emotion">😐</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">02</div>
+                        <div class="journey-stage-title">Cross-reference zones</div>
+                        <div class="journey-stage-desc">Open Excel, match car parks to zones manually, row by row</div>
+                        <div class="journey-emotion">😔</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">03</div>
+                        <div class="journey-stage-title">Check status in terminal</div>
+                        <div class="journey-stage-desc">Open legacy DOS system, search each flagged car park individually</div>
+                        <div class="journey-emotion">😤</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">04</div>
+                        <div class="journey-stage-title">Build the report</div>
+                        <div class="journey-stage-desc">Copy-paste into Word, calculate totals manually, format for submission</div>
+                        <div class="journey-emotion">😡</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">05</div>
+                        <div class="journey-stage-title">Submit and wait</div>
+                        <div class="journey-stage-desc">Email to manager, 2-day wait for confirmation, then start corrections</div>
+                        <div class="journey-emotion">😞</div>
+                    </div>
+                </div>
+
+                <div class="journey-label" style="color:#22C55E;margin-top:8px;">After — Designed flow (average 3 minutes)</div>
+                <div class="journey-row after">
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">01</div>
+                        <div class="journey-stage-title">Log in</div>
+                        <div class="journey-stage-desc">Dashboard loads with zone status and EV compliance visible immediately</div>
+                        <div class="journey-emotion">😊</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">02</div>
+                        <div class="journey-stage-title">Filter</div>
+                        <div class="journey-stage-desc">Two filter chips — zone + type — narrows 923K spaces to the relevant 478</div>
+                        <div class="journey-emotion">🙂</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">03</div>
+                        <div class="journey-stage-title">Alert fires</div>
+                        <div class="journey-stage-desc">Amber banner appears automatically — EV quota at 8%, below the 15% target</div>
+                        <div class="journey-emotion">😮</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">04</div>
+                        <div class="journey-stage-title">Bulk select</div>
+                        <div class="journey-stage-desc">Checkbox selects all flagged rows in one click. Bulk bar appears instantly</div>
+                        <div class="journey-emotion">😌</div>
+                    </div>
+                    <div class="journey-stage">
+                        <div class="journey-stage-num">05</div>
+                        <div class="journey-stage-title">Export done</div>
+                        <div class="journey-stage-desc">CSV exported, attached to email, sent. Wen Li closes her laptop.</div>
+                        <div class="journey-emotion">😄</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ════════════ SCREENS ════════════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">Product</div>
+                <h2>The Screens That Replaced the Spreadsheets</h2>
+                <p>Ten interconnected screens designed to handle the critical workflows we identified in
+                    discovery. Each one was tested with real parking officers before reaching final fidelity.</p>
+            </div>
+
+            <!-- ── Screen 01: Dashboard ── -->
+            <div class="screen-section-header">
+                <div class="overline">Screen 01 · Main Dashboard</div>
+                <h3>One Screen to Replace Forty Pages</h3>
+                <p>Jan's Monday morning starts here. Three status cards give a real-time snapshot of all 923,000 spaces. Zone bars surface capacity issues at a glance. The data table below answers any specific query in under two seconds.</p>
+            </div>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="412" data-pin-y="166" data-color="#2563EB">
+                        <div class="ann-note-title" style="color:#2563EB;">Overview Cards</div>
+                        <div class="ann-note-body">Three charts replace 40 pages of Monday printouts — status, zone split, and type breakdown at a glance.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="350" data-pin-y="295" data-color="#6B7280">
+                        <div class="ann-note-title" style="color:#6B7280;">Filter Chips</div>
+                        <div class="ann-note-body">Active filters shown as dismissible chips — officers see exactly what's narrowing the list.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="browser-bar">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="url-bar">parkbeheer.rvo.nl/overview</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#overview" tabindex="-1"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1280 860" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="412" cy="166" r="6" fill="#2563EB" opacity="0.9"/>
+                        <circle cx="350" cy="295" r="6" fill="#6B7280" opacity="0.9"/>
+                        <circle cx="1210" cy="96" r="6" fill="#0F2044" opacity="0.9"/>
+                        <circle cx="760" cy="350" r="6" fill="#22C55E" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Main Dashboard — 923,021 spaces tracked. Zone and type breakdowns replace manual Excel tallies.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="1210" data-pin-y="96" data-color="#0F2044">
+                        <div class="ann-note-title" style="color:#0F2044;">Quick Actions</div>
+                        <div class="ann-note-body">Add, export, and bulk-edit always accessible. No sub-menu drilling.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="760" data-pin-y="350" data-color="#22C55E">
+                        <div class="ann-note-title" style="color:#22C55E;">Status Pills</div>
+                        <div class="ann-note-body">Active, Inactive, Terminated — colour-coded pills scannable faster than reading text.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+
+            <!-- ── Screen 02: Car Park Detail ── -->
+            <div class="screen-section-header">
+                <div class="overline">Screen 02 · Car Park Detail</div>
+                <h3>One Record, Seven Dimensions</h3>
+                <p>Every car park has a single record with seven tabs covering lots, maps, enforcement, land, and building features. Officers no longer need three browser tabs open to answer one question.</p>
+            </div>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="380" data-pin-y="280" data-color="#2563EB">
+                        <div class="ann-note-title" style="color:#2563EB;">Lot Composition</div>
+                        <div class="ann-note-body">Cars, motorcycles, lorries, others — one donut shows the full split. Total: 282 lots.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="560" data-pin-y="76" data-color="#6B7280">
+                        <div class="ann-note-title" style="color:#6B7280;">Tabbed Detail</div>
+                        <div class="ann-note-body">Seven tabs per car park. Navigate without leaving the record — no new page loads.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="browser-bar">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="url-bar">parkbeheer.rvo.nl/car-parks/AM80/lots</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#detail" tabindex="-1" style="height:900px;"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1280 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="380" cy="280" r="6" fill="#2563EB" opacity="0.9"/>
+                        <circle cx="560" cy="76" r="6" fill="#6B7280" opacity="0.9"/>
+                        <circle cx="640" cy="550" r="6" fill="#F59E0B" opacity="0.9"/>
+                        <circle cx="1050" cy="250" r="6" fill="#0F2044" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Car Park AM80 — Lots tab. Allocation donut on the left, seven-tab navigation at top, contextual panel on the right.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="640" data-pin-y="550" data-color="#F59E0B">
+                        <div class="ann-note-title" style="color:#F59E0B;">Compliance Row</div>
+                        <div class="ann-note-body">EV-charging count tracked per car park. Amber highlight when below quarterly target.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="1050" data-pin-y="250" data-color="#0F2044">
+                        <div class="ann-note-title" style="color:#0F2044;">Contextual Panel</div>
+                        <div class="ann-note-body">Related articles and comparison tools in-context — no separate lookup tool required.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+
+            <!-- ── Screen 03: Filtered List ── -->
+            <div class="screen-section-header">
+                <div class="overline">Screen 03 · Filtered List</div>
+                <h3>Filter Once, Act on Everything</h3>
+                <p>Wen Li's quarterly EV compliance check: two filter chips narrow 923K spaces to the relevant 478. Bulk select reveals the non-compliant ones. One click exports a CSV ready for policy review.</p>
+            </div>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="400" data-pin-y="76" data-color="#2563EB">
+                        <div class="ann-note-title" style="color:#2563EB;">Filter Chips</div>
+                        <div class="ann-note-body">Zone and type filters stack as dismissible chips — one click removes a filter without resetting the view.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="350" data-pin-y="118" data-color="#0F2044">
+                        <div class="ann-note-title" style="color:#0F2044;">Bulk Operations</div>
+                        <div class="ann-note-body">Select multiple car parks — edit, delete, or export in one action. Critical for updating 50+ records.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="browser-bar">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="url-bar">parkbeheer.rvo.nl/car-parks?zone=NEZ&amp;type=US</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#list" tabindex="-1"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1280 860" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="400" cy="76" r="6" fill="#2563EB" opacity="0.9"/>
+                        <circle cx="350" cy="118" r="6" fill="#0F2044" opacity="0.9"/>
+                        <circle cx="1100" cy="820" r="6" fill="#6B7280" opacity="0.9"/>
+                        <circle cx="750" cy="160" r="6" fill="#22C55E" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Filtered List — 12 results in NEZ zone, Underground type. Bulk select + CSV export was the most-used feature within 2 weeks of launch.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="750" data-pin-y="160" data-color="#22C55E">
+                        <div class="ann-note-title" style="color:#22C55E;">Row Selection</div>
+                        <div class="ann-note-body">Selected row highlighted with checkbox. Shift-click for multi-select — Wen Li's 3-click export workflow.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="1100" data-pin-y="820" data-color="#6B7280">
+                        <div class="ann-note-title" style="color:#6B7280;">Pagination</div>
+                        <div class="ann-note-body">478 records, 12 per page. "Showing 1–12 of 478" eliminates the "how many are there?" question.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+
+            <!-- ── Screen 04: Map View ── -->
+            <div class="screen-section-header">
+                <div class="overline">Screen 04 · Interactive Map</div>
+                <h3>The View That Wasn't in the Brief</h3>
+                <p>After Phase 1 testing, officers requested one thing above all: a map. Cluster markers aggregate car parks by density. Hover to preview counts before committing to a zoom. CCTV and CPG gantry overlays toggle independently.</p>
+            </div>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="665" data-pin-y="182" data-color="#2563EB">
+                        <div class="ann-note-title" style="color:#2563EB;">Cluster Markers</div>
+                        <div class="ann-note-body">421 car parks aggregated into one tap target. Zooms to street level — no manual coordinates needed.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="310" data-pin-y="80" data-color="#6B7280">
+                        <div class="ann-note-title" style="color:#6B7280;">Spatial Search</div>
+                        <div class="ann-note-body">Search by address or car park number — map flies to result. Added after officers drove to the wrong zone.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="browser-bar">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="url-bar">parkbeheer.rvo.nl/map</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#map" tabindex="-1"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1280 860" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="665" cy="182" r="6" fill="#2563EB" opacity="0.9"/>
+                        <circle cx="310" cy="80" r="6" fill="#6B7280" opacity="0.9"/>
+                        <circle cx="1100" cy="180" r="6" fill="#0F2044" opacity="0.9"/>
+                        <circle cx="1070" cy="720" r="6" fill="#6B7280" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Interactive Map — Netherlands with cluster markers. Added post-testing at officer request. Most-loved feature at launch.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="1100" data-pin-y="180" data-color="#0F2044">
+                        <div class="ann-note-title" style="color:#0F2044;">Layer Controls</div>
+                        <div class="ann-note-body">CCTV and CPG gantry overlays toggle independently — inspectors see only what they need.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="1070" data-pin-y="720" data-color="#6B7280">
+                        <div class="ann-note-title" style="color:#6B7280;">Zoom Controls</div>
+                        <div class="ann-note-body">+/− respects the cluster hierarchy — zooming in dissolves clusters into individual markers.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+
+            <!-- ── Screen 05: Lots Allocation ── -->
+            <div class="screen-section-header">
+                <div class="overline">Screen 05 · Lots Allocation</div>
+                <h3>Compliance Visible at a Glance</h3>
+                <p>The lots allocation screen exposes every lot type's breakdown with inline bars that make quota deviation immediately visible. A warning banner fires automatically when any zone misses its EV charging target.</p>
+            </div>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="750" data-pin-y="68" data-color="#F59E0B">
+                        <div class="ann-note-title" style="color:#F59E0B;">Proactive Alert</div>
+                        <div class="ann-note-body">EV-charging below Q4 target surfaces automatically — no officer needs to remember to check compliance.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="640" data-pin-y="344" data-color="#F59E0B">
+                        <div class="ann-note-title" style="color:#F59E0B;">Flagged Row</div>
+                        <div class="ann-note-body">Amber highlight draws the eye to the problem lot type. Proportion bar and "Review" pill eliminate ambiguity.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="browser-bar">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="url-bar">parkbeheer.rvo.nl/car-parks/AM80/lots/allocation</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#lots" tabindex="-1"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1280 860" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="750" cy="68" r="6" fill="#F59E0B" opacity="0.9"/>
+                        <circle cx="640" cy="344" r="6" fill="#F59E0B" opacity="0.9"/>
+                        <circle cx="920" cy="450" r="6" fill="#2563EB" opacity="0.9"/>
+                        <circle cx="560" cy="175" r="6" fill="#6B7280" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Lots Allocation — expanded view with inline proportion bars. Warning banner triggers automatically when EV quota is missed.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="920" data-pin-y="450" data-color="#2563EB">
+                        <div class="ann-note-title" style="color:#2563EB;">Inline Bars</div>
+                        <div class="ann-note-body">Every lot type shows a proportion bar + percentage — allocation balance readable without calculating.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="560" data-pin-y="175" data-color="#6B7280">
+                        <div class="ann-note-title" style="color:#6B7280;">Category Totals</div>
+                        <div class="ann-note-body">Four colour-coded totals at the top: cars, motorcycles, lorry, others. Matches the donut on the detail page.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+
+            <!-- ── Screen 06: Guided Tour ── -->
+            <div class="screen-section-header">
+                <div class="overline">Screen 06 · Guided Tour</div>
+                <h3>No Training Sessions. Just a Four-Step Tour.</h3>
+                <p>When a new officer logs in for the first time, a four-step guided tour walks them through the platform. Each step spotlights one UI element, explains it in plain language, and moves on. Officers skip it after 2 minutes and never open the help docs. That's the goal.</p>
+            </div>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="690" data-pin-y="200" data-color="#2563EB">
+                        <div class="ann-note-title" style="color:#2563EB;">Spotlight Focus</div>
+                        <div class="ann-note-body">A targeted highlight isolates the element being explained. Everything else dims. No cognitive overload.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="252" data-pin-y="380" data-color="#0F2044">
+                        <div class="ann-note-title" style="color:#0F2044;">Step Progress</div>
+                        <div class="ann-note-body">Four dots — filled, elongated, or empty — show progress without numbering every step. Less anxiety, more momentum.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="browser-bar">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="url-bar">parkbeheer.rvo.nl/overview?tour=2</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#tour" tabindex="-1"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1280 860" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="690" cy="200" r="6" fill="#2563EB" opacity="0.9"/>
+                        <circle cx="252" cy="380" r="6" fill="#0F2044" opacity="0.9"/>
+                        <circle cx="530" cy="310" r="6" fill="#22C55E" opacity="0.9"/>
+                        <circle cx="530" cy="430" r="6" fill="#6B7280" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Guided Tour — Step 2 of 4. Spotlight on the stats cards. Officers complete the tour in under 2 minutes.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="530" data-pin-y="310" data-color="#22C55E">
+                        <div class="ann-note-title" style="color:#22C55E;">Plain Language</div>
+                        <div class="ann-note-body">Tooltip copy written for a parking officer, not a developer. Active voice, one concept per step.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="530" data-pin-y="430" data-color="#6B7280">
+                        <div class="ann-note-title" style="color:#6B7280;">Skip Anytime</div>
+                        <div class="ann-note-body">"Skip tour" is always visible — no forced walkthroughs. Officers who don't need it aren't delayed.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+
+            <!-- ── Screen 07: Settings ── -->
+            <div class="screen-section-header">
+                <div class="overline">Screen 07 · Settings</div>
+                <h3>Every Officer Controls Their Own Context</h3>
+                <p>Settings is organised into four groups — Account, Preferences, Data, and System — covering 14 distinct configuration areas. From zone monitoring defaults to notification thresholds to scheduled exports, every officer has a workspace that matches how they work.</p>
+            </div>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="200" data-pin-y="200" data-color="#2563EB">
+                        <div class="ann-note-title" style="color:#2563EB;">Category Nav</div>
+                        <div class="ann-note-body">14 settings items across 4 logical groups. Scannability tested with officers — no section took more than 3 seconds to find.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="640" data-pin-y="200" data-color="#0F2044">
+                        <div class="ann-note-title" style="color:#0F2044;">Profile & Zone</div>
+                        <div class="ann-note-body">Name, role, and primary zone are all editable. Zone preference cascades to dashboard defaults and notification filters.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="browser-bar">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="url-bar">parkbeheer.rvo.nl/settings</div>
+                    </div>
+                    <iframe src="parkbeheer-app.html#settings" tabindex="-1" style="height:960px;"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1280 960" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="200" cy="200" r="6" fill="#2563EB" opacity="0.9"/>
+                        <circle cx="640" cy="200" r="6" fill="#0F2044" opacity="0.9"/>
+                        <circle cx="640" cy="580" r="6" fill="#F59E0B" opacity="0.9"/>
+                        <circle cx="640" cy="760" r="6" fill="#22C55E" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Settings — Profile tab. 14 configuration areas across 4 groups. No training docs needed.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="640" data-pin-y="580" data-color="#F59E0B">
+                        <div class="ann-note-title" style="color:#F59E0B;">Notification Rules</div>
+                        <div class="ann-note-body">Toggle-based rules for EV alerts, weekly summaries, and status change emails. Officers configure exactly what fires — no noise.</div>
+                    </div>
+                    <div class="ann-note" data-pin-x="640" data-pin-y="760" data-color="#22C55E">
+                        <div class="ann-note-title" style="color:#22C55E;">Team Directory</div>
+                        <div class="ann-note-body">Manage team members and roles inline. Admins can invite officers and set zone-level permissions without leaving the app.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+
+            <!-- ── Supporting Screens ── -->
+            <div class="screen-section-header">
+                <div class="overline">Supporting Screens</div>
+                <h3>Onboarding, Guidelines &amp; Architecture</h3>
+                <p>Three more screens round out the system — a self-guided welcome flow, data visualisation standards for the four development teams, and the full information architecture map for the dev handoff.</p>
+            </div>
+            <div class="aux-screens-grid">
+                <div>
+                    <div class="overline" style="color:var(--accent);font-size:10px;margin-bottom:8px;">Screen 08 · Onboarding</div>
+                    <div class="screen-embed">
+                        <div class="browser-bar">
+                            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                            <div class="url-bar">parkbeheer.rvo.nl/welcome</div>
+                        </div>
+                        <iframe src="parkbeheer-app.html#onboarding" tabindex="-1" style="height:520px;"></iframe>
+                        <svg class="ann-svg" viewBox="0 0 1280 520" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"></svg>
+                        <div class="screen-caption">Welcome flow — step-by-step setup. Zero training sessions required.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="overline" style="color:var(--accent);font-size:10px;margin-bottom:8px;">Screen 09 · Data Viz Guidelines</div>
+                    <div class="screen-embed">
+                        <div class="browser-bar">
+                            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                            <div class="url-bar">parkbeheer.rvo.nl/knowledge/dataviz-guidelines</div>
+                        </div>
+                        <iframe src="parkbeheer-app.html#dataviz" tabindex="-1" style="height:460px;"></iframe>
+                        <svg class="ann-svg" viewBox="0 0 1280 460" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"></svg>
+                        <div class="screen-caption">DataViz v1.2 — 5-page doc covering donuts, bar charts, and accessibility rules.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="overline" style="color:var(--accent);font-size:10px;margin-bottom:8px;">Screen 10 · Information Architecture</div>
+                    <div class="screen-embed">
+                        <div class="browser-bar">
+                            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                            <div class="url-bar">parkbeheer.rvo.nl/help/information-architecture</div>
+                        </div>
+                        <iframe src="parkbeheer-app.html#ia" tabindex="-1" style="height:500px;"></iframe>
+                        <svg class="ann-svg" viewBox="0 0 1280 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"></svg>
+                        <div class="screen-caption">Full IA tree — all routes, sections, and modal states documented for handoff.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ TESTING & WHAT CHANGED ════════════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">Validation</div>
+                <h2>"That's Not How I'd Do It"</h2>
+                <p>We ran 3 rounds of moderated usability testing with 12 parking officers across 4 municipalities. Each
+                    round was 5 sessions × 45 minutes. We gave officers real tasks (“find all inactive car parks in the
+                    East Zone”) and timed them. Some results surprised us.</p>
+            </div>
+            <div class="img-grid">
+                <div class="img-card">
+                    <img src="images/parkbeheer_affinity_wall_12_1773221346845.png" alt="Research synthesis" class="full-img">
+                    <div class="caption"><strong>Research Synthesis Wall</strong>Sticky notes from Round 2 testing.
+                        Green = validated, yellow = friction, red = blocking issue that shipped a redesign.</div>
+                </div>
+                <div class="img-card">
+                    <img src="images/parkbeheer_user_testing_13_1773221364955.png" alt="User testing session" class="full-img">
+                    <div class="caption"><strong>Testing at RVO Offices</strong>Moderated sessions with officers using
+                        the prototype on their own laptops, at their own desks, with their own data.</div>
+                </div>
+            </div>
+
+            <!-- What we found -->
+            <div style="margin-top:48px;">
+                <h3 style="font-size:18px;font-weight:600;margin-bottom:20px;">What testing revealed — and what we
+                    changed</h3>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-num" style="background:#22C55E;">1</div>
+                        <h4>Finding: Table worked, charts didn't</h4>
+                        <p>95% task success on table search. But only 62% could read the zone bar chart correctly.
+                            <strong>We changed it:</strong> Added numerical labels directly on bars and simplified the
+                            legend from 7 items to 5.
+                        </p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-num" style="background:#F59E0B;">2</div>
+                        <h4>Finding: Map was confusing at zoom</h4>
+                        <p>Officers loved the map concept but got lost zooming in. Clusters would split at awkward zoom
+                            levels. <strong>We changed it:</strong> Added a cluster tooltip on hover (before click) so
+                            officers could preview car park counts without committing to a zoom.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-num" style="background:#EF4444;">3</div>
+                        <h4>Finding: Bulk export was critical</h4>
+                        <p>4 out of 5 officers tried to export data in the first session. It wasn't in the Phase 1 spec.
+                            <strong>We added it:</strong> Bulk select + CSV export became the most-used feature within 2
+                            weeks of launch.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post-testing quote -->
+            <div
+                style="margin-top:40px;padding:32px;background:var(--bg);border-left:4px solid #22C55E;border-radius:0 8px 8px 0;">
+                <p style="font-size:18px;font-style:italic;color:var(--text);line-height:1.6;margin-bottom:12px;">"I
+                    just did in 2 minutes what used to take me half a Monday morning. And I didn't need anyone to show
+                    me how."</p>
+                <p style="font-size:13px;color:var(--text-muted);font-weight:600;">— Jan de Vries, Senior Parking
+                    Officer, Central Zone · After Round 3 testing</p>
+            </div>
+
+            <div class="img-grid" style="margin-top:40px;">
+                <div class="img-card">
+                    <img src="images/parkbeheer_launch_day_14_1773221380922.png" alt="Launch day">
+                    <div class="caption"><strong>Launch day, December 2018</strong> — The RVO operations team reviewing the live dashboard for the first time. All 42 municipalities onboarded within 3 weeks.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ IMPACT ════════════ -->
+    <section class="cta-section">
+        <div class="container">
+            <div
+                style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.5);margin-bottom:12px;">
+                Impact</div>
+            <h3 style="font-size:28px;margin-bottom:16px;">What Happened After Launch</h3>
+            <p style="max-width:640px;margin:0 auto 32px;">The system went live in December 2018. Within 6 months:</p>
+            <div class="stats-row" style="margin-top:0;max-width:900px;margin-left:auto;margin-right:auto;">
+                <div class="stat-card">
+                    <div class="stat-num">40%</div>
+                    <div class="stat-label">Reduction in average task time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">0</div>
+                    <div class="stat-label">Formal training sessions conducted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">120+</div>
+                    <div class="stat-label">Officers actively using the system</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">100%</div>
+                    <div class="stat-label">EV-charging quota compliance (up from 60%)</div>
+                </div>
+            </div>
+            <div style="margin-top:40px;">
+                <a href="parkbeheer-app.html#overview" class="cta-btn">Explore the Live Prototype →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ REFLECTIONS ════════════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="overline">Reflections</div>
+                <h2>What I Know Now That I Didn't Then</h2>
+                <p>I was 25 when this wrapped. It was the most technically complex thing I'd ever designed. Looking back from here:</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-num">1</div>
+                    <h4>Use real data from week one</h4>
+                    <p>Round 1 testing used dummy car park numbers. Officers laughed at them and couldn't engage. Round 2, we used their actual data — the feedback immediately became specific, honest, and actionable. Never use dummy data for enterprise tools.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">2</div>
+                    <h4>The map should have been in the brief</h4>
+                    <p>It was the most-requested feature in testing and it wasn't in scope. I should have flagged spatial context as a core need during the kickoff, not six weeks in. I'd learned this from Jan's field ride-along on day one — I just hadn't pushed for it.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-num">3</div>
+                    <h4>Push back sooner, more specifically</h4>
+                    <p>As the junior, I deferred too much in the early sprints. When a layout felt wrong I'd try to solve it alone before raising it. Sanne always had a sharper take. I should have flagged issues earlier and let the senior brains help faster.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ PREV/NEXT NAV ════════════ -->
+    <nav class="proj-nav">
+        <a href="index.html" class="proj-nav-link prev">
+            <span class="proj-nav-label">← Portfolio</span>
+            <span class="proj-nav-title">Back to All Work</span>
+            <span class="proj-nav-arrow">←</span>
+        </a>
+        <a href="chargeur.html" class="proj-nav-link next">
+            <span class="proj-nav-label">Next →</span>
+            <span class="proj-nav-title">Chargeur</span>
+            <span class="proj-nav-arrow">→</span>
+        </a>
+    </nav>
+
+    <!-- ════════════ FOOTER ════════════ -->
+    <footer>
+        <div class="container">
+            <p>Parkbeheer NL · Designed in 2018 · Case study written with care</p>
+        </div>
+    </footer>
+
+    <script>
+(function() {
+    function scaleEmbeds() {
+        document.querySelectorAll('.screen-embed').forEach(function(embed) {
+            var w = embed.clientWidth;
+            var scale = Math.min(0.666, w / 1280);
+            var iframe = embed.querySelector('iframe');
+            var svg = embed.querySelector('.ann-svg');
+            var h = 860;
+            if (iframe) {
+                var inlineStyle = iframe.getAttribute('style') || '';
+                var match = inlineStyle.match(/height:\s*(\d+)/);
+                if (match) { h = parseInt(match[1]); }
+                iframe.style.transform = 'scale(' + scale + ')';
+                iframe.style.marginBottom = '0';
+                embed.style.overflow = 'hidden';
+                var barEl = embed.querySelector('.browser-bar') || embed.querySelector('.chrome');
+                var barH = barEl ? barEl.offsetHeight : 0;
+                embed.style.height = (barH + Math.round(h * scale)) + 'px';
+            }
+            if (svg) {
+                var barEl = embed.querySelector('.browser-bar') || embed.querySelector('.chrome');
+                var barH = barEl ? barEl.offsetHeight : 0;
+                svg.style.position = 'absolute';
+                svg.style.top = barH + 'px';
+                svg.style.left = '0';
+                svg.style.width = Math.round(1280 * scale) + 'px';
+                svg.style.height = Math.round(h * scale) + 'px';
+            }
+        });
+    }
+
+    function drawAllAnnotationLines() {
+        document.querySelectorAll('.screen-annotated').forEach(function(wrapper) {
+            var linesSvg = wrapper.querySelector('.ann-lines');
+            if (!linesSvg) return;
+            var annSvg = wrapper.querySelector('.ann-svg');
+            if (!annSvg) return;
+            var wRect = wrapper.getBoundingClientRect();
+            var svgRect = annSvg.getBoundingClientRect();
+            var vb = (annSvg.getAttribute('viewBox') || '0 0 1280 860').trim().split(/\s+/);
+            var scaleX = svgRect.width / (parseFloat(vb[2]) || 1280);
+            var scaleY = svgRect.height / (parseFloat(vb[3]) || 860);
+            var svgTop = svgRect.top - wRect.top;
+            var svgLeft = svgRect.left - wRect.left;
+            var paths = '';
+            wrapper.querySelectorAll('.ann-note[data-pin-x]').forEach(function(note) {
+                var pinX = parseFloat(note.dataset.pinX);
+                var pinY = parseFloat(note.dataset.pinY);
+                var color = note.dataset.color || '#6B7280';
+                var px = svgLeft + pinX * scaleX;
+                var py = svgTop + pinY * scaleY;
+                var nRect = note.getBoundingClientRect();
+                var isLeft = !!note.closest('.ann-sidebar-left');
+                var nx = isLeft ? (nRect.right - wRect.left) : (nRect.left - wRect.left);
+                var ny = nRect.top - wRect.top + nRect.height / 2;
+                var mx = (px + nx) / 2;
+                paths += '<path d="M' + px.toFixed(1) + ',' + py.toFixed(1) +
+                         ' C' + mx.toFixed(1) + ',' + py.toFixed(1) +
+                         ' ' + mx.toFixed(1) + ',' + ny.toFixed(1) +
+                         ' ' + nx.toFixed(1) + ',' + ny.toFixed(1) + '"' +
+                         ' stroke="' + color + '" stroke-width="1.5"' +
+                         ' stroke-dasharray="6 4" fill="none" opacity="0.65"/>';
+            });
+            linesSvg.innerHTML = paths;
+        });
+    }
+
+    function refresh() {
+        scaleEmbeds();
+        requestAnimationFrame(drawAllAnnotationLines);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', refresh);
+    } else { refresh(); }
+    window.addEventListener('resize', refresh);
+    window.addEventListener('load', refresh);
+})();
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  // Section reveals
+  gsap.utils.toArray('.section-title, .section-label, .section-intro, .section-header, h1, h2, h3').forEach(function(el) {
+    gsap.from(el, {
+      opacity: 0, y: 28, duration: 0.75, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+  // Cards and blocks
+  gsap.utils.toArray('.metric-card, .card, .timeline-step, .insight-card, .outcome-card, .quote-block, .two-col > *, .three-col > *, .four-col > *').forEach(function(el, i) {
+    gsap.from(el, {
+      opacity: 0, y: 36, duration: 0.65, delay: (i % 4) * 0.08, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+  });
+  // Images
+  gsap.utils.toArray('img:not(.nav-logo-img)').forEach(function(el) {
+    gsap.from(el, {
+      opacity: 0, scale: 0.97, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', once: true }
+    });
+  });
+  // Screen embeds
+  gsap.utils.toArray('.screen-annotated, .screen-embed').forEach(function(el) {
+    gsap.from(el, {
+      opacity: 0, y: 40, duration: 0.9, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+  });
+</script>
+
+<script>
+(function() {
+  var toggle = document.getElementById('themeToggle');
+  var body = document.body;
+  var DARK = 'dark';
+  var stored = localStorage.getItem('parkbeheer-theme');
+  if (stored === DARK) {
+    body.classList.add(DARK);
+    toggle.textContent = '☾';
+  }
+  toggle.addEventListener('click', function() {
+    var isDark = body.classList.toggle(DARK);
+    toggle.textContent = isDark ? '☾' : '☀';
+    localStorage.setItem('parkbeheer-theme', isDark ? DARK : 'light');
+  });
+})();
+</script>
+
+</body>
+
+</html>

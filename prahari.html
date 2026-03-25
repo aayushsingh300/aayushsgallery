@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAHARI — Counter-Drone Command Interface Case Study</title>
+    <meta name="description"
+        content="Designing the single surface that tells a duty officer whether to act on a drone threat in under five seconds. A UX case study.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0D0F12;
+            --bg-surface: #161A22;
+            --bg-elevated: #1E2430;
+            --bg-alt: #0F1119;
+            --act-now: #FF3B30;
+            --tracking: #FF9500;
+            --cleared: #3A3A3C;
+            --friendly: #30D158;
+            --accent: #0A84FF;
+            --alert-amber: #FFB800;
+            --alert-red: #FF4444;
+            --alert-green: #3DD68C;
+            --text-primary: #F0F2F5;
+            --text-secondary: #8B95A6;
+            --border: #2A3142;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-data: 'Space Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .narrow {
+            max-width: 680px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section.alt {
+            background: var(--bg-alt);
+        }
+
+        .section-label {
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .section h2 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin-bottom: 20px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            background: #0A0C10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0 0;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 80%, rgba(255, 59, 48, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            font-family: var(--font-data);
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.1;
+            max-width: 700px;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--act-now);
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .hero-chips {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .hero-chips span {
+            font-family: var(--font-data);
+            font-size: 11px;
+            padding: 5px 14px;
+            border-radius: 3px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        /* Hero composition */
+        .hero-comp {
+            position: relative;
+            height: 480px;
+            margin-top: 20px;
+        }
+
+        .hero-screen {
+            position: absolute;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--bg-surface);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        .hero-screen .chrome {
+            background: #1E2430;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hero-screen .chrome .d {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .hero-screen .chrome .d:nth-child(1) {
+            background: #FF5F57;
+        }
+
+        .hero-screen .chrome .d:nth-child(2) {
+            background: #FFBD2E;
+        }
+
+        .hero-screen .chrome .d:nth-child(3) {
+            background: #28CA41;
+        }
+
+        .hero-screen .chrome .url {
+            flex: 1;
+            margin-left: 8px;
+            font-family: var(--font-data);
+            font-size: 9px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .hero-screen iframe {
+            border: none;
+            display: block;
+            transform-origin: top left;
+        }
+
+        .hero-screen.main {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 740px;
+            height: 440px;
+            z-index: 2;
+        }
+
+        .hero-screen.main iframe {
+            width: 1280px;
+            height: 800px;
+            transform: scale(0.578);
+        }
+
+        .hero-screen.back-left {
+            left: 0;
+            top: 40px;
+            width: 340px;
+            height: 230px;
+            z-index: 1;
+            opacity: 0.7;
+            transform: perspective(1200px) rotateY(15deg);
+        }
+
+        .hero-screen.back-left iframe {
+            width: 1280px;
+            height: 800px;
+            transform: scale(0.265);
+        }
+
+        .hero-screen.front-right {
+            right: 0;
+            top: 100px;
+            width: 280px;
+            height: 200px;
+            z-index: 3;
+            box-shadow: 0 24px 80px rgba(255, 59, 48, 0.15), 0 16px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-screen.front-right iframe {
+            width: 1280px;
+            height: 800px;
+            transform: scale(0.218);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-stats .stat {
+            font-family: var(--font-data);
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .hero-stats .stat strong {
+            color: var(--alert-green);
+            font-weight: 700;
+        }
+
+        /* ── Pull Quote ── */
+        .pull-quote {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            max-width: 680px;
+            margin: 40px 0;
+            padding-left: 24px;
+            border-left: 3px solid var(--act-now);
+        }
+
+        .crew-quote {
+            font-family: var(--font-data);
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 24px 0 24px 24px;
+            border-left: 3px solid var(--act-now);
+            margin: 32px 0;
+        }
+
+        .crew-quote cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            font-style: normal;
+        }
+
+        /* ── Meta Card ── */
+        .meta-card {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            padding: 28px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin: 32px 0;
+        }
+
+        .meta-card .meta-label {
+            font-family: var(--font-data);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .meta-card .meta-value {
+            font-family: var(--font-heading);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ── Constraints ── */
+        .constraints {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        .constraint {
+            padding: 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .constraint h4 {
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .constraint p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: none;
+        }
+
+        /* ── Screen Embed ── */
+        .screen-embed {
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 40px 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .screen-embed .chrome {
+            background: #1E2430;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .screen-embed .chrome .d {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .screen-embed .chrome .d:nth-child(1) {
+            background: #FF5F57;
+        }
+
+        .screen-embed .chrome .d:nth-child(2) {
+            background: #FFBD2E;
+        }
+
+        .screen-embed .chrome .d:nth-child(3) {
+            background: #28CA41;
+        }
+
+        .screen-embed .chrome .url {
+            flex: 1;
+            margin-left: 8px;
+            font-family: var(--font-data);
+            font-size: 10px;
+            color: var(--text-secondary);
+            background: var(--bg-primary);
+            padding: 3px 10px;
+            border-radius: 3px;
+        }
+
+        .screen-embed iframe {
+            width: 1440px;
+            height: 900px;
+            border: none;
+            transform-origin: top left;
+            transform: scale(0.666);
+            display: block;
+            margin-bottom: 0;
+        }
+
+        .screen-caption {
+            font-family: var(--font-data);
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 12px;
+            background: var(--bg-elevated);
+        }
+
+        /* ── Unified Screen Annotation System ── */
+        .screen-annotated {
+            position: relative;
+            margin: 40px 0;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .screen-annotated .screen-embed {
+            flex: 1;
+            min-width: 0;
+            margin: 0;
+        }
+        .ann-sidebar {
+            width: 155px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 33px;
+        }
+        .ann-note {
+            padding: 9px 11px;
+            background: rgba(13,15,20,0.7);
+            border: 1px solid rgba(42,49,66,0.9);
+            border-radius: 4px;
+        }
+        .ann-note-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .ann-note-body {
+            font-size: 11px;
+            color: #8B95A6;
+            line-height: 1.5;
+        }
+        .ann-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        /* ── Two-col ── */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* ── Metrics ── */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            padding: 32px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .metric-card .metric-num {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .metric-card .metric-label {
+            font-family: var(--font-data);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* ── Compare Table ── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+        }
+
+        .compare-table th {
+            font-family: var(--font-data);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compare-table td {
+            font-size: 14px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            vertical-align: top;
+        }
+
+        .compare-table tr:nth-child(even) td {
+            background: var(--bg-surface);
+        }
+
+        .compare-table td:first-child {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+        }
+
+        .compare-table td:last-child {
+            color: var(--alert-green);
+        }
+
+        /* ── Stock Image ── */
+        .stock-img {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            margin: 32px 0;
+            object-fit: cover;
+        }
+
+        /* ── Findings ── */
+        .findings {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .finding {
+            padding: 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .finding p {
+            font-size: 14px;
+            max-width: none;
+        }
+
+        /* ── Principles Table ── */
+        .principles-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+        }
+
+        .principles-table th,
+        .principles-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .principles-table th {
+            font-family: var(--font-data);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .principles-table td:first-child {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        .principles-table td:last-child {
+            color: var(--text-secondary);
+        }
+
+        /* ── Incident Block ── */
+        .incident-block {
+            font-family: var(--font-body);
+            font-size: 19px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            max-width: 680px;
+        }
+
+        .incident-block strong {
+            color: var(--text-primary);
+        }
+
+        /* ── Timeline ── */
+        .research-timeline {
+            display: flex;
+            gap: 0;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .research-timeline::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .timeline-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-step .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--act-now);
+            margin: 0 auto 12px;
+            position: relative;
+            z-index: 1;
+            border: 2px solid var(--bg-primary);
+        }
+
+        .timeline-step .label {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .timeline-step .desc {
+            font-family: var(--font-data);
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* ── Reframe ── */
+        .reframe {
+            text-align: center;
+            padding: 120px 0;
+        }
+
+        .reframe h2 {
+            font-family: var(--font-heading);
+            font-size: 48px;
+            max-width: none;
+            margin: 0 auto 16px;
+        }
+
+        .reframe .sub {
+            font-family: var(--font-heading);
+            font-size: 28px;
+            color: var(--act-now);
+            font-weight: 600;
+        }
+
+        /* ── Prev/Next Nav ── */
+        .proj-nav {
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .proj-nav-link {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 40px 60px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .proj-nav-link:hover { background: var(--bg-elevated); }
+        .proj-nav-link.next { border-left: 1px solid var(--border); text-align: right; align-items: flex-end; }
+        .proj-nav-label {
+            font-family: var(--font-data);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+        .proj-nav-title {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .proj-nav-arrow {
+            font-size: 20px;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer a {
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--act-now);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .footer-sub {
+            font-family: var(--font-data);
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="hero">
+        <div class="container" style="position:relative;z-index:2;">
+            <div class="hero-tag">AGENCY · PRAHARI PROGRAM · 2023</div>
+            <h1>Five seconds to decide whether to <em>act</em></h1>
+            <p class="hero-sub" style="font-size: 20px; color: var(--text-primary); margin-top: 16px;">
+                <strong>PRAHARI</strong> is a counter-drone (C-UAS) command and control interface for the <strong>Indian Army, Corps of
+                    Signals</strong>.
+                I designed the single surface that tells a duty officer — in under five seconds — whether to act on a
+                threat that moves at 60 kmph.
+            </p>
+            <div class="hero-chips" style="margin-top: 24px;">
+                <span>Lead Product Designer</span>
+                <span>Desktop C2 Interface</span>
+                <span>Military & Defense</span>
+            </div>
+            <div class="hero-comp">
+                <!-- Back left: Handover -->
+                <div class="hero-screen back-left">
+                    <div class="chrome">
+                        <div class="d"></div>
+                        <div class="d"></div>
+                        <div class="d"></div>
+                        <div class="url">prahari.mil/handover</div>
+                    </div>
+                    <iframe src="prahari-app.html#handover" tabindex="-1"></iframe>
+                </div>
+                <!-- Center: Ops panel -->
+                <div class="hero-screen main">
+                    <div class="chrome">
+                        <div class="d"></div>
+                        <div class="d"></div>
+                        <div class="d"></div>
+                        <div class="url">prahari.mil/ops</div>
+                    </div>
+                    <iframe src="prahari-app.html#ops" tabindex="-1"></iframe>
+                </div>
+                <!-- Front right: Engagement Log -->
+                <div class="hero-screen front-right" style="border: 1px solid rgba(255,59,48,0.3);">
+                    <div class="chrome">
+                        <div class="d"></div>
+                        <div class="d"></div>
+                        <div class="d"></div>
+                        <div class="url">prahari.mil/log</div>
+                    </div>
+                    <iframe src="prahari-app.html#log" tabindex="-1"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="hero-stats">
+                <div class="stat">↓ Handover time from <strong>35 min</strong> to <strong>
+                        < 4 min</strong>
+                </div>
+                <div class="stat"><strong>≤ 3</strong> interactions to engage</div>
+                <div class="stat"><strong>100%</strong> actions auto-logged</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ QUICK INTRO ═══════ -->
+    <section style="padding: 0;">
+        <div class="container">
+            <div style="border-left: 3px solid var(--act-now, #FF3B30); padding: 20px 24px; background: var(--bg-surface); border-radius: 0 8px 8px 0; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
+                <strong style="color: var(--text-primary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">What you're about to read</strong><br style="margin-bottom: 8px;">
+                I designed the main interface for India's counter-drone command system. When an unidentified drone appears on radar, the duty officer needs to see it, assess the threat, and decide whether to electronically jam it — all in under five seconds. This case study walks through how we got from three screens and verbal coordination to one unified surface.
+                <span style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-secondary); opacity: 0.7;">Reading time: ~7 minutes</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ INCITING INCIDENT ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div
+                style="display: grid; grid-template-columns: 1fr 400px; gap: 40px; align-items: stretch; margin-top: -40px;">
+                <div class="incident-block"
+                    style="border-left: 4px solid var(--act-now); padding: 32px; background: var(--bg-surface); border-radius: 0 8px 8px 0;">
+                    <p style="margin-bottom: 24px;">On <strong>27 June 2021</strong>, two improvised drones carrying RDX
+                        detonated at the Indian Air Force station in Jammu. Nobody died. But it was the <strong
+                            style="color: var(--act-now);">first confirmed drone strike on an Indian military
+                            installation</strong> — and it sent a directive through every formation HQ in the country.
+                    </p>
+                    <p style="margin-bottom: 24px;">The Corps of Signals already owned the EW and sensor coordination
+                        mandate. Their problem wasn't that sensors didn't exist. <strong>The problem was that they lived
+                            on
+                            three different screens, operated by three different people, correlated verbally, logged
+                            manually, and acted on through a chain of radio calls.</strong></p>
+                    <p style="margin-bottom: 0; font-size: 16px; color: var(--text-primary);">Against a drone doing 60
+                        kmph, that process took up to <strong>four minutes</strong>. Four minutes is <strong>4
+                            kilometres.</strong></p>
+                </div>
+                <img src="images/prahari-radar-vehicle.png" alt="Military personnel in tactical position"
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border);">
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ PROJECT OVERVIEW ═══════ -->
+    <section class="section" style="padding-top: 0; padding-bottom: 40px;">
+        <div class="container">
+            <div class="section-label">EXECUTIVE SUMMARY</div>
+            <h2>Project Overview</h2>
+            <div class="meta-card"
+                style="margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; border: none; background: transparent; padding: 0;">
+                <div
+                    style="background: var(--bg-surface); border: 1px solid var(--border); padding: 32px; border-radius: 8px;">
+                    <div class="meta-label" style="color: var(--act-now); font-size: 12px; margin-bottom: 16px;">The
+                        Product</div>
+                    <p style="font-size: 15px; color: var(--text-primary); line-height: 1.6;"><strong>PRAHARI</strong>
+                        is a counter-drone command and control interface for detecting, tracking, and neutralising low-altitude airspace threats.</p>
+                </div>
+                <div
+                    style="background: var(--bg-surface); border: 1px solid var(--border); padding: 32px; border-radius: 8px;">
+                    <div class="meta-label" style="color: var(--tracking); font-size: 12px; margin-bottom: 16px;">The
+                        Users</div>
+                    <p style="font-size: 15px; color: var(--text-primary); line-height: 1.6;"><strong>Duty
+                            Officers</strong> in darkened signals control rooms, <strong>Sensor Operators</strong>, and
+                        <strong>Commanding Officers</strong>.
+                    </p>
+                </div>
+                <div
+                    style="background: var(--bg-surface); border: 1px solid var(--border); padding: 32px; border-radius: 8px;">
+                    <div class="meta-label" style="color: var(--alert-red); font-size: 12px; margin-bottom: 16px;">Why
+                        it's Critical</div>
+                    <p style="font-size: 15px; color: var(--text-primary); line-height: 1.6;">A false negative means a
+                        missed threat. A false positive triggers a jammer on a civilian aircraft. The interface must
+                        make
+                        asymmetric risk <em>visible</em>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ MY ROLE ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">MY ROLE</div>
+            <h2>Lead Product Designer — Strategy to Handoff</h2>
+            <div class="meta-card">
+                <div>
+                    <div class="meta-label">Role</div>
+                    <div class="meta-value">Lead Product Designer</div>
+                </div>
+                <div>
+                    <div class="meta-label">Duration</div>
+                    <div class="meta-value">14 Weeks (2023)</div>
+                </div>
+                <div>
+                    <div class="meta-label">Team</div>
+                    <div class="meta-value">3 Designers · 2 PMs · 15 Eng</div>
+                </div>
+                <div>
+                    <div class="meta-label">Client</div>
+                    <div class="meta-value">Corps of Signals, Indian Army</div>
+                </div>
+            </div>
+            <div class="constraints">
+                <div class="constraint">
+                    <h4>📵 No cameras in the ops room</h4>
+                    <p>Two site visits to a Corps of Signals unit. No cameras, no retention of network topology data, no
+                        documentation of sensor specifications. Notebooks only. We went as observers.</p>
+                </div>
+                <div class="constraint">
+                    <h4>🎖️ Military user research</h4>
+                    <p>Six operator interviews and three shift handovers observed. Every insight extracted from
+                        conversation, not screen recordings. Every workaround was a design that already existed — just
+                        not in the software.</p>
+                </div>
+                <div class="constraint">
+                    <h4>⏱️ 14-week sprint</h4>
+                    <p>Discovery to handoff in 14 weeks. 160+ annotated screens, 43 components, interaction specs for
+                        every dynamic state, and a data model brief co-written with the dev agency's tech lead.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DISCOVERY ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 01 · DISCOVERY</div>
+            <h2>Going to the field</h2>
+            <p>You can't design a system like this from a studio in Bengaluru. We arranged two two-day site visits to a
+                Corps of Signals unit at a formation HQ.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px 0;">
+                <img src="images/prahari-soldiers.webp" alt="Military sensor operator with optical equipment"
+                    style="width: 100%; height: 280px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border);">
+                <img src="images/prahari-drone-ops.jpeg" alt="C-UAS sensor vehicle deployed in the field"
+                    style="width: 100%; height: 280px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border);">
+            </div>
+            <div class="two-col" style="margin-top: 40px;">
+                <div>
+                    <h3 style="font-family:var(--font-heading);font-size:20px;margin-bottom:16px;">What we observed</h3>
+                    <p>The shift handover was the most revealing ritual. Incoming operators needed <strong
+                            style="color:var(--text-primary)">18–35 minutes</strong> of verbal briefing because there
+                        was no structured display of what was active, pending, or cleared.</p>
+                    <p>We watched a duty officer handle two training-scenario drone contacts. His eyes moved between
+                        three screens. One hand on a radio. The other writing a register entry.</p>
+                </div>
+                <div>
+                    <h3 style="font-family:var(--font-heading);font-size:20px;margin-bottom:16px;">The mental model gap
+                    </h3>
+                    <p>The mental model was spatial — he thought in bearings and sectors — but his primary tool was a
+                        tabular RF signal log. There was a persistent mismatch between how the problem existed in his
+                        mind and how the tools presented it.</p>
+                </div>
+            </div>
+
+            <div class="crew-quote" style="margin-top:48px;">
+                "I should be able to sit down cold, look at one screen, and know in five seconds whether I need to act
+                or not."
+                <cite>— JCO, Corps of Signals, Formation HQ</cite>
+            </div>
+            <p style="font-weight:500;color:var(--text-primary);font-style:italic;">We taped that to the wall for the
+                rest of the project.</p>
+        </div>
+    </section>
+
+    <!-- ═══════ WHAT WE FOUND ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 02 · DIAGNOSIS</div>
+            <h2>Three structural problems</h2>
+            <img src="images/prahari-drone-ops.jpeg" alt="C-UAS radar and sensor vehicle deployed in the field"
+                class="stock-img" style="height: 320px; margin-bottom: 32px;">
+            <div class="findings">
+                <div class="finding" style="border-top:3px solid var(--act-now);">
+                    <p><strong style="color:var(--act-now);">Fragmented picture.</strong> Sensor feeds were siloed. RF,
+                        radar, and optical data required mental correlation by the operator — a high-load task under
+                        pressure.</p>
+                </div>
+                <div class="finding" style="border-top:3px solid var(--tracking);">
+                    <p><strong style="color:var(--tracking);">Spatial-tabular mismatch.</strong> Operators reasoned
+                        about
+                        threats in space (map, bearing, sector). Their primary interface was a table. Every decision
+                        required a translation step.</p>
+                </div>
+                <div class="finding" style="border-top:3px solid var(--accent);">
+                    <p><strong style="color:var(--accent);">No audit trail.</strong> Engagement decisions — classify,
+                        jam, escalate — were made verbally. After-action reviews required stitching together registers,
+                        logs, and operator memory.</p>
+                </div>
+                <div class="finding" style="border-top:3px solid var(--alert-amber);">
+                    <p><strong style="color:var(--alert-amber);">4-minute response gap.</strong> Against a drone doing
+                        60
+                        kmph, the multi-screen, multi-person, verbal-correlation process took up to 4 minutes. That's 4
+                        kilometres of uncontested airspace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ REFRAME ═══════ -->
+    <section class="section alt reframe">
+        <div class="container">
+            <h2>Three screens. Three people. <em style="color:var(--text-secondary);">Verbal correlation.</em></h2>
+            <div class="sub">One screen. One surface. Automatic triage.</div>
+            <p style="margin:24px auto 0;text-align:center;max-width:480px;">That was the design contract.</p>
+        </div>
+    </section>
+
+    <!-- ═══════ STRATEGY ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 03 · STRATEGY</div>
+            <h2>First principles before wireframes</h2>
+            <p>Before we opened Figma, we ran an internal framing session around one question: <strong
+                    style="color:var(--text-primary);">What is the cost of a wrong decision — and which direction does
+                    it cut?</strong></p>
+            <p>In C-UAS, a false negative (missed threat) is catastrophic. A false positive — triggering a jammer on a
+                civilian aircraft — causes its own incident. The interface had to make asymmetric decision risk visible
+                and actionable.</p>
+            <table class="principles-table">
+                <thead>
+                    <tr>
+                        <th>Principle</th>
+                        <th>What it meant in practice</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Spatial primacy</td>
+                        <td>The map leads. All tabular data is subordinate and accessed in context of a selected
+                            contact.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Triage over information</td>
+                        <td>The interface shows three states: Act Now · Tracking · Cleared. Visual hierarchy enforces it
+                            relentlessly.</td>
+                    </tr>
+                    <tr>
+                        <td>Every action leaves a trace</td>
+                        <td>No verbal-only decisions. Classify, jam, escalate — all auto-logged with timestamp, operator
+                            ID, and current threat state.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ═══════ DESIGN: OPS PANEL ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 04 · DESIGN — THREAT OPERATIONS</div>
+            <h2>One screen. Five-second read.</h2>
+            <p>The Threat Operations Panel is the duty officer's primary interface. Live low-altitude airspace map.
+                Contact classification overlays. Triage queue. Contact detail panel opens inline on selection. Design
+                target: detection to engagement decision in ≤3 interactions.</p>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="400" data-pin-y="350" data-color="#FF3B30">
+                        <div class="ann-note-title" style="color:#FF3B30;">Contact Map</div>
+                        <div class="ann-note-body">Map-centric — threats shown as pulsing red markers. Position and status at a glance.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="chrome">
+                        <div class="d"></div><div class="d"></div><div class="d"></div>
+                        <div class="url">prahari.mil/ops</div>
+                    </div>
+                    <iframe src="prahari-app.html#ops" tabindex="-1"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="400" cy="350" r="6" fill="#FF3B30" opacity="0.9"/>
+                        <circle cx="1430" cy="140" r="6" fill="#FF9500" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Threat Operations Panel — map-centric with triage queue. Red contacts demand action. Amber contacts are being tracked. Everything else fades.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="1430" data-pin-y="140" data-color="#FF9500">
+                        <div class="ann-note-title" style="color:#FF9500;">Triage Queue</div>
+                        <div class="ann-note-body">Contacts sorted by threat level — ACT NOW first, cleared last.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+            <h3 style="font-family:var(--font-heading);font-size:20px;margin-top:60px;margin-bottom:16px;">Detection to
+                Jamming: three interactions</h3>
+            <p>Click a contact → review sensor data and classification → confirm electronic jam (called a "soft-kill" in military terms). The jammer activates, the
+                map updates, the log entry writes itself. The duty officer never leaves the screen.</p>
+            <div class="constraints" style="margin-top:32px;">
+                <div class="constraint" style="border-top:3px solid var(--act-now);">
+                    <h4 style="color:var(--act-now);">Interaction 1</h4>
+                    <p>Operator clicks contact in triage queue (or Tab to select, Enter). Contact Detail Panel opens
+                        with sensor data, bearing, distance, speed visible.</p>
+                </div>
+                <div class="constraint" style="border-top:3px solid var(--tracking);">
+                    <h4 style="color:var(--tracking);">Interaction 2</h4>
+                    <p>Operator presses SOFT-KILL (or S key). Confirmation modal opens with jammer assignment + auto-log
+                        preview.</p>
+                </div>
+                <div class="constraint" style="border-top:3px solid var(--friendly);">
+                    <h4 style="color:var(--friendly);">Interaction 3</h4>
+                    <p>Operator presses CONFIRM (or Enter). Jammer activates. Map shows amber zone. Status bar updates.
+                        Log entry created automatically.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DESIGN: RED → GREY ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 04 · COLOUR DISCIPLINE</div>
+            <h2>If it's red, it demands action. Nothing else gets red.</h2>
+            <p>Alarm fatigue was a documented problem in the existing setup — too many red indicators had trained
+                operators to discount the colour. We committed to a discipline: <strong
+                    style="color:var(--text-primary);">red means act. Period.</strong> Nothing decorative, nothing
+                ambient. If it's red, the duty officer must make a decision.</p>
+            <div class="constraints">
+                <div class="constraint" style="border-top:3px solid var(--act-now);">
+                    <h4 style="color:var(--act-now);">ACT NOW</h4>
+                    <p>Red. Pulsing marker on map. Top of triage queue. The operator must classify and respond.</p>
+                </div>
+                <div class="constraint" style="border-top:3px solid var(--tracking);">
+                    <h4 style="color:var(--tracking);">TRACKING</h4>
+                    <p>Amber. Static marker. Middle of triage queue. Monitoring — no immediate action required.</p>
+                </div>
+                <div class="constraint" style="border-top:3px solid var(--cleared);">
+                    <h4>CLEARED</h4>
+                    <p>Grey. Faded marker. Bottom of queue, collapsed by default. No action needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DESIGN: HANDOVER ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 05 · DESIGN — SHIFT HANDOVER</div>
+            <h2>Eliminating the 35-minute verbal briefing</h2>
+            <p>The Shift Handover Dashboard was designed to replace the 18–35 minute verbal handover entirely. A
+                structured status snapshot readable in under 2 minutes. The design test: can a new operator walk in,
+                read this screen, and know the full picture without speaking to the outgoing operator?</p>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="300" data-pin-y="200" data-color="#4A9EFF">
+                        <div class="ann-note-title" style="color:#4A9EFF;">Shift Snapshot</div>
+                        <div class="ann-note-body">Readable in under 2 minutes — replaces the 35-minute verbal brief.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="chrome">
+                        <div class="d"></div><div class="d"></div><div class="d"></div>
+                        <div class="url">prahari.mil/handover</div>
+                    </div>
+                    <iframe src="prahari-app.html#handover" tabindex="-1" style="height:700px;"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1440 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="300" cy="200" r="6" fill="#4A9EFF" opacity="0.9"/>
+                        <circle cx="1100" cy="350" r="6" fill="#FF9500" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Shift Handover Dashboard — intentionally calmer than the ops panel. A status surface, not a decision surface.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="1100" data-pin-y="350" data-color="#FF9500">
+                        <div class="ann-note-title" style="color:#FF9500;">Active Incidents</div>
+                        <div class="ann-note-body">Open incidents listed with severity — incoming operator sees what needs attention.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DESIGN: LOG ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 05 · DESIGN — ENGAGEMENT LOG</div>
+            <h2>Every action leaves a trace</h2>
+            <p>The Engagement Log was specifically designed for post-mission debriefs (the military's After-Action Review, or AAR). Every engagement decision
+                — classify, jam, escalate, clear — auto-logged with timestamp, operator ID, and current threat state.
+                Filterable, exportable to PDF, and dense but legible.</p>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="80" data-pin-y="200" data-color="#30D158">
+                        <div class="ann-note-title" style="color:#30D158;">Auto-Logged</div>
+                        <div class="ann-note-body">Every soft-kill, classify, and escalate auto-logged — operator never types a log entry.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="chrome">
+                        <div class="d"></div><div class="d"></div><div class="d"></div>
+                        <div class="url">prahari.mil/log</div>
+                    </div>
+                    <iframe src="prahari-app.html#log" tabindex="-1" style="height:700px;"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1440 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="80" cy="200" r="6" fill="#30D158" opacity="0.9"/>
+                        <circle cx="1350" cy="80" r="6" fill="#4A9EFF" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Engagement Log — structured rows for after-action review. Typography is dense but legible — this is a reference screen.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="1350" data-pin-y="80" data-color="#4A9EFF">
+                        <div class="ann-note-title" style="color:#4A9EFF;">Filter Controls</div>
+                        <div class="ann-note-body">Filter by operator, type, or time — export to PDF for AAR.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DESIGN: SENSORS ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 05 · DESIGN — SENSOR MANAGEMENT</div>
+            <h2>Knowing when your eyes go dark</h2>
+            <p>The sensor management screen gives the sensor operator full visibility into each unit's health, coverage,
+                and confidence rating. When OPT-3 drops to 38% confidence due to fog, the operator sees it immediately.
+            </p>
+            <div class="screen-annotated">
+                <div class="ann-sidebar ann-sidebar-left">
+                    <div class="ann-note" data-pin-x="300" data-pin-y="400" data-color="#4A9EFF">
+                        <div class="ann-note-title" style="color:#4A9EFF;">Coverage Grid</div>
+                        <div class="ann-note-body">Sensor coverage overlap shown — blind spots visible immediately.</div>
+                    </div>
+                </div>
+                <div class="screen-embed">
+                    <div class="chrome">
+                        <div class="d"></div><div class="d"></div><div class="d"></div>
+                        <div class="url">prahari.mil/sensors</div>
+                    </div>
+                    <iframe src="prahari-app.html#sensors" tabindex="-1" style="height:640px;"></iframe>
+                    <svg class="ann-svg" viewBox="0 0 1440 640" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="300" cy="400" r="6" fill="#4A9EFF" opacity="0.9"/>
+                        <circle cx="1100" cy="280" r="6" fill="#FF9500" opacity="0.9"/>
+                    </svg>
+                    <div class="screen-caption">Sensor Management — grid of sensor unit cards. Green means nominal. Amber means degraded. The operator can mark units offline with a reason field.</div>
+                </div>
+                <div class="ann-sidebar ann-sidebar-right">
+                    <div class="ann-note" data-pin-x="1100" data-pin-y="280" data-color="#FF9500">
+                        <div class="ann-note-title" style="color:#FF9500;">Confidence Rating</div>
+                        <div class="ann-note-body">OPT-3 at 38% due to fog — operator sees degradation before it becomes a gap.</div>
+                    </div>
+                </div>
+                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DECISIONS WE CUT ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 06 · SCOPE</div>
+            <h2>Decisions we cut</h2>
+            <div class="two-col">
+                <div class="constraint" style="border-top:3px solid var(--tracking);">
+                    <h4>Predictive trajectory overlay</h4>
+                    <p>A visual projection of a contact's flight path. Technically feasible, but our field research
+                        showed it created <strong style="color:var(--text-primary);">false confidence</strong>.
+                        Operators
+                        anchored to the projection and stopped updating their mental model. Cut.</p>
+                </div>
+                <div class="constraint" style="border-top:3px solid var(--accent);">
+                    <h4>Cross-formation contact sharing</h4>
+                    <p>Allowing adjacent units to see each other's contact picture. Politically complex, technically
+                        dependent on infrastructure we couldn't guarantee. Documented as Phase 2, not killed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ DELIVERY ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 07 · DELIVERY</div>
+            <h2>160+ screens. 43 components. 15 engineers.</h2>
+            <p>We handed off a Figma file with 160+ annotated screens, a component library with 43 components,
+                interaction specs for every dynamic state, and a data model brief co-written with the dev agency's tech
+                lead.</p>
+            <p>The keyboard-first interaction model required specific engineering coordination. We documented every
+                keyboard shortcut, focus state, and tab order in a separate interaction spec because the duty officer
+                scenario — high stress, hands busy, eyes on the map — made mouse-first interactions a design liability.
+            </p>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Count</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Annotated Screens</td>
+                        <td>160+</td>
+                        <td>Every state, edge case, and error condition documented</td>
+                    </tr>
+                    <tr>
+                        <td>Component Library</td>
+                        <td>43 components</td>
+                        <td>Contact markers, action buttons, badges, modals, sensor cards</td>
+                    </tr>
+                    <tr>
+                        <td>Interaction Specs</td>
+                        <td>Complete</td>
+                        <td>Keyboard shortcuts, focus states, tab order, animation timing</td>
+                    </tr>
+                    <tr>
+                        <td>Data Model Brief</td>
+                        <td>Co-written</td>
+                        <td>Contact, Event, Sensor Unit, Operator Session schemas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ═══════ OUTCOMES ═══════ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">CHAPTER 08 · OUTCOMES</div>
+            <h2>The handover time dropped from 35 minutes to under 4.</h2>
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-num" style="color:var(--alert-green);">
+                        < 4 min</div>
+                            <div class="metric-label">Shift handover time (was 18–35 min)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-num" style="color:var(--act-now);">≤ 3</div>
+                        <div class="metric-label">Interactions to engagement decision</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-num" style="color:var(--accent);">100%</div>
+                        <div class="metric-label">Engagement actions auto-logged</div>
+                    </div>
+                </div>
+                <p>That handover metric was the one we were most proud of — because it came from a user need we'd
+                    observed
+                    ourselves, not from a brief.</p>
+                <div class="crew-quote">
+                    "I should be able to sit down cold, look at one screen, and know in five seconds whether I need to
+                    act
+                    or not." — That's exactly what they got.
+                    <cite>— Validated against the JCO's original requirement</cite>
+                </div>
+            </div>
+    </section>
+
+    <!-- ═══════ RETROSPECTIVE ═══════ -->
+    <section class="section alt">
+        <div class="container">
+            <div class="section-label">CHAPTER 09 · RETROSPECTIVE</div>
+            <h2>What the project taught us</h2>
+            <div class="constraints">
+                <div class="constraint">
+                    <h4>No iterative feedback access</h4>
+                    <p>We never got iterative feedback access to users after the field visits. Every decision after week
+                        three was made on conviction, tested against our principles, and defended in internal critique —
+                        not validated with real users.</p>
+                </div>
+                <div class="constraint">
+                    <h4>We'd push for usability testing</h4>
+                    <p>If we did it again, we'd push for at least one remote usability session with operators using a
+                        high-fidelity prototype before the dev handoff. The handover dashboard would have been
+                        redesigned
+                        again.</p>
+                </div>
+                <div class="constraint">
+                    <h4>Field visits were the foundation</h4>
+                    <p>When you can't ask the user, you have to know the problem well enough to argue with yourself. The
+                        field visits weren't research luxury — they were the entire foundation.</p>
+                </div>
+            </div>
+            <p style="font-weight:500;color:var(--text-primary);margin-top:32px;font-style:italic;">When you can't ask
+                the user, you have to know the problem well enough to argue with yourself.</p>
+        </div>
+    </section>
+
+    <!-- ═══════ PREV/NEXT NAV ═══════ -->
+    <nav class="proj-nav">
+        <a href="chargeur.html" class="proj-nav-link prev">
+            <span class="proj-nav-label">← Previous</span>
+            <span class="proj-nav-title">Chargeur</span>
+            <span class="proj-nav-arrow">←</span>
+        </a>
+        <a href="rojnica.html" class="proj-nav-link next">
+            <span class="proj-nav-label">Next →</span>
+            <span class="proj-nav-title">Rojnica</span>
+            <span class="proj-nav-arrow">→</span>
+        </a>
+    </nav>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="footer">
+        <div class="container">
+            <a href="index.html">← Back to Portfolio</a>
+            <div class="footer-sub">PRAHARI · 2023 · Corps of Signals, Indian Army · Case study by Parker</div>
+        </div>
+    </footer>
+
+<script>
+(function() {
+    function scaleEmbeds() {
+        document.querySelectorAll('.screen-embed').forEach(function(embed) {
+            var w = embed.clientWidth;
+            var scale = Math.min(0.666, w / 1440);
+            var iframe = embed.querySelector('iframe');
+            var svg = embed.querySelector('.ann-svg');
+            var h = 900;
+            if (iframe) {
+                var inlineStyle = iframe.getAttribute('style') || '';
+                var match = inlineStyle.match(/height:\s*(\d+)/);
+                if (match) { h = parseInt(match[1]); }
+                iframe.style.transform = 'scale(' + scale + ')';
+                iframe.style.marginBottom = '0';
+                embed.style.overflow = 'hidden';
+                // Set container height = chrome + scaled iframe
+                var chromeEl = embed.querySelector('.chrome');
+                var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
+                embed.style.height = (chromeH + Math.round(h * scale)) + 'px';
+            }
+            if (svg) {
+                // Position the overlay to start at the iframe top (below chrome bar)
+                var chromeEl = embed.querySelector('.chrome');
+                var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
+                svg.style.position = 'absolute';
+                svg.style.top = chromeH + 'px';
+                svg.style.left = '0';
+                svg.style.width = Math.round(1440 * scale) + 'px';
+                svg.style.height = Math.round(h * scale) + 'px';
+            }
+        });
+    }
+
+    function drawAllAnnotationLines() {
+        document.querySelectorAll('.screen-annotated').forEach(function(wrapper) {
+            var linesSvg = wrapper.querySelector('.ann-lines');
+            if (!linesSvg) return;
+            var annSvg = wrapper.querySelector('.ann-svg');
+            if (!annSvg) return;
+            var wRect = wrapper.getBoundingClientRect();
+            var svgRect = annSvg.getBoundingClientRect();
+            // Use separate X/Y scales derived from the SVG's actual viewBox
+            var vb = (annSvg.getAttribute('viewBox') || '0 0 1440 900').trim().split(/\s+/);
+            var scaleX = svgRect.width / (parseFloat(vb[2]) || 1440);
+            var scaleY = svgRect.height / (parseFloat(vb[3]) || 900);
+            var svgTop = svgRect.top - wRect.top;
+            var svgLeft = svgRect.left - wRect.left;
+            var paths = '';
+            wrapper.querySelectorAll('.ann-note[data-pin-x]').forEach(function(note) {
+                var pinX = parseFloat(note.dataset.pinX);
+                var pinY = parseFloat(note.dataset.pinY);
+                var color = note.dataset.color || '#8B95A6';
+                var px = svgLeft + pinX * scaleX;
+                var py = svgTop + pinY * scaleY;
+                var nRect = note.getBoundingClientRect();
+                var isLeft = !!note.closest('.ann-sidebar-left');
+                var nx = isLeft ? (nRect.right - wRect.left) : (nRect.left - wRect.left);
+                var ny = nRect.top - wRect.top + nRect.height / 2;
+                var mx = (px + nx) / 2;
+                paths += '<path d="M' + px.toFixed(1) + ',' + py.toFixed(1) +
+                         ' C' + mx.toFixed(1) + ',' + py.toFixed(1) +
+                         ' ' + mx.toFixed(1) + ',' + ny.toFixed(1) +
+                         ' ' + nx.toFixed(1) + ',' + ny.toFixed(1) + '"' +
+                         ' stroke="' + color + '" stroke-width="1.5"' +
+                         ' stroke-dasharray="6 4" fill="none" opacity="0.75"/>';
+            });
+            linesSvg.innerHTML = paths;
+        });
+    }
+
+    function refresh() {
+        scaleEmbeds();
+        requestAnimationFrame(drawAllAnnotationLines);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', refresh);
+    } else { refresh(); }
+    window.addEventListener('resize', refresh);
+    window.addEventListener('load', refresh);
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  // Section reveals
+  gsap.utils.toArray('.section-title, .section-label, .section-intro, .section-header, h1, h2, h3').forEach(function(el) {
+    gsap.from(el, {
+      opacity: 0, y: 28, duration: 0.75, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+    });
+  });
+  // Cards and blocks
+  gsap.utils.toArray('.metric-card, .card, .timeline-step, .insight-card, .outcome-card, .quote-block, .two-col > *, .three-col > *, .four-col > *').forEach(function(el, i) {
+    gsap.from(el, {
+      opacity: 0, y: 36, duration: 0.65, delay: (i % 4) * 0.08, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+  });
+  // Images
+  gsap.utils.toArray('img:not(.nav-logo-img)').forEach(function(el) {
+    gsap.from(el, {
+      opacity: 0, scale: 0.97, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', once: true }
+    });
+  });
+  // Screen embeds
+  gsap.utils.toArray('.screen-annotated, .screen-embed').forEach(function(el) {
+    gsap.from(el, {
+      opacity: 0, y: 40, duration: 0.9, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+  });
+</script>
+
+</body>
+
+</html>

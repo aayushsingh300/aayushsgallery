@@ -1,0 +1,77 @@
+/* ─── SITE-WIDE GLOBALS ──────────────────────────────────────────────── */
+/* Linked from: index.html, all-works.html, about.html, resume.html, vigil.html */
+
+/* ─── GLOBAL GRAIN TEXTURE ───────────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 9001;
+  mix-blend-mode: overlay;
+}
+
+/* ─── SPACESHIP CURSOR ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  cursor: url('cursor-spaceship.svg') 11 1, crosshair;
+}
+/* keep I-beam for text fields */
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"],
+textarea {
+  cursor: url('cursor-spaceship.svg') 11 1, text;
+}
+
+/* ─── LIQUID RIPPLE (vigil.html + any page that opts in) ─────────────── */
+.liquid-ripple {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+.liquid-ripple-ring {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(74, 222, 128, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  animation: liquidRippleExpand 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.liquid-ripple-ring.ring-2 {
+  border-color: rgba(74, 222, 128, 0.28);
+  animation-delay: 0.1s;
+}
+.liquid-ripple-ring.ring-3 {
+  border-color: rgba(74, 222, 128, 0.14);
+  animation-delay: 0.2s;
+}
+.liquid-ripple-center {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.9);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  animation: liquidCenter 0.45s ease-out forwards;
+}
+@keyframes liquidRippleExpand {
+  0%   { width: 0; height: 0; opacity: 1; }
+  100% { width: 320px; height: 320px; opacity: 0; border-width: 1px; }
+}
+@keyframes liquidCenter {
+  0%   { width: 6px; height: 6px; opacity: 1; }
+  100% { width: 36px; height: 36px; opacity: 0; }
+}
