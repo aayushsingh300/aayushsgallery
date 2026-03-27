@@ -52,18 +52,30 @@
     }
 
     /* ── Nav ── */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    .nav { display: none; } /* replaced by u-nav */
+    .u-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 22px 60px;
-      background: rgba(10,14,20,0.6);
-      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(96,165,250,0.07);
-      transition: background 0.3s ease, border-color 0.3s ease;
+      padding: 20px 60px;
+      background: rgba(8,10,14,0.78);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+      font-family: 'Inter', sans-serif;
     }
-    .nav-scrolled {
-      background: rgba(10,14,20,0.92);
-      border-bottom-color: var(--border);
+    .u-nav.u-nav-hidden { transform: translateY(-100%); }
+    .u-nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .u-nav-logo img { height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.88; }
+    .u-nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+    .u-nav-links a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: 0.04em; color: rgba(214,208,196,0.65); transition: color 0.2s ease;
+    }
+    .u-nav-links a:hover { color: #d6d0c4; }
+    @media (max-width: 768px) {
+      .u-nav { padding: 16px 20px; }
+      .u-nav-links { display: none; }
     }
     .nav-back {
       display: flex; align-items: center; gap: 8px;
@@ -569,21 +581,16 @@
 
 <body>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a href="index.html" class="nav-back">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M12 7H2M2 7L6 3M2 7L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Portfolio
+<!-- Universal Navigation -->
+<nav class="u-nav" id="uNav">
+  <a href="index.html" class="u-nav-logo">
+    <img src="images/hero/Aayushsign.svg" alt="Aayush">
   </a>
-  <a href="#" class="nav-logo">VIGIL</a>
-  <a href="prahari.html" class="nav-next">
-    Next Project
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </a>
+  <ul class="u-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="all-works.html">All Works</a></li>
+    <li><a href="about.html">About & Resume</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
@@ -1628,6 +1635,25 @@
     });
   });
 </script>
+<script>
+  (function() {
+    var nav = document.getElementById('uNav');
+    if (!nav) return;
+    var lastY = window.scrollY, ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          var y = window.scrollY;
+          if (y > lastY && y > 80) nav.classList.add('u-nav-hidden');
+          else nav.classList.remove('u-nav-hidden');
+          lastY = y; ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+</script>
 
+<script src="cursor-effects.js"></script>
 </body>
 </html>

@@ -1,24 +1,70 @@
 /* ─── SITE-WIDE GLOBALS ──────────────────────────────────────────────── */
-/* Linked from: index.html, all-works.html, about.html, resume.html, vigil.html */
+/* Linked from: index.html, all-works.html, about.html, resume.html,
+                vigil.html, titaneyeplus_casestudy.html,
+                chargeur.html, parkbeheer.html, prahari.html, rojnica.html */
 
-/* ─── GLOBAL GRAIN TEXTURE ───────────────────────────────────────────── */
+/*
+  GRAIN STRATEGY — one rule, no tricks
+  ─────────────────────────────────────
+  body::after  z-index 9500  opacity 0.016  no blend-mode
+  · The SVG fractal noise tile renders as greyscale.
+  · At 1.6% straight opacity it is FELT, not seen — adds paper/film texture
+    without any perceivable effect on text or image contrast.
+  · No mix-blend-mode: straight compositing avoids all interaction with
+    stacking contexts, transforms, or section backgrounds.
+  · Animated background-position gives the noise a living, shifting feel.
+
+  body::before  z-index -1  (project/secondary pages only)
+  · Pure warm amber gradient, NO noise.
+  · z-index -1 keeps it behind ALL page content unconditionally.
+  · index.html, all-works.html, about.html override this inline because
+    their <style> tag comes after this file in the cascade.
+*/
+
+
+/* ─── WARM TINT (project & secondary pages) ─────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 18% 22%, rgba(150, 72, 24, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 80% at 82% 78%, rgba(120, 52, 16, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;   /* behind everything — never touches content */
+}
+
+
+/* ─── FILM GRAIN (all pages) ─────────────────────────────────────────── */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.016;      /* 1.6% — imperceptible on content, atmospheric on bg */
   pointer-events: none;
-  z-index: 9001;
-  mix-blend-mode: overlay;
+  z-index: 9500;
+  animation: grain-shift 8s steps(1, end) infinite;
 }
+
+@keyframes grain-shift {
+  0%   { background-position:   0px   0px; }
+  12%  { background-position:  -44px -66px; }
+  25%  { background-position: -110px  33px; }
+  37%  { background-position:   55px -88px; }
+  50%  { background-position:  -77px  77px; }
+  62%  { background-position:   22px -33px; }
+  75%  { background-position: -99px   55px; }
+  87%  { background-position:   66px -77px; }
+  100% { background-position:   0px   0px; }
+}
+
 
 /* ─── SPACESHIP CURSOR ───────────────────────────────────────────────── */
 *, *::before, *::after {
   cursor: url('cursor-spaceship.svg') 11 1, crosshair;
 }
-/* keep I-beam for text fields */
 input[type="text"],
 input[type="email"],
 input[type="search"],
@@ -27,44 +73,24 @@ textarea {
   cursor: url('cursor-spaceship.svg') 11 1, text;
 }
 
-/* ─── LIQUID RIPPLE (vigil.html + any page that opts in) ─────────────── */
+
+/* ─── LIQUID RIPPLE ──────────────────────────────────────────────────── */
 .liquid-ripple {
-  position: fixed;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
+  position: fixed; width: 0; height: 0; border-radius: 50%;
+  pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
 }
 .liquid-ripple-ring {
-  position: fixed;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
+  position: fixed; width: 0; height: 0; border-radius: 50%;
   border: 1.5px solid rgba(74, 222, 128, 0.5);
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
+  pointer-events: none; z-index: 9998; transform: translate(-50%, -50%);
   animation: liquidRippleExpand 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
-.liquid-ripple-ring.ring-2 {
-  border-color: rgba(74, 222, 128, 0.28);
-  animation-delay: 0.1s;
-}
-.liquid-ripple-ring.ring-3 {
-  border-color: rgba(74, 222, 128, 0.14);
-  animation-delay: 0.2s;
-}
+.liquid-ripple-ring.ring-2 { border-color: rgba(74, 222, 128, 0.28); animation-delay: 0.1s; }
+.liquid-ripple-ring.ring-3 { border-color: rgba(74, 222, 128, 0.14); animation-delay: 0.2s; }
 .liquid-ripple-center {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  position: fixed; width: 6px; height: 6px; border-radius: 50%;
   background: rgba(74, 222, 128, 0.9);
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
+  pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
   animation: liquidCenter 0.45s ease-out forwards;
 }
 @keyframes liquidRippleExpand {
@@ -74,4 +100,251 @@ textarea {
 @keyframes liquidCenter {
   0%   { width: 6px; height: 6px; opacity: 1; }
   100% { width: 36px; height: 36px; opacity: 0; }
+}
+
+/* ─── LIVE CHATBOT FAB & WINDOW ──────────────────────────────────────── */
+#chatbot-fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--orange, #ff8e00);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(255, 142, 0, 0.4);
+  cursor: pointer;
+  z-index: 10000;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+#chatbot-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(255, 142, 0, 0.5);
+}
+
+#chatbot-window {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 360px;
+  height: 500px;
+  background: rgba(16, 18, 24, 0.85);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  transform-origin: bottom right;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), visibility 0.3s;
+}
+
+#chatbot-window.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.8) translateY(20px);
+}
+
+.chatbot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chatbot-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chatbot-profile img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 142, 0, 0.6);
+}
+
+.chatbot-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatbot-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink, #d6d0c4);
+}
+
+.chatbot-status {
+  font-size: 12px;
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chatbot-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #4ade80;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+#chatbot-close {
+  background: none;
+  border: none;
+  color: rgba(214, 208, 196, 0.6);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+#chatbot-close:hover {
+  color: var(--ink, #d6d0c4);
+}
+
+.chatbot-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chatbot-messages::-webkit-scrollbar {
+  width: 6px;
+}
+.chatbot-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.chat-message {
+  display: flex;
+  max-width: 85%;
+}
+
+.chat-message.user {
+  align-self: flex-end;
+}
+
+.chat-message.bot {
+  align-self: flex-start;
+}
+
+.message-content {
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.chat-message.user .message-content {
+  background: var(--orange, #ff8e00);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-message.bot .message-content {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink, #d6d0c4);
+  border-bottom-left-radius: 4px;
+}
+
+.typing-indicator {
+  display: inline-flex;
+  gap: 4px;
+  padding: 6px 10px;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(214, 208, 196, 0.6);
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+.chatbot-input-area {
+  display: flex;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 10px;
+  align-items: center;
+}
+
+#chatbot-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 12px 16px;
+  color: var(--ink, #d6d0c4);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+#chatbot-input:focus {
+  border-color: rgba(255, 142, 0, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#chatbot-input::placeholder {
+  color: rgba(214, 208, 196, 0.4);
+}
+
+#chatbot-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--orange, #ff8e00);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  flex-shrink: 0;
+}
+
+#chatbot-send:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+#chatbot-send:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(214, 208, 196, 0.3);
+  cursor: not-allowed;
+  transform: none;
 }

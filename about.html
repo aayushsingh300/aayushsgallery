@@ -39,15 +39,15 @@
       align-items: center;
       justify-content: space-between;
       padding: 22px 80px;
-      background: rgba(34, 22, 22, 0.55);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(214,208,196,0.07);
+      background: rgba(8, 10, 14, 0.42);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       transition: background 0.35s ease, border-color 0.35s ease;
     }
     .nav-scrolled {
-      background: rgba(34, 22, 22, 0.88);
-      border-bottom-color: rgba(214,208,196,0.12);
+      background: rgba(8, 10, 14, 0.82);
+      border-bottom-color: rgba(255, 255, 255, 0.10);
     }
     .nav-logo { text-decoration: none; display: flex; align-items: center; }
     .nav-logo-svg { height: 30px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
@@ -61,17 +61,23 @@
     .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
     .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--ink); }
 
-    /* ─── GLOBAL GRAIN ──────────────────────────── */
-    body::after {
+    /* ─── WARM BROWN TINT OVERLAY ────────────── */
+    body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-size: 160px 160px;
-      opacity: 0.022;
+      background:
+        radial-gradient(ellipse 140% 90% at 30% 35%, rgba(140, 82, 38, 0.13) 0%, rgba(100, 52, 22, 0.08) 50%, transparent 100%),
+        linear-gradient(160deg, rgba(120, 65, 25, 0.09) 0%, rgba(80, 42, 16, 0.06) 60%, rgba(50, 25, 10, 0.03) 100%);
       pointer-events: none;
-      z-index: 9001;
-      mix-blend-mode: overlay;
+      z-index: 9000;
+      mix-blend-mode: multiply;
+      animation: tint-breathe 12s ease-in-out infinite;
+    }
+    @keyframes tint-breathe {
+      0%, 100% { opacity: 1; }
+      33%      { opacity: 0.85; }
+      66%      { opacity: 0.95; }
     }
 
     /* ─── PAGE HERO ────────────────────────────── */
@@ -267,6 +273,35 @@
     .footer-strip a { color: var(--orange); text-decoration: none; font-size: 14px; font-weight: 500; }
     .footer-copy { font-size: 13px; color: rgba(214,208,196,0.3); }
 
+    /* ─── DOWNLOAD BUTTON ──────────────────────── */
+    .download-resume-btn {
+      display: inline-flex; align-items: center; gap: 10px; margin-top: 28px;
+      padding: 11px 24px; border: 1px solid rgba(255,142,0,0.5); border-radius: 100px;
+      font-size: 13px; font-weight: 500; color: var(--orange); text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      background: rgba(255,142,0,0.04);
+    }
+    .download-resume-btn:hover { background: rgba(255,142,0,0.1); border-color: var(--orange); }
+
+    /* ─── RESUME CTA ──────────────────────────── */
+    .resume-cta {
+      border-top: 1px solid var(--border);
+      padding: 80px 80px 100px;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+      background: linear-gradient(180deg, #1d1412 0%, #221616 100%);
+    }
+    .resume-cta-left p {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 12px;
+    }
+    .resume-cta-left h2 {
+      font-size: clamp(22px, 3vw, 34px); font-weight: 600;
+      color: var(--ink); line-height: 1.2;
+    }
+    @media (max-width: 900px) {
+      .resume-cta { flex-direction: column; padding: 60px 24px 80px; align-items: flex-start; }
+    }
+
     @media (max-width: 900px) {
       .nav { padding: 20px 24px; }
       .nav-links { display: none; }
@@ -277,6 +312,7 @@
       .skills-inner { grid-template-columns: 1fr; }
       .skill-group { padding: 32px 24px; }
       .experience { padding: 60px 24px 80px; }
+      .resume-inner { grid-template-columns: 1fr; padding: 60px 24px 80px; gap: 40px; }
       .footer-strip { padding: 40px 24px; flex-direction: column; gap: 16px; }
     }
   </style>
@@ -290,8 +326,7 @@
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="all-works.html">All Works</a></li>
-    <li><a href="about.html" class="active">About Me</a></li>
-    <li><a href="resume.html">Resume</a></li>
+    <li><a href="about.html" class="active">About & Resume</a></li>
   </ul>
   <div class="nav-menu">
     <div class="hamburger" aria-label="Menu"><span></span><span></span></div>
@@ -324,6 +359,10 @@
         <span class="hero-stat-lbl">Clients</span>
       </div>
     </div>
+    <a href="resume.html" class="download-resume-btn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Resume
+    </a>
   </div>
   <div class="page-hero-portrait">
     <img src="images/hero/Aayuhs dp.jpg" alt="Aayush R">
@@ -456,8 +495,20 @@
   </div>
 </section>
 
+<!-- ── RESUME CTA ─────────────────────────────────── -->
+<section class="resume-cta">
+  <div class="resume-cta-left">
+    <p>Full Resume</p>
+    <h2>Skills, tools &amp; full work history</h2>
+  </div>
+  <a href="resume.html" class="download-resume-btn">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    View Resume
+  </a>
+</section>
+
 <footer class="footer-strip">
-  <a href="resume.html">View Full Resume →</a>
+  <a href="index.html">← Back to Home</a>
   <p class="footer-copy">aayushsingh300@gmail.com · +91 9031585962</p>
 </footer>
 
@@ -468,5 +519,6 @@
   });
 </script>
 
+<script src="cursor-effects.js"></script>
 </body>
 </html>

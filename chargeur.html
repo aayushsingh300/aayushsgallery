@@ -773,9 +773,46 @@
             font-weight: 600;
         }
     </style>
+<style>
+  .u-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(8,10,14,0.78);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    font-family: 'Inter', sans-serif;
+  }
+  .u-nav.u-nav-hidden { transform: translateY(-100%); }
+  .u-nav-logo { text-decoration: none; display: flex; align-items: center; }
+  .u-nav-logo img { height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.88; }
+  .u-nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+  .u-nav-links a {
+    text-decoration: none; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.04em; color: rgba(214,208,196,0.65); transition: color 0.2s ease;
+  }
+  .u-nav-links a:hover { color: #d6d0c4; }
+  @media (max-width: 768px) {
+    .u-nav { padding: 16px 20px; }
+    .u-nav-links { display: none; }
+  }
+</style>
+<link rel="stylesheet" href="site-globals.css">
 </head>
 
 <body>
+<nav class="u-nav" id="uNav">
+  <a href="index.html" class="u-nav-logo">
+    <img src="images/hero/Aayushsign.svg" alt="Aayush">
+  </a>
+  <ul class="u-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="all-works.html">All Works</a></li>
+    <li><a href="about.html">About & Resume</a></li>
+  </ul>
+</nav>
 
     <!-- ═══════ HERO ═══════ -->
     <section class="hero">
@@ -948,10 +985,16 @@
                     <p style="color:var(--text-primary);font-weight:500;">That trust is the entire design problem.</p>
                 </div>
             </div>
+            <img src="./images/chargeur-tank-interior.png" alt="Commander operating the CHARGEUR tablet interface inside the cramped ALT-3 tank interior"
+                style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
+            <p style="font-family: var(--font-data); font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: -24px; margin-bottom: 32px;">The operating environment: a cramped vehicle interior, low light, vibration, and a tablet that has to earn trust in under a second.</p>
             <div class="pull-quote">"They never touch the ammunition. They push a button and trust. That's the whole
                 design problem in one sentence."</div>
             <img src="./images/carousel.png" alt="Autoloader carousel diagram"
                 style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
+            <img src="./images/chargeur-data-flow.png" alt="System data flow: Autoloader Carousel → Sensor Array → Tablet Interface → Commander and Gunner"
+                style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 16px 0 32px;">
+            <p style="font-family: var(--font-data); font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: -24px; margin-bottom: 0;">How sensor data flows from the autoloader through the tablet to both crew members — the technology pipeline behind every screen in CHARGEUR.</p>
         </div>
     </section>
 
@@ -1566,6 +1609,8 @@
             var scale = Math.min(0.666, w / 1440);
             var iframe = embed.querySelector('iframe');
             var svg = embed.querySelector('.ann-svg');
+            var chromeEl = embed.querySelector('.chrome');
+            var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
             var h = 900;
             if (iframe) {
                 var inlineStyle = iframe.getAttribute('style') || '';
@@ -1574,18 +1619,21 @@
                 iframe.style.transform = 'scale(' + scale + ')';
                 iframe.style.marginBottom = '0';
                 embed.style.overflow = 'hidden';
-                var chromeEl = embed.querySelector('.chrome');
-                var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
                 embed.style.height = (chromeH + Math.round(h * scale)) + 'px';
             }
             if (svg) {
-                var chromeEl = embed.querySelector('.chrome');
-                var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
                 svg.style.position = 'absolute';
                 svg.style.top = chromeH + 'px';
                 svg.style.left = '0';
                 svg.style.width = Math.round(1440 * scale) + 'px';
                 svg.style.height = Math.round(h * scale) + 'px';
+            }
+            // Sync sidebar padding-top to actual chrome bar height so notes align with iframe content
+            var wrapper = embed.closest('.screen-annotated');
+            if (wrapper && chromeH > 0) {
+                wrapper.querySelectorAll('.ann-sidebar').forEach(function(sb) {
+                    sb.style.paddingTop = chromeH + 'px';
+                });
             }
         });
     }
@@ -1635,7 +1683,17 @@
         document.addEventListener('DOMContentLoaded', refresh);
     } else { refresh(); }
     window.addEventListener('resize', refresh);
-    window.addEventListener('load', refresh);
+    window.addEventListener('load', function() {
+        refresh();
+        // Redraw after a short delay to catch any late layout shifts
+        setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 300);
+    });
+    // Redraw lines on scroll (debounced) to handle scroll-triggered GSAP animations
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 80);
+    }, { passive: true });
 })();
 </script>
 
@@ -1672,7 +1730,26 @@
     });
   });
 </script>
+<script>
+  (function() {
+    var nav = document.getElementById('uNav');
+    if (!nav) return;
+    var lastY = window.scrollY, ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          var y = window.scrollY;
+          if (y > lastY && y > 80) nav.classList.add('u-nav-hidden');
+          else nav.classList.remove('u-nav-hidden');
+          lastY = y; ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+</script>
 
+<script src="cursor-effects.js"></script>
 </body>
 
 </html>
