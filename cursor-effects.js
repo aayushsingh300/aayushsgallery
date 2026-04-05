@@ -186,6 +186,8 @@
 
   // Hook into the same isOnClickable state the fire uses
   var _origCheckClickable = checkClickable;
+  var hoverTimeout = null;
+
   document.addEventListener('mouseover', function (e) {
     _origCheckClickable(e);
     if (isOnClickable) {
@@ -193,12 +195,19 @@
       if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
       targetGain = 0.18;   // subtle – not blasting
       kickSoundLoop();
+      
+      // Clear any existing timeout and set a new one to turn off the sound very quickly (approx 80ms)
+      if (hoverTimeout) clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(function() {
+        targetGain = 0;
+        kickSoundLoop();
+      }, 80);
     }
   });
+
   document.addEventListener('mouseout', function () {
     isOnClickable = false;
-    targetGain = 0;
-    kickSoundLoop(); // let the loop run to fade out, then it self-suspends
+    // Don't need to do targetGain = 0 here as we just let the click blip finish
   });
 
 })();

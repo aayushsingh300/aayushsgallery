@@ -3,8 +3,14 @@
                 vigil.html, titaneyeplus_casestudy.html,
                 chargeur.html, parkbeheer.html, prahari.html, rojnica.html */
 
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 /*
   GRAIN STRATEGY — one rule, no tricks
+
   ─────────────────────────────────────
   body::after  z-index 9500  opacity 0.016  no blend-mode
   · The SVG fractal noise tile renders as greyscale.
@@ -347,4 +353,91 @@ textarea {
   color: rgba(214, 208, 196, 0.3);
   cursor: not-allowed;
   transform: none;
+}
+
+
+/* ─── GLOBAL NAV (shared across all pages via nav-component.js) ─── */
+.g-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 60px;
+  background: rgba(8, 10, 14, 0.72);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), background 0.35s ease, border-color 0.35s ease;
+}
+.g-nav.g-nav-scrolled {
+  background: rgba(8, 10, 14, 0.92);
+  border-bottom-color: rgba(255,255,255,0.11);
+}
+.g-nav.g-nav-hidden { transform: translateY(-100%); }
+
+.g-nav-logo { text-decoration: none; display: flex; align-items: center; }
+.g-nav-logo img { height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.88; }
+
+.g-nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.g-nav-links a {
+  text-decoration: none;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(188,196,208,0.62);
+  transition: color 0.2s ease;
+  font-family: 'Inter', 'IBM Plex Sans', sans-serif;
+}
+.g-nav-links a:hover,
+.g-nav-links a.active { color: #EDF0F4; }
+
+.g-nav-actions { display: flex; align-items: center; gap: 12px; }
+
+.g-theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: rgba(188,196,208,0.7);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.g-theme-toggle:hover { background: rgba(255,255,255,0.09); color: #EDF0F4; }
+.g-theme-toggle svg { width: 15px; height: 15px; display: block; }
+.g-theme-toggle .icon-sun { display: none; }
+.g-theme-toggle .icon-moon { display: block; }
+body.light .g-theme-toggle .icon-sun  { display: block; }
+body.light .g-theme-toggle .icon-moon { display: none; }
+
+@media (max-width: 768px) {
+  .g-nav { padding: 16px 20px; }
+  .g-nav-links { display: none; }
+  
+  /* Portfolio global overrides */
+  .two-col, .three-col, .four-col, .hero-stats, .cs-metrics-grid, .meta-card, .app-main-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  
+  /* Titles and typography clamps */
+  .cs-hero-title, .hero-tagline, .hero-tag, .hero-sub, .section-label, .timeline-role {
+    font-size: clamp(28px, 8vw, 42px) !important;
+    line-height: 1.2 !important;
+    word-wrap: break-word !important;
+  }
+  
+  /* Mockups, images and structural overrides */
+  .mockup img, .chrome img, .cs-image, img.full-width, .image-wrapper img {
+    border-radius: 8px !important;
+  }
+  .hero-comp, .mockup, .chrome, .app-sidebar, body > .container {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Specific application layout fixes */
+  #dashboard, .dashboard-container, .split-view {
+    flex-direction: column !important;
+    min-width: 100% !important;
+  }
+  .app-sidebar.desktop-only { display: none !important; }
 }

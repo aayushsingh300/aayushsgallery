@@ -52,31 +52,6 @@
     }
 
     /* ── Nav ── */
-    .nav { display: none; } /* replaced by u-nav */
-    .u-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 60px;
-      background: rgba(8,10,14,0.78);
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
-      font-family: 'Inter', sans-serif;
-    }
-    .u-nav.u-nav-hidden { transform: translateY(-100%); }
-    .u-nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .u-nav-logo img { height: 28px; width: auto; filter: brightness(0) invert(1); opacity: 0.88; }
-    .u-nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
-    .u-nav-links a {
-      text-decoration: none; font-size: 13px; font-weight: 500;
-      letter-spacing: 0.04em; color: rgba(214,208,196,0.65); transition: color 0.2s ease;
-    }
-    .u-nav-links a:hover { color: #d6d0c4; }
-    @media (max-width: 768px) {
-      .u-nav { padding: 16px 20px; }
-      .u-nav-links { display: none; }
-    }
     .nav-back {
       display: flex; align-items: center; gap: 8px;
       text-decoration: none; color: var(--text-second);
@@ -581,17 +556,6 @@
 
 <body>
 
-<!-- Universal Navigation -->
-<nav class="u-nav" id="uNav">
-  <a href="index.html" class="u-nav-logo">
-    <img src="images/hero/Aayushsign.svg" alt="Aayush">
-  </a>
-  <ul class="u-nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="all-works.html">All Works</a></li>
-    <li><a href="about.html">About & Resume</a></li>
-  </ul>
-</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -769,7 +733,7 @@
     <p>Standard NATO combat gloves have a palm thickness of approximately 4mm. Thin tactical gloves are 2mm. Capacitive touchscreens stop registering touch at approximately 1.5mm of non-conductive material above the screen. Military advisors were consistent: in operational conditions, soldiers don't carry styluses. They have whatever gloves they issued that morning.</p>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_glove_interaction_1773646986941.png" alt="Soldier's hand in thick tactical glove pressing a glowing smartwatch in darkness" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <img src="images/vigil/vigil_mockup_main_ui_1775405730282.png" alt="Smartwatch displaying tactical mesh network UI mock" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Tactical glove constraint testing: Touchscreens fail under field thickness</figcaption>
     </figure>
 
@@ -999,7 +963,7 @@
     </ol>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_red_lamp_test_1773647021910.png" alt="Testing the wearable in pitch darkness with a red tactical light" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <img src="images/vigil/vigil_mockup_metrics_ui_1775405745887.png" alt="Smartwatch displaying dark mode metrics and heart rate UI" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Protocol 02 validation: Ambient light testing restricted to single red headlamp</figcaption>
     </figure>
 
@@ -1201,7 +1165,7 @@
     </div>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_cbrn_concept_1773647038676.png" alt="Military gas mask and a glowing rugged smartwatch resting on a crate" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <img src="images/vigil/vigil_mockup_map_ui_1775405764481.png" alt="Smartwatch displaying topological map UI with waypoints" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">CBRN Context: The cognitive state during a chemical threat is fundamentally different</figcaption>
     </figure>
 
@@ -1636,24 +1600,9 @@
   });
 </script>
 <script>
-  (function() {
-    var nav = document.getElementById('uNav');
-    if (!nav) return;
-    var lastY = window.scrollY, ticking = false;
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        requestAnimationFrame(function() {
-          var y = window.scrollY;
-          if (y > lastY && y > 80) nav.classList.add('u-nav-hidden');
-          else nav.classList.remove('u-nav-hidden');
-          lastY = y; ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
-  })();
 </script>
 
 <script src="cursor-effects.js"></script>
+<script src="nav-component.js"></script>
 </body>
 </html>

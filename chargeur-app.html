@@ -750,6 +750,17 @@
         .q-stat strong {
             color: var(--text-primary);
         }
+        @media (max-width: 768px) {
+            .topbar { flex-wrap: wrap; height: auto; padding: 12px; gap: 8px; }
+            .topbar-sep, .topbar-stat { display: none; }
+            .topbar-stat:first-of-type { display: block; }
+            .count-bars { flex-direction: column; }
+            .gunner-body, .fleet-body { grid-template-columns: 1fr; overflow-y: auto; }
+            .queue-cols, .queue-row { grid-template-columns: 40px 1fr 60px; }
+            .queue-cell, .queue-col-label:nth-child(n+4) { display: none; }
+            .queue-row { min-height: auto; padding: 12px 24px; }
+            .radar-svg { max-width: 100%; height: auto; }
+        }
     </style>
 </head>
 

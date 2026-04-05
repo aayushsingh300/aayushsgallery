@@ -1057,6 +1057,148 @@
       stroke: var(--coral);
     }
 
+    /* ─── BLOG BENTO SECTION ───────────────────── */
+    .blog-bento {
+      padding: 80px 80px 100px;
+      background: linear-gradient(180deg, #1a1010 0%, #1d1212 100%);
+      position: relative;
+    }
+    .blog-bento-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .blog-bento-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--coral);
+      display: block; margin-bottom: 8px;
+    }
+    .blog-bento-title {
+      font-size: clamp(28px, 3.5vw, 48px); font-weight: 600;
+      color: var(--ink); letter-spacing: -0.5px; line-height: 1.1;
+    }
+    .blog-bento-link {
+      font-size: 13px; font-weight: 500; color: var(--coral);
+      text-decoration: none; letter-spacing: 0.04em;
+      display: flex; align-items: center; gap: 6px;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .blog-bento-link:hover { opacity: 0.7; }
+    .blog-bento-link svg { width: 12px; height: 12px; }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 16px;
+    }
+
+    .blog-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 3px;
+      padding: 32px 28px;
+      text-decoration: none;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+    }
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(196,149,106,0.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+    .blog-card:hover {
+      background: rgba(255,255,255,0.045);
+      border-color: rgba(196,149,106,0.28);
+      transform: translateY(-2px);
+    }
+    .blog-card:hover::before { opacity: 1; }
+
+    /* featured card spans full height on left */
+    .blog-card-featured {
+      grid-row: 1 / 3;
+      padding: 40px 36px;
+    }
+
+    .blog-card-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .blog-card-tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--coral);
+    }
+    .blog-card-tag + .blog-card-tag::before { content: '·'; margin-right: 8px; opacity: 0.4; }
+
+    .blog-card-title {
+      font-size: clamp(18px, 1.8vw, 24px); font-weight: 600;
+      line-height: 1.2; letter-spacing: -0.3px; color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .blog-card-featured .blog-card-title {
+      font-size: clamp(22px, 2.2vw, 32px);
+    }
+
+    .blog-card-desc {
+      font-size: 14px; line-height: 1.68;
+      color: rgba(214,208,196,0.52);
+      flex: 1;
+    }
+    .blog-card-featured .blog-card-desc { font-size: 15px; }
+
+    .blog-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .blog-card-date {
+      font-size: 11px; color: rgba(214,208,196,0.28);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .blog-card-arrow {
+      width: 30px; height: 30px;
+      border: 1px solid rgba(214,208,196,0.18); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+    .blog-card:hover .blog-card-arrow {
+      border-color: var(--coral);
+      background: rgba(196,149,106,0.1);
+      transform: translate(2px,-2px);
+    }
+    .blog-card-arrow svg { width: 12px; height: 12px; }
+
+    /* decorative number accent */
+    .blog-card-num {
+      font-size: 80px; font-weight: 700; line-height: 1;
+      color: rgba(196,149,106,0.05);
+      position: absolute; bottom: 16px; right: 20px;
+      pointer-events: none; user-select: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 960px) {
+      .blog-bento { padding: 60px 24px 80px; }
+      .blog-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .blog-card-featured { grid-row: auto; }
+    }
+    @media (max-width: 600px) {
+      .blog-bento { padding: 48px 16px 64px; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-bento-header { flex-direction: column; gap: 16px; }
+    }
+
     /* ─── FOOTER / SOCIALS ─────────────────────── */
     .footer {
       background: linear-gradient(0deg, #160e0e 0%, #221616 100%);
@@ -2100,6 +2242,31 @@
         font-size: 28px;
       }
     }
+
+    @media (max-width: 768px) {
+      .hero-tagline { font-size: clamp(40px, 9vw, 60px) !important; padding-bottom: 40px !important; line-height: 1; }
+      .hero-sidebar { display: none !important; }
+      .hero-inner { padding: 100px 20px 0 !important; }
+      .hero-text { padding-bottom: 40px !important; }
+
+      .stats { grid-template-columns: repeat(2, 1fr) !important; border-bottom: 1px solid rgba(214, 208, 196, 0.06); }
+      .stat-cell { padding: 40px 20px !important; border-right: 1px solid rgba(214, 208, 196, 0.06) !important; border-bottom: 1px solid rgba(214, 208, 196, 0.06); align-items: center !important; text-align: center; }
+      .stat-cell:nth-child(even) { border-right: none !important; }
+
+      .about { flex-direction: column !important; min-height: auto !important; padding-bottom: 40px; }
+      .about-photo-col { width: 100% !important; height: 350px !important; }
+      .about-text-col { padding: 60px 20px 20px !important; }
+      
+      .about-label, .about-headline, .about-body, .about-tagline { 
+        position: static !important; 
+        transform: none !important; 
+        margin-bottom: 24px; 
+      }
+      .about-headline { font-size: 24px !important; }
+      .about-body { font-size: 18px !important; }
+      
+      .services-grid { grid-template-columns: 1fr !important; }
+    }
   </style>
 </head>
 
@@ -2111,46 +2278,6 @@
   <!-- ── GLOBAL FIREFLIES CANVAS (behind project cards via z-index:0) ── -->
   <canvas id="globalFireflies" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;will-change:contents;"></canvas>
 
-  <!-- ── NAV ──────────────────────────────────────── -->
-  <nav class="nav">
-    <a href="index.html" class="nav-logo">
-      <img src="images/hero/Aayushsign.svg" alt="Aayush" class="nav-logo-svg">
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="all-works.html">All Works</a></li>
-      <li><a href="about.html">About & Resume</a></li>
-    </ul>
-    <div class="nav-menu">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
-        <!-- Moon icon (shown in dark mode) -->
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5"
-            stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        <!-- Sun icon (shown in light mode) -->
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5" />
-          <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-          <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="1.5"
-            stroke-linecap="round" />
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="1.5"
-            stroke-linecap="round" />
-          <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-          <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="1.5"
-            stroke-linecap="round" />
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="1.5"
-            stroke-linecap="round" />
-        </svg>
-      </button>
-      <div class="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </nav>
 
   <!-- ── HERO ──────────────────────────────────────── -->
   <section class="hero">
@@ -2517,29 +2644,26 @@
         </div>
       </a>
 
-      <!-- Card 4: PRAHARI -->
-      <a href="prahari.html" class="proj-card">
+      <!-- Card 4: MUSPELL (Healthcare) -->
+      <a href="muspell.html" class="proj-card">
         <div class="proj-card-bg">
-          <img src="images/hero/3258a21f2393a8a7a121be48522e00f1763cc596.png" alt="">
+          <img src="gallery/muspell images/hero-mockup.png" alt="Muspell">
         </div>
         <div class="proj-card-overlay">
-
           <div class="proj-card-gradient-bottom"
             style="background:linear-gradient(0deg,#221616 0%, rgba(34,22,23,0) 100%);"></div>
         </div>
         <div class="proj-card-content">
           <div class="proj-card-header">
-            <div class="proj-card-title" style="text-align:left;">PRAHARI</div>
-            <div class="proj-card-subtitle" style="text-align:left;">C-UAS Command &amp; Control</div>
+            <div class="proj-card-title" style="text-align:left;">MUSPELL</div>
+            <div class="proj-card-subtitle" style="text-align:left;">Clinical Health Data Viewer</div>
           </div>
           <div class="proj-card-body">
             <p class="proj-card-desc">
-              Designing the single surface that tells a duty officer whether to act on a drone threat in under five
-              seconds. Indian Army, Corps of Signals.
+              Designing a clinical data visualisation platform for healthcare teams — turning complex patient data into clear, actionable interfaces.
             </p>
             <div class="proj-card-cta">
-              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Defense ·
-                2023</span>
+              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Healthcare · 2022</span>
               <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
                 <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
                 <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
@@ -2661,6 +2785,75 @@
       </a>
     </div>
 
+  </section>
+
+  <!-- ── BLOG BENTO SECTION ──────────────────────────── -->
+  <section class="blog-bento">
+    <div class="blog-bento-header">
+      <div>
+        <span class="blog-bento-label">Thoughts & Writing</span>
+        <h2 class="blog-bento-title">Design learnings,<br>out in the open.</h2>
+      </div>
+      <a href="blogs.html" class="blog-bento-link">
+        All articles
+        <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="blog-grid">
+
+      <!-- Featured blog -->
+      <a href="https://medium.com/ux-planet/product-ux-design-for-enterprise-setting-up-a-design-workflow-process-and-language-7590de2d7438" target="_blank" class="blog-card blog-card-featured">
+        <div>
+          <div class="blog-card-tags">
+            <span class="blog-card-tag">UX Planet</span>
+            <span class="blog-card-tag">Enterprise</span>
+          </div>
+          <h3 class="blog-card-title">Product &amp; UX Design for Enterprise</h3>
+          <p class="blog-card-desc">Right Design Approach, Observations, Learnings &amp; Suggestions when dealing with large-scale B2B software environments. Setting up workflow, process &amp; design language.</p>
+        </div>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">Jun 30, 2022</span>
+          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <span class="blog-card-num">01</span>
+      </a>
+
+      <!-- Blog 2 -->
+      <a href="https://medium.com/ux-planet/framing-the-most-realistic-persona-of-an-enterprise-healthcare-users-1493a6d5a63b" target="_blank" class="blog-card">
+        <div>
+          <div class="blog-card-tags">
+            <span class="blog-card-tag">UX Planet</span>
+            <span class="blog-card-tag">Healthcare</span>
+          </div>
+          <h3 class="blog-card-title">Framing the Enterprise Healthcare Persona</h3>
+          <p class="blog-card-desc">Research &amp; payback from my own mistakes while framing personas for high-cognitive load B2B environments.</p>
+        </div>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">Jan 20, 2025</span>
+          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <span class="blog-card-num">02</span>
+      </a>
+
+      <!-- Blog 3 -->
+      <a href="https://medium.com/design-bootcamp/designing-saas-products-like-a-pro-8ce799e89130" target="_blank" class="blog-card">
+        <div>
+          <div class="blog-card-tags">
+            <span class="blog-card-tag">Bootcamp</span>
+            <span class="blog-card-tag">SaaS</span>
+          </div>
+          <h3 class="blog-card-title">Designing SaaS products like a pro</h3>
+          <p class="blog-card-desc">Tips &amp; headscratches while building scalable, data-dense web platforms. Best practices &amp; observations.</p>
+        </div>
+        <div class="blog-card-footer">
+          <span class="blog-card-date">Dec 9, 2024</span>
+          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <span class="blog-card-num">03</span>
+      </a>
+
+    </div>
   </section>
 
   <!-- ── MARQUEE BANDS ─────────────────────────────── -->
@@ -2917,15 +3110,7 @@
       });
     })();
 
-    // ─── THEME ─────────────────────────────────────────────
-    (function () {
-      var saved = localStorage.getItem('portfolio-theme');
-      if (saved === 'light') document.body.classList.add('light');
-    })();
-    document.getElementById('themeToggle').addEventListener('click', function () {
-      var isLight = document.body.classList.toggle('light');
-      localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
-    });
+    // ─── THEME (handled by nav-component.js) ───────────────
 
     // ─── GSAP ──────────────────────────────────────────────
     gsap.registerPlugin(ScrollTrigger);
@@ -2933,8 +3118,8 @@
     // Nav — backdrop blur on scroll
     ScrollTrigger.create({
       start: 60,
-      onEnter: function () { document.querySelector('.nav').classList.add('nav-scrolled'); },
-      onLeaveBack: function () { document.querySelector('.nav').classList.remove('nav-scrolled'); }
+      onEnter: function () { document.getElementById('gNav') && document.getElementById('gNav').classList.add('g-nav-scrolled'); },
+      onLeaveBack: function () { document.getElementById('gNav') && document.getElementById('gNav').classList.remove('g-nav-scrolled'); }
     });
 
     // ─── HERO SPARKLES ─────────────────────────────────────
@@ -3436,6 +3621,7 @@
   </div>
   
   <script src="chatbot.js"></script>
+  <script src="nav-component.js"></script>
 </body>
 
 </html>

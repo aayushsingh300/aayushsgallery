@@ -30,208 +30,130 @@
       overflow-x: hidden;
     }
 
-    /* ─── NAV ─────────────────────────────────── */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+    /* ─── CLOUD HERO ─────────────────────────── */
+    .cloud-hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 560px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 22px 80px;
-      background: rgba(8, 10, 14, 0.42);
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-      transition: background 0.35s ease, border-color 0.35s ease;
-    }
-    .nav-scrolled {
-      background: rgba(8, 10, 14, 0.82);
-      border-bottom-color: rgba(255, 255, 255, 0.10);
-    }
-    .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-logo-svg { height: 30px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
-    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
-    .nav-links a {
-      text-decoration: none; font-size: 14px; font-weight: 500;
-      letter-spacing: 0.04em; color: rgba(214,208,196,0.7); transition: color 0.2s ease;
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
-    .nav-menu { display: flex; align-items: center; gap: 12px; }
-    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
-    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--ink); }
-
-    /* ─── WARM BROWN TINT OVERLAY ────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 140% 90% at 30% 35%, rgba(140, 82, 38, 0.10) 0%, rgba(100, 52, 22, 0.06) 50%, transparent 100%),
-        linear-gradient(160deg, rgba(120, 65, 25, 0.07) 0%, rgba(80, 42, 16, 0.04) 60%, rgba(50, 25, 10, 0.02) 100%);
-      pointer-events: none;
-      z-index: 9000;
-      mix-blend-mode: multiply;
-      animation: tint-breathe 12s ease-in-out infinite;
-    }
-    @keyframes tint-breathe {
-      0%, 100% { opacity: 1; }
-      33%      { opacity: 0.85; }
-      66%      { opacity: 0.95; }
-    }
-
-    /* ─── PARTICLE HERO ────────────────────────── */
-    .particle-hero {
-      position: relative;
-      height: 360vh;
-      background: #0c0808;
-    }
-
-    .particle-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
+      justify-content: center;
       overflow: hidden;
     }
-
-    #particle-canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
+    .cloud-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 24px;
+      max-width: 680px;
     }
-
-    /* ─── HERO TEXT LAYER ─────────────────────── */
-    .ph-text {
-      position: absolute;
-      left: clamp(24px, 5.5vw, 80px);
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 5;
-      max-width: 440px;
-      pointer-events: none;
-    }
-
-    .ph-eyebrow {
+    .ch-eyebrow {
       display: block;
-      font-family: 'Questrial', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--coral);
-      margin-bottom: 18px;
-      opacity: 0;
-      transition: opacity 0.05s linear, transform 0.05s linear;
+      color: var(--orange);
+      margin-bottom: 20px;
+      opacity: 0.9;
     }
-
-    .ph-name {
-      font-size: clamp(52px, 7vw, 88px);
+    .ch-name {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(52px, 9vw, 96px);
       font-weight: 700;
-      line-height: 0.92;
-      letter-spacing: -2px;
-      color: var(--ink);
-      margin-bottom: 18px;
-      opacity: 0;
-      transition: opacity 0.05s linear, transform 0.05s linear;
-    }
-
-    .ph-role {
-      font-size: 16px;
-      font-weight: 400;
-      color: rgba(214,208,196,0.55);
-      letter-spacing: 0.02em;
-      margin-bottom: 28px;
-      opacity: 0;
-      transition: opacity 0.05s linear, transform 0.05s linear;
-    }
-
-    .ph-tagline {
-      font-size: clamp(18px, 2.2vw, 26px);
-      font-weight: 300;
-      line-height: 1.4;
-      color: rgba(214,208,196,0.82);
-      margin-bottom: 36px;
-      opacity: 0;
-      transition: opacity 0.05s linear, transform 0.05s linear;
-    }
-
-    .ph-stats {
-      display: flex;
-      gap: 32px;
-      margin-bottom: 32px;
-      opacity: 0;
-      transition: opacity 0.05s linear, transform 0.05s linear;
-    }
-    .ph-stat-num {
-      display: block;
-      font-size: 30px;
-      font-weight: 600;
-      color: var(--ink);
+      color: #fff;
+      letter-spacing: -3px;
       line-height: 1;
-      margin-bottom: 3px;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 32px rgba(0,0,0,0.45);
     }
-    .ph-stat-lbl {
-      font-size: 10px;
+    .ch-tagline {
+      font-size: 17px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 36px;
+      line-height: 1.5;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    }
+    .ch-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .ch-stat {
+      text-align: center;
+      padding: 0 24px;
+    }
+    .ch-stat strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .ch-stat span {
+      display: block;
+      font-size: 11px;
       font-weight: 500;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: rgba(214,208,196,0.38);
+      color: rgba(255,255,255,0.55);
+      margin-top: 4px;
     }
-
-    .ph-resume-btn {
+    .ch-stat-sep {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,0.2);
+    }
+    .ch-resume-btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 11px 22px;
-      border: 1px solid rgba(255,142,0,0.45);
+      gap: 8px;
+      padding: 12px 28px;
+      border: 1px solid rgba(255,142,0,0.6);
       border-radius: 100px;
       font-size: 13px;
       font-weight: 500;
       color: var(--orange);
       text-decoration: none;
-      background: rgba(255,142,0,0.04);
+      background: rgba(255,142,0,0.07);
+      backdrop-filter: blur(8px);
       transition: background 0.2s ease, border-color 0.2s ease;
-      opacity: 0;
-      pointer-events: all;
     }
-    .ph-resume-btn:hover { background: rgba(255,142,0,0.10); border-color: var(--orange); }
-
-    /* ─── SCROLL HINT ──────────────────────────── */
-    .ph-scroll-hint {
+    .ch-resume-btn:hover {
+      background: rgba(255,142,0,0.16);
+      border-color: var(--orange);
+    }
+    .ch-scroll-hint {
       position: absolute;
-      bottom: 36px;
+      bottom: 32px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 5;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      transition: opacity 0.3s ease;
-    }
-    .ph-scroll-hint span {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
+      gap: 6px;
+      color: rgba(255,255,255,0.4);
+      font-size: 11px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(214,208,196,0.3);
+      animation: ch-bounce 2s ease-in-out infinite;
     }
-    .ph-scroll-arrow {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(180deg, rgba(164,120,100,0.5) 0%, transparent 100%);
-      animation: scroll-arrow-pulse 1.8s ease-in-out infinite;
-    }
-    @keyframes scroll-arrow-pulse {
-      0%, 100% { transform: scaleY(1); opacity: 0.7; }
-      50%       { transform: scaleY(0.6); opacity: 0.3; }
+    @keyframes ch-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
     }
 
     /* ─── SKILLS STRIP ─────────────────────────── */
     .skills-strip {
-      background: linear-gradient(180deg, #0c0808 0%, #1c1411 50%, #221616 100%);
+      background: linear-gradient(180deg, #1a1111 0%, #1d1312 50%, #221616 100%);
       border-bottom: 1px solid var(--border);
     }
     .skills-inner {
@@ -334,12 +256,8 @@
     }
 
     @media (max-width: 900px) {
-      .nav { padding: 20px 24px; }
-      .nav-links { display: none; }
-      .ph-text { max-width: 55vw; }
-      .ph-name { letter-spacing: -1px; }
-      .ph-stats { gap: 20px; }
-      .ph-tagline { display: none; }
+      .ch-stats { gap: 0; }
+      .ch-stat { padding: 0 16px; }
       .skills-inner { grid-template-columns: 1fr; }
       .skill-group { padding: 32px 24px; }
       .experience { padding: 60px 24px 80px; }
@@ -348,66 +266,45 @@
     }
 
     @media (max-width: 600px) {
-      .ph-text { left: 20px; max-width: calc(100vw - 40px); }
-      .ph-name { font-size: clamp(38px, 11vw, 60px); }
-      .ph-stats { display: none; }
+      .ch-name { letter-spacing: -2px; font-size: clamp(36px, 12vw, 56px) !important; }
+      .ch-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; row-gap: 24px; padding: 0 10px; }
+      .ch-stat { padding: 0 !important; }
+      .ch-stat-sep { display: none; }
+      
+      .timeline-role { font-size: 17px !important; }
+      .timeline-company { font-size: 14px !important; }
+      
+      .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
+      .skill-tag { font-size: 12px; padding: 6px 12px; }
     }
   </style>
 </head>
 <body>
 
-<nav class="nav" id="mainNav">
-  <a href="index.html" class="nav-logo">
-    <img src="images/hero/Aayushsign.svg" alt="Aayush" class="nav-logo-svg">
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="all-works.html">All Works</a></li>
-    <li><a href="about.html" class="active">About & Resume</a></li>
-  </ul>
-  <div class="nav-menu">
-    <div class="hamburger" aria-label="Menu"><span></span><span></span></div>
+
+<!-- ── CLOUD HERO ──────────────────────────────────── -->
+<section class="cloud-hero" id="vantaBg">
+  <div class="cloud-hero-content">
+    <span class="ch-eyebrow">Senior Product Designer</span>
+    <h1 class="ch-name">Aayush R.</h1>
+    <p class="ch-tagline">Designing for people who actually use it.</p>
+    <div class="ch-stats">
+      <div class="ch-stat"><strong>8+</strong><span>Years active</span></div>
+      <div class="ch-stat-sep"></div>
+      <div class="ch-stat"><strong>30+</strong><span>Projects shipped</span></div>
+      <div class="ch-stat-sep"></div>
+      <div class="ch-stat"><strong>5</strong><span>Sectors</span></div>
+      <div class="ch-stat-sep"></div>
+      <div class="ch-stat"><strong>12</strong><span>Partners</span></div>
+    </div>
+    <a href="resume.html" class="ch-resume-btn">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      View Resume
+    </a>
   </div>
-</nav>
-
-<!-- ── PARTICLE HERO ──────────────────────────────── -->
-<section class="particle-hero" id="particleHero">
-  <div class="particle-sticky">
-    <canvas id="particle-canvas"></canvas>
-
-    <div class="ph-text" id="phText">
-      <span class="ph-eyebrow" id="phEyebrow">About Me</span>
-      <h1 class="ph-name" id="phName">Aayush R.</h1>
-      <p class="ph-role" id="phRole">Product Designer &nbsp;·&nbsp; 8+ Years</p>
-      <p class="ph-tagline" id="phTagline">Designing for people<br>who actually use it.</p>
-      <div class="ph-stats" id="phStats">
-        <div class="ph-stat">
-          <span class="ph-stat-num">8+</span>
-          <span class="ph-stat-lbl">Years</span>
-        </div>
-        <div class="ph-stat">
-          <span class="ph-stat-num">30+</span>
-          <span class="ph-stat-lbl">Projects</span>
-        </div>
-        <div class="ph-stat">
-          <span class="ph-stat-num">5</span>
-          <span class="ph-stat-lbl">Domains</span>
-        </div>
-        <div class="ph-stat">
-          <span class="ph-stat-num">12</span>
-          <span class="ph-stat-lbl">Clients</span>
-        </div>
-      </div>
-      <a href="resume.html" class="ph-resume-btn" id="phResumeBtn">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Resume
-      </a>
-    </div>
-
-    <div class="ph-scroll-hint" id="phScrollHint">
-      <span>scroll</span>
-      <div class="ph-scroll-arrow"></div>
-    </div>
+  <div class="ch-scroll-hint">
+    <span>Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M8 13l-4-4M8 13l4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
 </section>
 
@@ -554,330 +451,29 @@
   <p class="footer-copy">aayushsingh300@gmail.com · +91 9031585962</p>
 </footer>
 
-<!-- ─── CDN LIBS ──────────────────────────────────── -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+<!-- ─── Vanta.js Clouds ──────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
 <script>
-/* ── Nav scroll state ── */
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('nav-scrolled', window.scrollY > 40);
-});
-
-/* ═══════════════════════════════════════════════════════════
-   PARTICLE SKATER ENGINE
-═══════════════════════════════════════════════════════════ */
-(function initParticleHero() {
-  const isMobile = window.innerWidth < 768;
-  const COUNT    = isMobile ? 2200 : 4500;
-  const XOFF     = isMobile ? 0.25 : 1.2;   /* skater X offset (right of center) */
-
-  const lerp       = (a, b, t) => a + (b - a) * t;
-  const clamp01    = (x) => Math.max(0, Math.min(1, x));
-  const smoothstep = (x) => { const c = clamp01(x); return c * c * (3 - 2 * c); };
-  const rand       = (a, b) => a + Math.random() * (b - a);
-
-  /* ── Three.js ── */
-  const canvas = document.getElementById('particle-canvas');
-  const W = window.innerWidth, H = window.innerHeight;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(W, H);
-  renderer.setClearColor(0x000000, 0);
-
-  const scene  = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
-  camera.position.z = 5;
-
-  /* ── Buffers ── */
-  const posA = new Float32Array(COUNT * 3);
-  const posB = new Float32Array(COUNT * 3);
-  const posC = new Float32Array(COUNT * 3);  /* skater rest pose */
-  const pos  = new Float32Array(COUNT * 3);
-  const col  = new Float32Array(COUNT * 3);
-
-  /* State A — nebula scatter */
-  for (let i = 0; i < COUNT; i++) {
-    const r = rand(2.4, 5.2), th = Math.random() * Math.PI * 2;
-    const ph = Math.acos(2 * Math.random() - 1);
-    posA[i*3]   = r * Math.sin(ph) * Math.cos(th);
-    posA[i*3+1] = r * Math.sin(ph) * Math.sin(th) * 0.65;
-    posA[i*3+2] = rand(-2.5, 2.5);
-  }
-
-  /* State B — vortex helix */
-  for (let i = 0; i < COUNT; i++) {
-    const t = i / COUNT, angle = t * Math.PI * 20;
-    const r = 0.35 + Math.abs(Math.sin(t * Math.PI * 8)) * 1.5 + t * 0.6;
-    posB[i*3]   = Math.cos(angle) * r * 0.75;
-    posB[i*3+1] = (t - 0.5) * 5.5;
-    posB[i*3+2] = Math.sin(angle) * r * 0.18;
-  }
-
-  /* ════════════════════════════════════════════════
-     SKATER PARTICLE SYSTEM
-     Each particle is stably assigned to a body part
-     (no randomness per frame — deterministic hash).
-     skaterXY(i, animT) → [x, y] in world space.
-  ════════════════════════════════════════════════ */
-  function skaterXY(i, animT) {
-    /* ── Animation drivers ── */
-    const jump   = Math.max(0, Math.sin(animT * Math.PI));          /* 0→1→0 arc    */
-    const crouch = (Math.cos(animT * Math.PI * 2) + 1) * 0.5;     /* 1→0→1 squat  */
-    const tilt   = Math.sin(animT * Math.PI * 2) * 0.32;           /* board spin   */
-    const armUp  = jump * 0.26;                                     /* arms raise   */
-
-    /* ── Board Y baseline ── */
-    const BY = -1.2 + jump * 0.88;
-    const BW = 0.46;                                                /* board half-w */
-
-    /* ── Skeleton joints ── */
-    const footLX = -0.27, footRX = 0.27, footY = BY + 0.06;
-    const kneeLX = -0.19, kneeLY = BY + 0.30 + crouch * 0.30 + jump * 0.15;
-    const kneeRX =  0.16, kneeRY = kneeLY;
-    const hipX = 0.03,    hipY   = BY + 0.72 - crouch * 0.16;
-    const shlX = hipX + 0.04, shlY = hipY + 0.50;
-    const headX = shlX + 0.03, headY = shlY + 0.30, headR = 0.155;
-    const elbLX = shlX - 0.30, elbLY = shlY - 0.04 + armUp;
-    const hndLX = elbLX - 0.20, hndLY = elbLY - 0.09 + armUp;
-    const elbRX = shlX + 0.27, elbRY = shlY - 0.04 + armUp;
-    const hndRX = elbRX + 0.17, hndRY = elbRY - 0.07 + armUp;
-
-    /* Board tilt helper — rotates (bx, by) around board center then adds BY */
-    function bpt(bx, by) {
-      const c = Math.cos(tilt), s = Math.sin(tilt);
-      return [bx * c - by * s, bx * s + by * c + BY];
-    }
-
-    /* Segment lerp */
-    function seg(ax, ay, bx, by, t) { return [lerp(ax, bx, t), lerp(ay, by, t)]; }
-
-    /* Stable per-particle hash — same value every call for same i */
-    const h1 = Math.sin(i * 127.1) * 0.5 + 0.5;
-    const h2 = Math.sin(i * 311.7) * 0.5 + 0.5;
-
-    /* Body part breakpoints (fraction of COUNT) */
-    /* [board, lWheel, rWheel, head, hat, torso, lLeg, rLeg, lArm, rArm, feet] */
-    const bp = [0, 0.155, 0.190, 0.222, 0.335, 0.358, 0.470, 0.548, 0.628, 0.685, 0.740, 1.0];
-    const norm = i / COUNT;
-    let part = bp.length - 2;
-    for (let p = 0; p < bp.length - 1; p++) {
-      if (norm >= bp[p] && norm < bp[p + 1]) { part = p; break; }
-    }
-    const t = (norm - bp[part]) / (bp[part + 1] - bp[part]);  /* 0→1 within part */
-
-    let x, y;
-    switch (part) {
-
-      case 0: { /* Board plank */
-        const [bx, by] = bpt((t - 0.5) * BW * 2.18, (h1 - 0.5) * 0.056);
-        x = bx; y = by; break;
-      }
-
-      case 1: { /* Left wheel */
-        const a = h1 * Math.PI * 2, r = Math.sqrt(h2) * 0.063;
-        const [wx, wy] = bpt(-BW * 0.70, -0.066);
-        x = wx + Math.cos(a) * r; y = wy + Math.sin(a) * r; break;
-      }
-
-      case 2: { /* Right wheel */
-        const a = h1 * Math.PI * 2, r = Math.sqrt(h2) * 0.063;
-        const [wx, wy] = bpt(BW * 0.70, -0.066);
-        x = wx + Math.cos(a) * r; y = wy + Math.sin(a) * r; break;
-      }
-
-      case 3: { /* Head — filled disk */
-        const a = t * Math.PI * 2, r = Math.sqrt(h1) * headR;
-        x = headX + Math.cos(a) * r; y = headY + Math.sin(a) * r; break;
-      }
-
-      case 4: { /* Cap brim */
-        x = headX - 0.07 + t * 0.28; y = headY - headR * 0.84 + (h1 - 0.5) * 0.04; break;
-      }
-
-      case 5: { /* Torso */
-        const [sx, sy] = seg(shlX, shlY, hipX, hipY, t);
-        x = sx + (h1 - 0.5) * 0.09; y = sy; break;
-      }
-
-      case 6: { /* Left leg: foot→knee (t<0.5) then knee→hip (t≥0.5) */
-        if (t < 0.5) { [x, y] = seg(footLX, footY, kneeLX, kneeLY, t * 2); }
-        else          { [x, y] = seg(kneeLX, kneeLY, hipX - 0.09, hipY, (t - 0.5) * 2); }
-        x += (h1 - 0.5) * 0.048; break;
-      }
-
-      case 7: { /* Right leg */
-        if (t < 0.5) { [x, y] = seg(footRX, footY, kneeRX, kneeRY, t * 2); }
-        else          { [x, y] = seg(kneeRX, kneeRY, hipX + 0.09, hipY, (t - 0.5) * 2); }
-        x += (h1 - 0.5) * 0.048; break;
-      }
-
-      case 8: { /* Left arm: shoulder→elbow→hand */
-        if (t < 0.5) { [x, y] = seg(shlX - 0.04, shlY, elbLX, elbLY, t * 2); }
-        else          { [x, y] = seg(elbLX, elbLY, hndLX, hndLY, (t - 0.5) * 2); }
-        x += (h1 - 0.5) * 0.04; break;
-      }
-
-      case 9: { /* Right arm */
-        if (t < 0.5) { [x, y] = seg(shlX + 0.04, shlY, elbRX, elbRY, t * 2); }
-        else          { [x, y] = seg(elbRX, elbRY, hndRX, hndRY, (t - 0.5) * 2); }
-        x += (h1 - 0.5) * 0.04; break;
-      }
-
-      default: { /* Feet / shoes */
-        x = (t < 0.5 ? footLX : footRX) + (h1 - 0.5) * 0.13;
-        y = footY + (h2 - 0.5) * 0.055; break;
-      }
-    }
-
-    return [x + XOFF, y];
-  }
-
-  /* State C — skater in rest/crouch pose (animT = 0) */
-  for (let i = 0; i < COUNT; i++) {
-    const [x, y] = skaterXY(i, 0);
-    posC[i*3] = x; posC[i*3+1] = y; posC[i*3+2] = rand(-0.04, 0.04);
-  }
-
-  /* Init */
-  for (let k = 0; k < COUNT * 3; k++) pos[k] = posA[k];
-
-  /* ── Geometry + Material ── */
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
-
-  const mat = new THREE.PointsMaterial({
-    size:            isMobile ? 0.028 : 0.022,
-    sizeAttenuation: true,
-    vertexColors:    true,
-    blending:        THREE.AdditiveBlending,
-    transparent:     true,
-    opacity:         0.9,
-    depthWrite:      false,
+  VANTA.CLOUDS({
+    el: '#vantaBg',
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200,
+    minWidth: 200,
+    backgroundColor: 0x0d1117,
+    skyColor: 0x1a2d45,
+    cloudColor: 0x3a5070,
+    cloudShadowColor: 0x060d14,
+    sunColor: 0xff8e00,
+    sunGlareColor: 0xff6633,
+    sunlightColor: 0xff9933,
+    speed: 0.80
   });
-
-  scene.add(new THREE.Points(geo, mat));
-
-  /* ── Colors ── */
-  function updateColors(progress, now) {
-    for (let i = 0; i < COUNT; i++) {
-      let r, g, b;
-      if (progress < 0.45) {
-        const t = progress / 0.45;
-        r = lerp(0.38, 0.72, t); g = lerp(0.46, 0.44, t); b = lerp(0.68, 0.32, t);
-      } else if (progress < 0.82) {
-        const t = (progress - 0.45) / 0.37;
-        r = lerp(0.72, 1.00, t); g = lerp(0.44, 0.55, t); b = lerp(0.32, 0.00, t);
-      } else {
-        /* Hot orange — body parts get slight warmth variation */
-        const n = Math.sin(now * 1.6 + i * 0.09) * 0.055;
-        r = 1.0; g = 0.55 + n * 0.45; b = Math.max(0, n * 0.25);
-      }
-      col[i*3] = r; col[i*3+1] = g; col[i*3+2] = b;
-    }
-    geo.attributes.color.needsUpdate = true;
-  }
-
-  /* ── Particles ── */
-  let scrollProgress = 0, skaterT = 0;
-
-  function updateParticles(progress) {
-    for (let i = 0; i < COUNT; i++) {
-      const i3 = i * 3;
-
-      if (progress <= 0.42) {
-        /* Nebula → Vortex with organic drift */
-        const t = smoothstep(progress / 0.42);
-        const drift = Math.sin(performance.now() * 0.00022 + i * 0.012) * (1 - t) * 0.12;
-        pos[i3]   = lerp(posA[i3],   posB[i3],   t) + drift;
-        pos[i3+1] = lerp(posA[i3+1], posB[i3+1], t) + drift * 0.55;
-        pos[i3+2] = lerp(posA[i3+2], posB[i3+2], t);
-
-      } else if (progress <= 0.84) {
-        /* Vortex → Skater rest pose */
-        const t = smoothstep((progress - 0.42) / 0.42);
-        pos[i3]   = lerp(posB[i3],   posC[i3],   t);
-        pos[i3+1] = lerp(posB[i3+1], posC[i3+1], t);
-        pos[i3+2] = lerp(posB[i3+2], posC[i3+2], t);
-
-      } else {
-        /* Skater animation — full live positions */
-        const [sx, sy] = skaterXY(i, skaterT);
-        pos[i3]   = sx;
-        pos[i3+1] = sy;
-        pos[i3+2] = posC[i3+2];   /* keep baked Z depth */
-      }
-    }
-    geo.attributes.position.needsUpdate = true;
-  }
-
-  /* ── Text reveals ── */
-  const elEyebrow    = document.getElementById('phEyebrow');
-  const elName       = document.getElementById('phName');
-  const elRole       = document.getElementById('phRole');
-  const elTagline    = document.getElementById('phTagline');
-  const elStats      = document.getElementById('phStats');
-  const elResume     = document.getElementById('phResumeBtn');
-  const elScrollHint = document.getElementById('phScrollHint');
-
-  function revealEl(el, p, s, e) {
-    const t = smoothstep(clamp01((p - s) / (e - s)));
-    el.style.opacity   = t;
-    el.style.transform = `translateY(${(1 - t) * 20}px)`;
-  }
-
-  function updateText(progress) {
-    revealEl(elEyebrow, progress, 0.72, 0.80);
-    revealEl(elName,    progress, 0.76, 0.84);
-    revealEl(elRole,    progress, 0.79, 0.87);
-    revealEl(elTagline, progress, 0.82, 0.90);
-    revealEl(elStats,   progress, 0.86, 0.93);
-    revealEl(elResume,  progress, 0.90, 0.97);
-    elScrollHint.style.opacity = Math.max(0, 1 - scrollProgress * 7);
-  }
-
-  /* ── GSAP ScrollTrigger ── */
-  gsap.registerPlugin(ScrollTrigger);
-  ScrollTrigger.create({
-    trigger: '#particleHero',
-    start:   'top top',
-    end:     'bottom bottom',
-    scrub:   1.4,
-    onUpdate: (self) => { scrollProgress = self.progress; }
-  });
-
-  /* ── Render loop ── */
-  function animate() {
-    requestAnimationFrame(animate);
-    const now = performance.now() * 0.001;
-
-    /* Advance ollie cycle only in final phase — ~7s per loop at 60fps */
-    if (scrollProgress > 0.84) skaterT = (skaterT + 0.0024) % 1;
-
-    updateParticles(scrollProgress);
-    updateColors(scrollProgress, now);
-    updateText(scrollProgress);
-    camera.position.x = Math.sin(now * 0.28) * 0.06;
-    camera.position.y = Math.cos(now * 0.19) * 0.04;
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  /* ── Resize ── */
-  window.addEventListener('resize', () => {
-    const nW = window.innerWidth, nH = window.innerHeight;
-    camera.aspect = nW / nH;
-    camera.updateProjectionMatrix();
-    renderer.setSize(nW, nH);
-  });
-
-})();
 </script>
 
 <script src="cursor-effects.js"></script>
+<script src="nav-component.js"></script>
 </body>
 </html>
