@@ -67,8 +67,8 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 140% 90% at 30% 35%, rgba(140, 82, 38, 0.13) 0%, rgba(100, 52, 22, 0.08) 50%, transparent 100%),
-        linear-gradient(160deg, rgba(120, 65, 25, 0.09) 0%, rgba(80, 42, 16, 0.06) 60%, rgba(50, 25, 10, 0.03) 100%);
+        radial-gradient(ellipse 140% 90% at 30% 35%, rgba(140, 82, 38, 0.10) 0%, rgba(100, 52, 22, 0.06) 50%, transparent 100%),
+        linear-gradient(160deg, rgba(120, 65, 25, 0.07) 0%, rgba(80, 42, 16, 0.04) 60%, rgba(50, 25, 10, 0.02) 100%);
       pointer-events: none;
       z-index: 9000;
       mix-blend-mode: multiply;
@@ -80,116 +80,158 @@
       66%      { opacity: 0.95; }
     }
 
-    /* ─── PAGE HERO ────────────────────────────── */
-    .page-hero {
+    /* ─── PARTICLE HERO ────────────────────────── */
+    .particle-hero {
       position: relative;
-      min-height: 720px;
-      overflow: hidden;
-      display: flex;
-      align-items: stretch;
-      background: linear-gradient(135deg, #221616 0%, #1a1010 60%, #1e1212 100%);
+      height: 360vh;
+      background: #0c0808;
     }
-    /* ambient orbs */
-    .page-hero-bg {
-      display: block;
+
+    .particle-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #particle-canvas {
       position: absolute;
       inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .page-hero-bg::before {
-      content: '';
-      position: absolute;
-      right: 360px; top: -80px;
-      width: 550px; height: 550px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(164,120,100,0.09) 0%, transparent 65%);
-    }
-    .page-hero-bg::after {
-      content: '';
-      position: absolute;
-      left: -60px; bottom: -60px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,142,0,0.04) 0%, transparent 65%);
-    }
-    .page-hero-gradient { display: none; }
-    .page-hero-orb { display: none; }
-
-    /* left content */
-    .page-hero-content {
-      position: relative;
-      z-index: 3;
-      padding: 140px 80px 80px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    /* right portrait column */
-    .page-hero-portrait {
-      width: 400px;
-      flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
-      background: #1a1212;
-    }
-    .page-hero-portrait img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center top;
       display: block;
     }
-    /* subtle gradient overlay to blend into bg */
-    .page-hero-portrait::after {
-      content: '';
+
+    /* ─── HERO TEXT LAYER ─────────────────────── */
+    .ph-text {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(34,22,22,0.45) 0%, transparent 35%),
-                  linear-gradient(0deg, rgba(34,22,22,0.6) 0%, transparent 30%);
-    }
-    /* decorative corner lines */
-    .page-hero-portrait::before {
-      content: '';
-      position: absolute;
-      top: 20px; right: 20px;
-      width: 60px; height: 60px;
-      border-top: 1px solid rgba(164,120,100,0.4);
-      border-right: 1px solid rgba(164,120,100,0.4);
-      z-index: 2;
+      left: clamp(24px, 5.5vw, 80px);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      max-width: 440px;
       pointer-events: none;
     }
-    .page-hero-label {
-      font-size: 12px; font-weight: 500; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--coral); margin-bottom: 20px;
+
+    .ph-eyebrow {
+      display: block;
+      font-family: 'Questrial', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 18px;
+      opacity: 0;
+      transition: opacity 0.05s linear, transform 0.05s linear;
     }
-    .page-hero-title {
-      font-size: clamp(52px, 7vw, 96px); font-weight: 600;
-      line-height: 0.95; letter-spacing: -1px; color: var(--ink); margin-bottom: 32px;
+
+    .ph-name {
+      font-size: clamp(52px, 7vw, 88px);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -2px;
+      color: var(--ink);
+      margin-bottom: 18px;
+      opacity: 0;
+      transition: opacity 0.05s linear, transform 0.05s linear;
     }
-    .page-hero-bio {
-      font-size: 18px; font-weight: 400; line-height: 1.7;
-      color: rgba(214,208,196,0.72); max-width: 540px;
+
+    .ph-role {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(214,208,196,0.55);
+      letter-spacing: 0.02em;
+      margin-bottom: 28px;
+      opacity: 0;
+      transition: opacity 0.05s linear, transform 0.05s linear;
     }
-    .hero-stat-row {
+
+    .ph-tagline {
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 300;
+      line-height: 1.4;
+      color: rgba(214,208,196,0.82);
+      margin-bottom: 36px;
+      opacity: 0;
+      transition: opacity 0.05s linear, transform 0.05s linear;
+    }
+
+    .ph-stats {
       display: flex;
-      gap: 40px;
-      margin-top: 40px;
+      gap: 32px;
+      margin-bottom: 32px;
+      opacity: 0;
+      transition: opacity 0.05s linear, transform 0.05s linear;
     }
-    .hero-stat-num {
-      font-size: 36px; font-weight: 600; color: var(--ink); line-height: 1;
-      display: block; margin-bottom: 4px;
+    .ph-stat-num {
+      display: block;
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 3px;
     }
-    .hero-stat-lbl {
-      font-size: 11px; font-weight: 500; text-transform: uppercase;
-      letter-spacing: 0.12em; color: rgba(214,208,196,0.4);
+    .ph-stat-lbl {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(214,208,196,0.38);
+    }
+
+    .ph-resume-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 22px;
+      border: 1px solid rgba(255,142,0,0.45);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--orange);
+      text-decoration: none;
+      background: rgba(255,142,0,0.04);
+      transition: background 0.2s ease, border-color 0.2s ease;
+      opacity: 0;
+      pointer-events: all;
+    }
+    .ph-resume-btn:hover { background: rgba(255,142,0,0.10); border-color: var(--orange); }
+
+    /* ─── SCROLL HINT ──────────────────────────── */
+    .ph-scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.3s ease;
+    }
+    .ph-scroll-hint span {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(214,208,196,0.3);
+    }
+    .ph-scroll-arrow {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, rgba(164,120,100,0.5) 0%, transparent 100%);
+      animation: scroll-arrow-pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scroll-arrow-pulse {
+      0%, 100% { transform: scaleY(1); opacity: 0.7; }
+      50%       { transform: scaleY(0.6); opacity: 0.3; }
     }
 
     /* ─── SKILLS STRIP ─────────────────────────── */
     .skills-strip {
-      background: linear-gradient(180deg, #1c1411 0%, #221616 100%);
+      background: linear-gradient(180deg, #0c0808 0%, #1c1411 50%, #221616 100%);
       border-bottom: 1px solid var(--border);
     }
     .skills-inner {
@@ -200,12 +242,10 @@
     }
     .skill-group {
       padding: 48px 52px;
-      background: var(--bg-dark);
+      background: #1a1111;
       transition: background 0.25s ease;
     }
-    .skill-group:hover {
-      background: rgba(164,120,100,0.06);
-    }
+    .skill-group:hover { background: rgba(164,120,100,0.06); }
     .skill-group-label {
       font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
       text-transform: uppercase; color: rgba(214,208,196,0.35); margin-bottom: 18px;
@@ -236,9 +276,7 @@
       content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
       width: 1px; background: var(--border);
     }
-    .timeline-item {
-      position: relative; padding-left: 32px; margin-bottom: 56px;
-    }
+    .timeline-item { position: relative; padding-left: 32px; margin-bottom: 56px; }
     .timeline-item:last-child { margin-bottom: 0; }
     .timeline-item::before {
       content: ''; position: absolute; left: -4px; top: 7px;
@@ -252,17 +290,13 @@
     .timeline-role { font-size: 20px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
     .timeline-company { font-size: 15px; font-weight: 500; color: var(--coral); margin-bottom: 4px; }
     .timeline-location { font-size: 12px; color: rgba(214,208,196,0.35); margin-bottom: 14px; }
-    .timeline-desc {
-      font-size: 15px; font-weight: 400; line-height: 1.7; color: rgba(214,208,196,0.6);
-    }
+    .timeline-desc { font-size: 15px; font-weight: 400; line-height: 1.7; color: rgba(214,208,196,0.6); }
     .timeline-bullets { list-style: none; margin-top: 10px; }
     .timeline-bullets li {
       font-size: 14px; line-height: 1.65; color: rgba(214,208,196,0.55);
       padding-left: 16px; position: relative; margin-bottom: 5px;
     }
-    .timeline-bullets li::before {
-      content: '·'; position: absolute; left: 0; color: var(--coral);
-    }
+    .timeline-bullets li::before { content: '·'; position: absolute; left: 0; color: var(--coral); }
 
     /* ─── FOOTER ───────────────────────────────── */
     .footer-strip {
@@ -298,22 +332,25 @@
       font-size: clamp(22px, 3vw, 34px); font-weight: 600;
       color: var(--ink); line-height: 1.2;
     }
-    @media (max-width: 900px) {
-      .resume-cta { flex-direction: column; padding: 60px 24px 80px; align-items: flex-start; }
-    }
 
     @media (max-width: 900px) {
       .nav { padding: 20px 24px; }
       .nav-links { display: none; }
-      .page-hero { flex-direction: column-reverse; min-height: auto; }
-      .page-hero-content { padding: 60px 24px 60px; }
-      .page-hero-portrait { width: 100%; height: 360px; }
-      .hero-stat-row { gap: 24px; flex-wrap: wrap; }
+      .ph-text { max-width: 55vw; }
+      .ph-name { letter-spacing: -1px; }
+      .ph-stats { gap: 20px; }
+      .ph-tagline { display: none; }
       .skills-inner { grid-template-columns: 1fr; }
       .skill-group { padding: 32px 24px; }
       .experience { padding: 60px 24px 80px; }
-      .resume-inner { grid-template-columns: 1fr; padding: 60px 24px 80px; gap: 40px; }
+      .resume-cta { flex-direction: column; padding: 60px 24px 80px; align-items: flex-start; }
       .footer-strip { padding: 40px 24px; flex-direction: column; gap: 16px; }
+    }
+
+    @media (max-width: 600px) {
+      .ph-text { left: 20px; max-width: calc(100vw - 40px); }
+      .ph-name { font-size: clamp(38px, 11vw, 60px); }
+      .ph-stats { display: none; }
     }
   </style>
 </head>
@@ -333,39 +370,44 @@
   </div>
 </nav>
 
-<!-- ── HERO ─────────────────────────────────────── -->
-<section class="page-hero">
-  <div class="page-hero-content">
-    <p class="page-hero-label">About Me</p>
-    <h1 class="page-hero-title">Designing for<br>people who<br>actually use it.</h1>
-    <p class="page-hero-bio">
-      I'm Aayush — a product designer based in Bengaluru, India, with 8+ years building digital products across healthcare, enterprise software, consumer retail, and defense. I care about the intersection of clarity and craft: systems that hold up under pressure, and interfaces people reach for on instinct.
-    </p>
-    <div class="hero-stat-row">
-      <div>
-        <span class="hero-stat-num">8+</span>
-        <span class="hero-stat-lbl">Years</span>
+<!-- ── PARTICLE HERO ──────────────────────────────── -->
+<section class="particle-hero" id="particleHero">
+  <div class="particle-sticky">
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="ph-text" id="phText">
+      <span class="ph-eyebrow" id="phEyebrow">About Me</span>
+      <h1 class="ph-name" id="phName">Aayush R.</h1>
+      <p class="ph-role" id="phRole">Product Designer &nbsp;·&nbsp; 8+ Years</p>
+      <p class="ph-tagline" id="phTagline">Designing for people<br>who actually use it.</p>
+      <div class="ph-stats" id="phStats">
+        <div class="ph-stat">
+          <span class="ph-stat-num">8+</span>
+          <span class="ph-stat-lbl">Years</span>
+        </div>
+        <div class="ph-stat">
+          <span class="ph-stat-num">30+</span>
+          <span class="ph-stat-lbl">Projects</span>
+        </div>
+        <div class="ph-stat">
+          <span class="ph-stat-num">5</span>
+          <span class="ph-stat-lbl">Domains</span>
+        </div>
+        <div class="ph-stat">
+          <span class="ph-stat-num">12</span>
+          <span class="ph-stat-lbl">Clients</span>
+        </div>
       </div>
-      <div>
-        <span class="hero-stat-num">30+</span>
-        <span class="hero-stat-lbl">Projects</span>
-      </div>
-      <div>
-        <span class="hero-stat-num">5</span>
-        <span class="hero-stat-lbl">Domains</span>
-      </div>
-      <div>
-        <span class="hero-stat-num">12</span>
-        <span class="hero-stat-lbl">Clients</span>
-      </div>
+      <a href="resume.html" class="ph-resume-btn" id="phResumeBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Resume
+      </a>
     </div>
-    <a href="resume.html" class="download-resume-btn">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Resume
-    </a>
-  </div>
-  <div class="page-hero-portrait">
-    <img src="images/hero/Aayuhs dp.jpg" alt="Aayush R">
+
+    <div class="ph-scroll-hint" id="phScrollHint">
+      <span>scroll</span>
+      <div class="ph-scroll-arrow"></div>
+    </div>
   </div>
 </section>
 
@@ -512,11 +554,328 @@
   <p class="footer-copy">aayushsingh300@gmail.com · +91 9031585962</p>
 </footer>
 
+<!-- ─── CDN LIBS ──────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
 <script>
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+/* ── Nav scroll state ── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+});
+
+/* ═══════════════════════════════════════════════════════════
+   PARTICLE SKATER ENGINE
+═══════════════════════════════════════════════════════════ */
+(function initParticleHero() {
+  const isMobile = window.innerWidth < 768;
+  const COUNT    = isMobile ? 2200 : 4500;
+  const XOFF     = isMobile ? 0.25 : 1.2;   /* skater X offset (right of center) */
+
+  const lerp       = (a, b, t) => a + (b - a) * t;
+  const clamp01    = (x) => Math.max(0, Math.min(1, x));
+  const smoothstep = (x) => { const c = clamp01(x); return c * c * (3 - 2 * c); };
+  const rand       = (a, b) => a + Math.random() * (b - a);
+
+  /* ── Three.js ── */
+  const canvas = document.getElementById('particle-canvas');
+  const W = window.innerWidth, H = window.innerHeight;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(W, H);
+  renderer.setClearColor(0x000000, 0);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
+  camera.position.z = 5;
+
+  /* ── Buffers ── */
+  const posA = new Float32Array(COUNT * 3);
+  const posB = new Float32Array(COUNT * 3);
+  const posC = new Float32Array(COUNT * 3);  /* skater rest pose */
+  const pos  = new Float32Array(COUNT * 3);
+  const col  = new Float32Array(COUNT * 3);
+
+  /* State A — nebula scatter */
+  for (let i = 0; i < COUNT; i++) {
+    const r = rand(2.4, 5.2), th = Math.random() * Math.PI * 2;
+    const ph = Math.acos(2 * Math.random() - 1);
+    posA[i*3]   = r * Math.sin(ph) * Math.cos(th);
+    posA[i*3+1] = r * Math.sin(ph) * Math.sin(th) * 0.65;
+    posA[i*3+2] = rand(-2.5, 2.5);
+  }
+
+  /* State B — vortex helix */
+  for (let i = 0; i < COUNT; i++) {
+    const t = i / COUNT, angle = t * Math.PI * 20;
+    const r = 0.35 + Math.abs(Math.sin(t * Math.PI * 8)) * 1.5 + t * 0.6;
+    posB[i*3]   = Math.cos(angle) * r * 0.75;
+    posB[i*3+1] = (t - 0.5) * 5.5;
+    posB[i*3+2] = Math.sin(angle) * r * 0.18;
+  }
+
+  /* ════════════════════════════════════════════════
+     SKATER PARTICLE SYSTEM
+     Each particle is stably assigned to a body part
+     (no randomness per frame — deterministic hash).
+     skaterXY(i, animT) → [x, y] in world space.
+  ════════════════════════════════════════════════ */
+  function skaterXY(i, animT) {
+    /* ── Animation drivers ── */
+    const jump   = Math.max(0, Math.sin(animT * Math.PI));          /* 0→1→0 arc    */
+    const crouch = (Math.cos(animT * Math.PI * 2) + 1) * 0.5;     /* 1→0→1 squat  */
+    const tilt   = Math.sin(animT * Math.PI * 2) * 0.32;           /* board spin   */
+    const armUp  = jump * 0.26;                                     /* arms raise   */
+
+    /* ── Board Y baseline ── */
+    const BY = -1.2 + jump * 0.88;
+    const BW = 0.46;                                                /* board half-w */
+
+    /* ── Skeleton joints ── */
+    const footLX = -0.27, footRX = 0.27, footY = BY + 0.06;
+    const kneeLX = -0.19, kneeLY = BY + 0.30 + crouch * 0.30 + jump * 0.15;
+    const kneeRX =  0.16, kneeRY = kneeLY;
+    const hipX = 0.03,    hipY   = BY + 0.72 - crouch * 0.16;
+    const shlX = hipX + 0.04, shlY = hipY + 0.50;
+    const headX = shlX + 0.03, headY = shlY + 0.30, headR = 0.155;
+    const elbLX = shlX - 0.30, elbLY = shlY - 0.04 + armUp;
+    const hndLX = elbLX - 0.20, hndLY = elbLY - 0.09 + armUp;
+    const elbRX = shlX + 0.27, elbRY = shlY - 0.04 + armUp;
+    const hndRX = elbRX + 0.17, hndRY = elbRY - 0.07 + armUp;
+
+    /* Board tilt helper — rotates (bx, by) around board center then adds BY */
+    function bpt(bx, by) {
+      const c = Math.cos(tilt), s = Math.sin(tilt);
+      return [bx * c - by * s, bx * s + by * c + BY];
+    }
+
+    /* Segment lerp */
+    function seg(ax, ay, bx, by, t) { return [lerp(ax, bx, t), lerp(ay, by, t)]; }
+
+    /* Stable per-particle hash — same value every call for same i */
+    const h1 = Math.sin(i * 127.1) * 0.5 + 0.5;
+    const h2 = Math.sin(i * 311.7) * 0.5 + 0.5;
+
+    /* Body part breakpoints (fraction of COUNT) */
+    /* [board, lWheel, rWheel, head, hat, torso, lLeg, rLeg, lArm, rArm, feet] */
+    const bp = [0, 0.155, 0.190, 0.222, 0.335, 0.358, 0.470, 0.548, 0.628, 0.685, 0.740, 1.0];
+    const norm = i / COUNT;
+    let part = bp.length - 2;
+    for (let p = 0; p < bp.length - 1; p++) {
+      if (norm >= bp[p] && norm < bp[p + 1]) { part = p; break; }
+    }
+    const t = (norm - bp[part]) / (bp[part + 1] - bp[part]);  /* 0→1 within part */
+
+    let x, y;
+    switch (part) {
+
+      case 0: { /* Board plank */
+        const [bx, by] = bpt((t - 0.5) * BW * 2.18, (h1 - 0.5) * 0.056);
+        x = bx; y = by; break;
+      }
+
+      case 1: { /* Left wheel */
+        const a = h1 * Math.PI * 2, r = Math.sqrt(h2) * 0.063;
+        const [wx, wy] = bpt(-BW * 0.70, -0.066);
+        x = wx + Math.cos(a) * r; y = wy + Math.sin(a) * r; break;
+      }
+
+      case 2: { /* Right wheel */
+        const a = h1 * Math.PI * 2, r = Math.sqrt(h2) * 0.063;
+        const [wx, wy] = bpt(BW * 0.70, -0.066);
+        x = wx + Math.cos(a) * r; y = wy + Math.sin(a) * r; break;
+      }
+
+      case 3: { /* Head — filled disk */
+        const a = t * Math.PI * 2, r = Math.sqrt(h1) * headR;
+        x = headX + Math.cos(a) * r; y = headY + Math.sin(a) * r; break;
+      }
+
+      case 4: { /* Cap brim */
+        x = headX - 0.07 + t * 0.28; y = headY - headR * 0.84 + (h1 - 0.5) * 0.04; break;
+      }
+
+      case 5: { /* Torso */
+        const [sx, sy] = seg(shlX, shlY, hipX, hipY, t);
+        x = sx + (h1 - 0.5) * 0.09; y = sy; break;
+      }
+
+      case 6: { /* Left leg: foot→knee (t<0.5) then knee→hip (t≥0.5) */
+        if (t < 0.5) { [x, y] = seg(footLX, footY, kneeLX, kneeLY, t * 2); }
+        else          { [x, y] = seg(kneeLX, kneeLY, hipX - 0.09, hipY, (t - 0.5) * 2); }
+        x += (h1 - 0.5) * 0.048; break;
+      }
+
+      case 7: { /* Right leg */
+        if (t < 0.5) { [x, y] = seg(footRX, footY, kneeRX, kneeRY, t * 2); }
+        else          { [x, y] = seg(kneeRX, kneeRY, hipX + 0.09, hipY, (t - 0.5) * 2); }
+        x += (h1 - 0.5) * 0.048; break;
+      }
+
+      case 8: { /* Left arm: shoulder→elbow→hand */
+        if (t < 0.5) { [x, y] = seg(shlX - 0.04, shlY, elbLX, elbLY, t * 2); }
+        else          { [x, y] = seg(elbLX, elbLY, hndLX, hndLY, (t - 0.5) * 2); }
+        x += (h1 - 0.5) * 0.04; break;
+      }
+
+      case 9: { /* Right arm */
+        if (t < 0.5) { [x, y] = seg(shlX + 0.04, shlY, elbRX, elbRY, t * 2); }
+        else          { [x, y] = seg(elbRX, elbRY, hndRX, hndRY, (t - 0.5) * 2); }
+        x += (h1 - 0.5) * 0.04; break;
+      }
+
+      default: { /* Feet / shoes */
+        x = (t < 0.5 ? footLX : footRX) + (h1 - 0.5) * 0.13;
+        y = footY + (h2 - 0.5) * 0.055; break;
+      }
+    }
+
+    return [x + XOFF, y];
+  }
+
+  /* State C — skater in rest/crouch pose (animT = 0) */
+  for (let i = 0; i < COUNT; i++) {
+    const [x, y] = skaterXY(i, 0);
+    posC[i*3] = x; posC[i*3+1] = y; posC[i*3+2] = rand(-0.04, 0.04);
+  }
+
+  /* Init */
+  for (let k = 0; k < COUNT * 3; k++) pos[k] = posA[k];
+
+  /* ── Geometry + Material ── */
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+
+  const mat = new THREE.PointsMaterial({
+    size:            isMobile ? 0.028 : 0.022,
+    sizeAttenuation: true,
+    vertexColors:    true,
+    blending:        THREE.AdditiveBlending,
+    transparent:     true,
+    opacity:         0.9,
+    depthWrite:      false,
   });
+
+  scene.add(new THREE.Points(geo, mat));
+
+  /* ── Colors ── */
+  function updateColors(progress, now) {
+    for (let i = 0; i < COUNT; i++) {
+      let r, g, b;
+      if (progress < 0.45) {
+        const t = progress / 0.45;
+        r = lerp(0.38, 0.72, t); g = lerp(0.46, 0.44, t); b = lerp(0.68, 0.32, t);
+      } else if (progress < 0.82) {
+        const t = (progress - 0.45) / 0.37;
+        r = lerp(0.72, 1.00, t); g = lerp(0.44, 0.55, t); b = lerp(0.32, 0.00, t);
+      } else {
+        /* Hot orange — body parts get slight warmth variation */
+        const n = Math.sin(now * 1.6 + i * 0.09) * 0.055;
+        r = 1.0; g = 0.55 + n * 0.45; b = Math.max(0, n * 0.25);
+      }
+      col[i*3] = r; col[i*3+1] = g; col[i*3+2] = b;
+    }
+    geo.attributes.color.needsUpdate = true;
+  }
+
+  /* ── Particles ── */
+  let scrollProgress = 0, skaterT = 0;
+
+  function updateParticles(progress) {
+    for (let i = 0; i < COUNT; i++) {
+      const i3 = i * 3;
+
+      if (progress <= 0.42) {
+        /* Nebula → Vortex with organic drift */
+        const t = smoothstep(progress / 0.42);
+        const drift = Math.sin(performance.now() * 0.00022 + i * 0.012) * (1 - t) * 0.12;
+        pos[i3]   = lerp(posA[i3],   posB[i3],   t) + drift;
+        pos[i3+1] = lerp(posA[i3+1], posB[i3+1], t) + drift * 0.55;
+        pos[i3+2] = lerp(posA[i3+2], posB[i3+2], t);
+
+      } else if (progress <= 0.84) {
+        /* Vortex → Skater rest pose */
+        const t = smoothstep((progress - 0.42) / 0.42);
+        pos[i3]   = lerp(posB[i3],   posC[i3],   t);
+        pos[i3+1] = lerp(posB[i3+1], posC[i3+1], t);
+        pos[i3+2] = lerp(posB[i3+2], posC[i3+2], t);
+
+      } else {
+        /* Skater animation — full live positions */
+        const [sx, sy] = skaterXY(i, skaterT);
+        pos[i3]   = sx;
+        pos[i3+1] = sy;
+        pos[i3+2] = posC[i3+2];   /* keep baked Z depth */
+      }
+    }
+    geo.attributes.position.needsUpdate = true;
+  }
+
+  /* ── Text reveals ── */
+  const elEyebrow    = document.getElementById('phEyebrow');
+  const elName       = document.getElementById('phName');
+  const elRole       = document.getElementById('phRole');
+  const elTagline    = document.getElementById('phTagline');
+  const elStats      = document.getElementById('phStats');
+  const elResume     = document.getElementById('phResumeBtn');
+  const elScrollHint = document.getElementById('phScrollHint');
+
+  function revealEl(el, p, s, e) {
+    const t = smoothstep(clamp01((p - s) / (e - s)));
+    el.style.opacity   = t;
+    el.style.transform = `translateY(${(1 - t) * 20}px)`;
+  }
+
+  function updateText(progress) {
+    revealEl(elEyebrow, progress, 0.72, 0.80);
+    revealEl(elName,    progress, 0.76, 0.84);
+    revealEl(elRole,    progress, 0.79, 0.87);
+    revealEl(elTagline, progress, 0.82, 0.90);
+    revealEl(elStats,   progress, 0.86, 0.93);
+    revealEl(elResume,  progress, 0.90, 0.97);
+    elScrollHint.style.opacity = Math.max(0, 1 - scrollProgress * 7);
+  }
+
+  /* ── GSAP ScrollTrigger ── */
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.create({
+    trigger: '#particleHero',
+    start:   'top top',
+    end:     'bottom bottom',
+    scrub:   1.4,
+    onUpdate: (self) => { scrollProgress = self.progress; }
+  });
+
+  /* ── Render loop ── */
+  function animate() {
+    requestAnimationFrame(animate);
+    const now = performance.now() * 0.001;
+
+    /* Advance ollie cycle only in final phase — ~7s per loop at 60fps */
+    if (scrollProgress > 0.84) skaterT = (skaterT + 0.0024) % 1;
+
+    updateParticles(scrollProgress);
+    updateColors(scrollProgress, now);
+    updateText(scrollProgress);
+    camera.position.x = Math.sin(now * 0.28) * 0.06;
+    camera.position.y = Math.cos(now * 0.19) * 0.04;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  /* ── Resize ── */
+  window.addEventListener('resize', () => {
+    const nW = window.innerWidth, nH = window.innerHeight;
+    camera.aspect = nW / nH;
+    camera.updateProjectionMatrix();
+    renderer.setSize(nW, nH);
+  });
+
+})();
 </script>
 
 <script src="cursor-effects.js"></script>
