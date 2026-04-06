@@ -550,6 +550,23 @@
       .hero-stats { padding: 24px; flex-wrap: wrap; gap: 20px; }
       .section h2 { font-size: 28px; }
       .footer { padding: 40px 24px; flex-direction: column; gap: 24px; text-align: center; }
+
+      /* Hero h1 is 80px — too large without scaling */
+      .hero h1 { font-size: clamp(40px, 10vw, 80px); letter-spacing: -1px; }
+      .hero-sub-title { font-size: 18px; }
+      .hero-chips { gap: 6px; }
+    }
+
+    @media (max-width: 540px) {
+      .container { padding: 0 16px; }
+      .hero { padding: 72px 0 0; min-height: auto; }
+      .hero h1 { font-size: 36px; letter-spacing: -0.5px; }
+      .hero-sub-title { font-size: 16px; }
+      .meta-card { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .hero-watch-comp { height: 200px; }
+      .section { padding: 64px 0; }
+      .section h2 { font-size: 24px; }
     }
   </style>
 </head>

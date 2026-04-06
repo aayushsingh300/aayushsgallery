@@ -803,6 +803,55 @@
             color: var(--text-secondary);
             margin-top: 4px;
         }
+
+        /* ── Responsive ── */
+        @media (max-width: 860px) {
+            .container { padding: 0 24px; }
+            .narrow { padding: 0 24px; }
+
+            .hero { padding: 72px 0 40px; min-height: auto; }
+            .hero h1 { font-size: 40px; }
+            .hero-sub { font-size: 16px; }
+
+            /* Hide fixed-width hero composition */
+            .hero-comp { display: none; }
+
+            .screen-embed { overflow: hidden; max-width: 100%; }
+            .screen-embed iframe { width: 100vw; height: auto; min-height: 300px; transform: none; max-width: 100%; }
+
+            .screen-annotated { flex-direction: column; }
+            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+            .ann-svg { display: none; }
+
+            /* Grids */
+            .stats-strip,
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+            .findings,
+            .two-col,
+            .explore-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+
+            .metrics-grid { grid-template-columns: 1fr !important; }
+
+            .tension-grid { grid-template-columns: 1fr; }
+            .tension-grid .tg-head,
+            .tension-grid .tg-cell { border-right: none; }
+
+            .spec-grid { grid-template-columns: repeat(3, 1fr); }
+
+            .spec-label { display: none; }
+
+            .proj-nav { grid-template-columns: 1fr; }
+            .proj-nav-link { padding: 28px 24px; }
+            .proj-nav-link.next { border-left: none; border-top: 1px solid var(--border); text-align: left; align-items: flex-start; }
+        }
+
+        @media (max-width: 540px) {
+            .container { padding: 0 16px; }
+            .hero h1 { font-size: 30px; }
+            .spec-grid { grid-template-columns: repeat(2, 1fr); }
+            h2 { font-size: 24px; }
+        }
     </style>
 <link rel="stylesheet" href="site-globals.css">
 </head>

@@ -772,6 +772,61 @@
             color: var(--ofl);
             font-weight: 600;
         }
+
+        /* ── Responsive ── */
+        @media (max-width: 860px) {
+            .container { padding: 0 24px; }
+            .section { padding: 64px 0; }
+
+            .hero { padding: 72px 0 0; }
+            .hero h1 { font-size: 36px; }
+            .hero-sub { font-size: 16px; }
+            .hero-chips { gap: 8px; }
+            .hero-stats { flex-wrap: wrap; gap: 20px; padding: 24px 0; }
+
+            /* Hide complex hero composition — too wide for mobile */
+            .hero-comp { display: none; }
+
+            .screen-embed { overflow: hidden; max-width: 100%; }
+            .screen-embed iframe { width: 100vw; height: auto; min-height: 300px; transform: none; max-width: 100%; }
+
+            .meta-card { grid-template-columns: repeat(2, 1fr); }
+            .constraints { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; gap: 24px; }
+            .metrics { grid-template-columns: 1fr; }
+            .findings { grid-template-columns: 1fr; }
+
+            .research-timeline { flex-direction: column; gap: 20px; }
+            .research-timeline::before { display: none; }
+            .timeline-step { text-align: left; display: flex; align-items: flex-start; gap: 12px; }
+            .timeline-step .dot { margin: 4px 0 0; flex-shrink: 0; }
+
+            .reframe { padding: 64px 0; }
+            .reframe h2 { font-size: 32px; }
+            .reframe .sub { font-size: 20px; }
+
+            .screen-annotated { flex-direction: column; }
+            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+            .ann-svg { display: none; }
+
+            .proj-nav { grid-template-columns: 1fr; }
+            .proj-nav-link { padding: 28px 24px; }
+            .proj-nav-link.next { border-left: none; border-top: 1px solid var(--border); text-align: left; align-items: flex-start; }
+        }
+
+        @media (max-width: 540px) {
+            .container { padding: 0 16px; }
+            .section { padding: 48px 0; }
+
+            .hero h1 { font-size: 28px; }
+            .hero-sub { font-size: 15px; }
+
+            .meta-card { grid-template-columns: 1fr; }
+            .compare-table { font-size: 13px; }
+            .compare-table th, .compare-table td { padding: 10px 12px; }
+            .pull-quote { font-size: 20px; padding-left: 16px; }
+            .section h2 { font-size: 28px; }
+        }
     </style>
 <link rel="stylesheet" href="site-globals.css">
 </head>
