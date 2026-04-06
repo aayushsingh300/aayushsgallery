@@ -66,6 +66,20 @@ body::after {
   100% { background-position:   0px   0px; }
 }
 
+}
+
+@keyframes grain-shift {
+  0%   { background-position:   0px   0px; }
+  12%  { background-position:  -44px -66px; }
+  25%  { background-position: -110px  33px; }
+  37%  { background-position:   55px -88px; }
+  50%  { background-position:  -77px  77px; }
+  62%  { background-position:   22px -33px; }
+  75%  { background-position: -99px   55px; }
+  87%  { background-position:   66px -77px; }
+  100% { background-position:   0px   0px; }
+}
+
 
 /* ─── SPACESHIP CURSOR ───────────────────────────────────────────────── */
 *, *::before, *::after {

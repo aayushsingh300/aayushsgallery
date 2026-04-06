@@ -57,6 +57,9 @@
 
   /* Insert nav + drawer as first children of body */
   document.body.insertAdjacentElement('afterbegin', drawer);
+    '</div>';
+
+  /* Insert as first child of body */
   document.body.insertAdjacentElement('afterbegin', nav);
 
   /* ── Theme persistence ── */
