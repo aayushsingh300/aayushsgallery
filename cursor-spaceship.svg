@@ -1,18 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="34" viewBox="0 0 22 34">
-  <!-- shadow/outline for light backgrounds -->
-  <path d="M11 1 L17.5 27.5 L11 23 L4.5 27.5 Z" fill="none" stroke="rgba(34,22,22,0.55)" stroke-width="1.5" stroke-linejoin="round"/>
-  <path d="M4.5 27.5 L0 34 L6 24 Z" fill="none" stroke="rgba(34,22,22,0.4)" stroke-width="1" stroke-linejoin="round"/>
-  <path d="M17.5 27.5 L22 34 L16 24 Z" fill="none" stroke="rgba(34,22,22,0.4)" stroke-width="1" stroke-linejoin="round"/>
+  <!-- shadow -->
+  <path d="M11 0 C8 6, 4 16, 4 24 Q4 28, 7 30 L11 28 L15 30 Q18 28, 18 24 C18 16, 14 6, 11 0Z" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="1.2"/>
   <!-- body -->
-  <path d="M11 1 L17.5 27.5 L11 23 L4.5 27.5 Z" fill="#d6d0c4"/>
-  <!-- left fin -->
-  <path d="M4.5 27.5 L0 34 L6 24 Z" fill="#a47864"/>
-  <!-- right fin -->
-  <path d="M17.5 27.5 L22 34 L16 24 Z" fill="#a47864"/>
+  <path d="M11 0 C8 6, 4 16, 4 24 Q4 28, 7 30 L11 28 L15 30 Q18 28, 18 24 C18 16, 14 6, 11 0Z" fill="#d6d0c4"/>
+  <!-- body panel lines -->
+  <path d="M8 10 L8 24" stroke="rgba(34,22,22,0.15)" stroke-width="0.5"/>
+  <path d="M14 10 L14 24" stroke="rgba(34,22,22,0.15)" stroke-width="0.5"/>
+  <!-- left booster -->
+  <path d="M4 22 L1.5 30 L4.5 28 Z" fill="#a47864"/>
+  <!-- right booster -->
+  <path d="M18 22 L20.5 30 L17.5 28 Z" fill="#a47864"/>
   <!-- cockpit window -->
-  <ellipse cx="11" cy="13.5" rx="2.4" ry="3.2" fill="#101f2c"/>
-  <!-- cockpit rim glow -->
-  <ellipse cx="11" cy="13.5" rx="2.4" ry="3.2" fill="none" stroke="#a47864" stroke-width="0.7" opacity="0.8"/>
-  <!-- engine glow dot -->
-  <circle cx="11" cy="25.5" r="1.2" fill="#ff8e00" opacity="0.7"/>
+  <ellipse cx="11" cy="11" rx="2.2" ry="3.6" fill="#101f2c"/>
+  <!-- cockpit rim -->
+  <ellipse cx="11" cy="11" rx="2.2" ry="3.6" fill="none" stroke="#a47864" stroke-width="0.6" opacity="0.7"/>
+  <!-- cockpit highlight -->
+  <ellipse cx="10.2" cy="9.8" rx="0.8" ry="1.8" fill="rgba(200,220,255,0.15)"/>
+  <!-- engine nozzle -->
+  <path d="M8 28 L8.5 32 L11 30.5 L13.5 32 L14 28" fill="#442f26" stroke="#a47864" stroke-width="0.4"/>
+  <!-- engine flame core -->
+  <ellipse cx="11" cy="32" rx="1.8" ry="1.5" fill="#ff8e00" opacity="0.8"/>
+  <!-- engine flame outer -->
+  <ellipse cx="11" cy="32.5" rx="2.8" ry="1.2" fill="#ff8e00" opacity="0.3"/>
 </svg>

@@ -1226,8 +1226,33 @@
             color: var(--text-tertiary)
         }
 
-        .sensor-detail-row .sdv {
-            color: var(--text-secondary)
+        @media (max-width: 768px) {
+            .status-bar { flex-wrap: wrap; height: auto; padding: 12px; }
+            .nav-tabs { width: 100%; order: 3; margin-top: 10px; overflow-x: auto; white-space: nowrap; border-top: 1px solid var(--border-default); padding-top: 10px; }
+            .status-right { width: 100%; order: 4; margin-top: 10px; justify-content: space-between; }
+            .sensor-row { width: 100%; order: 2; margin-top: 10px; justify-content: flex-start; }
+            .shift-time { display: none; }
+            
+            .main-content { flex-direction: column; overflow-y: auto; }
+            .map-canvas { flex: none; height: 400px; width: 100%; }
+            
+            .triage-panel { width: 100%; border-left: none; border-top: 1px solid var(--border-default); flex: none; height: auto; }
+            .detail-panel { 
+                width: 100%; 
+                top: auto; 
+                bottom: 0; 
+                height: 80vh; 
+                transform: translateY(100%); 
+                border-left: none; 
+                border-top: 1px solid var(--border-subtle); 
+                border-radius: 12px 12px 0 0; 
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.5); 
+            }
+            .detail-panel.open { transform: translateY(0); }
+            
+            .handover-grid, .stat-cards, .sensors-grid { grid-template-columns: 1fr; gap: 16px; }
+            .log-table { display: block; overflow-x: auto; white-space: nowrap; }
+            .log-filters { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
         }
     </style>
 </head>

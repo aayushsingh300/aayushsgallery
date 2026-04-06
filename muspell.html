@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUSPELL — Clinical Data Access Layer Case Study</title>
+  <meta name="description"
+    content="Case study: Designing a FHIR-native clinical data access layer for a healthcare archival platform deployed at 100+ healthcare organizations.">
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="site-globals.css">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --m-bg: #0D0F12;
+      --m-surface: #14171C;
+      --m-elevated: #1C2028;
+      --m-blue: #5A9FD0;
+      --m-blue-soft: #4A8FBF;
+      --m-blue-dim: rgba(90, 159, 208, 0.35);
+      --m-blue-glow: rgba(90, 159, 208, 0.08);
+      --m-white: #EDF0F4;
+      --m-body: #BCC4D0;
+      --m-caption: #8E96A4;
+      --m-border: rgba(255, 255, 255, 0.07);
+      --m-border-s: rgba(255, 255, 255, 0.10);
+
+      --font-head: 'IBM Plex Sans', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    body::before {
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 15%, rgba(74, 143, 191, 0.04) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 85% 80%, rgba(74, 143, 191, 0.025) 0%, transparent 55%) !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--m-bg);
+      color: var(--m-body);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.78;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+
+    /* Layout */
+    .m-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .m-container-wide {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .m-section {
+      padding: 96px 0;
+    }
+
+    /* Narrative Elements */
+    .chapter-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--m-caption);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .m-section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--m-blue);
+      margin-bottom: 36px;
+    }
+
+    .m-sub-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--m-caption);
+      margin-top: 72px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--m-border);
+    }
+
+    .pull-quote {
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--m-white);
+      margin: 48px 0;
+      padding-left: 32px;
+      border-left: 2px solid var(--m-blue);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .callout {
+      padding: 32px;
+      border-radius: 6px;
+      margin: 40px 0;
+      background: var(--m-surface);
+      border: 1px solid var(--m-border-s);
+    }
+
+    .callout-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    .callout.failed .callout-label {
+      color: #E06C75;
+    }
+
+    .callout.insight .callout-label {
+      color: var(--m-blue);
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Typography */
+    h1 {
+      font-family: var(--font-head);
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -2px;
+      color: var(--m-white);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      color: var(--m-white);
+      margin-bottom: 24px;
+    }
+
+    h3 {
+      font-family: var(--font-head);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--m-white);
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+
+    .m-subtitle {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--m-body);
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .m-body {
+      color: var(--m-body);
+      max-width: 680px;
+      margin-bottom: 24px;
+      font-size: 17px;
+      line-height: 1.78;
+    }
+
+    .m-body strong {
+      color: var(--m-white);
+      font-weight: 500;
+    }
+
+    /* HERO */
+    .m-hero {
+      padding-top: 120px;
+      padding-bottom: 0;
+      overflow: hidden;
+    }
+
+    .m-hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 56px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+
+    .m-hero-visual {
+      position: relative;
+      padding: 0 0 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .m-hero-visual::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(74, 143, 191, 0.10) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .m-hero-mockup {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 960px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 16px 48px rgba(0, 0, 0, 0.35), 0 32px 80px rgba(0, 0, 0, 0.25);
+    }
+
+    .m-hero-mockup img {
+      width: 100%;
+      display: block;
+    }
+
+    .m-hero-caption {
+      text-align: center;
+      margin-top: 20px;
+      padding: 0 40px;
+    }
+
+    /* Stats Bar */
+    .m-stats-bar {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 28px 0;
+      margin-top: 16px;
+      border-top: 1px solid var(--m-border);
+    }
+
+    .m-stat {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--m-caption);
+    }
+
+    .m-stat strong {
+      color: var(--m-blue);
+      font-weight: 600;
+    }
+
+    /* Meta Table */
+    .m-meta-table {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.7;
+    }
+
+    .m-meta-row {
+      display: flex;
+      gap: 20px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--m-border);
+    }
+
+    .m-meta-row:last-child {
+      border-bottom: none;
+    }
+
+    .m-meta-key {
+      color: var(--m-caption);
+      min-width: 130px;
+      flex-shrink: 0;
+      font-weight: 400;
+      letter-spacing: 0.025em;
+    }
+
+    .m-meta-val {
+      color: var(--m-white);
+      font-weight: 400;
+    }
+
+    /* Images */
+    .m-img-block {
+      margin: 48px 0;
+    }
+
+    .m-img-full,
+    .m-img-inline {
+      width: 100%;
+      border: 1px solid var(--m-border-s);
+      border-radius: 4px;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+      display: block;
+    }
+
+    .m-img-inline {
+      max-width: 860px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .m-img-caption {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--m-caption);
+      margin-top: 12px;
+      line-height: 1.55;
+    }
+
+    .m-img-caption.center {
+      text-align: center;
+    }
+
+    .m-img-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 48px 0;
+    }
+
+    .m-img-pair img {
+      width: 100%;
+      border: 1px solid var(--m-border-s);
+      border-radius: 4px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+      display: block;
+    }
+
+    /* Personnel / Quotes */
+    .crew-quote {
+      margin: 40px 0;
+      padding-left: 20px;
+      border-left: 2px solid var(--m-border-s);
+    }
+
+    .crew-quote p {
+      font-size: 18px;
+      color: var(--m-white);
+      margin-bottom: 8px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .crew-quote cite {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--m-caption);
+      font-style: normal;
+    }
+
+    /* Metric Callouts */
+    .m-metrics-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin: 56px 0 44px;
+    }
+
+    .m-metric-block {
+      padding: 32px;
+      background: var(--m-surface);
+      border: 1px solid var(--m-border-s);
+      border-radius: 6px;
+    }
+
+    .m-metric-num {
+      font-family: var(--font-head);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--m-white);
+      line-height: 1.15;
+      letter-spacing: -1px;
+    }
+
+    .m-metric-num span {
+      color: var(--m-blue);
+    }
+
+    .m-metric-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--m-caption);
+      margin-top: 10px;
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+    }
+
+    .m-divider {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--m-border-s);
+      border: none;
+    }
+
+    /* Footer */
+    .m-footer {
+      border-top: 1px solid var(--m-border-s);
+      padding: 64px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .m-footer a {
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--m-caption);
+      transition: color 0.25s ease;
+    }
+
+    .m-footer a:hover {
+      color: var(--m-blue);
+    }
+
+    @media (max-width: 900px) {
+      .m-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .m-img-pair {
+        grid-template-columns: 1fr;
+      }
+
+      .m-metrics-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .m-container,
+      .m-container-wide {
+        padding: 0 20px;
+      }
+
+      .m-metric-num {
+        font-size: 36px;
+      }
+
+      .m-meta-row {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .m-meta-key {
+        min-width: unset;
+      }
+
+      .m-footer {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .m-section {
+        padding: 72px 0;
+      }
+
+      .pull-quote {
+        font-size: 20px;
+        padding-left: 20px;
+      }
+    }
+
+    /* Scroll Reveal */
+    .m-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .m-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .m-stagger>.m-reveal:nth-child(2) {
+      transition-delay: 0.08s;
+    }
+
+    .m-stagger>.m-reveal:nth-child(3) {
+      transition-delay: 0.16s;
+    }
+
+    .m-stagger>.m-reveal:nth-child(4) {
+      transition-delay: 0.24s;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- HERO                                                                   -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <header class="m-hero">
+    <div class="m-container m-stagger">
+      <div class="m-hero-grid">
+        <div class="m-hero-title m-reveal">
+          <h1>Muspell</h1>
+          <p class="m-subtitle">Designing a FHIR-Native Clinical Archival Platform for Healthcare Networks</p>
+          <div class="m-stats-bar">
+            <div class="m-stat"><strong>100+</strong> healthcare orgs</div>
+            <div class="m-stat"><strong>1 PB</strong> archived data</div>
+            <div class="m-stat"><strong>30+</strong> legacy EHRs</div>
+            <div class="m-stat"><strong>KLAS</strong> rated platform</div>
+          </div>
+        </div>
+        <div class="m-meta-table m-reveal">
+          <div class="m-meta-row">
+            <span class="m-meta-key">Timeline</span>
+            <span class="m-meta-val">2022 – Active Production</span>
+          </div>
+          <div class="m-meta-row">
+            <span class="m-meta-key">The Client</span>
+            <span class="m-meta-val">Hospital Networks (Sold as a B2B platform via 314e)</span>
+          </div>
+          <div class="m-meta-row">
+            <span class="m-meta-key">My Role</span>
+            <span class="m-meta-val">Lead Product Designer</span>
+          </div>
+          <div class="m-meta-row">
+            <span class="m-meta-key">The Team</span>
+            <span class="m-meta-val">1 PM, 1 UI Designer, 7 Core Engineers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-hero-visual m-reveal">
+      <div class="m-hero-mockup">
+        <img src="gallery/muspell images/hero-mockup.png" alt="Muspell patient chart interface">
+      </div>
+    </div>
+    <div class="m-hero-caption">
+      <p class="m-img-caption center">Muspell’s clinical viewer — patient encounters mapped via SMART on FHIR, securely
+        presented on the provider’s screen.</p>
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 01                                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="m-section">
+    <div class="m-container">
+      <p class="chapter-num m-reveal">Chapter 01</p>
+      <p class="m-section-label m-reveal">The Compliance Cliff</p>
+      <h2 class="m-reveal">The Data Trap Nobody Talks About</h2>
+
+      <div class="m-stagger">
+        <p class="m-body m-reveal">When a hospital decides to transition thousands of staff to Epic, it's heralded as a
+          massive modernization victory. What rarely makes the news is the logistical nightmare left behind in the
+          server rooms: decades of patient data stranded in legacy systems like Cerner, MEDITECH, and eClinicalWorks.
+        </p>
+
+        <p class="m-body m-reveal">Decommissioning those old mainframes is necessary to save millions in licensing fees,
+          but doing so without a secure way to access historical patient records violates the 21st Century Cures Act.
+          The data can't just be exported to a massive spreadsheet; it consists of complex, coded clinical histories,
+          lab results, and legal audit trails.</p>
+
+        <p class="m-body m-reveal"><strong>Muspell</strong> was built by 314e as a B2B platform to solve this exact
+          problem. Sold to hospital networks like Broward Health, Muspell functions as a FHIR-native archival layer. It
+          ingests archaic formats from over 30 different legacy systems, normalizes the data, and securely surfaces it
+          within the hospital's new, active EHR interface.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="m-divider">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 02                                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="m-section">
+    <div class="m-container">
+      <p class="chapter-num m-reveal">Chapter 02</p>
+      <p class="m-section-label m-reveal">Discovery & Strategy</p>
+      <h2 class="m-reveal">Mapping the Unknown</h2>
+
+      <p class="m-body m-reveal">I joined as the Lead Product Designer in the early planning phase of Muspell. The
+        underlying data ingestion engine was already proving itself capable, but the surface—the interface that
+        clinicians, HIM (Health Information Management) professionals, and compliance auditors would actually touch—was
+        non-existent.</p>
+
+      <div class="m-img-block m-reveal">
+        <img src="gallery/muspell images/discovery.png" alt="Product team in a meeting room mapping out architecture"
+          class="m-img-inline">
+        <p class="m-img-caption center">Early discovery phase: Mapping the chasm between raw legacy data ingestion and a
+          usable clinical interface.</p>
+      </div>
+
+      <p class="m-body m-reveal">The first major challenge we encountered during our discovery workshops wasn't about UI
+        aesthetics; it was a fundamental architectural contradiction.</p>
+
+      <div class="pull-quote m-reveal">"We're designing a unified view for data that inherently resists unification."
+      </div>
+
+      <p class="m-body m-reveal">Imagine an allergy record from an obsolete 1990s system consisting solely of a
+        free-text field matching against a fully structured, SNOMED-coded allergy record from 2018. If we forced them
+        into a visually identical template, we ran the risk of misrepresenting the clinical certainty of the data.
+        <em>The source system mattered just as much as the data itself.</em></p>
+
+      <div class="callout insight m-reveal">
+        <div class="callout-label">Strategic Decision: Transparent Provenance</div>
+        <p>I pushed to make the origin of every piece of data a first-class citizen in the UI. Instead of hiding the
+          complexity of the legacy ingest, we exposed it as a "Source System" badge on every encounter, medication, and
+          clinical note. For an auditor or a physician, knowing that a confusing lab result came from an outdated
+          instance of <em>AmbulatoryEHR1</em> was crucial context.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="m-divider">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 03                                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="m-section">
+    <div class="m-container">
+      <p class="chapter-num m-reveal">Chapter 03</p>
+      <p class="m-section-label m-reveal">User Research</p>
+      <h2 class="m-reveal">Designing for the Administrator</h2>
+
+      <p class="m-body m-reveal">When you think of healthcare software, you immediately visualize a physician running
+        the halls. However, Muspell is an archival tool. The physician only uses it when they desperately need
+        historical context that wasn't migrated. The <em>primary</em> user is the hospital administrator.</p>
+
+      <div class="m-img-block m-reveal">
+        <img src="gallery/muspell images/research.png"
+          alt="Desk showing user research synthesis, highlighted workflows, and healthcare UI sketches"
+          class="m-img-inline">
+        <p class="m-img-caption center">Synthesizing interview transcripts from HIM (Health Information Management)
+          directors and hospital IT administrators.</p>
+      </div>
+
+      <p class="m-body m-reveal">I spent hours reviewing operational constraints with compliance officers and IT
+        directors at mid-sized hospital networks. The recurring theme was fear—fear of an audit, fear of unauthorized
+        access to a VIP patient's legacy chart, and fear of the logistical nightmare of managing permissions across
+        merged hospital systems.</p>
+
+      <!-- Configuration Pairs -->
+      <div class="m-container-wide m-reveal" style="margin: 48px -40px;">
+        <div class="m-img-pair" style="margin: 0;">
+          <figure>
+            <img src="gallery/muspell images/8.png" alt="User permissions panel — role assignments">
+            <figcaption class="m-img-caption">Enterprise role management: Translating complex HIPAA compliance into
+              distinct, assignable roles like 'HIM Super User' and 'Report Viewer'.</figcaption>
+          </figure>
+          <figure>
+            <img src="gallery/muspell images/18.png" alt="Column Selection and Ordering settings">
+            <figcaption class="m-img-caption">Global column configuration: Allowing hospital IT to define what data
+              density looks like for specific roles globally.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <p class="m-body m-reveal">This research directly informed the system's robust configuration layer. Instead of
+        treating settings as an afterthought, we designed them as high-assurance control panels. Administrators could
+        govern data at a granular level, adjusting which columns appeared by default depending on whether the user was
+        pulling a financial report or conducting an emergency room review.</p>
+    </div>
+  </section>
+
+  <hr class="m-divider">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 04                                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="m-section">
+    <div class="m-container">
+      <p class="chapter-num m-reveal">Chapter 04</p>
+      <p class="m-section-label m-reveal">Visual Language</p>
+      <h2 class="m-reveal">The Clinical Interface</h2>
+
+      <p class="m-body m-reveal">For the clinical viewer itself, the interface needed to be deeply respectful of a
+        clinician's cognitive load. We adopted a sparse, high-contrast, data-dense approach, utilizing IBM Plex Sans and
+        Mono to ensure alphanumeric legibility—a critical factor when misreading a dosage number can have devastating
+        consequences.</p>
+
+      <figure class="m-reveal" style="margin: 48px 0;">
+        <img src="gallery/muspell images/5.png" alt="Information Architecture sketch" class="m-img-inline">
+        <figcaption class="m-img-caption">Early IA sketch documenting a core realization: the default state shouldn't be
+          a dashboard, it must be the Patient Search.</figcaption>
+      </figure>
+
+      <p class="m-body m-reveal">Our analytics showed that in archival workflows, <strong>80% of the intent is simply
+          finding a specific patient</strong>. There was no need for a complex homepage or an onboarding tour. We made
+        finding the patient the absolute center of gravity for the application.</p>
+
+      <h3 class="m-reveal">Card vs. Tabular Views</h3>
+      <p class="m-body m-reveal">We encountered immediate friction between two core user groups. HIM staff, who rapidly
+        audit hundreds of encounters a day, demanded tightly packed, spreadsheet-like tabular data. Medical staff
+        evaluating a patient's historical context wanted "cards"—broader, more contextual summaries of an encounter.</p>
+
+      <!-- Context Pair -->
+      <div class="m-container-wide m-reveal" style="margin: 48px -40px;">
+        <div class="m-img-pair" style="margin: 0;">
+          <figure>
+            <img src="gallery/muspell images/11.png" alt="Tabular view">
+            <figcaption class="m-img-caption">The Tabular View: Built for scanning, filtering, and rapid bulk review
+              workflows.</figcaption>
+          </figure>
+          <figure>
+            <img src="gallery/muspell images/12.png" alt="Card view">
+            <figcaption class="m-img-caption">The Card View: Expanded clinical context built for deep-diving into a
+              specific historical encounter.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <p class="m-body m-reveal">Instead of compromising with a weak middle ground, we designed a robust toggle system
+        that persisted state. A billing auditor logs in and sees dense tables; a physician logs in and interacts with
+        rich clinical cards.</p>
+    </div>
+  </section>
+
+  <hr class="m-divider">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 05                                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="m-section">
+    <div class="m-container">
+      <p class="chapter-num m-reveal">Chapter 05</p>
+      <p class="m-section-label m-reveal">Lessons Learned</p>
+      <h2 class="m-reveal">What We Broke in Phase 1</h2>
+
+      <p class="m-body m-reveal">The product launched successfully to its first pilot hospitals, but user feedback from
+        the Health Information Management (HIM) departments quickly highlighted a significant oversight in my initial
+        design strategy.</p>
+
+      <div class="callout failed m-reveal">
+        <div class="callout-label">The Mistake: Underestimating the ROI Workflow</div>
+        <p>HIM professionals spend a massive portion of their day handling "Release of Information" (ROI) requests—for
+          example, securely transmitting historical records to a law firm or an insurance provider. In our initial
+          launch, I had scoped ROI as a basic "export" feature tucked away under a menu.</p>
+      </div>
+
+      <div class="crew-quote m-reveal">
+        <p>"Generating an audit certificate and a secure disclosure log isn't a peripheral task for us. It is the entire
+          job."</p>
+        <cite>— HIM Director, Pilot Hospital Network</cite>
+      </div>
+
+      <p class="m-body m-reveal">That feedback stung, but it was incredibly clarifying. HIM departments were manually
+        piecing together our basic export functions with external Excel trackers to manage their queues. We had
+        inadvertently made their hardest workflow clunkier.</p>
+
+      <p class="m-body m-reveal">I immediately pivoted our focus. In the subsequent design cycles, we elevated ROI from
+        a simple "button" to a dedicated, first-class asynchronous module. We introduced formal request queues,
+        customizable legal forms, and automated disclosure logging. It was a stark reminder that in enterprise SaaS,
+        failing to understand the back-office operational reality creates just as much friction as a poor UI.</p>
+    </div>
+  </section>
+
+  <hr class="m-divider">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 06                                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="m-section">
+    <div class="m-container">
+      <p class="chapter-num m-reveal">Chapter 06</p>
+      <p class="m-section-label m-reveal">Business Outcomes</p>
+      <h2 class="m-reveal">Scaling & Performance</h2>
+
+      <p class="m-body m-reveal">Despite the early hiccups with ROI, the core archival viewer proved to be a massive
+        operational success. We integrated directly into Epic Hyperdrive via SMART on FHIR, meaning clinicians no longer
+        had to log into separate legacy portals. Muspell simply appeared as a native tab inside the patient's current
+        chart.</p>
+
+      <figure class="m-reveal" style="margin: 48px 0;">
+        <img src="gallery/muspell images/21.png" alt="Average retrieval time chart" class="m-img-inline">
+        <figcaption class="m-img-caption">Post-launch analytics demonstrating the drop in time-to-retrieve for patient
+          inquiries.</figcaption>
+      </figure>
+
+      <div class="m-metrics-row m-reveal">
+        <div class="m-metric-block">
+          <div class="m-metric-num"><span>~15</span> → <span>~11</span> min</div>
+          <div class="m-metric-label">Average time to retrieve complex historical records</div>
+        </div>
+        <div class="m-metric-block">
+          <div class="m-metric-num"><span>~27%</span></div>
+          <div class="m-metric-label">Reduction in time spent searching per patient</div>
+        </div>
+      </div>
+
+      <p class="m-body m-reveal">In a hospital environment, shaving 4 minutes off a lookup process multiplied by
+        hundreds of staff members translates to staggering operational efficiency.</p>
+    </div>
+  </section>
+
+  <hr class="m-divider">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- CHAPTER 07                                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="m-section">
+    <div class="m-container">
+      <p class="chapter-num m-reveal">Chapter 07</p>
+      <p class="m-section-label m-reveal">The Product Today</p>
+      <h2 class="m-reveal">From Viewer to Platform</h2>
+
+      <div class="m-img-block m-reveal">
+        <img src="gallery/muspell images/9.png" alt="Muspell live embedded within Epic Hyperdrive" class="m-img-full">
+        <p class="m-img-caption center">The platform live in production, processing massive volumes of clinical data
+          daily.</p>
+      </div>
+
+      <p class="m-body m-reveal">Today, Muspell is a KLAS-rated platform deployed at major health systems like Broward
+        Health, serving over 100 healthcare organizations and archiving upwards of a petabyte of patient data.</p>
+
+      <p class="m-body m-reveal">What started as a targeted interface solution for compliance has evolved deeply. It now
+        features an AI-powered search layer, custom hospital-operations dashboards, and a FHIR-native data lake built on
+        Apache Iceberg. While the platform has outgrown its humble phase 1 roots, the core clinical architecture and the
+        foundational design language we established remain the bedrock of the product thousands of clinicians rely on
+        today.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="m-footer">
+    <a href="all-works.html">← All projects</a>
+    <a href="chargeur.html">Next: CHARGEUR →</a>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.m-reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.10, rootMargin: '0px 0px -30px 0px' });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('a, button, input, select, textarea, .u-nav')) return;
+      var x = e.clientX, y = e.clientY;
+      var center = document.createElement('div');
+      center.className = 'liquid-ripple-center';
+      center.style.cssText = 'left:' + x + 'px;top:' + y + 'px;';
+      document.body.appendChild(center);
+      setTimeout(function () { center.remove(); }, 500);
+      ['', 'ring-2', 'ring-3'].forEach(function (cls, i) {
+        var ring = document.createElement('div');
+        ring.className = 'liquid-ripple-ring' + (cls ? ' ' + cls : '');
+        ring.style.cssText = 'left:' + x + 'px;top:' + y + 'px;animation-delay:' + (i * 0.1) + 's;';
+        document.body.appendChild(ring);
+        setTimeout(function () { ring.remove(); }, 1100);
+      });
+    });
+  </script>
+
+  <script src="cursor-effects.js"></script>
+  <script src="nav-component.js"></script>
+</body>
+
+</html>

@@ -32,16 +32,23 @@
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
     }
-    body::after {
+
+    /* ─── WARM BROWN TINT OVERLAY ────────────── */
+    body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-size: 160px 160px;
-      opacity: 0.022;
+      background: radial-gradient(ellipse 140% 90% at 30% 35%, rgba(140, 82, 38, 0.13) 0%, rgba(100, 52, 22, 0.08) 50%, transparent 100%),
+                  linear-gradient(160deg, rgba(120, 65, 25, 0.09) 0%, rgba(80, 42, 16, 0.06) 60%, rgba(50, 25, 10, 0.03) 100%);
       pointer-events: none;
-      z-index: 9001;
-      mix-blend-mode: overlay;
+      z-index: 9000;
+      mix-blend-mode: multiply;
+      animation: tint-breathe 12s ease-in-out infinite;
+    }
+    @keyframes tint-breathe {
+      0%, 100% { opacity: 1; background-position: 0% 0%; }
+      33%      { opacity: 0.85; background-position: 5% 3%; }
+      66%      { opacity: 0.95; background-position: -3% -2%; }
     }
 
     /* ─── NAV ─────────────────────────────────── */
@@ -49,14 +56,14 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 22px 80px;
-      background: rgba(34, 22, 22, 0.55);
-      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(214,208,196,0.07);
+      background: rgba(8, 10, 14, 0.42);
+      backdrop-filter: blur(22px) saturate(160%); -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       transition: background 0.35s ease, border-color 0.35s ease;
     }
     .nav-scrolled {
-      background: rgba(34, 22, 22, 0.88);
-      border-bottom-color: rgba(214,208,196,0.12);
+      background: rgba(8, 10, 14, 0.82);
+      border-bottom-color: rgba(255, 255, 255, 0.10);
     }
     .nav-logo { text-decoration: none; display: flex; align-items: center; }
     .nav-logo-svg { height: 30px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
@@ -277,20 +284,6 @@
 </head>
 <body>
 
-<nav class="nav" id="mainNav">
-  <a href="index.html" class="nav-logo">
-    <img src="images/hero/Aayushsign.svg" alt="Aayush" class="nav-logo-svg">
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="all-works.html" class="active">All Works</a></li>
-    <li><a href="about.html">About Me</a></li>
-    <li><a href="resume.html">Resume</a></li>
-  </ul>
-  <div class="nav-menu">
-    <div class="hamburger" aria-label="Menu"><span></span><span></span></div>
-  </div>
-</nav>
 
 <!-- ── HEADER ───────────────────────────────────── -->
 <header class="page-header">
@@ -480,7 +473,7 @@
   </a>
 
   <!-- Muspell -->
-  <a href="#" class="work-row" data-tags="healthcare b2b saas">
+  <a href="muspell.html" class="work-row" data-tags="healthcare b2b saas">
     <div class="work-image">
       <img src="images/portfolio-assets/2uJ7RgaBPFgwEOtqN8tkdt0bYcM.png" alt="Muspell">
     </div>
@@ -691,5 +684,7 @@
   draw();
 })();
 </script>
+<script src="cursor-effects.js"></script>
+<script src="nav-component.js"></script>
 </body>
 </html>

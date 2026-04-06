@@ -1365,6 +1365,18 @@
         .path-solid {
             opacity: 1;
         }
+        @media (max-width: 768px) {
+            .app-sidebar { display: none !important; }
+            .header-nav { overflow-x: auto; white-space: nowrap; padding-bottom: 4px; }
+            .content-grid { grid-template-columns: 1fr; }
+            .treatment-timeline { flex-direction: column; overflow-x: hidden; height: auto; padding: 20px 0; }
+            .timeline-track { display: none; }
+            .timeline-node { position: relative; left: 0 !important; margin-bottom: 24px; padding-left: 24px; border-left: 2px solid var(--border); }
+            .tn-time { transform: none; text-align: left; margin-bottom: 4px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .header-patient-id { font-size: 24px; }
+            .bottom-bar { overflow-x: auto; }
+        }
     </style>
 </head>
 

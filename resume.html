@@ -172,20 +172,6 @@
 </head>
 <body>
 
-<nav class="nav" id="mainNav">
-  <a href="index.html" class="nav-logo">
-    <img src="images/hero/Aayushsign.svg" alt="Aayush" class="nav-logo-svg">
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="all-works.html">All Works</a></li>
-    <li><a href="about.html">About Me</a></li>
-    <li><a href="resume.html" class="active">Resume</a></li>
-  </ul>
-  <div class="nav-menu">
-    <div class="hamburger" aria-label="Menu"><span></span><span></span></div>
-  </div>
-</nav>
 
 <header class="resume-header">
   <div>
@@ -391,12 +377,6 @@
   <p>aayushsingh300@gmail.com · +91 9031585962</p>
 </footer>
 
-<script>
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('nav-scrolled', window.scrollY > 40);
-  });
-</script>
-
+<script src="nav-component.js"></script>
 </body>
 </html>

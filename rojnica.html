@@ -60,7 +60,7 @@
             margin: 0 auto;
         }
 
-        /* ═══ HERO ═══ */
+        /* HERO */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -180,7 +180,7 @@
             text-transform: uppercase;
         }
 
-        /* ═══ META ═══ */
+        /* META */
         .meta-section {
             padding: 60px 0;
             border-bottom: 1px solid var(--border);
@@ -207,7 +207,7 @@
             font-weight: 600;
         }
 
-        /* ═══ CHAPTERS ═══ */
+        /* CHAPTERS */
         .chapter {
             padding: 100px 0;
             border-bottom: 1px solid var(--border);
@@ -803,11 +803,61 @@
             color: var(--text-secondary);
             margin-top: 4px;
         }
+
+        /* ── Responsive ── */
+        @media (max-width: 860px) {
+            .container { padding: 0 24px; }
+            .narrow { padding: 0 24px; }
+
+            .hero { padding: 72px 0 40px; min-height: auto; }
+            .hero h1 { font-size: 40px; }
+            .hero-sub { font-size: 16px; }
+
+            /* Hide fixed-width hero composition */
+            .hero-comp { display: none; }
+
+            .screen-embed { overflow: hidden; max-width: 100%; }
+            .screen-embed iframe { width: 100vw; height: auto; min-height: 300px; transform: none; max-width: 100%; }
+
+            .screen-annotated { flex-direction: column; }
+            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+            .ann-svg { display: none; }
+
+            /* Grids */
+            .stats-strip,
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+            .findings,
+            .two-col,
+            .explore-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+
+            .metrics-grid { grid-template-columns: 1fr !important; }
+
+            .tension-grid { grid-template-columns: 1fr; }
+            .tension-grid .tg-head,
+            .tension-grid .tg-cell { border-right: none; }
+
+            .spec-grid { grid-template-columns: repeat(3, 1fr); }
+
+            .spec-label { display: none; }
+
+            .proj-nav { grid-template-columns: 1fr; }
+            .proj-nav-link { padding: 28px 24px; }
+            .proj-nav-link.next { border-left: none; border-top: 1px solid var(--border); text-align: left; align-items: flex-start; }
+        }
+
+        @media (max-width: 540px) {
+            .container { padding: 0 16px; }
+            .hero h1 { font-size: 30px; }
+            .spec-grid { grid-template-columns: repeat(2, 1fr); }
+            h2 { font-size: 24px; }
+        }
     </style>
+<link rel="stylesheet" href="site-globals.css">
 </head>
 
 <body>
-    <!-- ═══════ HERO ═══════ -->
+    <!-- HERO -->
     <section class="hero">
         <div class="container">
             <div class="hero-eyebrow">Case Study 03 — Precision Agriculture</div>
@@ -846,18 +896,18 @@
         </div>
     </section>
 
-    <!-- ═══════ QUICK INTRO ═══════ -->
+    <!-- QUICK INTRO -->
     <section style="padding: 0;">
         <div class="container">
             <div style="border-left: 3px solid var(--accent, #2D6A4F); padding: 20px 24px; background: var(--bg-surface, rgba(255,255,255,0.04)); border-radius: 0 8px 8px 0; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
-                <strong style="color: var(--text-primary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">What you're about to read</strong><br style="margin-bottom: 8px;">
+                <strong style="color: var(--text-primary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">The short version</strong><br style="margin-bottom: 8px;">
                 A Polish agricultural cooperative runs 12 spray drones across 2,760 hectares of wheat. They had 48 hours to treat a fungal outbreak and no software to coordinate the fleet. This is the story of designing three interconnected interfaces — a mission planner, a live fleet dashboard, and a field reload station — that turned chaos into a system.
                 <span style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-secondary); opacity: 0.7;">Reading time: ~9 minutes</span>
             </div>
         </div>
     </section>
 
-    <!-- ═══════ DRONE SPEC ═══════ -->
+    <!-- DRONE SPEC -->
     <section class="drone-spec">
         <div class="container">
             <div class="spec-eyebrow">The Hardware</div>
@@ -931,7 +981,7 @@
         </div>
     </section>
 
-    <!-- ═══════ META ═══════ -->
+    <!-- META -->
     <section class="meta-section">
         <div class="container">
             <div class="meta-grid">
@@ -959,7 +1009,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.01 — CONTEXT ═══════ -->
+    <!-- CH.01 — CONTEXT -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -995,7 +1045,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.02 — INCITING INCIDENT ═══════ -->
+    <!-- CH.02 — INCITING INCIDENT -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -1058,7 +1108,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.03 — DISCOVERY ═══════ -->
+    <!-- CH.03 — DISCOVERY -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -1106,7 +1156,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.04 — STRATEGY ═══════ -->
+    <!-- CH.04 — STRATEGY -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -1165,7 +1215,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.05 — MISSION PLANNER ═══════ -->
+    <!-- CH.05 — MISSION PLANNER -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -1276,7 +1326,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.06 — FLEET DASHBOARD ═══════ -->
+    <!-- CH.06 — FLEET DASHBOARD -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -1379,7 +1429,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.07 — RELOAD STATION ═══════ -->
+    <!-- CH.07 — RELOAD STATION -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -1420,7 +1470,7 @@
         </div>
     </section>
 
-    <!-- ═══════ CH.08 — OUTCOMES ═══════ -->
+    <!-- CH.08 — OUTCOMES -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
@@ -1476,7 +1526,7 @@
         </div>
     </section>
 
-    <!-- ═══════ PREV/NEXT NAV ═══════ -->
+    <!-- PREV/NEXT NAV -->
     <nav class="proj-nav">
         <a href="prahari.html" class="proj-nav-link prev">
             <span class="proj-nav-label">← Previous</span>
@@ -1490,7 +1540,7 @@
         </a>
     </nav>
 
-    <!-- ═══════ FOOTER ═══════ -->
+    <!-- FOOTER -->
     <section class="footer">
         <div class="container">
             <a href="index.html">← Back to Portfolio</a>
@@ -1505,6 +1555,8 @@
             var scale = Math.min(0.666, w / 1440);
             var iframe = embed.querySelector('iframe');
             var svg = embed.querySelector('.ann-svg');
+            var chromeEl = embed.querySelector('.chrome');
+            var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
             var h = 900;
             if (iframe) {
                 var inlineStyle = iframe.getAttribute('style') || '';
@@ -1513,18 +1565,21 @@
                 iframe.style.transform = 'scale(' + scale + ')';
                 iframe.style.marginBottom = '0';
                 embed.style.overflow = 'hidden';
-                var chromeEl = embed.querySelector('.chrome');
-                var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
                 embed.style.height = (chromeH + Math.round(h * scale)) + 'px';
             }
             if (svg) {
-                var chromeEl = embed.querySelector('.chrome');
-                var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
                 svg.style.position = 'absolute';
                 svg.style.top = chromeH + 'px';
                 svg.style.left = '0';
                 svg.style.width = Math.round(1440 * scale) + 'px';
                 svg.style.height = Math.round(h * scale) + 'px';
+            }
+            // Sync sidebar padding-top to actual chrome height
+            var wrapper = embed.closest('.screen-annotated');
+            if (wrapper && chromeH > 0) {
+                wrapper.querySelectorAll('.ann-sidebar').forEach(function(sb) {
+                    sb.style.paddingTop = chromeH + 'px';
+                });
             }
         });
     }
@@ -1574,7 +1629,15 @@
         document.addEventListener('DOMContentLoaded', refresh);
     } else { refresh(); }
     window.addEventListener('resize', refresh);
-    window.addEventListener('load', refresh);
+    window.addEventListener('load', function() {
+        refresh();
+        setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 300);
+    });
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 80);
+    }, { passive: true });
 })();
 </script>
 
@@ -1611,7 +1674,11 @@
     });
   });
 </script>
+<script>
+</script>
 
+<script src="cursor-effects.js"></script>
+<script src="nav-component.js"></script>
 </body>
 
 </html>

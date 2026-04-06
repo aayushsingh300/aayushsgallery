@@ -52,19 +52,6 @@
     }
 
     /* ── Nav ── */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 22px 60px;
-      background: rgba(10,14,20,0.6);
-      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(96,165,250,0.07);
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
-    .nav-scrolled {
-      background: rgba(10,14,20,0.92);
-      border-bottom-color: var(--border);
-    }
     .nav-back {
       display: flex; align-items: center; gap: 8px;
       text-decoration: none; color: var(--text-second);
@@ -563,28 +550,29 @@
       .hero-stats { padding: 24px; flex-wrap: wrap; gap: 20px; }
       .section h2 { font-size: 28px; }
       .footer { padding: 40px 24px; flex-direction: column; gap: 24px; text-align: center; }
+
+      /* Hero h1 is 80px — too large without scaling */
+      .hero h1 { font-size: clamp(40px, 10vw, 80px); letter-spacing: -1px; }
+      .hero-sub-title { font-size: 18px; }
+      .hero-chips { gap: 6px; }
+    }
+
+    @media (max-width: 540px) {
+      .container { padding: 0 16px; }
+      .hero { padding: 72px 0 0; min-height: auto; }
+      .hero h1 { font-size: 36px; letter-spacing: -0.5px; }
+      .hero-sub-title { font-size: 16px; }
+      .meta-card { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .hero-watch-comp { height: 200px; }
+      .section { padding: 64px 0; }
+      .section h2 { font-size: 24px; }
     }
   </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a href="index.html" class="nav-back">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M12 7H2M2 7L6 3M2 7L6 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Portfolio
-  </a>
-  <a href="#" class="nav-logo">VIGIL</a>
-  <a href="prahari.html" class="nav-next">
-    Next Project
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </a>
-</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -762,7 +750,7 @@
     <p>Standard NATO combat gloves have a palm thickness of approximately 4mm. Thin tactical gloves are 2mm. Capacitive touchscreens stop registering touch at approximately 1.5mm of non-conductive material above the screen. Military advisors were consistent: in operational conditions, soldiers don't carry styluses. They have whatever gloves they issued that morning.</p>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_glove_interaction_1773646986941.png" alt="Soldier's hand in thick tactical glove pressing a glowing smartwatch in darkness" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <img src="images/vigil/vigil_mockup_main_ui_1775405730282.png" alt="Smartwatch displaying tactical mesh network UI mock" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Tactical glove constraint testing: Touchscreens fail under field thickness</figcaption>
     </figure>
 
@@ -992,7 +980,7 @@
     </ol>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_red_lamp_test_1773647021910.png" alt="Testing the wearable in pitch darkness with a red tactical light" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <img src="images/vigil/vigil_mockup_metrics_ui_1775405745887.png" alt="Smartwatch displaying dark mode metrics and heart rate UI" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Protocol 02 validation: Ambient light testing restricted to single red headlamp</figcaption>
     </figure>
 
@@ -1194,7 +1182,7 @@
     </div>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_cbrn_concept_1773647038676.png" alt="Military gas mask and a glowing rugged smartwatch resting on a crate" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <img src="images/vigil/vigil_mockup_map_ui_1775405764481.png" alt="Smartwatch displaying topological map UI with waypoints" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
       <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">CBRN Context: The cognitive state during a chemical threat is fundamentally different</figcaption>
     </figure>
 
@@ -1628,6 +1616,10 @@
     });
   });
 </script>
+<script>
+</script>
 
+<script src="cursor-effects.js"></script>
+<script src="nav-component.js"></script>
 </body>
 </html>

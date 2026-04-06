@@ -1327,14 +1327,90 @@
 
         .team-member-info strong { display: block; font-size: 13px; font-weight: 600; }
         .team-member-info span { font-size: 11px; color: var(--text-muted); }
+
+        /* ── Responsive ── */
+        @media (max-width: 860px) {
+            .container { padding: 0 24px; }
+            .section { padding: 56px 0; }
+
+            .hero { padding: 72px 0 0; }
+            .hero h1 { font-size: 36px; }
+            .hero .subtitle { font-size: 16px; }
+            .hero-meta { flex-wrap: wrap; gap: 20px; }
+
+            /* Hide hero mockup composition */
+            .hero-mockup { display: none; }
+
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+
+            .img-grid { grid-template-columns: 1fr; }
+            .img-grid.three-col { grid-template-columns: 1fr; }
+
+            .process-steps { grid-template-columns: 1fr; gap: 20px; }
+
+            .feature-card {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .feature-card.reverse { direction: ltr; }
+
+            .figma-gallery { grid-template-columns: 1fr; }
+            .figma-gallery.three-up { grid-template-columns: 1fr; }
+
+            .screen-annotated { flex-direction: column; }
+            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+            .ann-svg { display: none; }
+            .aux-screens-grid { grid-template-columns: 1fr; }
+
+            .personas-grid { grid-template-columns: 1fr; }
+            .persona-body { grid-template-columns: 1fr; }
+
+            .empathy-grid { grid-template-columns: 1fr; }
+
+            .journey-row { grid-template-columns: 1fr 1fr; }
+            .journey-stage:nth-child(even) { border-right: none; }
+
+            .ds-grid { grid-template-columns: 1fr; }
+
+            .explore-grid { grid-template-columns: 1fr; }
+
+            .team-callout { flex-direction: column; gap: 16px; }
+
+            .timeline { flex-direction: column; gap: 24px; padding-top: 0; }
+            .timeline::before { display: none; }
+            .timeline-phase { text-align: left; display: flex; align-items: flex-start; gap: 12px; }
+            .timeline-dot { margin: 4px 0 0; }
+
+            .proj-nav { grid-template-columns: 1fr; }
+            .proj-nav-link { padding: 28px 24px; }
+            .proj-nav-link.next { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; align-items: flex-start; }
+
+            .screen-embed iframe {
+                width: 100vw;
+                height: auto;
+                min-height: 300px;
+                transform: none;
+                margin-bottom: 0;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .container { padding: 0 16px; }
+            .hero h1 { font-size: 28px; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .journey-row { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 24px; }
+        }
     </style>
+<link rel="stylesheet" href="site-globals.css">
 </head>
 
 <body>
 
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">☀</button>
 
-    <!-- ════════════ HERO ════════════ -->
+    <!-- HERO -->
     <section class="hero">
         <div class="container">
             <div class="overline">Case Study · 2018</div>
@@ -1415,18 +1491,18 @@
         </div>
     </section>
 
-    <!-- ════════════ QUICK INTRO ════════════ -->
+    <!-- QUICK INTRO -->
     <section style="padding: 0;">
         <div class="container">
             <div style="border-left: 3px solid var(--accent, #2563EB); padding: 20px 24px; background: var(--surface); border-radius: 0 8px 8px 0; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-muted);">
-                <strong style="color: var(--text); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">What you're about to read</strong><br style="margin-bottom: 8px;">
+                <strong style="color: var(--text); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">A bit of context</strong><br style="margin-bottom: 8px;">
                 The Dutch government manages over 923,000 parking spaces across 42 cities — and until 2018, the entire operation ran on shared Excel files and a DOS-era terminal system. As the junior designer on a three-person agency team, I helped design a modern platform that replaced the spreadsheets. You'll see the problem through the eyes of two real officers, the design process, and the ten screens that now run the operation.
                 <span style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-muted); opacity: 0.7;">Reading time: ~12 minutes</span>
             </div>
         </div>
     </section>
 
-    <!-- ════════════ THE PROBLEM ════════════ -->
+    <!-- THE PROBLEM -->
     <section class="section">
         <div class="container">
             <div class="section-header">
@@ -1487,7 +1563,7 @@
         </div>
     </section>
 
-    <!-- ════════════ PERSONAS ════════════ -->
+    <!-- PERSONAS -->
     <section class="section alt">
         <div class="container">
             <div class="section-header">
@@ -1599,7 +1675,7 @@
         </div>
     </section>
 
-    <!-- ════════════ PROCESS ════════════ -->
+    <!-- PROCESS -->
     <section class="section alt">
         <div class="container">
             <div class="section-header">
@@ -1679,7 +1755,7 @@
         </div>
     </section>
 
-    <!-- ════════════ EXPLORATION ════════════ -->
+    <!-- EXPLORATION -->
     <section class="section">
         <div class="container">
             <div class="section-header">
@@ -1718,7 +1794,7 @@
         </div>
     </section>
 
-    <!-- ════════════ DESIGN SYSTEM ════════════ -->
+    <!-- DESIGN SYSTEM -->
     <section class="section alt">
         <div class="container">
             <div class="section-header">
@@ -1939,7 +2015,7 @@
         </div>
     </section>
 
-    <!-- ════════════ SCREENS ════════════ -->
+    <!-- SCREENS -->
     <section class="section">
         <div class="container">
             <div class="section-header">
@@ -2304,7 +2380,7 @@
         </div>
     </section>
 
-    <!-- ════════════ TESTING & WHAT CHANGED ════════════ -->
+    <!-- TESTING & WHAT CHANGED -->
     <section class="section alt">
         <div class="container">
             <div class="section-header">
@@ -2377,7 +2453,7 @@
         </div>
     </section>
 
-    <!-- ════════════ IMPACT ════════════ -->
+    <!-- IMPACT -->
     <section class="cta-section">
         <div class="container">
             <div
@@ -2409,7 +2485,7 @@
         </div>
     </section>
 
-    <!-- ════════════ REFLECTIONS ════════════ -->
+    <!-- REFLECTIONS -->
     <section class="section">
         <div class="container">
             <div class="section-header">
@@ -2437,7 +2513,7 @@
         </div>
     </section>
 
-    <!-- ════════════ PREV/NEXT NAV ════════════ -->
+    <!-- PREV/NEXT NAV -->
     <nav class="proj-nav">
         <a href="index.html" class="proj-nav-link prev">
             <span class="proj-nav-label">← Portfolio</span>
@@ -2451,7 +2527,7 @@
         </a>
     </nav>
 
-    <!-- ════════════ FOOTER ════════════ -->
+    <!-- FOOTER -->
     <footer>
         <div class="container">
             <p>Parkbeheer NL · Designed in 2018 · Case study written with care</p>
@@ -2466,6 +2542,8 @@
             var scale = Math.min(0.666, w / 1280);
             var iframe = embed.querySelector('iframe');
             var svg = embed.querySelector('.ann-svg');
+            var barEl = embed.querySelector('.browser-bar') || embed.querySelector('.chrome');
+            var barH = barEl ? barEl.offsetHeight : 0;
             var h = 860;
             if (iframe) {
                 var inlineStyle = iframe.getAttribute('style') || '';
@@ -2474,18 +2552,21 @@
                 iframe.style.transform = 'scale(' + scale + ')';
                 iframe.style.marginBottom = '0';
                 embed.style.overflow = 'hidden';
-                var barEl = embed.querySelector('.browser-bar') || embed.querySelector('.chrome');
-                var barH = barEl ? barEl.offsetHeight : 0;
                 embed.style.height = (barH + Math.round(h * scale)) + 'px';
             }
             if (svg) {
-                var barEl = embed.querySelector('.browser-bar') || embed.querySelector('.chrome');
-                var barH = barEl ? barEl.offsetHeight : 0;
                 svg.style.position = 'absolute';
                 svg.style.top = barH + 'px';
                 svg.style.left = '0';
                 svg.style.width = Math.round(1280 * scale) + 'px';
                 svg.style.height = Math.round(h * scale) + 'px';
+            }
+            // Sync sidebar padding-top to actual bar height
+            var wrapper = embed.closest('.screen-annotated');
+            if (wrapper && barH > 0) {
+                wrapper.querySelectorAll('.ann-sidebar').forEach(function(sb) {
+                    sb.style.paddingTop = barH + 'px';
+                });
             }
         });
     }
@@ -2535,7 +2616,15 @@
         document.addEventListener('DOMContentLoaded', refresh);
     } else { refresh(); }
     window.addEventListener('resize', refresh);
-    window.addEventListener('load', refresh);
+    window.addEventListener('load', function() {
+        refresh();
+        setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 300);
+    });
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 80);
+    }, { passive: true });
 })();
     </script>
 
@@ -2590,7 +2679,11 @@
   });
 })();
 </script>
+<script>
+</script>
 
+<script src="cursor-effects.js"></script>
+<script src="nav-component.js"></script>
 </body>
 
 </html>
