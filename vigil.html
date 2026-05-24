@@ -750,8 +750,8 @@
     <p>Standard NATO combat gloves have a palm thickness of approximately 4mm. Thin tactical gloves are 2mm. Capacitive touchscreens stop registering touch at approximately 1.5mm of non-conductive material above the screen. Military advisors were consistent: in operational conditions, soldiers don't carry styluses. They have whatever gloves they issued that morning.</p>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_mockup_main_ui_1775405730282.png" alt="Smartwatch displaying tactical mesh network UI mock" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
-      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Tactical glove constraint testing: Touchscreens fail under field thickness</figcaption>
+      <img src="images/vigil/vigil_glove_interaction_1773646986941.png" alt="Soldier's gloved hand operating a tactical smartwatch in rain" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Field constraint: Standard tactical gloves render capacitive touchscreens inoperable</figcaption>
     </figure>
 
     <div class="callout failed">
@@ -980,8 +980,8 @@
     </ol>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_mockup_metrics_ui_1775405745887.png" alt="Smartwatch displaying dark mode metrics and heart rate UI" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
-      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Protocol 02 validation: Ambient light testing restricted to single red headlamp</figcaption>
+      <img src="images/vigil/vigil_red_lamp_test_1773647021910.png" alt="Hands operating tactical smartwatch under red lamp in darkness" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">Protocol 02 validation: All interaction testing conducted under single red headlamp only</figcaption>
     </figure>
 
     <div class="callout insight">
@@ -1182,8 +1182,8 @@
     </div>
 
     <figure style="margin: 48px 0;">
-      <img src="images/vigil/vigil_mockup_map_ui_1775405764481.png" alt="Smartwatch displaying topological map UI with waypoints" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
-      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">CBRN Context: The cognitive state during a chemical threat is fundamentally different</figcaption>
+      <img src="images/vigil/vigil_cbrn_concept_1773647038676.png" alt="Gas mask and tactical smartwatch on military equipment crate" style="width: 100%; border-radius: 4px; border: 1px solid var(--border);">
+      <figcaption style="font-family: var(--font-data); font-size: 11px; color: var(--text-second); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 12px; text-align: center;">CBRN context: When a soldier smells gas, the cognitive state is fundamentally different</figcaption>
     </figure>
 
     <!-- CBRN watch mockup -->
@@ -1589,9 +1589,9 @@
 
 <script>
   // Nav scroll behavior
-  const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('nav-scrolled', window.scrollY > 60);
+    const nav = document.getElementById('nav');
+    if (nav) nav.classList.toggle('nav-scrolled', window.scrollY > 60);
   });
 
   // ── Liquid Ripple Effect ────────────────────────────────

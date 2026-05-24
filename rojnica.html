@@ -804,32 +804,52 @@
             margin-top: 4px;
         }
 
+        /* Defensive global: prevent rogue inline-width content from forcing a horizontal scrollbar */
+        html, body { overflow-x: hidden; }
+
         /* ── Responsive ── */
         @media (max-width: 860px) {
             .container { padding: 0 24px; }
             .narrow { padding: 0 24px; }
 
             .hero { padding: 72px 0 40px; min-height: auto; }
-            .hero h1 { font-size: 40px; }
+            .hero h1 { font-size: 36px; line-height: 1.2; }
             .hero-sub { font-size: 16px; }
 
             /* Hide fixed-width hero composition */
             .hero-comp { display: none; }
 
+            /* ── Mobile: keep the iframe visible but proportionally scaled to fit the viewport.
+               JS scaleEmbeds() computes scale = clientWidth / 1440 (≈0.25 on a phone).
+               DO NOT override transform/width/height here — JS owns sizing. ── */
             .screen-embed { overflow: hidden; max-width: 100%; }
-            .screen-embed iframe { width: 100vw; height: auto; min-height: 300px; transform: none; max-width: 100%; }
 
-            .screen-annotated { flex-direction: column; }
-            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
-            .ann-svg { display: none; }
+            /* Annotations, pin dots, and connector lines are desktop-only — never on mobile.
+               The screen alone (no labels) keeps mobile clean. */
+            .ann-sidebar, .ann-svg, .ann-lines { display: none !important; }
+            .screen-annotated { gap: 0 !important; }
 
-            /* Grids */
+            /* Chapter typography — keep paragraphs comfortable, not overwhelming */
+            .chapter { padding: 64px 0; }
+            .chapter h2 { font-size: 26px; }
+            .chapter h3 { font-size: 18px; margin: 28px 0 12px; }
+            .chapter p { font-size: 15px; }
+            .pull-quote { font-size: 17px; padding: 16px 20px; margin: 28px 0; }
+            .timeline-artifact { padding: 22px 18px; }
+            .tl-row { flex-direction: column; gap: 4px; }
+            .tl-time { width: auto; }
+
+            /* Grids — single column on mobile so nothing wraps one-word-per-line */
             .stats-strip,
-            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
 
             .findings,
             .two-col,
-            .explore-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+            .explore-grid,
+            .insight-grid,
+            .principle-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+
+            .meta-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
             .metrics-grid { grid-template-columns: 1fr !important; }
 
@@ -1625,14 +1645,31 @@
         requestAnimationFrame(drawAllAnnotationLines);
     }
 
+    function init() {
+        refresh();
+        // Redraw when iframes finish loading (fixes annotation lines that drift after late layout)
+        document.querySelectorAll('.screen-embed iframe').forEach(function(iframe) {
+            iframe.addEventListener('load', function() {
+                refresh();
+                setTimeout(refresh, 120);
+            }, { once: false });
+        });
+        // Belt-and-braces redraws as fonts/images settle
+        [200, 600, 1200, 2400].forEach(function(t) { setTimeout(refresh, t); });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', refresh);
-    } else { refresh(); }
+        document.addEventListener('DOMContentLoaded', init);
+    } else { init(); }
     window.addEventListener('resize', refresh);
     window.addEventListener('load', function() {
         refresh();
         setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 300);
     });
+    // Re-trigger when fonts finish loading (avoids text-reflow drift)
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() { setTimeout(refresh, 50); });
+    }
     var scrollTimer;
     window.addEventListener('scroll', function() {
         clearTimeout(scrollTimer);
