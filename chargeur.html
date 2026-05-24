@@ -787,8 +787,8 @@
             /* Hide complex hero composition — too wide for mobile */
             .hero-comp { display: none; }
 
+            /* ── iframe embeds: JS scaleEmbeds() handles sizing — DON'T override transform/width/height here ── */
             .screen-embed { overflow: hidden; max-width: 100%; }
-            .screen-embed iframe { width: 100vw; height: auto; min-height: 300px; transform: none; max-width: 100%; }
 
             .meta-card { grid-template-columns: repeat(2, 1fr); }
             .constraints { grid-template-columns: 1fr; }
@@ -805,9 +805,8 @@
             .reframe h2 { font-size: 32px; }
             .reframe .sub { font-size: 20px; }
 
-            .screen-annotated { flex-direction: column; }
-            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
-            .ann-svg { display: none; }
+            /* Hide annotations and overlay lines on mobile views */
+            .ann-sidebar, .ann-svg, .ann-lines { display: none !important; }
 
             .proj-nav { grid-template-columns: 1fr; }
             .proj-nav-link { padding: 28px 24px; }

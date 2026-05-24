@@ -804,6 +804,9 @@
             margin-top: 4px;
         }
 
+        /* ── Mobile static fallback for iframe-based screens ── */
+        .screen-mobile-fallback { display: none; }
+
         /* ── Responsive ── */
         @media (max-width: 860px) {
             .container { padding: 0 24px; }
@@ -816,12 +819,62 @@
             /* Hide fixed-width hero composition */
             .hero-comp { display: none; }
 
-            .screen-embed { overflow: hidden; max-width: 100%; }
-            .screen-embed iframe { width: 100vw; height: auto; min-height: 300px; transform: none; max-width: 100%; }
+            /* ── iframe embeds: JS scaleEmbeds() handles sizing — DON'T override transform/width/height here ── */
+            .screen-embed { overflow: hidden; max-width: 100%; height: auto !important; }
+            .screen-embed iframe { display: none !important; }
 
-            .screen-annotated { flex-direction: column; }
-            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
-            .ann-svg { display: none; }
+            /* Hide annotations and overlay lines on mobile views */
+            .ann-sidebar, .ann-svg, .ann-lines { display: none !important; }
+
+            /* Static UI reference card replacing iframe on mobile */
+            .screen-mobile-fallback {
+                display: flex !important;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 26px 22px;
+                background:
+                    linear-gradient(135deg, rgba(74,158,255,0.07), rgba(123,198,126,0.05)),
+                    var(--bg-elevated);
+                border-top: 1px solid var(--border);
+                color: var(--text-secondary);
+            }
+            .screen-mobile-fallback .smf-eyebrow {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--accent);
+            }
+            .screen-mobile-fallback .smf-title {
+                font-family: var(--font-heading);
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--text-primary);
+                line-height: 1.3;
+            }
+            .screen-mobile-fallback .smf-body {
+                font-size: 13px;
+                line-height: 1.55;
+                color: var(--text-secondary);
+                margin: 0;
+            }
+            .screen-mobile-fallback .smf-cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 16px;
+                background: var(--accent);
+                color: #0A0A0B;
+                font-family: var(--font-mono);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                border-radius: 4px;
+                text-decoration: none;
+                margin-top: 4px;
+            }
 
             /* Grids */
             .stats-strip,
@@ -1549,6 +1602,26 @@
 
 <script>
 (function() {
+    function injectMobileFallbacks() {
+        document.querySelectorAll('.screen-embed iframe').forEach(function(iframe) {
+            var embed = iframe.parentElement;
+            if (!embed || embed.querySelector('.screen-mobile-fallback')) return;
+            var src = iframe.getAttribute('src') || '';
+            var hash = (src.split('#')[1] || 'view').replace(/-/g, ' ');
+            var caption = embed.querySelector('.screen-caption');
+            var captionText = caption ? caption.textContent.trim() : 'Interactive UI demo';
+            var titleText = hash.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+            var fallback = document.createElement('div');
+            fallback.className = 'screen-mobile-fallback';
+            fallback.innerHTML =
+                '<div class="smf-eyebrow">UI Reference · ' + titleText + '</div>' +
+                '<div class="smf-title">' + titleText + ' Screen</div>' +
+                '<p class="smf-body">' + captionText + '</p>' +
+                '<a href="' + src + '" target="_blank" rel="noopener" class="smf-cta">View interactive demo →</a>';
+            embed.insertBefore(fallback, iframe);
+        });
+    }
+
     function scaleEmbeds() {
         document.querySelectorAll('.screen-embed').forEach(function(embed) {
             var w = embed.clientWidth;
@@ -1625,14 +1698,32 @@
         requestAnimationFrame(drawAllAnnotationLines);
     }
 
+    function init() {
+        injectMobileFallbacks();
+        refresh();
+        // Redraw when iframes finish loading (fixes annotation lines that drift after late layout)
+        document.querySelectorAll('.screen-embed iframe').forEach(function(iframe) {
+            iframe.addEventListener('load', function() {
+                refresh();
+                setTimeout(refresh, 120);
+            }, { once: false });
+        });
+        // Belt-and-braces redraws as fonts/images settle
+        [200, 600, 1200, 2400].forEach(function(t) { setTimeout(refresh, t); });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', refresh);
-    } else { refresh(); }
+        document.addEventListener('DOMContentLoaded', init);
+    } else { init(); }
     window.addEventListener('resize', refresh);
     window.addEventListener('load', function() {
         refresh();
         setTimeout(function() { requestAnimationFrame(drawAllAnnotationLines); }, 300);
     });
+    // Re-trigger when fonts finish loading (avoids text-reflow drift)
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() { setTimeout(refresh, 50); });
+    }
     var scrollTimer;
     window.addEventListener('scroll', function() {
         clearTimeout(scrollTimer);

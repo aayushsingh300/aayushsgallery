@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penknife — ATS + CRM for Healthcare Staffing</title>
+  <meta name="description" content="Designing Penknife — a white-label ATS + CRM platform for 314e Corporation, deployed across US hospital networks including UCLA Health.">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site-globals.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:           #0D0F14;
+      --bg-surface:   #141820;
+      --bg-elevated:  #1C2130;
+      --bg-alt:       #0F1218;
+      --ink:          #EDF0F4;
+      --ink-dim:      rgba(237,240,244,0.62);
+      --ink-muted:    rgba(237,240,244,0.36);
+      --pk-blue:      #6BAED4;
+      --pk-blue-dim:  rgba(107,174,212,0.12);
+      --pk-blue-line: rgba(107,174,212,0.25);
+      --coral:        #C4956A;
+      --border:       rgba(255,255,255,0.08);
+      --border-hi:    rgba(107,174,212,0.22);
+      --fn-head:      'Space Grotesk', sans-serif;
+      --fn-body:      'Inter', sans-serif;
+      --fn-mono:      'Space Mono', monospace;
+    }
+
+    body {
+      font-family: var(--fn-body);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+      font-size: 17px;
+      overflow-x: hidden;
+    }
+
+    /* ── Layout ────────────────────────────── */
+    .container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* ── Sections ──────────────────────────── */
+    .section { padding: 96px 0; }
+    .section + .section { border-top: 1px solid var(--border); }
+    .section.alt { background: var(--bg-alt); }
+
+    .section-label {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--pk-blue);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--pk-blue);
+      opacity: 0.35;
+    }
+
+    /* ── Hero ──────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 55% at 12% 28%, rgba(107,174,212,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 70% at 88% 72%, rgba(60,80,120,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 140px 48px 64px;
+      max-width: 1160px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow-tag {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--pk-blue);
+      padding: 5px 12px;
+      border: 1px solid var(--border-hi);
+      border-radius: 3px;
+      background: var(--pk-blue-dim);
+    }
+    .hero-eyebrow-line { width: 40px; height: 1px; background: var(--border-hi); }
+    .hero-eyebrow-sub {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+    .hero-title {
+      font-family: var(--fn-head);
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .hero-subtitle {
+      font-size: clamp(16px, 1.8vw, 19px);
+      color: var(--ink-dim);
+      max-width: 600px;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 64px;
+    }
+    .hero-chip {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 3px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--ink-muted);
+    }
+    .hero-image-well {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .hero-image-well::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .hero-screen {
+      width: 82%;
+      max-width: 980px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px 12px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      box-shadow: 0 -30px 100px rgba(0,0,0,0.55), 0 0 0 1px rgba(107,174,212,0.07);
+      opacity: 0.92;
+    }
+
+    /* ── Meta Grid ─────────────────────────── */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 64px 0;
+    }
+    .meta-cell {
+      background: var(--bg-surface);
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .meta-label {
+      font-family: var(--fn-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pk-blue);
+      opacity: 0.7;
+    }
+    .meta-value {
+      font-family: var(--fn-head);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    /* ── Prose ─────────────────────────────── */
+    .prose p {
+      color: var(--ink-dim);
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+    .prose p:last-child { margin-bottom: 0; }
+    .section h2 {
+      font-family: var(--fn-head);
+      font-size: clamp(26px, 3.2vw, 38px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+    .section h3 {
+      font-family: var(--fn-head);
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+
+    /* ── Pull quote ────────────────────────── */
+    .pull-quote {
+      font-family: var(--fn-head);
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-style: italic;
+      color: var(--ink-dim);
+      line-height: 1.45;
+      max-width: 680px;
+      padding: 36px 0 36px 28px;
+      border-left: 3px solid var(--pk-blue);
+      margin: 48px 0;
+    }
+    .pull-quote strong { color: var(--ink); font-style: normal; }
+
+    /* ── Pain points ───────────────────────── */
+    .pain-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 36px 0;
+    }
+    .pain-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid rgba(200,80,80,0.45);
+      border-radius: 4px;
+      padding: 18px 20px;
+    }
+    .pain-item-title {
+      font-family: var(--fn-head);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 5px;
+    }
+    .pain-item-desc {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* ── Stakeholders ──────────────────────── */
+    .stakeholder-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 36px 0;
+    }
+    .stakeholder-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 26px 22px;
+    }
+    .stakeholder-card.primary {
+      border-color: var(--border-hi);
+      background: rgba(107,174,212,0.05);
+    }
+    .stakeholder-type {
+      font-family: var(--fn-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--pk-blue);
+      margin-bottom: 10px;
+    }
+    .stakeholder-card h3 { font-size: 16px; margin-bottom: 8px; }
+    .stakeholder-card p { font-size: 13px; color: var(--ink-dim); line-height: 1.6; margin: 0; }
+
+    /* ──────────────────────────────────────────
+       ANNOTATED SCREEN — core pattern
+       Two layouts:
+         .annotated-screen            → image left, annotations RIGHT
+         .annotated-screen.ann-left   → annotations LEFT, image right
+    ─────────────────────────────────────────── */
+    .annotated-screen {
+      display: grid;
+      grid-template-columns: 1fr 296px;
+      gap: 0;
+      margin: 56px 0;
+      align-items: start;
+    }
+    .annotated-screen.ann-left {
+      grid-template-columns: 296px 1fr;
+    }
+
+    /* Image column */
+    .ann-screen {
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+      background: var(--bg-surface);
+      line-height: 0;
+    }
+    .ann-screen img {
+      width: 100%;
+      display: block;
+      opacity: 0.93;
+      transition: opacity 0.4s ease;
+    }
+    .ann-screen:hover img { opacity: 1; }
+
+    /* Browser chrome */
+    .ann-chrome {
+      background: var(--bg-elevated);
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid var(--border);
+      line-height: 1;
+    }
+    .ann-dot { width: 9px; height: 9px; border-radius: 50%; }
+    .ann-dot:nth-child(1) { background: #FF5F57; }
+    .ann-dot:nth-child(2) { background: #FFBD2E; }
+    .ann-dot:nth-child(3) { background: #28CA41; }
+    .ann-url {
+      margin-left: 12px;
+      font-family: var(--fn-mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+      background: var(--bg);
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      max-width: 340px;
+      line-height: 1.5;
+    }
+
+    /* Annotation rail — RIGHT side */
+    .ann-rail {
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+    /* Vertical connecting line */
+    .ann-rail::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 28px;
+      bottom: 28px;
+      width: 1px;
+      background: var(--pk-blue-line);
+    }
+
+    /* Annotation rail — LEFT side */
+    .annotated-screen.ann-left .ann-rail {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .annotated-screen.ann-left .ann-rail::before {
+      left: auto;
+      right: 0;
+    }
+
+    /* Individual annotation card */
+    .ann-card {
+      padding: 20px 24px 20px 28px;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .ann-card:last-child { border-bottom: none; }
+
+    /* Horizontal tick from rail line to card */
+    .ann-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 30px;
+      width: 20px;
+      height: 1px;
+      background: var(--pk-blue-line);
+    }
+    /* Dot on the rail at intersection */
+    .ann-card::after {
+      content: '';
+      position: absolute;
+      left: -3px;
+      top: 26px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--pk-blue);
+      opacity: 0.6;
+      box-shadow: 0 0 8px rgba(107,174,212,0.4);
+    }
+
+    /* Left-rail card — connectors flip to right */
+    .annotated-screen.ann-left .ann-card {
+      padding: 20px 28px 20px 24px;
+      text-align: right;
+    }
+    .annotated-screen.ann-left .ann-card::before {
+      left: auto;
+      right: 0;
+    }
+    .annotated-screen.ann-left .ann-card::after {
+      left: auto;
+      right: -3px;
+    }
+
+    .ann-num {
+      display: block;
+      font-family: var(--fn-mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--pk-blue);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+    .ann-title {
+      display: block;
+      font-family: var(--fn-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 7px;
+    }
+    .ann-body {
+      font-size: 12.5px;
+      color: var(--ink-dim);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Caption below annotated screen */
+    .ann-caption {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      color: var(--ink-muted);
+      letter-spacing: 0.07em;
+      padding-top: 12px;
+      padding-left: 2px;
+    }
+
+    /* Crop top of image — hides marketing banner, shows UI portion */
+    .crop-top img {
+      height: 420px;
+      object-fit: cover;
+      object-position: center 88%;
+    }
+
+    /* ── Feature sections ──────────────────── */
+    .feature-block {
+      padding: 72px 0;
+      border-top: 1px solid var(--border);
+    }
+    .feature-block:first-child { border-top: none; padding-top: 0; }
+    .feature-header {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .feature-num {
+      font-family: var(--fn-mono);
+      font-size: 11px;
+      color: var(--pk-blue);
+      letter-spacing: 0.1em;
+      opacity: 0.55;
+      flex-shrink: 0;
+    }
+    .feature-header h3 { font-size: clamp(19px, 2.2vw, 24px); margin: 0; }
+
+    /* ── Mobile feature: phone + side annotations ── */
+    .mobile-feature {
+      display: grid;
+      grid-template-columns: 296px 1fr;
+      gap: 0;
+      margin: 48px 0;
+      align-items: start;
+    }
+    .phone-shell {
+      background: #0A0C12;
+      border-radius: 38px;
+      padding: 16px 11px;
+      border: 1.5px solid rgba(255,255,255,0.11);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.04);
+      line-height: 0;
+    }
+    .phone-notch {
+      width: 90px;
+      height: 24px;
+      background: #0A0C12;
+      border-radius: 0 0 14px 14px;
+      margin: 0 auto 6px;
+      border: 1.5px solid rgba(255,255,255,0.07);
+      border-top: none;
+      line-height: 0;
+    }
+    .phone-shell img {
+      width: 100%;
+      border-radius: 18px;
+      display: block;
+      opacity: 0.95;
+    }
+    /* Phone annotations — right rail same pattern */
+    .phone-ann-rail {
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+    .phone-ann-rail::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 28px;
+      bottom: 28px;
+      width: 1px;
+      background: var(--pk-blue-line);
+    }
+    .phone-ann-rail .ann-card { padding-left: 28px; }
+
+    /* ── Decision cards ────────────────────── */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin: 36px 0;
+    }
+    .decision-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 26px 24px;
+    }
+    .decision-tag {
+      font-family: var(--fn-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--pk-blue);
+      margin-bottom: 9px;
+    }
+    .decision-card h4 {
+      font-family: var(--fn-head);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 9px;
+      color: var(--ink);
+    }
+    .decision-card p { font-size: 13.5px; color: var(--ink-dim); line-height: 1.65; margin: 0; }
+
+    /* ── Honest list ───────────────────────── */
+    .honest-list { list-style: none; margin: 28px 0; }
+    .honest-list li {
+      display: flex;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .honest-list li:last-child { border-bottom: none; }
+    .honest-bullet {
+      flex-shrink: 0;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(200,80,80,0.55);
+      margin-top: 9px;
+    }
+    .honest-text { font-size: 15px; color: var(--ink-dim); line-height: 1.65; }
+    .honest-text strong { color: var(--ink); font-weight: 600; }
+
+    /* ── Outcomes ──────────────────────────── */
+    .outcomes-list { list-style: none; margin: 36px 0; }
+    .outcome-item {
+      display: flex;
+      gap: 18px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .outcome-item:last-child { border-bottom: none; }
+    .outcome-icon {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      border-radius: 6px;
+      background: var(--pk-blue-dim);
+      border: 1px solid var(--border-hi);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .outcome-icon svg {
+      width: 14px; height: 14px;
+      stroke: var(--pk-blue);
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .outcome-text { font-size: 15px; color: var(--ink-dim); line-height: 1.65; }
+    .outcome-text strong { color: var(--ink); display: block; margin-bottom: 3px; font-size: 15px; }
+
+    /* ── Footer ────────────────────────────── */
+    .cs-footer {
+      padding: 80px 48px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .cs-footer-label {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 18px;
+    }
+    .cs-footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: var(--fn-head);
+      font-size: clamp(22px, 3.2vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      transition: color 0.2s ease;
+    }
+    .cs-footer-link:hover { color: var(--pk-blue); }
+    .cs-footer-link svg {
+      width: 26px; height: 26px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform 0.3s ease;
+    }
+    .cs-footer-link:hover svg { transform: translate(4px,-4px); }
+
+    /* ── Misc ──────────────────────────────── */
+    .method-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0; }
+    .method-pill {
+      font-size: 13px;
+      color: var(--ink-dim);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 7px 15px;
+      border-radius: 100px;
+    }
+    .ia-objects { display: flex; gap: 10px; flex-wrap: wrap; margin: 22px 0; }
+    .ia-object {
+      font-family: var(--fn-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 9px 16px;
+      border-radius: 4px;
+      background: var(--pk-blue-dim);
+      border: 1px solid var(--border-hi);
+      color: var(--pk-blue);
+    }
+
+    /* ── Responsive ────────────────────────── */
+    @media (max-width: 960px) {
+      .container { padding: 0 28px; }
+      .hero-content { padding: 120px 28px 48px; }
+      .section { padding: 68px 0; }
+      .meta-grid { grid-template-columns: repeat(2, 1fr); }
+      .pain-list { grid-template-columns: 1fr; }
+      .stakeholder-grid { grid-template-columns: 1fr; gap: 12px; }
+      .decisions-grid { grid-template-columns: 1fr; }
+      .hero-screen { width: 96%; }
+      .cs-footer { padding: 60px 28px; }
+
+      /* Annotated screens: stack to image-top, annotations-bottom */
+      .annotated-screen,
+      .annotated-screen.ann-left {
+        grid-template-columns: 1fr;
+      }
+      .annotated-screen.ann-left .ann-screen { order: 1; }
+      .annotated-screen.ann-left .ann-rail  { order: 2; }
+
+      .ann-rail,
+      .annotated-screen.ann-left .ann-rail {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0;
+        border-top: 1px solid var(--pk-blue-line);
+        margin-top: 0;
+        padding-top: 4px;
+      }
+      .ann-rail::before,
+      .annotated-screen.ann-left .ann-rail::before { display: none; }
+
+      .ann-card,
+      .annotated-screen.ann-left .ann-card {
+        flex: 1;
+        min-width: 240px;
+        padding: 18px 20px;
+        text-align: left;
+        border-right: 1px solid rgba(255,255,255,0.05);
+        border-bottom: none;
+      }
+      .ann-card:last-child { border-right: none; }
+      .ann-card::before,
+      .ann-card::after,
+      .annotated-screen.ann-left .ann-card::before,
+      .annotated-screen.ann-left .ann-card::after { display: none; }
+
+      /* Mobile feature */
+      .mobile-feature {
+        grid-template-columns: 1fr;
+      }
+      .phone-shell { max-width: 300px; margin: 0 auto; }
+      .phone-ann-rail {
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--pk-blue-line);
+        padding-top: 4px;
+        margin-top: 0;
+      }
+      .phone-ann-rail::before { display: none; }
+      .phone-ann-rail .ann-card {
+        flex: 1;
+        min-width: 220px;
+        padding: 18px 20px;
+        border-right: 1px solid rgba(255,255,255,0.05);
+        border-bottom: none;
+      }
+      .phone-ann-rail .ann-card:last-child { border-right: none; }
+      .phone-ann-rail .ann-card::before,
+      .phone-ann-rail .ann-card::after { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 0 20px; }
+      .hero-content { padding: 100px 20px 40px; }
+      .section { padding: 52px 0; }
+      .hero-title { letter-spacing: -1px; }
+      .meta-grid { grid-template-columns: 1fr 1fr; }
+      .meta-cell { padding: 18px 14px; }
+      .meta-value { font-size: 13px; }
+      .pull-quote { padding: 26px 0 26px 16px; }
+      .feature-header { flex-direction: column; gap: 4px; }
+      .cs-footer { padding: 48px 20px; }
+      .ann-card, .phone-ann-rail .ann-card { min-width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    }
+
+    @media (max-width: 420px) {
+      .meta-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV injected by nav-component.js ── -->
+
+<!-- HERO ─────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-tag">Healthcare Staffing</span>
+      <span class="hero-eyebrow-line"></span>
+      <span class="hero-eyebrow-sub">314e Corporation · 2021</span>
+    </div>
+    <h1 class="hero-title">Penknife</h1>
+    <p class="hero-subtitle">ATS + CRM for healthcare staffing, white-labelled for US hospital networks. One platform to replace four fragmented tools — from sourcing to placement.</p>
+    <div class="hero-chips">
+      <span class="hero-chip">UX Design</span>
+      <span class="hero-chip">Service Design</span>
+      <span class="hero-chip">Information Architecture</span>
+      <span class="hero-chip">UI Systems</span>
+      <span class="hero-chip">White-Label SaaS</span>
+      <span class="hero-chip">Live — UCLA Health</span>
+    </div>
+  </div>
+  <div class="hero-image-well">
+    <img class="hero-screen" src="penknife/image%201.jpg" alt="Penknife dashboard" loading="eager">
+  </div>
+</section>
+
+<!-- META GRID ────────────────────────── -->
+<div class="container">
+  <div class="meta-grid">
+    <div class="meta-cell"><span class="meta-label">Organisation</span><span class="meta-value">314e Corporation</span></div>
+    <div class="meta-cell"><span class="meta-label">My Role</span><span class="meta-value">UX Designer — end-to-end</span></div>
+    <div class="meta-cell"><span class="meta-label">Year</span><span class="meta-value">2021</span></div>
+    <div class="meta-cell"><span class="meta-label">Platform</span><span class="meta-value">Desktop-primary web app</span></div>
+    <div class="meta-cell"><span class="meta-label">Scope</span><span class="meta-value">UX + Service Design, IA, UI Systems</span></div>
+    <div class="meta-cell"><span class="meta-label">Domain</span><span class="meta-value">Healthcare Staffing / HR Tech</span></div>
+    <div class="meta-cell"><span class="meta-label">Status</span><span class="meta-value">Live — multiple US hospital networks</span></div>
+    <div class="meta-cell"><span class="meta-label">White-labelled for</span><span class="meta-value">UCLA Health (confirmed)</span></div>
+  </div>
+</div>
+
+<!-- 01 CONTEXT ───────────────────────── -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">01 / Context</p>
+    <h2>A staffing operation running on spreadsheets and friction</h2>
+    <div class="prose">
+      <p>314e Corporation is a US-based healthcare IT company in the SF Bay Area. Their core business includes running large staffing operations for hospital systems — managing hundreds of open clinical positions simultaneously. When I joined the project, they were doing it with fragments: a generic ATS, a disconnected CRM, email threads, and manual spreadsheet pipelines.</p>
+      <p>Penknife was 314e's answer — their own proprietary platform. Its real commercial model was white-labelling: hospitals get a fully branded recruitment portal (their logo, their domain, their colours), while 314e operates the whole system behind the scenes. UCLA Health is one known deployment.</p>
+      <p>That white-label model had a direct design consequence: we couldn't lean on a strong product identity as a quality signal. The experience itself had to carry the weight. The tool had to be recognisably good, not recognisably Penknife.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 THE PROBLEM ───────────────────── -->
+<section class="section alt">
+  <div class="container">
+    <p class="section-label">02 / The Problem</p>
+    <h2>Healthcare recruiting isn't like other recruiting</h2>
+    <div class="prose">
+      <p>The complexity is significantly higher. Candidates carry multi-layered credential requirements — licence types, specialties, compliance documentation. Positions are often urgent; a clinical coverage gap directly affects patient care. And the regulatory environment adds verification layers that generic platforms were never built to handle.</p>
+    </div>
+    <ul class="pain-list">
+      <li class="pain-item">
+        <p class="pain-item-title">Four disconnected tools</p>
+        <p class="pain-item-desc">ATS for tracking. A separate CRM for client relationships. Email for communication. Spreadsheets for reporting. No single source of truth.</p>
+      </li>
+      <li class="pain-item">
+        <p class="pain-item-title">No unified candidate view</p>
+        <p class="pain-item-desc">Recruiter context was scattered across systems. Every handoff meant re-explaining a candidate's history from scratch.</p>
+      </li>
+      <li class="pain-item">
+        <p class="pain-item-title">Healthcare complexity unaddressed</p>
+        <p class="pain-item-desc">Generic platforms had no concept of licence types, specialty matching, or compliance documentation workflows.</p>
+      </li>
+      <li class="pain-item">
+        <p class="pain-item-title">Hospital clients had no visibility</p>
+        <p class="pain-item-desc">Hiring managers at client hospitals had no real-time view into their open positions. Status updates were compiled manually each week.</p>
+      </li>
+    </ul>
+    <blockquote class="pull-quote">
+      "How do you design a single platform that makes a recruiter's full day — from sourcing to placement — <strong>faster, less error-prone, and contextually aware of healthcare's unique demands?</strong>"
+    </blockquote>
+  </div>
+</section>
+
+<!-- 03 STAKEHOLDERS ─────────────────── -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">03 / Stakeholders & Users</p>
+    <h2>Three very different relationships with the same data</h2>
+    <div class="prose">
+      <p>Penknife serves a layered stakeholder map. Getting the IA right meant understanding that these users don't just have different needs — they have different tolerances for complexity and completely different session patterns.</p>
+    </div>
+    <div class="stakeholder-grid">
+      <div class="stakeholder-card primary">
+        <p class="stakeholder-type">Primary · Power User</p>
+        <h3>Healthcare Recruiters</h3>
+        <p>314e's internal team. They live in the platform all day — sourcing, pipeline management, interview scheduling, client submissions, offer handling. They need speed, minimal context-switching, and a system that picks up where they left off.</p>
+      </div>
+      <div class="stakeholder-card primary">
+        <p class="stakeholder-type">Primary · Occasional User</p>
+        <h3>Hiring Managers</h3>
+        <p>Hospital-side. They log in to review submitted candidates, leave feedback, and approve hires. They need clarity, not complexity. Their view is a stripped-down subset of the full recruiter interface.</p>
+      </div>
+      <div class="stakeholder-card">
+        <p class="stakeholder-type">Indirect · Experience User</p>
+        <h3>Candidates</h3>
+        <p>Applicants who interact with the white-labelled portal. They never see Penknife — they see the hospital's branded careers page. But their data flows directly into Penknife's ATS. The portal quality is a direct output of how well Penknife's job posting flow was designed.</p>
+      </div>
+    </div>
+    <div class="prose" style="margin-top:28px">
+      <p style="font-size:13.5px; color:var(--ink-muted)"><strong style="color:var(--ink-dim)">Secondary:</strong> Account Managers at 314e (pipeline visibility), Compliance teams (credentialing trails), IT/Engineering (existing codebase constraints).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 DESIGN PROCESS ────────────────── -->
+<section class="section alt">
+  <div class="container">
+    <p class="section-label">04 / Design Process</p>
+    <h2>Research, then architecture, then screens</h2>
+    <div class="prose">
+      <p>We started with direct access to 314e's own recruitment team — an advantage because we had real users from day one, and a constraint because internal projects carry political weight. Not every pain point was freely shared in group settings. We had to do contextual inquiry: sitting with recruiters during their actual workday, not just interviewing them.</p>
+    </div>
+    <div class="method-pills">
+      <span class="method-pill">Contextual inquiry with senior recruiters</span>
+      <span class="method-pill">Workflow mapping (applied → placed)</span>
+      <span class="method-pill">Competitive audit — iCIMS, Workday, Lever, Bullhorn</span>
+      <span class="method-pill">Stakeholder interviews with account managers</span>
+      <span class="method-pill">Spreadsheet mental model analysis</span>
+    </div>
+    <h3 style="margin-top:44px">Key insight: the ATS/CRM split was the core problem</h3>
+    <div class="prose">
+      <p>The most important finding: ATS and CRM functions were not separable in a recruiter's mind. A candidate is also a relationship. A job opening is also a client deliverable. Every recruiter described constantly toggling between tracking where a candidate was in the process (ATS thinking) and managing what the client knew or expected (CRM thinking).</p>
+      <p>Generic platforms forced this split. Penknife's design premise was to collapse it entirely — treat the recruiter's day as a unified workflow, not two systems bolted together.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04a INFORMATION ARCHITECTURE ────── -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">04a / Information Architecture</p>
+    <h2>Five objects. Every feature is a relationship between them.</h2>
+    <div class="prose">
+      <p>Given the scale of data Penknife handles — candidates, jobs, clients, interviews, tasks, communications, compliance docs — IA was the most critical phase. We ran card-sorting and tree-testing sessions with recruiters to understand how they naturally grouped information, rather than how we assumed they did.</p>
+    </div>
+    <div class="ia-objects">
+      <span class="ia-object">Candidates</span>
+      <span class="ia-object">Jobs</span>
+      <span class="ia-object">Clients</span>
+      <span class="ia-object">Tasks</span>
+      <span class="ia-object">Reports</span>
+    </div>
+
+    <!-- IMAGE 1: Dashboard — annotations RIGHT -->
+    <div class="annotated-screen">
+      <div class="ann-screen">
+        <img src="penknife/image%201.jpg" alt="Penknife dashboard — recruiter home view" loading="lazy">
+      </div>
+      <div class="ann-rail">
+        <div class="ann-card">
+          <span class="ann-num">Role-Aware Dashboard</span>
+          <strong class="ann-title">Assigned jobs and today's schedule at session start</strong>
+          <p class="ann-body">The dashboard surfaces each recruiter's own assigned jobs with live application counts (220, 29, 56…). The right column anchors the calendar and today's scheduled interviews — the two highest time-sensitive priorities. No navigation needed from a cold open.</p>
+        </div>
+        <div class="ann-card">
+          <span class="ann-num">Object-Based Sidebar</span>
+          <strong class="ann-title">Data entities in the nav, not feature names</strong>
+          <p class="ann-body">The sidebar lists Candidates, Jobs, Applications, Placements, Tasks, Contacts, Companies, Opportunities — every screen is a filtered view of one of these objects. Card-sorting confirmed recruiters navigate by what they're looking for, not by which workflow step they're on.</p>
+        </div>
+      </div>
+    </div>
+    <p class="ann-caption">Dashboard — recruiter home view</p>
+  </div>
+</section>
+
+<!-- 04b WIREFRAMING ──────────────────── -->
+<section class="section alt">
+  <div class="container">
+    <p class="section-label">04b / Wireframing & Iteration</p>
+    <h2>Kanban first, table view second — because that's how recruiters think</h2>
+    <div class="prose">
+      <p>We moved quickly through lo-fi wireframes because recruiters responded far better to something clickable than to static screens. Early prototypes were tested in-session, iterated same-day.</p>
+      <p>A key early decision: we prototyped the Kanban view before the table view. It mapped better to the mental model recruiters described — "I think of candidates as moving through stages." The table view came later as a power-user alternative, once we understood that high-volume recruiters preferred scanning rows.</p>
+    </div>
+
+    <!-- IMAGE 11 (cropped): Submissions Kanban — annotations LEFT -->
+    <div class="annotated-screen ann-left">
+      <div class="ann-rail">
+        <div class="ann-card">
+          <span class="ann-num">Mental Model Mapping</span>
+          <strong class="ann-title">Kanban first — driven by how recruiters speak</strong>
+          <p class="ann-body">During contextual inquiry, recruiters consistently used stage language — "she's at interview," "he's been submitted," "still in screening." We built the Kanban view first, before the table was even scoped. The visual model matched how they already thought about candidates.</p>
+        </div>
+        <div class="ann-card">
+          <span class="ann-num">Stage as the Action</span>
+          <strong class="ann-title">Moving a card is the status update</strong>
+          <p class="ann-body">Column placement is the status action — Screened → Qualified → Interviewed → Final Selection. No separate dropdown, no edit step. Reduces status updates from a three-click flow to a single drag. Recruiters in testing commented on this without being prompted.</p>
+        </div>
+      </div>
+      <div class="ann-screen crop-top">
+        <img src="penknife/image%2011.jpg" alt="Submissions pipeline — kanban stage view" loading="lazy">
+      </div>
+    </div>
+    <p class="ann-caption" style="text-align:right">Candidate pipeline — Kanban stage view</p>
+
+    <!-- IMAGE 4: Applications table view — annotations RIGHT -->
+    <div class="annotated-screen" style="margin-top:64px">
+      <div class="ann-screen">
+        <img src="penknife/image%204.jpg" alt="Job applications — table view with fit scores" loading="lazy">
+      </div>
+      <div class="ann-rail">
+        <div class="ann-card">
+          <span class="ann-num">Table as Power-User Mode</span>
+          <strong class="ann-title">High-volume pipelines need row scanning, not cards</strong>
+          <p class="ann-body">Recruiters managing 30–40 candidates per role needed to compare across dimensions quickly — applied date, stage, fit score, scheduled time — without drilling into individual records. The table view (Applications tab) is the alt view for this. Both modes ship; the toggle lives on the job record.</p>
+        </div>
+        <div class="ann-card">
+          <span class="ann-num">Context-Staying Tab Structure</span>
+          <strong class="ann-title">All views of a job stay under one record</strong>
+          <p class="ann-body">Applications, Details, Activities, Draft Applications, and AI Recommendations are tabs within the same job record — no context loss when switching views. A recruiter stays anchored to the job while accessing any mode of working with it.</p>
+        </div>
+      </div>
+    </div>
+    <p class="ann-caption">Job applications — table view</p>
+  </div>
+</section>
+
+<!-- 04c UI SYSTEM ───────────────────── -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">04c / UI Design & System Building</p>
+    <h2>Calm, professional, token-based — built to be invisible</h2>
+    <div class="prose">
+      <p>We used a muted blue and neutral palette deliberately. Healthcare environments have enough visual stress. The tool should feel like a steady, controlled workspace — not an exciting startup product. Typography was optimised for dense data readability: clean sans-serif, strict hierarchy for data labels, field values, status badges, and action affordances.</p>
+      <p>Given the white-label requirement, we implemented a proper design token system. Colour tokens were abstract (primary, secondary, surface, etc.) so swapping a client's brand in was a token swap, not a redesign. For UCLA's deployment, onboarding time was under two days.</p>
+    </div>
+
+    <!-- IMAGE 2: CRM Overview — annotations LEFT -->
+    <div class="annotated-screen ann-left">
+      <div class="ann-rail">
+        <div class="ann-card">
+          <span class="ann-num">CRM Surface, Same Platform</span>
+          <strong class="ann-title">A different home for a different role</strong>
+          <p class="ann-body">Account managers and relationship owners land here — not the recruiter dashboard. "Followed Records" surfaces watched contacts; the three widget panels show today's meetings and recently interacted contacts. Same data model, different role lens. Zero re-platforming needed to switch contexts.</p>
+        </div>
+        <div class="ann-card">
+          <span class="ann-num">Context Restoration</span>
+          <strong class="ann-title">Where you left off, not where you started</strong>
+          <p class="ann-body">The home surface is designed around relationship recency — showing the contacts and meetings that are currently active. Every session starts with what matters now. The same principle as the recruiter dashboard, applied to the CRM workflow.</p>
+        </div>
+      </div>
+      <div class="ann-screen">
+        <img src="penknife/image%202.jpg" alt="CRM overview — followed records and activity widgets" loading="lazy">
+      </div>
+    </div>
+    <p class="ann-caption" style="text-align:right">CRM overview — account manager home</p>
+  </div>
+</section>
+
+<!-- 05 KEY FEATURES ──────────────────── -->
+<section class="section alt">
+  <div class="container">
+    <p class="section-label">05 / Key Features</p>
+    <h2>Six features that define the unified workflow</h2>
+
+    <!-- FEATURE 1: Unified Timeline -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <span class="feature-num">01</span>
+        <h3>Unified Candidate + Client Timeline</h3>
+      </div>
+      <div class="prose">
+        <p>The core experience innovation. Every candidate record shows not just application history, but every touchpoint with the associated client — emails sent, interviews scheduled, feedback received. A recruiter opening a candidate file sees the full story, not half of it. This was the most direct design expression of the ATS/CRM unification insight.</p>
+      </div>
+
+      <!-- IMAGE 5: CRM contact + activity timeline — annotations RIGHT -->
+      <div class="annotated-screen">
+        <div class="ann-screen">
+          <img src="penknife/image%205.jpg" alt="CRM contact record — activity and email timeline" loading="lazy">
+        </div>
+        <div class="ann-rail">
+          <div class="ann-card">
+            <span class="ann-num">Communication History In-Record</span>
+            <strong class="ann-title">Email opens and outbound threads logged automatically</strong>
+            <p class="ann-body">The Activities tab on a contact record shows every email opened, every outbound message sent — timestamped and attributed to the sender. No manual logging, no separate email tool. The recruiter opens the record and the full communication history is already there.</p>
+          </div>
+          <div class="ann-card">
+            <span class="ann-num">CRM + ATS in One Panel</span>
+            <strong class="ann-title">Relationship context lives alongside contact data</strong>
+            <p class="ann-body">The detail panel surfaces company affiliation, deal value, and contact metadata (left) alongside the live activity feed (right). A recruiter — or account manager — gets the full picture without switching between a CRM and a separate activity log.</p>
+          </div>
+        </div>
+      </div>
+      <p class="ann-caption">Contact record — unified activity timeline</p>
+    </div>
+
+    <!-- FEATURE 2: Kanban Pipeline -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <span class="feature-num">02</span>
+        <h3>Kanban Pipeline View</h3>
+      </div>
+      <div class="prose">
+        <p>Candidates move through stages: Applied → Screened → Submitted → Interview → Offer → Placed. The Kanban board makes this visible at a glance across an entire job's pipeline. Cards are dense with information — name, specialty, submission date, client feedback status — without becoming cluttered.</p>
+        <p>We tested multiple card densities. Recruiters handling 20–40 candidates per job needed the compact version. Those doing senior or specialised roles preferred expanded cards with more context visible without clicking in. Both modes shipped.</p>
+      </div>
+
+      <!-- IMAGE 6: Opportunities Kanban — annotations RIGHT -->
+      <div class="annotated-screen">
+        <div class="ann-screen">
+          <img src="penknife/image%206.jpg" alt="Opportunities pipeline — Kanban stage view" loading="lazy">
+        </div>
+        <div class="ann-rail">
+          <div class="ann-card">
+            <span class="ann-num">Stage Columns, Not Lists</span>
+            <strong class="ann-title">Pipeline state visible at a glance</strong>
+            <p class="ann-body">Opportunities move through Qualifying → Evaluating → Socializing → Negotiating. The column view makes the full pipeline health scannable — how much is in each stage, which accounts are advancing, where things are stuck — without opening individual records.</p>
+          </div>
+          <div class="ann-card">
+            <span class="ann-num">Card-Level Data</span>
+            <strong class="ann-title">Value and labels visible on the card itself</strong>
+            <p class="ann-body">Each card shows the hospital client name, revenue value, location tags, and action shortcuts inline. Account managers can act directly from the board — no click-through required for the most common actions.</p>
+          </div>
+        </div>
+      </div>
+      <p class="ann-caption">Opportunities pipeline — Kanban view</p>
+
+      <!-- IMAGE 7: Opportunity detail panel — annotations LEFT -->
+      <div class="annotated-screen ann-left" style="margin-top:64px">
+        <div class="ann-rail">
+          <div class="ann-card">
+            <span class="ann-num">Detail Without Leaving the Board</span>
+            <strong class="ann-title">Slide-out panel keeps Kanban context visible</strong>
+            <p class="ann-body">Clicking an opportunity opens a detail panel over the board — not a new page. The Kanban stays visible in the background. The account manager reads deal details, contact info, and activity log without losing their place in the pipeline view.</p>
+          </div>
+          <div class="ann-card">
+            <span class="ann-num">Automated Activity Log</span>
+            <strong class="ann-title">Discovery events captured without manual entry</strong>
+            <p class="ann-body">The Activities tab records system-generated events (discovery completions, stage changes, email sends) as they happen. The account manager's last touchpoint and current opportunity state are always reconstructable from the record — no manual logging required.</p>
+          </div>
+        </div>
+        <div class="ann-screen">
+          <img src="penknife/image%207.jpg" alt="Opportunity detail — activity log side panel" loading="lazy">
+        </div>
+      </div>
+      <p class="ann-caption" style="text-align:right">Opportunity detail — slide-out panel with activity log</p>
+    </div>
+
+    <!-- FEATURE 3: AI Scoring -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <span class="feature-num">03</span>
+        <h3>AI-Powered Candidate Scoring</h3>
+      </div>
+      <div class="prose">
+        <p>Penknife includes an AI scoring layer that evaluates candidates against job requirements and surfaces a fit score. For healthcare roles, this means the model accounts for licence type, specialty match, years of experience in specific clinical settings, and location/availability constraints.</p>
+        <p>The design challenge was transparency. Recruiters did not want a black-box score — they wanted to understand why a candidate was ranked where they were. We designed a score breakdown panel showing which factors contributed and at what weight, so recruiters could apply judgement on top of the algorithmic recommendation rather than deferring to it.</p>
+      </div>
+
+      <!-- IMAGE 8: AI scoring with filter panel — annotations LEFT -->
+      <div class="annotated-screen ann-left">
+        <div class="ann-rail">
+          <div class="ann-card">
+            <span class="ann-num">Score as a Filter, Not a Ranking</span>
+            <strong class="ann-title">Recruiter sets the threshold — algorithm doesn't decide</strong>
+            <p class="ann-body">The "Filter by AI Scoring" panel lets the recruiter set a minimum fit score cutoff (shown: 65 out of 100). Only candidates above that threshold surface. The recruiter controls the cut-off — the AI narrows the pool, but the recruiter defines what "narrow" means.</p>
+          </div>
+          <div class="ann-card">
+            <span class="ann-num">AI Recommendations as Opt-In</span>
+            <strong class="ann-title">A separate tab, not the default view</strong>
+            <p class="ann-body">AI Recommendations is one of five tabs on the job record — the default opens to all Applications unfiltered. Recruiters choose when to apply the AI lens. This was a deliberate positioning decision: the algorithm is a tool the recruiter reaches for, not a filter imposed on entry.</p>
+          </div>
+        </div>
+        <div class="ann-screen">
+          <img src="penknife/image%208.jpg" alt="AI Recommendations tab — fit score filter panel" loading="lazy">
+        </div>
+      </div>
+      <p class="ann-caption" style="text-align:right">AI Recommendations — fit score filter panel</p>
+    </div>
+
+    <!-- FEATURE 4: Job Board Integration -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <span class="feature-num">04</span>
+        <h3>Hospital-Specific External Job Board Integration</h3>
+      </div>
+      <div class="prose">
+        <p>One of the standout features from a service design perspective. When a recruiter creates a job in Penknife, it can be published directly to the corresponding hospital's white-labelled careers page — the same flow as traditional job boards, but managed entirely from within Penknife. Candidates applying through the hospital's site have their application routed automatically into the ATS, with the hospital's branding intact throughout.</p>
+        <p>This was the most technically complex feature and required close collaboration with engineering to define the data model for multi-tenant job publishing. It eliminated the need for recruiters to manually pull applications from external boards and re-enter them into the system.</p>
+      </div>
+
+      <!-- IMAGE 9: White-label hospital careers page — annotations RIGHT -->
+      <div class="annotated-screen">
+        <div class="ann-screen">
+          <img src="penknife/image%209.jpg" alt="Fairview Hospital — white-label careers portal" loading="lazy">
+        </div>
+        <div class="ann-rail">
+          <div class="ann-card">
+            <span class="ann-num">Hospital Brand, Penknife Invisible</span>
+            <strong class="ann-title">Candidate experience is fully white-labelled</strong>
+            <p class="ann-body">Candidates see Fairview Hospital's logo, colour scheme, and domain — no Penknife branding anywhere in the candidate-facing flow. The careers page, job listings, and application forms are all hospital-branded while the entire backend is Penknife's ATS. Powered by Penknife appears only in the footer.</p>
+          </div>
+          <div class="ann-card">
+            <span class="ann-num">Filtered Job Board by Default</span>
+            <strong class="ann-title">Location, specialty, and type filters on the listing page</strong>
+            <p class="ann-body">The careers page ships with left-rail filters for location, specialty, hiring type, and deployment type. These are driven by the structured job fields set in Penknife — not free-text. Healthcare-specific filtering (specialty, deployment) works because the underlying data model was built for it.</p>
+          </div>
+        </div>
+      </div>
+      <p class="ann-caption">Fairview Hospital — white-label careers portal</p>
+
+      <!-- IMAGE 10: White-label job detail page — annotations LEFT -->
+      <div class="annotated-screen ann-left" style="margin-top:64px">
+        <div class="ann-rail">
+          <div class="ann-card">
+            <span class="ann-num">Job Detail as Candidate Experience</span>
+            <strong class="ann-title">Full description, metadata, and similar jobs in one page</strong>
+            <p class="ann-body">The white-label job detail page surfaces the full job description alongside structured metadata (employment type, department, work type, hiring type) in a right sidebar. Similar jobs at the bottom extend the candidate session — a recruiter-designed candidate UX, not just a form.</p>
+          </div>
+          <div class="ann-card">
+            <span class="ann-num">Inbound Application Routing</span>
+            <strong class="ann-title">Applications flow into the ATS automatically</strong>
+            <p class="ann-body">When a candidate applies through this page, a new record is created in Penknife's ATS tagged to the correct job and hospital client — no CSV import, no manual entry. This was the highest-ROI workflow improvement we identified across the entire platform.</p>
+          </div>
+        </div>
+        <div class="ann-screen">
+          <img src="penknife/image%2010.jpg" alt="White-label job detail page — candidate view" loading="lazy">
+        </div>
+      </div>
+      <p class="ann-caption" style="text-align:right">White-label job detail — candidate-facing view</p>
+    </div>
+
+    <!-- FEATURE 5: Mobile -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <span class="feature-num">05</span>
+        <h3>Mobile — Critical Actions Only</h3>
+      </div>
+      <div class="prose">
+        <p>The product is fundamentally a desktop tool. Recruiters work at desks managing large data sets across wide screens. Mobile was never intended to be the primary experience, and we made that call deliberately early — resisting pressure to "make it work on mobile too."</p>
+        <p>What we designed instead was a constrained mobile view for account managers and hospital-side hiring managers who occasionally need to check status or approve a submission away from their desks: view submitted candidates, leave feedback, approve or reject. Nothing more. The mobile experience is less capable by design, and that was the right call.</p>
+      </div>
+
+      <div class="decisions-grid" style="margin-top:36px">
+        <div class="decision-card">
+          <p class="decision-tag">Research-Backed Scope</p>
+          <h4>94% desktop sessions — data backed the call</h4>
+          <p>Analytics showed 94% of recruiter sessions on desktop with an average session length of 40+ minutes. A full mobile port would have compromised the desktop experience without delivering a genuinely useful mobile one. We chose to do one exceptionally well.</p>
+        </div>
+        <div class="decision-card">
+          <p class="decision-tag">Hiring Manager Use Case</p>
+          <h4>Three tasks, constrained by design</h4>
+          <p>The mobile surface covers: view submitted candidates, leave feedback, approve or reject. That's the entire feature set. Not a compressed version of the recruiter UI — a purpose-built surface for the hiring manager's away-from-desk scenario. Intentionally less capable than desktop.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURE 6: Reporting -->
+    <div class="feature-block">
+      <div class="feature-header">
+        <span class="feature-num">06</span>
+        <h3>Reporting & Pipeline Analytics</h3>
+      </div>
+      <div class="prose">
+        <p>Account managers needed to show hospital clients pipeline health without giving them full access to the platform. We designed a reporting module that generated client-facing summaries — time-to-fill, submission-to-offer ratios, pipeline velocity by role — formatted for sharing in client meetings.</p>
+        <p>Internally, 314e used the same data to track recruiter performance and identify pipeline bottlenecks. This was the module I'm most critical of in retrospect — under-designed relative to its operational importance, launched under pressure, and required significant post-launch iteration.</p>
+      </div>
+
+      <!-- IMAGE 3: Dashboard pipeline data — annotations RIGHT -->
+      <div class="annotated-screen">
+        <div class="ann-screen">
+          <img src="penknife/image%203.jpg" alt="Dashboard — pipeline visibility and job metrics" loading="lazy">
+        </div>
+        <div class="ann-rail">
+          <div class="ann-card">
+            <span class="ann-num">Dashboard as Proxy for Reporting</span>
+            <strong class="ann-title">Pipeline counts visible without a reporting module</strong>
+            <p class="ann-body">The dashboard surfaces per-job application volumes (220, 29, 56, 10), open job count (8), and scheduled interview load. This was what hospital hiring managers actually wanted visibility into — their pipeline health at a glance, without going through an account manager for a weekly update.</p>
+          </div>
+          <div class="ann-card">
+            <span class="ann-num">Known Post-Launch Debt</span>
+            <strong class="ann-title">Aggregate counts, not analytics</strong>
+            <p class="ann-body">The dashboard gave surface-level counts but not the deeper metrics clients needed — time-to-fill, submission-to-offer ratios, pipeline velocity by role. The gap between what was built and what was asked for became apparent post-launch. The reporting module needed more design investment than it received under timeline pressure.</p>
+          </div>
+        </div>
+      </div>
+      <p class="ann-caption">Dashboard pipeline view — surface-level reporting</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 06 DESIGN DECISIONS ──────────────── -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">06 / Design Decisions & Trade-offs</p>
+    <h2>Four decisions that shaped the product</h2>
+    <div class="decisions-grid">
+      <div class="decision-card">
+        <p class="decision-tag">Platform Strategy</p>
+        <h4>Desktop-first was non-negotiable</h4>
+        <p>Early conversations surfaced pressure to "make it work on mobile too." We pushed back with data: 94% of recruiter sessions were on desktop, average session length was 40+ minutes. A responsive reflow would have been a worse desktop experience and still a mediocre mobile one. We chose to do desktop exceptionally well.</p>
+      </div>
+      <div class="decision-card">
+        <p class="decision-tag">Theming Architecture</p>
+        <h4>Design tokens over CSS overrides</h4>
+        <p>We could have handled white-labelling at the CSS level — just swap a hex code. We chose to implement a proper token system, which added time upfront but made each new client deployment significantly faster. UCLA's onboarding time was under two days. The investment compounded across every subsequent deployment.</p>
+      </div>
+      <div class="decision-card">
+        <p class="decision-tag">Architectural Compromise</p>
+        <h4>Integrated client profile vs. dedicated parent</h4>
+        <p>One of the trickier calls: whether to build a dedicated parent/client profile separate from candidates, or integrate client context into the existing candidate view framework. Building separate would have been more thorough but required significant backend changes and delayed launch. We integrated — which meant UX compromises in client-facing views. A known unresolved issue.</p>
+      </div>
+      <div class="decision-card">
+        <p class="decision-tag">Research Constraint</p>
+        <h4>Research skewed toward 314e's internal team</h4>
+        <p>Most of our research access was with 314e's own recruiters. Hospital-side hiring managers were harder to access during the research phase. This created a blind spot in the client-facing views that became apparent only after deployment. More direct access earlier would have changed several design decisions in the approval and feedback flows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 WHAT I'D DO DIFFERENTLY ─────── -->
+<section class="section alt">
+  <div class="container">
+    <p class="section-label">07 / What I'd Do Differently</p>
+    <h2>The honest parts</h2>
+    <div class="prose">
+      <p>This is a live product I'm genuinely proud of. It also has real seams. These are the things I'd change.</p>
+    </div>
+    <ul class="honest-list">
+      <li>
+        <div class="honest-bullet"></div>
+        <p class="honest-text"><strong>Better sprint structure during discovery.</strong> We front-loaded research into a long, unstructured phase — no sprint cadence, no time-boxed synthesis loops. Good insight, poor momentum going into the design phase, which created pressure at the back end. I'd run discovery in shorter, tighter cycles now.</p>
+      </li>
+      <li>
+        <div class="honest-bullet"></div>
+        <p class="honest-text"><strong>More direct access to hospital hiring managers, earlier.</strong> The hiring manager view — client-facing portal and approval flows — was designed largely from inference and secondary interviews. We could see the blind spot forming and didn't have the access to close it in time.</p>
+      </li>
+      <li>
+        <div class="honest-bullet"></div>
+        <p class="honest-text"><strong>The reporting module needed more time.</strong> It became a major client request that we had to iterate quickly, under pressure, after launch. With more design attention during the main build, we could have shipped a significantly more useful reporting layer — the most under-resourced feature relative to its actual strategic importance.</p>
+      </li>
+      <li>
+        <div class="honest-bullet"></div>
+        <p class="honest-text"><strong>The parent profile decision was the wrong call.</strong> Integrating client context into the candidate view framework was pragmatic but produced UX compromises we knew about at the time. Given the same timeline constraints, I'd push harder to carve out the backend work — the integrated approach has a ceiling that limits how good the client-facing experience can get.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 08 OUTCOMES ──────────────────────── -->
+<section class="section">
+  <div class="container">
+    <p class="section-label">08 / Outcomes</p>
+    <h2>Directional results from a live, deployed product</h2>
+    <div class="prose">
+      <p>Penknife is in production across multiple US hospital networks. Specific metrics are owned by 314e and not all are public — what follows is directional, not a press release.</p>
+    </div>
+    <ul class="outcomes-list">
+      <li class="outcome-item">
+        <div class="outcome-icon"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <div class="outcome-text">
+          <strong>Significant reduction in time-to-fill</strong>
+          Consolidating four systems into one removed the re-entry overhead and context-reconstruction lag built into every recruiter's daily workflow.
+        </div>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="outcome-text">
+          <strong>Recruiter onboarding time decreased</strong>
+          The platform was intuitive enough for new 314e hires to become productive faster — a reduction in formal training overhead observed consistently across new recruiter cohorts.
+        </div>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="outcome-text">
+          <strong>Hospital client satisfaction improved</strong>
+          Primarily attributed to real-time pipeline visibility. Hiring managers could check their open positions without chasing account managers for weekly status updates.
+        </div>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="outcome-text">
+          <strong>White-label deployment time cut significantly</strong>
+          The token-based theming system took each new client deployment from a multi-week integration project to under two days. UCLA Health's deployment was completed in under 48 hours.
+        </div>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="outcome-text">
+          <strong>AI scoring became a sales differentiator</strong>
+          The explainability-first approach — score breakdowns with contributing factors — became a feature 314e's account managers actively led with in pitches to new hospital network partners.
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER ───────────────────────────── -->
+<footer class="cs-footer">
+  <p class="cs-footer-label">Next project</p>
+  <a href="titaneyeplus_casestudy.html" class="cs-footer-link">
+    Titan Eyeplus
+    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</footer>
+
+<script src="nav-component.js"></script>
+<script src="cursor-effects.js"></script>
+<script src="chatbot.js"></script>
+</body>
+</html>

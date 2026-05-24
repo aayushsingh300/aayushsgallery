@@ -1385,14 +1385,11 @@
             .proj-nav-link { padding: 28px 24px; }
             .proj-nav-link.next { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); text-align: left; align-items: flex-start; }
 
-            .screen-embed iframe {
-                width: 100vw;
-                height: auto;
-                min-height: 300px;
-                transform: none;
-                margin-bottom: 0;
-                max-width: 100%;
-            }
+            /* ── iframe embeds: JS scaleEmbeds() handles sizing — DON'T override transform/width/height here ── */
+            .screen-embed { overflow: hidden; max-width: 100%; }
+
+            /* Hide annotations and overlay lines on mobile views */
+            .ann-sidebar, .ann-svg, .ann-lines { display: none !important; }
         }
 
         @media (max-width: 540px) {

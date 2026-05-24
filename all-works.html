@@ -250,6 +250,42 @@
       background: rgba(255,142,0,0.12); color: var(--orange);
       margin-bottom: 12px;
     }
+    .work-status-wip {
+      background: rgba(255,142,0,0.18);
+      color: var(--orange);
+      border: 1px solid rgba(255,142,0,0.4);
+    }
+
+    /* WIP overlay on the project image */
+    .work-row-wip .work-image { position: relative; overflow: hidden; }
+    .work-row-wip .work-image img { filter: grayscale(35%) brightness(0.6); transition: filter 0.3s ease; }
+    .work-row-wip:hover .work-image img { filter: grayscale(20%) brightness(0.7); }
+    .wip-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background:
+        repeating-linear-gradient(135deg, rgba(0,0,0,0.0) 0 18px, rgba(255,142,0,0.10) 18px 36px),
+        linear-gradient(180deg, rgba(20,15,10,0.55), rgba(20,15,10,0.75));
+      pointer-events: none;
+    }
+    .wip-overlay-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 16px 22px; border: 1px solid rgba(255,142,0,0.55);
+      background: rgba(20,15,10,0.7);
+      border-radius: 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    }
+    .wip-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--orange);
+      padding: 4px 10px; border-radius: 100px;
+      background: rgba(255,142,0,0.16);
+      border: 1px solid rgba(255,142,0,0.45);
+    }
+    .wip-text {
+      font-size: 12px; letter-spacing: 0.04em;
+      color: rgba(214,208,196,0.88);
+    }
 
     /* ─── FOOTER ───────────────────────────────── */
     .page-footer {
@@ -517,23 +553,23 @@
   </a>
 
   <!-- Penknife ATS -->
-  <a href="#" class="work-row" data-tags="saas b2b">
+  <a href="penknife.html" class="work-row" data-tags="saas b2b healthcare">
     <div class="work-image">
-      <img src="images/portfolio-assets/QeUhVTvOY9zoIlJRAjzCoogWCjw.jpg" alt="Penknife ATS">
+      <img src="penknife/image%201.jpg" alt="Penknife ATS">
     </div>
     <div class="work-content">
       <div class="work-top">
         <div class="work-tags">
+          <span class="work-tag">Healthcare</span>
           <span class="work-tag">SaaS</span>
-          <span class="work-tag">B2B</span>
-          <span class="work-tag">HR Tech</span>
+          <span class="work-tag">Service Design</span>
         </div>
-        <h2 class="work-title">Penknife ATS</h2>
-        <p class="work-subtitle">Applicant Tracking System</p>
-        <p class="work-desc">Designing a modern applicant tracking system that reduces recruiter overhead and keeps candidates in the loop at every stage of the hiring process.</p>
+        <h2 class="work-title">Penknife</h2>
+        <p class="work-subtitle">ATS + CRM · White-Label Healthcare Staffing</p>
+        <p class="work-desc">Unifying a fragmented four-tool recruitment stack into one white-label platform for US hospital networks. Live at UCLA Health. ATS + CRM collapsed into a single recruiter workflow.</p>
       </div>
       <div class="work-bottom">
-        <span class="work-meta">SaaS · 2023</span>
+        <span class="work-meta">314e Corporation · Healthcare · 2021</span>
         <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
     </div>
@@ -562,47 +598,31 @@
     </div>
   </a>
 
-  <!-- VR Try-On -->
-  <a href="#" class="work-row" data-tags="b2c ecommerce">
+  <!-- Increasing Conversions — Healthcare Product Web UI (WIP) -->
+  <a href="#" class="work-row work-row-wip" data-tags="b2c">
     <div class="work-image">
-      <img src="images/portfolio-assets/xkhL0lrjeCa0Pq81e4z1CAJ6I-1.webp" alt="VR Try-On">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">B2C</span>
-          <span class="work-tag">AR/VR</span>
-          <span class="work-tag">Retail</span>
+      <img src="images/portfolio-assets/ud9KeBMYBcqOvOmbmecKrZcxo.webp" alt="Healthcare Product Web UI">
+      <div class="wip-overlay">
+        <div class="wip-overlay-inner">
+          <span class="wip-badge">Work in Progress</span>
+          <span class="wip-text">Case study coming soon</span>
         </div>
-        <h2 class="work-title">VR Try-On</h2>
-        <p class="work-subtitle">Virtual Try-On Experience</p>
-        <p class="work-desc">Bringing eyewear try-on into the virtual space — letting customers see themselves in frames through AR/VR before committing to a purchase.</p>
       </div>
-      <div class="work-bottom">
-        <span class="work-meta">Titan · AR/VR · 2021</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Revamping Product Web Pages -->
-  <a href="#" class="work-row" data-tags="b2c">
-    <div class="work-image">
-      <img src="images/portfolio-assets/ud9KeBMYBcqOvOmbmecKrZcxo.webp" alt="Product Web Pages">
     </div>
     <div class="work-content">
       <div class="work-top">
-        <span class="work-status">Read in Progress</span>
+        <span class="work-status work-status-wip">Work in Progress</span>
         <div class="work-tags">
           <span class="work-tag">B2C</span>
+          <span class="work-tag">Healthcare</span>
           <span class="work-tag">Web</span>
         </div>
-        <h2 class="work-title">Product Web Pages</h2>
-        <p class="work-subtitle">Web · Marketing · Conversion</p>
-        <p class="work-desc">Revamping product landing pages with a focus on conversion, storytelling, and brand alignment across digital touchpoints.</p>
+        <h2 class="work-title">Increasing conversions by just upgrading Healthcare product web UI</h2>
+        <p class="work-subtitle">Healthcare · Web · Conversion</p>
+        <p class="work-desc">Revamping healthcare product landing pages with a focus on conversion uplift, clarity of clinical claims, and brand alignment across digital touchpoints.</p>
       </div>
       <div class="work-bottom">
-        <span class="work-meta">Web · Marketing</span>
+        <span class="work-meta">Healthcare · Web · Conversion</span>
         <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </div>
     </div>

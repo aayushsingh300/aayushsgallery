@@ -816,9 +816,11 @@
             .reframe h2 { font-size: 32px; }
             .reframe .sub { font-size: 20px; }
 
-            .screen-annotated { flex-direction: column; }
-            .ann-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; padding-top: 0; }
-            .ann-svg { display: none; }
+            /* ── iframe embeds: JS scaleEmbeds() handles sizing — DON'T override transform/width/height here ── */
+            .screen-embed { overflow: hidden; max-width: 100%; }
+
+            /* Hide annotations and overlay lines on mobile views */
+            .ann-sidebar, .ann-svg, .ann-lines { display: none !important; }
 
             .proj-nav { grid-template-columns: 1fr; }
             .proj-nav-link { padding: 28px 24px; }
@@ -1638,6 +1640,56 @@
   });
 </script>
 <script>
+</script>
+
+<script>
+(function() {
+    function scaleEmbeds() {
+        document.querySelectorAll('.screen-embed').forEach(function(embed) {
+            var w = embed.clientWidth;
+            var scale = Math.min(0.666, w / 1440);
+            var iframe = embed.querySelector('iframe');
+            var svg = embed.querySelector('.ann-svg');
+            var chromeEl = embed.querySelector('.chrome');
+            var chromeH = chromeEl ? chromeEl.offsetHeight : 0;
+            var h = 900;
+            if (iframe) {
+                var inlineStyle = iframe.getAttribute('style') || '';
+                var match = inlineStyle.match(/height:\s*(\d+)/);
+                if (match) { h = parseInt(match[1]); }
+                iframe.style.width = '1440px';
+                iframe.style.transform = 'scale(' + scale + ')';
+                iframe.style.transformOrigin = 'top left';
+                iframe.style.marginBottom = '0';
+                embed.style.overflow = 'hidden';
+                embed.style.height = (chromeH + Math.round(h * scale)) + 'px';
+            }
+            if (svg) {
+                svg.style.position = 'absolute';
+                svg.style.top = chromeH + 'px';
+                svg.style.left = '0';
+                svg.style.width = Math.round(1440 * scale) + 'px';
+                svg.style.height = Math.round(h * scale) + 'px';
+            }
+            var wrapper = embed.closest('.screen-annotated');
+            if (wrapper && chromeH > 0) {
+                wrapper.querySelectorAll('.ann-sidebar').forEach(function(sb) {
+                    sb.style.paddingTop = chromeH + 'px';
+                });
+            }
+        });
+    }
+
+    function refresh() { scaleEmbeds(); }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', refresh);
+    } else { refresh(); }
+    window.addEventListener('resize', refresh);
+    window.addEventListener('load', function() {
+        refresh();
+        setTimeout(refresh, 300);
+    });
+})();
 </script>
 
 <script src="cursor-effects.js"></script>
