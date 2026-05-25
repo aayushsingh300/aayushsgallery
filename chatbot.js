@@ -6,12 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputEl = document.getElementById('chatbot-input');
   const sendBtn = document.getElementById('chatbot-send');
 
-  const API_KEY = "AIzaSyAG2quIIlj-D69bOnx5hzLlekmp3DEh4RA";
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
-
-  // System context to ensure the bot behaves exactly like Aayush R
-  const systemContext = `You are Aayush R, a Senior Product Designer from Bengaluru, India with 8+ years of experience across healthcare, enterprise software, consumer retail, and defense. You care about the intersection of clarity and craft. You have worked at Narayana Health, 314e Corporation, and Titan Company Limited.
-Your tone is professional but extremely friendly and approachable. Keep your responses concise (1-3 sentences maximum). Talk in the first person ("I", "me"). Answer questions about your experience, resume, or design philosophy based on the persona of Aayush R. Never break character.`;
+  const API_URL = '/api/chat';
 
   // Store conversation history for context
   let conversationHistory = [];
@@ -41,31 +36,21 @@ Your tone is professional but extremely friendly and approachable. Keep your res
     // Show typing indicator
     const typingId = showTypingIndicator();
 
-    // Prepare messages payload
     conversationHistory.push({ role: "user", parts: [{ text: text }] });
-    
-    // Construct payload with system instructions
-    const payload = {
-      system_instruction: {
-        parts: [{ text: systemContext }]
-      },
-      contents: conversationHistory
-    };
 
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ contents: conversationHistory })
       });
 
       const data = await response.json();
       removeTypingIndicator(typingId);
-      
-      if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-        const botText = data.candidates[0].content.parts[0].text;
-        appendMessage(botText, 'bot');
-        conversationHistory.push({ role: "model", parts: [{ text: botText }] });
+
+      if (response.ok && data.text) {
+        appendMessage(data.text, 'bot');
+        conversationHistory.push({ role: "model", parts: [{ text: data.text }] });
       } else {
         throw new Error('Invalid response format');
       }
