@@ -3126,6 +3126,7 @@
     (function () {
       var canvas = document.getElementById('heroSparkles');
       if (!canvas) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       var ctx = canvas.getContext('2d');
       var stars = [];
       var NUM = 80; // reduced from 128; twinkling doesn't need density
@@ -3343,6 +3344,7 @@
     (function () {
       var canvas = document.getElementById('globalFireflies');
       if (!canvas) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       var ctx = canvas.getContext('2d');
       var W, H, flies = [];
       var NUM_FLIES = 38; // halved; visually identical at comfortable density
@@ -3420,6 +3422,7 @@
     (function () {
       var canvas = document.getElementById('orbitalGlobe');
       if (!canvas) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       var ctx = canvas.getContext('2d');
       var W = 320, H = 320;
       var cx = W / 2, cy = H / 2;
@@ -3580,11 +3583,11 @@
   <script src="cursor-effects.js"></script>
 
   <!-- ── LIVE CHATBOT ─────────────────────────────────── -->
-  <div id="chatbot-fab" aria-label="Open Chat">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <button id="chatbot-fab" type="button" aria-label="Open Chat">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
     </svg>
-  </div>
+  </button>
   
   <div id="chatbot-window" class="hidden">
     <div class="chatbot-header">

@@ -129,6 +129,8 @@ textarea {
   right: 30px;
   width: 60px;
   height: 60px;
+  border: none;
+  padding: 0;
   border-radius: 50%;
   background: var(--orange, #ff8e00);
   color: #fff;
@@ -144,6 +146,11 @@ textarea {
 #chatbot-fab:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 25px rgba(255, 142, 0, 0.5);
+}
+
+#chatbot-fab:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
 }
 
 #chatbot-window {
@@ -518,4 +525,20 @@ body.light .g-theme-toggle .icon-moon { display: none; }
     min-width: 100% !important;
   }
   .app-sidebar.desktop-only { display: none !important; }
+}
+
+
+/* ─── REDUCED MOTION (all pages) ─────────────────────────────────────────
+   Honour prefers-reduced-motion. Durations are collapsed to near-zero rather
+   than removed, so reveal animations still snap to their visible end-state
+   (content never ships hidden), while infinite loops (film grain, comets,
+   stars, scanlines) stop after a single iteration. JS canvas effects on the
+   home (sparkles, fireflies, orbital globe) are additionally gated in-page. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
