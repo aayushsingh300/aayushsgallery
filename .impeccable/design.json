@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-08T00:00:00Z",
+  "title": "Design System: Aayush R Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "signal-orange": { "role": "primary", "displayName": "Signal Orange", "canonical": "#ff8e00", "tonalRamp": ["#3a1f00", "#5c3200", "#854700", "#b35f00", "#e07700", "#ff8e00", "#ffab47", "#ffd199"] },
+      "terminal-green": { "role": "secondary", "displayName": "Terminal Green", "canonical": "#4ade80", "tonalRamp": ["#0a2e1a", "#0f4527", "#176338", "#22824b", "#34a862", "#4ade80", "#86eaa9", "#c3f5d4"] },
+      "terracotta": { "role": "tertiary", "displayName": "Terracotta", "canonical": "#a47864", "tonalRamp": ["#2c1d16", "#3f2a20", "#5a3c2e", "#775445", "#8e6354", "#a47864", "#c39e90", "#e0cbc1"] },
+      "ink-cream": { "role": "neutral", "displayName": "Ink Cream", "canonical": "#d6d0c4", "tonalRamp": ["#2b2820", "#403c30", "#5a5443", "#7d7560", "#a39a83", "#c2bba9", "#d6d0c4", "#ece8df"] },
+      "space-black": { "role": "neutral", "displayName": "Space Black", "canonical": "#04060e", "tonalRamp": ["#04060e", "#0a0e14", "#10141d", "#171c27", "#222a38", "#39435a", "#5a6680", "#8a96b0"] },
+      "warm-black": { "role": "neutral", "displayName": "Warm Black", "canonical": "#221616", "tonalRamp": ["#0d0808", "#160e0e", "#1a1010", "#221616", "#2e1d1d", "#3d2727", "#5a3a3a", "#7d5454"] }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Headline", "purpose": "Hero tagline only — room-filling uppercase Inter, the opening shout." },
+      "display": { "displayName": "Display", "purpose": "Questrial warmth note for project titles and feature headings." },
+      "body": { "displayName": "Body", "purpose": "Inter reading copy and descriptions; cap at 65–75ch." },
+      "label": { "displayName": "Label", "purpose": "Uppercase micro-labels: CTA text, card subtitles, eyebrows." },
+      "mono": { "displayName": "Telemetry", "purpose": "Monospace data and readouts, paired with terminal green." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 45px 55px -20px #0d0600", "purpose": "Deep warm far-thrown shadow under project cards; brown-tinted, not gray." },
+      { "name": "glow-orange", "value": "0 4px 20px rgba(255,142,0,0.4)", "purpose": "Signal-orange glow under the chatbot FAB and active orange elements." },
+      { "name": "glass-float", "value": "0 10px 40px rgba(0,0,0,0.5)", "purpose": "Floating glass panels (nav, chatbot window) over backdrop-blur." }
+    ],
+    "motion": [
+      { "name": "ease-glide", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default long ease-out for card lifts, nav, drawer." },
+      { "name": "ease-spring", "value": "cubic-bezier(0.175, 0.885, 0.32, 1.275)", "purpose": "Tactile overshoot on FAB and solid-button hover." },
+      { "name": "grain-shift", "value": "8s steps(1, end) infinite", "purpose": "Drifting film-grain step loop." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Signal CTA Link",
+      "kind": "custom",
+      "refersTo": "cta-link",
+      "description": "The portfolio's signature action: a glowing uppercase orange text link with an arrow, not a filled button.",
+      "html": "<a class=\"ds-cta-link\" href=\"#\"><span class=\"ds-cta-text\">View case study</span><svg class=\"ds-cta-arrow\" width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\"><path d=\"M4 14h18M16 8l6 6-6 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a>",
+      "css": ".ds-cta-link { display: inline-flex; align-items: center; gap: 17px; text-decoration: none; color: #ff8e00; transition: gap 0.25s cubic-bezier(0.22,1,0.36,1); } .ds-cta-text { font-family: 'Inter', sans-serif; font-size: 15.2px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.4px; text-shadow: 0 0 3px #ff8e00; } .ds-cta-arrow { flex-shrink: 0; } .ds-cta-link:hover { gap: 24px; } .ds-cta-link:focus-visible { outline: 2px solid #ff8e00; outline-offset: 4px; }"
+    },
+    {
+      "name": "Solid FAB",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Circular signal-orange floating action button with spring hover.",
+      "html": "<button class=\"ds-fab\" aria-label=\"Open chat\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.6-.8L3 21l1.9-5.4A8.5 8.5 0 1 1 21 11.5z\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/></svg></button>",
+      "css": ".ds-fab { width: 60px; height: 60px; border-radius: 50%; background: #ff8e00; color: #fff; border: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(255,142,0,0.4); transition: transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s ease; } .ds-fab:hover { transform: scale(1.1); box-shadow: 0 6px 25px rgba(255,142,0,0.5); } .ds-fab:focus-visible { outline: 2px solid #ff8e00; outline-offset: 3px; }"
+    },
+    {
+      "name": "Glass Nav",
+      "kind": "nav",
+      "refersTo": "nav-glass",
+      "description": "Fixed glassmorphic top bar; links rest muted, brighten to ice-white.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-logo\" href=\"#\">AR</a><ul class=\"ds-nav-links\"><li><a href=\"#\" class=\"active\">Work</a></li><li><a href=\"#\">About</a></li><li><a href=\"#\">Resume</a></li></ul></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; background: rgba(8,10,14,0.72); backdrop-filter: blur(22px) saturate(140%); -webkit-backdrop-filter: blur(22px) saturate(140%); border-bottom: 1px solid rgba(255,255,255,0.07); } .ds-nav-logo { color: #edf0f4; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.04em; } .ds-nav-links { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; } .ds-nav-links a { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; color: rgba(188,196,208,0.62); text-decoration: none; transition: color 0.2s ease; } .ds-nav-links a:hover, .ds-nav-links a.active { color: #edf0f4; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "proj-card",
+      "description": "Full-bleed image card with warm scrim, centered title, deep warm rest shadow, and signature lift on hover.",
+      "html": "<a class=\"ds-card\" href=\"#\"><div class=\"ds-card-scrim\"></div><div class=\"ds-card-content\"><h3 class=\"ds-card-title\">Chargeur</h3><p class=\"ds-card-sub\">EV charging platform</p></div></a>",
+      "css": ".ds-card { position: relative; display: block; width: 320px; height: 480px; border-radius: 4px; overflow: hidden; text-decoration: none; background: #221616 url('') center/cover; box-shadow: 0 45px 55px -20px #0d0600; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); } .ds-card-scrim { position: absolute; inset: auto 0 0 0; height: 360px; background: linear-gradient(0deg, rgba(22,14,14,0.97) 0%, rgba(22,14,14,0.5) 70%, transparent 100%); } .ds-card-content { position: absolute; inset: auto 0 20px 0; text-align: center; } .ds-card-title { font-family: 'Questrial', sans-serif; font-size: 29px; font-weight: 400; line-height: 1.3; color: #d6d0c4; margin: 0; } .ds-card-sub { font-family: 'Inter', sans-serif; font-size: 15.6px; text-transform: uppercase; letter-spacing: 0.4px; color: #d6d0c4; margin: 4px 0 0; } .ds-card:hover { transform: translateY(-8px) scale(1.01); } .ds-card:focus-visible { outline: 2px solid #ff8e00; outline-offset: 4px; }"
+    },
+    {
+      "name": "Glass Input",
+      "kind": "input",
+      "refersTo": "input-glass",
+      "description": "Glass text field; border warms to orange on focus.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Ask me anything\">",
+      "css": ".ds-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 12px 16px; color: #d6d0c4; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s ease, background 0.2s ease; } .ds-input::placeholder { color: rgba(214,208,196,0.4); } .ds-input:focus { border-color: rgba(255,142,0,0.5); background: rgba(255,255,255,0.08); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Mission Control",
+    "overview": "This is a designer's flight deck. A near-black void holds content the way a HUD holds telemetry; signal orange marks the one action worth taking, terminal green is reserved for live readouts. But it is not cold sci-fi: the void is warmed from below by an earth band of terracotta, umber, and ember-brown, so the cosmos feels watched from a lived-in place. Film grain and a spaceship cursor make the surface feel like a physical instrument. Components are tactile and confident, with real weight and long-eased motion. The cosmic frame sets the ambition; the work inside the cards stays the hero.",
+    "keyCharacteristics": [
+      "Near-black space body warmed by an earth band (terracotta/umber/ember)",
+      "Signal orange as the single action color; terminal green as the live-data color",
+      "Glassmorphic navigation and overlays, used purposefully",
+      "Film grain + spaceship cursor as ambient instrument texture",
+      "Tactile components with real weight and long-eased motion",
+      "Inter for structure, Questrial for display warmth, monospace for telemetry"
+    ],
+    "rules": [
+      { "name": "The Single Signal Rule", "body": "Signal orange is an action color, not a brand wash. It appears on the one thing the user should do next and nowhere else. If two oranges compete on a screen, one of them is wrong.", "section": "colors" },
+      { "name": "The Live-Green Rule", "body": "Terminal green is forbidden as decoration. It is permitted only where something is genuinely live or measured: a status, a readout, a real-time response. Green used for 'looks techy' is a tell.", "section": "colors" },
+      { "name": "The One Shout Rule", "body": "Only the hero headline is allowed to fill the viewport. Below the fold, scale steps down hard; nothing else competes with the opening shout.", "section": "typography" },
+      { "name": "The Warm-Shadow Rule", "body": "Shadows are brown-black, never neutral gray. A gray drop-shadow on this palette reads as a 2014 app card and is forbidden.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep signal orange (#ff8e00) as the single action color — one obvious next move per screen.",
+      "Do reserve terminal green (#4ade80) for genuinely live or measured states only.",
+      "Do warm every shadow toward brown-black (#0d0600), never neutral gray.",
+      "Do keep text on Ink Cream (#d6d0c4), warm and never pure white, to tie type to the earth band.",
+      "Do give interactive elements real weight and long-eased motion — tactile and confident.",
+      "Do let only the hero headline fill the viewport; step scale down hard below it."
+    ],
+    "donts": [
+      "Don't ship the generic template portfolio look — no interchangeable Webflow hero, no uniform card grid without a point of view.",
+      "Don't drift toward a corporate SaaS landing — no navy-and-blue gradient wash, no hero-metric blocks, no buzzword copy.",
+      "Don't use terminal green decoratively to 'look techy' — it must mean live or measured.",
+      "Don't let a second orange compete with the primary action on any screen.",
+      "Don't use a neutral gray drop-shadow; on this warm palette it reads as a 2014 app card.",
+      "Don't let cosmic effects out-shout the work — the project is always the hero."
+    ]
+  }
+}
