@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aayush R — Product Designer</title>
-  <meta name="description" content="Senior Product Designer with 8+ years creating impactful digital experiences.">
+  <meta name="description" content="Senior Product Designer with 8+ years across healthcare, enterprise software, and retail. Case studies with real users, real constraints, and measured results.">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Questrial&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="site-globals.css">
@@ -126,7 +126,7 @@
     .hero {
       position: relative;
       width: 100%;
-      min-height: 900px;
+      min-height: 100vh;
       overflow: hidden;
       background: #04060e;
     }
@@ -145,49 +145,75 @@
       pointer-events: none;
       overflow: hidden;
     }
+
     .hero-nebula::before {
       content: '';
       position: absolute;
-      width: 900px; height: 900px;
-      top: -200px; left: -100px;
+      width: 900px;
+      height: 900px;
+      top: -200px;
+      left: -100px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(60,30,120,0.28) 0%, rgba(30,15,80,0.12) 50%, transparent 70%);
+      background: radial-gradient(circle, rgba(60, 30, 120, 0.28) 0%, rgba(30, 15, 80, 0.12) 50%, transparent 70%);
       animation: nebula-drift-a 22s ease-in-out infinite alternate;
     }
+
     .hero-nebula::after {
       content: '';
       position: absolute;
-      width: 700px; height: 700px;
-      bottom: -100px; right: 5%;
+      width: 700px;
+      height: 700px;
+      bottom: -100px;
+      right: 5%;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(10,80,120,0.22) 0%, rgba(5,50,90,0.10) 50%, transparent 70%);
+      background: radial-gradient(circle, rgba(10, 80, 120, 0.22) 0%, rgba(5, 50, 90, 0.10) 50%, transparent 70%);
       animation: nebula-drift-b 28s ease-in-out infinite alternate;
     }
+
     @keyframes nebula-drift-a {
-      0%   { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(80px, 60px) scale(1.15); }
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        transform: translate(80px, 60px) scale(1.15);
+      }
     }
+
     @keyframes nebula-drift-b {
-      0%   { transform: translate(0, 0) scale(1.05); }
-      100% { transform: translate(-60px, -40px) scale(0.92); }
+      0% {
+        transform: translate(0, 0) scale(1.05);
+      }
+
+      100% {
+        transform: translate(-60px, -40px) scale(0.92);
+      }
     }
 
     /* Horizon glow — deep space rim light */
     .hero-horizon {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       height: 280px;
       z-index: 1;
       pointer-events: none;
       background: linear-gradient(0deg,
-        rgba(20,60,130,0.18) 0%,
-        rgba(15,40,90,0.08) 50%,
-        transparent 100%);
+          rgba(20, 60, 130, 0.18) 0%,
+          rgba(15, 40, 90, 0.08) 50%,
+          transparent 100%);
       animation: horizon-pulse 6s ease-in-out infinite alternate;
     }
+
     @keyframes horizon-pulse {
-      0%   { opacity: 0.6; }
-      100% { opacity: 1; }
+      0% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 1;
+      }
     }
 
     /* Scan lines */
@@ -196,13 +222,11 @@
       inset: 0;
       z-index: 2;
       pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 3px,
-        rgba(255,255,255,0.012) 3px,
-        rgba(255,255,255,0.012) 4px
-      );
+      background: repeating-linear-gradient(0deg,
+          transparent 0px,
+          transparent 3px,
+          rgba(255, 255, 255, 0.012) 3px,
+          rgba(255, 255, 255, 0.012) 4px);
     }
 
     /* CSS star field dots */
@@ -212,15 +236,24 @@
       z-index: 1;
       pointer-events: none;
     }
+
     .hero-stars-css span {
       position: absolute;
       border-radius: 50%;
       background: white;
       animation: star-twinkle var(--d, 3s) ease-in-out infinite alternate;
     }
+
     @keyframes star-twinkle {
-      0%   { opacity: var(--min, 0.1); transform: scale(1); }
-      100% { opacity: var(--max, 0.9); transform: scale(1.4); }
+      0% {
+        opacity: var(--min, 0.1);
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: var(--max, 0.9);
+        transform: scale(1.4);
+      }
     }
 
     /* Shooting star */
@@ -228,33 +261,58 @@
       position: absolute;
       z-index: 1;
       pointer-events: none;
-      width: 2px; height: 2px;
+      width: 2px;
+      height: 2px;
       border-radius: 50%;
       background: white;
-      box-shadow: 0 0 6px 2px rgba(200,220,255,0.8);
+      box-shadow: 0 0 6px 2px rgba(200, 220, 255, 0.8);
       animation: comet-fly 8s linear infinite;
-      top: 15%; left: -5%;
+      top: 15%;
+      left: -5%;
       opacity: 0;
     }
+
     .hero-comet::after {
       content: '';
       position: absolute;
-      top: 50%; left: -80px;
+      top: 50%;
+      left: -80px;
       transform: translateY(-50%);
-      width: 80px; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(200,220,255,0.5));
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200, 220, 255, 0.5));
     }
+
     .hero-comet:nth-child(2) {
-      top: 35%; animation-delay: 3.5s; animation-duration: 9s;
+      top: 35%;
+      animation-delay: 3.5s;
+      animation-duration: 9s;
     }
+
     .hero-comet:nth-child(3) {
-      top: 60%; animation-delay: 6s; animation-duration: 11s;
+      top: 60%;
+      animation-delay: 6s;
+      animation-duration: 11s;
     }
+
     @keyframes comet-fly {
-      0%   { transform: translateX(0) translateY(0); opacity: 0; }
-      5%   { opacity: 1; }
-      95%  { opacity: 1; }
-      100% { transform: translateX(115vw) translateY(30px); opacity: 0; }
+      0% {
+        transform: translateX(0) translateY(0);
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 1;
+      }
+
+      95% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateX(115vw) translateY(30px);
+        opacity: 0;
+      }
     }
 
     /* ── Layer 1: Sparkle canvas ── */
@@ -275,7 +333,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.88;
+      opacity: 0.55;
       mix-blend-mode: screen;
       z-index: 3;
       pointer-events: none;
@@ -286,10 +344,29 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(4, 6, 14, 0.0) 0%, rgba(4, 6, 14, 0.70) 100%),
-        linear-gradient(180deg, rgba(4, 6, 14, 0.45) 0%, rgba(4, 6, 14, 0.10) 40%, rgba(4, 6, 14, 0.0) 65%, rgba(4, 6, 14, 0.45) 100%);
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(4, 6, 14, 0.0) 0%, rgba(4, 6, 14, 0.55) 100%),
+        linear-gradient(180deg, rgba(4, 6, 14, 0.3) 0%, rgba(4, 6, 14, 0.05) 40%, rgba(4, 6, 14, 0.0) 65%, rgba(4, 6, 14, 0.35) 100%);
       z-index: 4;
       pointer-events: none;
+    }
+
+    /* ── Cinematic bridge: hero → stats seamless blend ── */
+    .hero-stats-bridge {
+      position: relative;
+      z-index: 2;
+      height: 120px;
+      background: linear-gradient(180deg, #04060e 0%, #221616 100%);
+      overflow: hidden;
+    }
+
+    .hero-stats-bridge::after {
+      content: '';
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(164, 120, 100, 0.18), transparent);
     }
 
     /* ── Layer 4: Astronaut ── */
@@ -314,7 +391,7 @@
       display: none;
     }
 
-    /* animated glow orb */
+    /* animated glow orb — warm ambient tone */
     .hero-glow {
       position: absolute;
       left: 30%;
@@ -323,7 +400,7 @@
       width: 700px;
       height: 700px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(80, 100, 180, 0.18) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(140, 90, 50, 0.14) 0%, rgba(80, 100, 180, 0.10) 40%, transparent 70%);
       filter: blur(60px);
       opacity: 0.7;
       z-index: 1;
@@ -1010,6 +1087,27 @@
       text-align: left;
     }
 
+    /* disclosure flag: marks NDA consulting engagements */
+    .proj-card-flag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 3;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: rgba(4, 6, 14, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 4px;
+      padding: 5px 10px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      pointer-events: none;
+    }
+
     /* placeholder card (teal) */
     .proj-card.placeholder-card {
       background: #053640;
@@ -1063,30 +1161,53 @@
       background: linear-gradient(180deg, #1a1010 0%, #1d1212 100%);
       position: relative;
     }
+
     .blog-bento-header {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       margin-bottom: 48px;
     }
+
     .blog-bento-label {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--coral);
-      display: block; margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--coral);
+      display: block;
+      margin-bottom: 8px;
     }
+
     .blog-bento-title {
-      font-size: clamp(28px, 3.5vw, 48px); font-weight: 600;
-      color: var(--ink); letter-spacing: -0.5px; line-height: 1.1;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
     }
+
     .blog-bento-link {
-      font-size: 13px; font-weight: 500; color: var(--coral);
-      text-decoration: none; letter-spacing: 0.04em;
-      display: flex; align-items: center; gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--coral);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       white-space: nowrap;
       transition: opacity 0.2s ease;
     }
-    .blog-bento-link:hover { opacity: 0.7; }
-    .blog-bento-link svg { width: 12px; height: 12px; }
+
+    .blog-bento-link:hover {
+      opacity: 0.7;
+    }
+
+    .blog-bento-link svg {
+      width: 12px;
+      height: 12px;
+    }
 
     .blog-grid {
       display: grid;
@@ -1096,8 +1217,8 @@
     }
 
     .blog-card {
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 3px;
       padding: 32px 28px;
       text-decoration: none;
@@ -1110,20 +1231,25 @@
       overflow: hidden;
       transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
     }
+
     .blog-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(196,149,106,0.06) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(196, 149, 106, 0.06) 0%, transparent 60%);
       opacity: 0;
       transition: opacity 0.22s ease;
     }
+
     .blog-card:hover {
-      background: rgba(255,255,255,0.045);
-      border-color: rgba(196,149,106,0.28);
+      background: rgba(255, 255, 255, 0.045);
+      border-color: rgba(196, 149, 106, 0.28);
       transform: translateY(-2px);
     }
-    .blog-card:hover::before { opacity: 1; }
+
+    .blog-card:hover::before {
+      opacity: 1;
+    }
 
     /* featured card spans full height on left */
     .blog-card-featured {
@@ -1131,72 +1257,131 @@
       padding: 40px 36px;
     }
 
-    .blog-card-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-    .blog-card-tag {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--coral);
+    .blog-card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
     }
-    .blog-card-tag + .blog-card-tag::before { content: '·'; margin-right: 8px; opacity: 0.4; }
+
+    .blog-card-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--coral);
+    }
+
+    .blog-card-tag+.blog-card-tag::before {
+      content: '·';
+      margin-right: 8px;
+      opacity: 0.4;
+    }
 
     .blog-card-title {
-      font-size: clamp(18px, 1.8vw, 24px); font-weight: 600;
-      line-height: 1.2; letter-spacing: -0.3px; color: var(--ink);
+      font-size: clamp(18px, 1.8vw, 24px);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+      color: var(--ink);
       margin-bottom: 10px;
     }
+
     .blog-card-featured .blog-card-title {
       font-size: clamp(22px, 2.2vw, 32px);
     }
 
     .blog-card-desc {
-      font-size: 14px; line-height: 1.68;
-      color: rgba(214,208,196,0.52);
+      font-size: 14px;
+      line-height: 1.68;
+      color: rgba(214, 208, 196, 0.52);
       flex: 1;
     }
-    .blog-card-featured .blog-card-desc { font-size: 15px; }
+
+    .blog-card-featured .blog-card-desc {
+      font-size: 15px;
+    }
 
     .blog-card-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: auto; padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
     }
+
     .blog-card-date {
-      font-size: 11px; color: rgba(214,208,196,0.28);
-      letter-spacing: 0.06em; text-transform: uppercase;
+      font-size: 11px;
+      color: rgba(214, 208, 196, 0.28);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
+
     .blog-card-arrow {
-      width: 30px; height: 30px;
-      border: 1px solid rgba(214,208,196,0.18); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgba(214, 208, 196, 0.18);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
     }
+
     .blog-card:hover .blog-card-arrow {
       border-color: var(--coral);
-      background: rgba(196,149,106,0.1);
-      transform: translate(2px,-2px);
+      background: rgba(196, 149, 106, 0.1);
+      transform: translate(2px, -2px);
     }
-    .blog-card-arrow svg { width: 12px; height: 12px; }
+
+    .blog-card-arrow svg {
+      width: 12px;
+      height: 12px;
+    }
 
     /* decorative number accent */
     .blog-card-num {
-      font-size: 80px; font-weight: 700; line-height: 1;
-      color: rgba(196,149,106,0.05);
-      position: absolute; bottom: 16px; right: 20px;
-      pointer-events: none; user-select: none;
+      font-size: 80px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(196, 149, 106, 0.05);
+      position: absolute;
+      bottom: 16px;
+      right: 20px;
+      pointer-events: none;
+      user-select: none;
       font-variant-numeric: tabular-nums;
     }
 
     @media (max-width: 960px) {
-      .blog-bento { padding: 60px 24px 80px; }
+      .blog-bento {
+        padding: 60px 24px 80px;
+      }
+
       .blog-grid {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
       }
-      .blog-card-featured { grid-row: auto; }
+
+      .blog-card-featured {
+        grid-row: auto;
+      }
     }
+
     @media (max-width: 600px) {
-      .blog-bento { padding: 48px 16px 64px; }
-      .blog-grid { grid-template-columns: 1fr; }
-      .blog-bento-header { flex-direction: column; gap: 16px; }
+      .blog-bento {
+        padding: 48px 16px 64px;
+      }
+
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-bento-header {
+        flex-direction: column;
+        gap: 16px;
+      }
     }
 
     /* ─── FOOTER / SOCIALS ─────────────────────── */
@@ -1291,6 +1476,7 @@
       width: 320px;
       height: 320px;
     }
+
     #orbitalGlobe {
       width: 100%;
       height: 100%;
@@ -1640,11 +1826,12 @@
       justify-content: center;
       align-items: center;
       padding: 100px 80px;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
       position: relative;
       overflow: hidden;
       z-index: 2;
     }
+
     .book-call-section::before {
       content: '';
       position: absolute;
@@ -1654,14 +1841,16 @@
       width: 600px;
       height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,142,0,0.06) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(255, 142, 0, 0.06) 0%, transparent 65%);
       pointer-events: none;
     }
+
     .book-call-inner {
       text-align: center;
       position: relative;
       z-index: 1;
     }
+
     .book-call-label {
       font-size: 11px;
       font-weight: 600;
@@ -1670,6 +1859,7 @@
       color: var(--coral);
       margin-bottom: 16px;
     }
+
     .book-call-heading {
       font-size: clamp(36px, 5vw, 64px);
       font-weight: 600;
@@ -1678,19 +1868,21 @@
       color: var(--ink);
       margin-bottom: 20px;
     }
+
     .book-call-sub {
       font-size: 17px;
-      color: rgba(214,208,196,0.5);
+      color: rgba(214, 208, 196, 0.5);
       margin-bottom: 40px;
       line-height: 1.6;
     }
+
     .book-call-btn {
       display: inline-flex;
       align-items: center;
       gap: 12px;
       padding: 16px 36px;
-      background: rgba(255,142,0,0.1);
-      border: 1px solid rgba(255,142,0,0.5);
+      background: rgba(255, 142, 0, 0.1);
+      border: 1px solid rgba(255, 142, 0, 0.5);
       border-radius: 100px;
       color: var(--orange);
       font-size: 15px;
@@ -1699,40 +1891,47 @@
       cursor: pointer;
       transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
     }
+
     .book-call-btn:hover {
-      background: rgba(255,142,0,0.18);
+      background: rgba(255, 142, 0, 0.18);
       border-color: var(--orange);
       transform: translateY(-2px);
     }
+
     /* Calendly overlay */
     .calendly-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(6,8,16,0.88);
+      background: rgba(6, 8, 16, 0.88);
       z-index: 10000;
       align-items: center;
       justify-content: center;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
-    .calendly-overlay.open { display: flex; }
+
+    .calendly-overlay.open {
+      display: flex;
+    }
+
     .calendly-modal {
       position: relative;
       width: min(760px, calc(100vw - 40px));
       max-height: calc(100vh - 60px);
       background: #ffffff;
-      border: 1px solid rgba(0,0,0,0.1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 12px;
       overflow: hidden;
     }
+
     .calendly-close {
       position: absolute;
       top: 14px;
       right: 14px;
       z-index: 2;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 50%;
       width: 36px;
       height: 36px;
@@ -1743,7 +1942,11 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .calendly-close:hover { background: rgba(255,142,0,0.15); }
+
+    .calendly-close:hover {
+      background: rgba(255, 142, 0, 0.15);
+    }
+
     .calendly-inline-widget iframe {
       border: none !important;
     }
@@ -1804,10 +2007,21 @@
       mix-blend-mode: multiply;
       animation: tint-breathe 12s ease-in-out infinite;
     }
+
     @keyframes tint-breathe {
-      0%, 100% { opacity: 1; }
-      33%      { opacity: 0.85; }
-      66%      { opacity: 0.95; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      33% {
+        opacity: 0.85;
+      }
+
+      66% {
+        opacity: 0.95;
+      }
     }
 
     /* ─── ANIMATED GRAIN CANVAS ──────────────── */
@@ -1827,9 +2041,17 @@
       background-size: 220px 220px;
       animation: grain-pulse 8s ease-in-out infinite, grain-shift 0.45s steps(1, end) infinite;
     }
+
     @keyframes grain-pulse {
-      0%, 100% { opacity: 0.58; }
-      50%      { opacity: 0.72; }
+
+      0%,
+      100% {
+        opacity: 0.58;
+      }
+
+      50% {
+        opacity: 0.72;
+      }
     }
 
     /* ─── LIGHT MODE OVERRIDES ─────────────── */
@@ -2244,28 +2466,76 @@
     }
 
     @media (max-width: 768px) {
-      .hero-tagline { font-size: clamp(40px, 9vw, 60px) !important; padding-bottom: 40px !important; line-height: 1; }
-      .hero-sidebar { display: none !important; }
-      .hero-inner { padding: 100px 20px 0 !important; }
-      .hero-text { padding-bottom: 40px !important; }
-
-      .stats { grid-template-columns: repeat(2, 1fr) !important; border-bottom: 1px solid rgba(214, 208, 196, 0.06); }
-      .stat-cell { padding: 40px 20px !important; border-right: 1px solid rgba(214, 208, 196, 0.06) !important; border-bottom: 1px solid rgba(214, 208, 196, 0.06); align-items: center !important; text-align: center; }
-      .stat-cell:nth-child(even) { border-right: none !important; }
-
-      .about { flex-direction: column !important; min-height: auto !important; padding-bottom: 40px; }
-      .about-photo-col { width: 100% !important; height: 350px !important; }
-      .about-text-col { padding: 60px 20px 20px !important; }
-      
-      .about-label, .about-headline, .about-body, .about-tagline { 
-        position: static !important; 
-        transform: none !important; 
-        margin-bottom: 24px; 
+      .hero-tagline {
+        font-size: clamp(40px, 9vw, 60px) !important;
+        padding-bottom: 40px !important;
+        line-height: 1;
       }
-      .about-headline { font-size: 24px !important; }
-      .about-body { font-size: 18px !important; }
-      
-      .services-grid { grid-template-columns: 1fr !important; }
+
+      .hero-sidebar {
+        display: none !important;
+      }
+
+      .hero-inner {
+        padding: 100px 20px 0 !important;
+      }
+
+      .hero-text {
+        padding-bottom: 40px !important;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+        border-bottom: 1px solid rgba(214, 208, 196, 0.06);
+      }
+
+      .stat-cell {
+        padding: 40px 20px !important;
+        border-right: 1px solid rgba(214, 208, 196, 0.06) !important;
+        border-bottom: 1px solid rgba(214, 208, 196, 0.06);
+        align-items: center !important;
+        text-align: center;
+      }
+
+      .stat-cell:nth-child(even) {
+        border-right: none !important;
+      }
+
+      .about {
+        flex-direction: column !important;
+        min-height: auto !important;
+        padding-bottom: 40px;
+      }
+
+      .about-photo-col {
+        width: 100% !important;
+        height: 350px !important;
+      }
+
+      .about-text-col {
+        padding: 60px 20px 20px !important;
+      }
+
+      .about-label,
+      .about-headline,
+      .about-body,
+      .about-tagline {
+        position: static !important;
+        transform: none !important;
+        margin-bottom: 24px;
+      }
+
+      .about-headline {
+        font-size: 24px !important;
+      }
+
+      .about-body {
+        font-size: 18px !important;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
 </head>
@@ -2276,7 +2546,8 @@
   <canvas id="grainCanvas"></canvas>
 
   <!-- ── GLOBAL FIREFLIES CANVAS (behind project cards via z-index:0) ── -->
-  <canvas id="globalFireflies" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;will-change:contents;"></canvas>
+  <canvas id="globalFireflies"
+    style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;will-change:contents;"></canvas>
 
 
   <!-- ── HERO ──────────────────────────────────────── -->
@@ -2336,7 +2607,7 @@
         <div class="hero-text">
           <p class="hero-greeting">Hello There !</p>
           <p class="hero-name">I am <em style="font-style:normal;">Aayush</em>&nbsp;<span class="dim">R</span></p>
-          <h1 class="hero-tagline">I CREATE<br><span class="typeword" id="typeword">EXPERIENCES</span></h1>
+          <h1 class="hero-tagline">I CREATE<br><span class="typeword" id="typeword">SYSTEMS</span></h1>
         </div>
 
         <!-- SIDEBAR -->
@@ -2347,11 +2618,11 @@
             <div class="sidebar-info-panel">
               <p class="sidebar-body-text">
                 Senior Product Designer with<br>
-                8+ years of expertise in<br>
-                Fintech, SaaS, and digital<br>
-                innovation, creating user-<br>
-                centric and impactful digital<br>
-                experiences.
+                8+ years across healthcare,<br>
+                defence, enterprise software,<br>
+                and retail, designing tools<br>
+                that hold up when the<br>
+                stakes are real.
               </p>
               <div class="sidebar-tools" aria-hidden="true">
                 <!-- Figma icon -->
@@ -2430,6 +2701,9 @@
     </div>
   </section>
 
+  <!-- Cinematic bridge from hero into stats -->
+  <div class="hero-stats-bridge" aria-hidden="true"></div>
+
   <!-- ── STATS ──────────────────────────────────────── -->
   <div class="stats">
     <div class="stat-cell">
@@ -2455,22 +2729,22 @@
     <div class="about-text-col" style="min-height: 823px;">
       <p class="about-label">About Me as a Designer</p>
       <p class="about-headline">
-        Surgeons, soldiers, and shoppers<br>
-        —I’ve built for all of them.,<br>
-        My career is a chaotic mix of high-stakes<br>
-        complexity and, consumer "delight."
+        Surgeons, soldiers, and shoppers:<br>
+        I’ve built for all of them.<br>
+        My career is a mix of high-stakes<br>
+        complexity and consumer delight.
       </p>
       <p class="about-body">
         I specialize in systems that survive reality,<br>
         whether that’s a high-pressure clinical environment<br>
         or a luxury retail launch.<br>
         Based in Bengaluru, I bring a "don't-fail"<br>
-        discipline to B2C, mostly because after designing<br>
-        for the defence, I’ve forgotten<br>
+        discipline to consumer work, mostly because<br>
+        after designing for the defence, I’ve forgotten<br>
         how to make things that break.
       </p>
       <p class="about-tagline">
-        [ Bengaluru · Available | Open to, enterprise &amp; , defense, AI & complex-domain work ]
+        [ Bengaluru · Available for enterprise, healthcare, defense, AI &amp; complex-domain work ]
       </p>
     </div>
 
@@ -2488,9 +2762,9 @@
 
     <div class="projects-header">
       <div class="projects-title-block">
-        <p class="projects-year">2024–2025</p>
+        <p class="projects-year">2019 – 2025</p>
         <h2 class="projects-heading">
-          Recent<br>
+          Selected<br>
           <span class="accent">Projects</span>
         </h2>
       </div>
@@ -2503,38 +2777,38 @@
           See All Works
         </a>
         <p class="projects-desc">
-          Here are some of my latest projects, where strategy meets<br>
-          creativity to deliver impactful digital experiences. Each design<br>
-          is crafted with a user-first approach, ensuring both aesthetics<br>
-          and functionality shine.
+          Product work first: clinical platforms and retail experiences<br>
+          with real users and measured results. Then the consulting<br>
+          engagements in defense and robotics, published under NDA<br>
+          with names and program details altered.
         </p>
       </div>
     </div>
 
     <div class="projects-grid">
 
-      <!-- Card 1: Parkbeheer NL -->
-      <a href="parkbeheer.html" class="proj-card">
+      <!-- Card 1: MUSPELL (Healthcare, shipped) -->
+      <a href="muspell.html" class="proj-card">
         <div class="proj-card-bg">
-          <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png" alt="">
+          <img src="gallery/muspell images/hero-mockup.png" alt="Muspell clinical data platform">
         </div>
         <div class="proj-card-overlay">
-
-          <div class="proj-card-gradient-bottom"></div>
+          <div class="proj-card-gradient-bottom"
+            style="background:linear-gradient(0deg,#221616 0%, rgba(34,22,23,0) 100%);"></div>
         </div>
         <div class="proj-card-content">
-          <div class="proj-card-header" style="text-align:left;">
-            <div class="proj-card-title" style="text-align:left; font-size:29px;">Parkbeheer NL</div>
-            <div class="proj-card-subtitle" style="text-align:left;">Enterprise B2G Platform</div>
+          <div class="proj-card-header">
+            <div class="proj-card-title" style="text-align:left;">MUSPELL</div>
+            <div class="proj-card-subtitle" style="text-align:left;">Clinical Health Data Platform</div>
           </div>
           <div class="proj-card-body">
             <p class="proj-card-desc">
-              Replacing a 20-year-old spreadsheet system with an enterprise platform for 120+ parking officers managing
-              923K spaces across the Netherlands.
+              A clinical data platform relied on by thousands of clinicians: turning dense patient records into
+              interfaces care teams can act on.
             </p>
             <div class="proj-card-cta">
-              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">RVO
-                Netherlands · 2018</span>
+              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">314e
+                Corporation · 2022</span>
               <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
                 <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
                 <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
@@ -2545,8 +2819,71 @@
         </div>
       </a>
 
-      <!-- Card 2: CHARGEUR -->
+      <!-- Card 2: PENKNIFE (Healthcare ATS, shipped) -->
+      <a href="penknife.html" class="proj-card">
+        <div class="proj-card-bg">
+          <img src="penknife/image%201.jpg" alt="Penknife healthcare recruiting dashboard">
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-card-gradient-bottom"></div>
+        </div>
+        <div class="proj-card-content">
+          <div class="proj-card-header">
+            <div class="proj-card-title">PENKNIFE</div>
+            <div class="proj-card-subtitle">Healthcare Recruiting ATS</div>
+          </div>
+          <div class="proj-card-body">
+            <p class="proj-card-desc">
+              Unifying a healthcare staffing operation that ran on spreadsheets: five core objects, six workflows, one
+              system. Live and in daily use.
+            </p>
+            <div class="proj-card-cta">
+              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">314e
+                Corporation · 2021</span>
+              <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
+                <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
+                <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3: Titan EYEx (Retail, shipped) -->
+      <a href="titaneyeplus_casestudy.html" class="proj-card">
+        <div class="proj-card-bg">
+          <img src="images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp" alt="Titan EYEx eyewear retail experience">
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-card-gradient-bottom"></div>
+        </div>
+        <div class="proj-card-content">
+          <div class="proj-card-header">
+            <div class="proj-card-title">Titan EYEx</div>
+            <div class="proj-card-subtitle">Retail · Eyewear Product Experience</div>
+          </div>
+          <div class="proj-card-body">
+            <p class="proj-card-desc">
+              Redesigning the eyewear browsing and selection experience for Titan's optical retail brand, combining
+              prescription and style discovery.
+            </p>
+            <div class="proj-card-cta">
+              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Titan
+                Company · 2020</span>
+              <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
+                <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
+                <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 4: CHARGEUR (consulting, NDA) -->
       <a href="chargeur.html" class="proj-card">
+        <div class="proj-card-flag">Under NDA · Details altered</div>
         <div class="proj-card-bg">
           <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="">
         </div>
@@ -2580,6 +2917,7 @@
 
       <!-- Card 3: VIGIL -->
       <a href="vigil.html" class="proj-card">
+        <div class="proj-card-flag">Under NDA · Details altered</div>
         <div class="proj-card-bg" style="background:#0A0E14; display:flex; align-items:center; justify-content:center;">
           <svg viewBox="0 0 160 160" width="140" height="140" style="opacity:0.85;">
             <!-- Watch body -->
@@ -2644,38 +2982,9 @@
         </div>
       </a>
 
-      <!-- Card 4: MUSPELL (Healthcare) -->
-      <a href="muspell.html" class="proj-card">
-        <div class="proj-card-bg">
-          <img src="gallery/muspell images/hero-mockup.png" alt="Muspell">
-        </div>
-        <div class="proj-card-overlay">
-          <div class="proj-card-gradient-bottom"
-            style="background:linear-gradient(0deg,#221616 0%, rgba(34,22,23,0) 100%);"></div>
-        </div>
-        <div class="proj-card-content">
-          <div class="proj-card-header">
-            <div class="proj-card-title" style="text-align:left;">MUSPELL</div>
-            <div class="proj-card-subtitle" style="text-align:left;">Clinical Health Data Viewer</div>
-          </div>
-          <div class="proj-card-body">
-            <p class="proj-card-desc">
-              Designing a clinical data visualisation platform for healthcare teams — turning complex patient data into clear, actionable interfaces.
-            </p>
-            <div class="proj-card-cta">
-              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Healthcare · 2022</span>
-              <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
-                <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
-                <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <!-- Card 4: ROJNICA -->
+      <!-- Card 6: ROJNICA (consulting, NDA) -->
       <a href="rojnica.html" class="proj-card">
+        <div class="proj-card-flag">Under NDA · Details altered</div>
         <div class="proj-card-bg">
           <img src="images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png" alt="">
         </div>
@@ -2698,70 +3007,6 @@
               <span
                 style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Agriculture ·
                 2024</span>
-              <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
-                <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
-                <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <!-- Card 5: Lego Design System -->
-      <a href="#" class="proj-card">
-        <div class="proj-card-bg">
-          <img src="images/portfolio-assets/DTDT1mezgd4M2D43u4CrreaHo4U.webp" alt="">
-        </div>
-        <div class="proj-card-overlay">
-
-          <div class="proj-card-gradient-bottom"></div>
-        </div>
-        <div class="proj-card-content">
-          <div class="proj-card-header">
-            <div class="proj-card-title">Lego Design System</div>
-            <div class="proj-card-subtitle">Design Systems · UI Architecture</div>
-          </div>
-          <div class="proj-card-body">
-            <p class="proj-card-desc">
-              Building a scalable, component-driven design system for modular product experiences. Consistency at every
-              brick.
-            </p>
-            <div class="proj-card-cta">
-              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Design
-                System · 2022</span>
-              <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
-                <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
-                <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <!-- Card 6: Titan EYEx -->
-      <a href="titaneyeplus_casestudy.html" class="proj-card">
-        <div class="proj-card-bg">
-          <img src="images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp" alt="">
-        </div>
-        <div class="proj-card-overlay">
-
-          <div class="proj-card-gradient-bottom"></div>
-        </div>
-        <div class="proj-card-content">
-          <div class="proj-card-header">
-            <div class="proj-card-title">Titan EYEx</div>
-            <div class="proj-card-subtitle">Retail · Eyewear Product Experience</div>
-          </div>
-          <div class="proj-card-body">
-            <p class="proj-card-desc">
-              Redesigning the eyewear browsing and selection experience for Titan's optical retail brand, combining
-              prescription and style discovery.
-            </p>
-            <div class="proj-card-cta">
-              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Titan
-                Company · 2020</span>
               <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
                 <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
                 <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
@@ -2796,59 +3041,77 @@
       </div>
       <a href="blogs.html" class="blog-bento-link">
         All articles
-        <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 12 12" fill="none">
+          <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
       </a>
     </div>
 
     <div class="blog-grid">
 
       <!-- Featured blog -->
-      <a href="https://medium.com/ux-planet/product-ux-design-for-enterprise-setting-up-a-design-workflow-process-and-language-7590de2d7438" target="_blank" class="blog-card blog-card-featured">
+      <a href="https://medium.com/ux-planet/product-ux-design-for-enterprise-setting-up-a-design-workflow-process-and-language-7590de2d7438"
+        target="_blank" class="blog-card blog-card-featured">
         <div>
           <div class="blog-card-tags">
             <span class="blog-card-tag">UX Planet</span>
             <span class="blog-card-tag">Enterprise</span>
           </div>
           <h3 class="blog-card-title">Product &amp; UX Design for Enterprise</h3>
-          <p class="blog-card-desc">Right Design Approach, Observations, Learnings &amp; Suggestions when dealing with large-scale B2B software environments. Setting up workflow, process &amp; design language.</p>
+          <p class="blog-card-desc">Right Design Approach, Observations, Learnings &amp; Suggestions when dealing with
+            large-scale B2B software environments. Setting up workflow, process &amp; design language.</p>
         </div>
         <div class="blog-card-footer">
           <span class="blog-card-date">Jun 30, 2022</span>
-          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></span>
         </div>
         <span class="blog-card-num">01</span>
       </a>
 
       <!-- Blog 2 -->
-      <a href="https://medium.com/ux-planet/framing-the-most-realistic-persona-of-an-enterprise-healthcare-users-1493a6d5a63b" target="_blank" class="blog-card">
+      <a href="https://medium.com/ux-planet/framing-the-most-realistic-persona-of-an-enterprise-healthcare-users-1493a6d5a63b"
+        target="_blank" class="blog-card">
         <div>
           <div class="blog-card-tags">
             <span class="blog-card-tag">UX Planet</span>
             <span class="blog-card-tag">Healthcare</span>
           </div>
           <h3 class="blog-card-title">Framing the Enterprise Healthcare Persona</h3>
-          <p class="blog-card-desc">Research &amp; payback from my own mistakes while framing personas for high-cognitive load B2B environments.</p>
+          <p class="blog-card-desc">Research &amp; payback from my own mistakes while framing personas for
+            high-cognitive load B2B environments.</p>
         </div>
         <div class="blog-card-footer">
           <span class="blog-card-date">Jan 20, 2025</span>
-          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></span>
         </div>
         <span class="blog-card-num">02</span>
       </a>
 
       <!-- Blog 3 -->
-      <a href="https://medium.com/design-bootcamp/designing-saas-products-like-a-pro-8ce799e89130" target="_blank" class="blog-card">
+      <a href="https://medium.com/design-bootcamp/designing-saas-products-like-a-pro-8ce799e89130" target="_blank"
+        class="blog-card">
         <div>
           <div class="blog-card-tags">
             <span class="blog-card-tag">Bootcamp</span>
             <span class="blog-card-tag">SaaS</span>
           </div>
           <h3 class="blog-card-title">Designing SaaS products like a pro</h3>
-          <p class="blog-card-desc">Tips &amp; headscratches while building scalable, data-dense web platforms. Best practices &amp; observations.</p>
+          <p class="blog-card-desc">Tips &amp; headscratches while building scalable, data-dense web platforms. Best
+            practices &amp; observations.</p>
         </div>
         <div class="blog-card-footer">
           <span class="blog-card-date">Dec 9, 2024</span>
-          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="blog-card-arrow"><svg viewBox="0 0 14 14" fill="none">
+              <path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></span>
         </div>
         <span class="blog-card-num">03</span>
       </a>
@@ -3039,8 +3302,8 @@
       <p class="book-call-sub">30 minutes. No agenda. Just a conversation about what you're building.</p>
       <button class="book-call-btn" id="openCalendly">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="3" y="4" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5" />
+          <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
         </svg>
         Book a 30-min Call
       </button>
@@ -3051,10 +3314,15 @@
   <div class="calendly-overlay" id="calendlyOverlay">
     <div class="calendly-modal">
       <button class="calendly-close" id="closeCalendly" aria-label="Close">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
       </button>
       <!-- Google Calendar Appointment embed -->
-      <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2FssCYTwsJpfsqzieRw1N_hdniZm1YsRg4kS8m1nfhvwExD3rL6XVSRggkpJmAC0TLajuHXp-j?gv=true" style="border: 0; min-width:320px; height:700px; width:100%; border-radius: 8px;" frameborder="0" scrolling="yes"></iframe>
+      <iframe
+        src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2FssCYTwsJpfsqzieRw1N_hdniZm1YsRg4kS8m1nfhvwExD3rL6XVSRggkpJmAC0TLajuHXp-j?gv=true"
+        style="border: 0; min-width:320px; height:700px; width:100%; border-radius: 8px;" frameborder="0"
+        scrolling="yes"></iframe>
     </div>
   </div>
 
@@ -3174,8 +3442,7 @@
 
     // Hero entrance
     var tl = gsap.timeline({ delay: 0.05 });
-    tl.from('.hero-layer-city img', { opacity: 0, duration: 1.6, ease: 'power2.out' }, 0)
-      .from('.hero-video', { opacity: 0, duration: 2, ease: 'power2.out' }, 0.2)
+    tl.from('.hero-video', { opacity: 0, duration: 2, ease: 'power2.out' }, 0.4)
       .from('.hero-greeting', { opacity: 0, y: 22, duration: 0.7, ease: 'power2.out' }, 0.4)
       .from('.hero-name', { opacity: 0, y: 28, duration: 0.7, ease: 'power2.out' }, 0.55)
       .from('.hero-tagline', { opacity: 0, y: 44, scale: 0.97, duration: 0.9, ease: 'power3.out' }, 0.7)
@@ -3263,7 +3530,7 @@
 
     // "I CREATE [word]" rotating word swap
     (function () {
-      var words = ['EXPERIENCES', 'SYSTEMS', 'INTERFACES', 'CLARITY', 'IMPACT'];
+      var words = ['SYSTEMS', 'INSTRUMENTS', 'INTERFACES', 'CLARITY'];
       var i = 0;
       var tw = document.getElementById('typeword');
       if (!tw) return;
@@ -3330,7 +3597,7 @@
           '--min:' + minOp + ';' +
           '--max:' + maxOp + ';' +
           'animation-delay:' + delay + 's;' +
-        '"></span>';
+          '"></span>';
       }
       container.innerHTML = html;
     })();
@@ -3348,7 +3615,7 @@
       var ctx = canvas.getContext('2d');
       var W, H, flies = [];
       var NUM_FLIES = 38; // halved; visually identical at comfortable density
-      var FRAME_MS  = 1000 / 30; // throttle to 30 fps — plenty smooth for drifting dots
+      var FRAME_MS = 1000 / 30; // throttle to 30 fps — plenty smooth for drifting dots
       var lastFrame = 0;
 
       function resize() {
@@ -3429,7 +3696,7 @@
       var globeVisible = false;
       // Pause globe animation when off-screen
       if ('IntersectionObserver' in window) {
-        var globeObs = new IntersectionObserver(function(entries) {
+        var globeObs = new IntersectionObserver(function (entries) {
           globeVisible = entries[0].isIntersecting;
         }, { rootMargin: '100px' });
         globeObs.observe(canvas);
@@ -3584,11 +3851,12 @@
 
   <!-- ── LIVE CHATBOT ─────────────────────────────────── -->
   <button id="chatbot-fab" type="button" aria-label="Open Chat">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
     </svg>
   </button>
-  
+
   <div id="chatbot-window" class="hidden">
     <div class="chatbot-header">
       <div class="chatbot-profile">
@@ -3599,30 +3867,33 @@
         </div>
       </div>
       <button id="chatbot-close" aria-label="Close Chat">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
     </div>
-    
+
     <div class="chatbot-messages" id="chatbot-messages">
       <div class="chat-message bot">
-        <div class="message-content">Hi there! I'm Aayush. Let me know if you have any questions about my work or experience.</div>
+        <div class="message-content">Hi there! I'm Aayush. Let me know if you have any questions about my work or
+          experience.</div>
       </div>
     </div>
-    
+
     <div class="chatbot-input-area">
       <input type="text" id="chatbot-input" placeholder="Type a message..." autocomplete="off">
       <button id="chatbot-send" aria-label="Send Message">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13"></line>
           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
         </svg>
       </button>
     </div>
   </div>
-  
+
   <script src="chatbot.js"></script>
   <script src="nav-component.js"></script>
 </body>

@@ -220,6 +220,58 @@
     }
     .timeline-bullets li::before { content: '·'; position: absolute; left: 0; color: var(--coral); }
 
+    /* ─── BEYOND DESIGN ────────────────────────── */
+    .beyond {
+      padding: 90px 80px 100px;
+      background: linear-gradient(180deg, #1d1311 0%, #201412 100%);
+      border-top: 1px solid var(--border);
+    }
+    .beyond-head { max-width: 740px; margin-bottom: 46px; }
+    .beyond-head h2 {
+      font-size: clamp(24px, 3.4vw, 38px); font-weight: 600;
+      color: var(--ink); line-height: 1.18; margin: 12px 0 18px;
+    }
+    .beyond-head h2 em { color: var(--orange); font-style: normal; }
+    .beyond-head p {
+      font-size: 15px; line-height: 1.75; color: rgba(214,208,196,0.62);
+    }
+    .beyond-carousel { position: relative; }
+    .life-track {
+      display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding-bottom: 6px; scroll-behavior: smooth;
+      -ms-overflow-style: none; scrollbar-width: none;
+    }
+    .life-track::-webkit-scrollbar { display: none; }
+    .life-card {
+      position: relative; flex: 0 0 300px; height: 380px; scroll-snap-align: start;
+      border-radius: 16px; overflow: hidden; border: 1px solid var(--border);
+      background: linear-gradient(155deg, rgba(164,120,100,0.24), rgba(34,22,22,0.92));
+    }
+    .life-card:nth-child(3n+2) { background: linear-gradient(155deg, rgba(255,142,0,0.20), rgba(34,22,22,0.94)); }
+    .life-card:nth-child(3n+3) { background: linear-gradient(155deg, rgba(16,31,44,0.55), rgba(34,22,22,0.92)); }
+    .life-card img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.55s ease, opacity 0.3s ease;
+    }
+    .life-card:hover img { transform: scale(1.05); }
+    .life-card img.is-missing { opacity: 0; }
+    .life-hint {
+      position: absolute; inset: 0; display: none; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px; text-align: center;
+      color: rgba(214,208,196,0.42); pointer-events: none; padding: 24px;
+    }
+    .life-card img.is-missing ~ .life-hint { display: flex; }
+    .life-hint svg { opacity: 0.55; }
+    .life-hint span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+    .carousel-nav { display: flex; gap: 12px; margin-top: 26px; }
+    .carousel-btn {
+      width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border);
+      background: transparent; color: var(--ink); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .carousel-btn:hover { background: rgba(255,142,0,0.1); border-color: var(--orange); color: var(--orange); }
+
     /* ─── FOOTER ───────────────────────────────── */
     .footer-strip {
       padding: 48px 80px;
@@ -261,6 +313,8 @@
       .skills-inner { grid-template-columns: 1fr; }
       .skill-group { padding: 32px 24px; }
       .experience { padding: 60px 24px 80px; }
+      .beyond { padding: 60px 24px 80px; }
+      .life-card { flex-basis: 78vw; height: 340px; }
       .resume-cta { flex-direction: column; padding: 60px 24px 80px; align-items: flex-start; }
       .footer-strip { padding: 40px 24px; flex-direction: column; gap: 16px; }
     }
@@ -297,9 +351,9 @@
       <div class="ch-stat-sep"></div>
       <div class="ch-stat"><strong>12</strong><span>Partners</span></div>
     </div>
-    <a href="resume.html" class="ch-resume-btn">
+    <a href="gallery/Aayush_Ranjan_Resume.pdf" target="_blank" rel="noopener" class="ch-resume-btn">
       <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      View Resume
+      Download Resume
     </a>
   </div>
   <div class="ch-scroll-hint">
@@ -434,15 +488,75 @@
   </div>
 </section>
 
+<!-- ── BEYOND DESIGN ──────────────────────────────── -->
+<section class="beyond">
+  <div class="beyond-head">
+    <p class="section-label">Off the clock</p>
+    <h2>There's a person behind the <em>pixels</em>.</h2>
+    <p>
+      Design is what I do, but it isn't the whole of me. Away from the screen I'm usually
+      painting or sketching, chasing a wall to graffiti, out on a trail somewhere, or upside
+      down mid-calisthenics set. The same curiosity that pulls me through a design problem is
+      what sends me looking for the next hill, the next blank canvas, the next thing to make.
+    </p>
+  </div>
+
+  <div class="beyond-carousel">
+    <!-- Drop real photos into images/life/ using these exact filenames and they replace the placeholders automatically. -->
+    <div class="life-track" id="lifeTrack">
+
+      <figure class="life-card">
+        <img src="images/life/painting.jpg" alt="Aayush painting" loading="lazy" onerror="this.classList.add('is-missing')">
+        <div class="life-hint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>images/life/painting.jpg</span></div>
+      </figure>
+
+      <figure class="life-card">
+        <img src="images/life/sketching.jpg" alt="Aayush sketching" loading="lazy" onerror="this.classList.add('is-missing')">
+        <div class="life-hint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>images/life/sketching.jpg</span></div>
+      </figure>
+
+      <figure class="life-card">
+        <img src="images/life/graffiti.jpg" alt="Aayush doing graffiti" loading="lazy" onerror="this.classList.add('is-missing')">
+        <div class="life-hint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>images/life/graffiti.jpg</span></div>
+      </figure>
+
+      <figure class="life-card">
+        <img src="images/life/hiking.jpg" alt="Aayush hiking" loading="lazy" onerror="this.classList.add('is-missing')">
+        <div class="life-hint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>images/life/hiking.jpg</span></div>
+      </figure>
+
+      <figure class="life-card">
+        <img src="images/life/calisthenics.jpg" alt="Aayush doing calisthenics" loading="lazy" onerror="this.classList.add('is-missing')">
+        <div class="life-hint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>images/life/calisthenics.jpg</span></div>
+      </figure>
+
+      <figure class="life-card">
+        <img src="images/life/photography.jpg" alt="Aayush shooting photography" loading="lazy" onerror="this.classList.add('is-missing')">
+        <div class="life-hint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>images/life/photography.jpg</span></div>
+      </figure>
+
+    </div>
+
+    <div class="carousel-nav">
+      <button class="carousel-btn" id="lifePrev" aria-label="Previous">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 3L5 9l6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="carousel-btn" id="lifeNext" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 3l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- ── RESUME CTA ─────────────────────────────────── -->
 <section class="resume-cta">
   <div class="resume-cta-left">
     <p>Full Resume</p>
     <h2>Skills, tools &amp; full work history</h2>
   </div>
-  <a href="resume.html" class="download-resume-btn">
+  <a href="gallery/Aayush_Ranjan_Resume.pdf" target="_blank" rel="noopener" class="download-resume-btn">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M7 9l-3-3M7 9l3-3M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    View Resume
+    Download Resume
   </a>
 </section>
 
@@ -471,6 +585,22 @@
     sunlightColor: 0xff9933,
     speed: 0.80
   });
+</script>
+
+<script>
+  // Beyond-design carousel arrows
+  (function () {
+    var track = document.getElementById('lifeTrack');
+    if (!track) return;
+    function step() {
+      var card = track.querySelector('.life-card');
+      return card ? card.offsetWidth + 18 : 320;
+    }
+    var prev = document.getElementById('lifePrev');
+    var next = document.getElementById('lifeNext');
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+  })();
 </script>
 
 <script src="cursor-effects.js"></script>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rabbitsfoot — Design Studio</title>
+  <meta name="description" content="rabbitsfoot is a design studio for things that have to work the first time. Strategy, design, and development for healthcare, enterprise, defense, and consumer products. Defense work published under NDA.">
+  <link rel="stylesheet" href="site-globals.css">
+  <link rel="stylesheet" href="studio.css">
+</head>
+
+<body class="rf-body">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 1: HERO
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="rf-hero" id="rf-hero">
+    <canvas id="rfThreeCanvas"></canvas>
+    <div class="rf-hero-vignette"></div>
+
+    <div class="rf-hero-content">
+      <p class="rf-hero-eyebrow">Design Studio — Est. 2017</p>
+      <h1 class="rf-hero-headline" id="rfHeroHeadline">
+        We design things<br>that have to <em>work</em><br>the first time.
+      </h1>
+      <p class="rf-hero-sub">
+        A studio at the intersection of strategy, craft, and engineering: products for healthcare, enterprise, and retail, and defense programs delivered with partner agencies under NDA.
+      </p>
+      <a href="#rf-contact" class="rf-hero-cta">
+        Start a Project
+        <svg viewBox="0 0 14 14" fill="none">
+          <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="rf-scroll-cue" id="rfScrollCue">
+      <span>Scroll</span>
+      <div class="rf-scroll-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 2: ABOUT / THESIS
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="rf-thesis" id="rf-thesis">
+    <h2 class="rf-thesis-statement" id="rfThesisStatement">
+      Surgeons, soldiers, and shoppers — we've built for all of them. Our work thrives where failure isn't an option and complexity is the starting point.
+    </h2>
+
+    <div class="rf-thesis-columns">
+      <div>
+        <p class="rf-thesis-copy">
+          We specialize in systems that survive reality — whether that's a high-pressure clinical environment, an armored vehicle interior, or a luxury retail launch. Every pixel earns its place. Every interaction is tested against the worst case, not the demo.
+        </p>
+      </div>
+      <div>
+        <p class="rf-thesis-copy">
+          Based in Bengaluru with partner agencies at project locations across Europe and India, rabbitsfoot brings a "don't-fail" discipline to every engagement. After years designing for hospitals, armored vehicles, and retail floors, we've forgotten how to make things that break.
+        </p>
+        <a href="studio-about.html" class="rf-thesis-link">
+          More about the studio
+          <svg viewBox="0 0 12 12" fill="none">
+            <path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 3: STRIPE WIPE TRANSITION
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="rf-stripe-wipe" id="rfStripeWipe" aria-hidden="true">
+    <div class="rf-stripe"></div>
+    <div class="rf-stripe"></div>
+    <div class="rf-stripe"></div>
+    <div class="rf-stripe"></div>
+    <div class="rf-stripe"></div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 4: KEY FACTS
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="rf-facts" id="rf-facts">
+    <p class="rf-facts-eyebrow">The numbers</p>
+    <div class="rf-facts-grid">
+
+      <div class="rf-fact-card" data-target="25" data-suffix="+">
+        <div class="rf-fact-number">
+          <!-- digit columns injected by JS -->
+        </div>
+        <p class="rf-fact-label">Projects Shipped</p>
+      </div>
+
+      <div class="rf-fact-card" data-target="8" data-suffix="+">
+        <div class="rf-fact-number"></div>
+        <p class="rf-fact-label">Years in the Field</p>
+      </div>
+
+      <div class="rf-fact-card" data-target="6" data-suffix="">
+        <div class="rf-fact-number"></div>
+        <p class="rf-fact-label">Domains Covered</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 5: SELECTED WORK — HORIZONTAL SCROLL TRACK
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="rf-work" id="rf-work">
+    <div class="rf-work-header">
+      <p class="rf-work-eyebrow">Selected Work</p>
+      <h2 class="rf-work-title">Projects we're<br><em>proud of</em></h2>
+    </div>
+
+    <div class="rf-work-pin" id="rfWorkPin">
+      <div class="rf-work-track-wrapper">
+        <div class="rf-work-track" id="rfWorkTrack">
+
+          <!-- Card 1: Parkbeheer NL -->
+          <a href="parkbeheer.html" class="rf-project-card">
+            <div class="rf-project-card-img">
+              <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png" alt="Parkbeheer NL" loading="lazy">
+              <span class="rf-project-badge concept">Under NDA</span>
+            </div>
+            <div class="rf-project-card-info">
+              <h3 class="rf-project-card-title">Parkbeheer NL</h3>
+              <p class="rf-project-card-desc">Replacing a 20-year-old spreadsheet system with an enterprise platform for 120+ parking officers managing 923K spaces across the Netherlands.</p>
+              <span class="rf-project-card-link">
+                Explore project
+                <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 2: CHARGEUR -->
+          <a href="chargeur.html" class="rf-project-card">
+            <div class="rf-project-card-img">
+              <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="CHARGEUR" loading="lazy">
+              <span class="rf-project-badge concept">Under NDA</span>
+            </div>
+            <div class="rf-project-card-info">
+              <h3 class="rf-project-card-title">CHARGEUR</h3>
+              <p class="rf-project-card-desc">Redesigning ammunition load management for the ALT-3 armored vehicle fleet. Zero mismatch errors. 41% faster type-switch time.</p>
+              <span class="rf-project-card-link">
+                Explore project
+                <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 3: VIGIL -->
+          <a href="vigil.html" class="rf-project-card">
+            <div class="rf-project-card-img" style="background:#0A0E14; display:flex; align-items:center; justify-content:center;">
+              <svg viewBox="0 0 160 160" width="200" height="200" style="opacity:0.85;">
+                <rect x="52" y="28" width="56" height="104" rx="20" fill="#111827" stroke="#4ADE80" stroke-width="1.5"/>
+                <rect x="62" y="10" width="36" height="20" rx="6" fill="#1a2332"/>
+                <rect x="62" y="130" width="36" height="20" rx="6" fill="#1a2332"/>
+                <rect x="58" y="38" width="44" height="52" rx="6" fill="#0A0E14"/>
+                <circle cx="80" cy="64" r="14" fill="none" stroke="#4ADE80" stroke-width="0.8" stroke-opacity="0.5"/>
+                <polygon points="80,52 83,62 80,60 77,62" fill="#4ADE80"/>
+                <polygon points="80,76 83,66 80,68 77,66" fill="#4ADE80" opacity="0.4"/>
+                <circle cx="80" cy="108" r="3" fill="#4ADE80"/>
+                <text x="80" y="119" font-family="monospace" font-size="5" fill="#4ADE80" text-anchor="middle" opacity="0.7">OPERATIONAL</text>
+              </svg>
+              <span class="rf-project-badge concept">Under NDA</span>
+            </div>
+            <div class="rf-project-card-info">
+              <h3 class="rf-project-card-title">VIGIL</h3>
+              <p class="rf-project-card-desc">Designing a tactical wearable for NATO infantry — in darkness, under fire, with gloves on. 67 screens. Wear OS 4 + iOS/Android.</p>
+              <span class="rf-project-card-link">
+                Explore project
+                <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 4: MUSPELL -->
+          <a href="muspell.html" class="rf-project-card">
+            <div class="rf-project-card-img">
+              <img src="gallery/muspell images/hero-mockup.png" alt="MUSPELL" loading="lazy">
+              <span class="rf-project-badge shipped">Shipped</span>
+            </div>
+            <div class="rf-project-card-info">
+              <h3 class="rf-project-card-title">MUSPELL</h3>
+              <p class="rf-project-card-desc">Clinical data visualisation platform — turning complex patient data into clear, actionable interfaces for healthcare teams.</p>
+              <span class="rf-project-card-link">
+                Explore project
+                <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 5: ROJNICA -->
+          <a href="rojnica.html" class="rf-project-card">
+            <div class="rf-project-card-img">
+              <img src="images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png" alt="ROJNICA" loading="lazy">
+              <span class="rf-project-badge concept">Under NDA</span>
+            </div>
+            <div class="rf-project-card-info">
+              <h3 class="rf-project-card-title">ROJNICA</h3>
+              <p class="rf-project-card-desc">Coordinating 12 agricultural drones across 2,760 hectares within a 48-hour treatment window. Three interfaces, one system.</p>
+              <span class="rf-project-card-link">
+                Explore project
+                <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card 6: Titan EYEx -->
+          <a href="titaneyeplus_casestudy.html" class="rf-project-card">
+            <div class="rf-project-card-img">
+              <img src="images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp" alt="Titan EYEx" loading="lazy">
+              <span class="rf-project-badge shipped">Shipped</span>
+            </div>
+            <div class="rf-project-card-info">
+              <h3 class="rf-project-card-title">Titan EYEx</h3>
+              <p class="rf-project-card-desc">Redesigning the eyewear browsing and selection experience for Titan's optical retail brand — combining prescription and style discovery.</p>
+              <span class="rf-project-card-link">
+                Explore project
+                <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- View All Card -->
+          <a href="all-works.html" class="rf-project-card rf-view-all">
+            <div class="rf-view-all-inner">
+              <svg viewBox="0 0 32 32" fill="none">
+                <path d="M8 24L24 8M24 8H14M24 8V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="rf-view-all-label">View All Projects</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 6: SERVICES
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="rf-services" id="rf-services">
+    <div class="rf-services-bg-word" id="rfServiceWord">Strategy</div>
+
+    <div class="rf-services-header">
+      <p class="rf-services-eyebrow">What we do</p>
+      <h2 class="rf-services-title">Capabilities that<br>ship products</h2>
+    </div>
+
+    <div class="rf-services-grid">
+
+      <div class="rf-service-card">
+        <div class="rf-service-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="24" cy="24" r="18"/>
+            <path d="M16 24L24 16L32 24M24 16V36"/>
+          </svg>
+        </div>
+        <h3 class="rf-service-name">Product Design</h3>
+        <p class="rf-service-desc">End-to-end product design from research to pixel-perfect handoff. We design systems that scale, not screens that look nice.</p>
+      </div>
+
+      <div class="rf-service-card">
+        <div class="rf-service-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6" y="6" width="16" height="16" rx="2"/>
+            <rect x="26" y="6" width="16" height="16" rx="2"/>
+            <rect x="6" y="26" width="16" height="16" rx="2"/>
+            <rect x="26" y="26" width="16" height="16" rx="2"/>
+          </svg>
+        </div>
+        <h3 class="rf-service-name">Design Systems</h3>
+        <p class="rf-service-desc">Scalable, token-driven component libraries that keep your product consistent at any team size. Built for engineers, not just designers.</p>
+      </div>
+
+      <div class="rf-service-card">
+        <div class="rf-service-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 12h32M8 24h32M8 36h16"/>
+            <circle cx="36" cy="36" r="6"/>
+            <path d="M36 33v6M33 36h6"/>
+          </svg>
+        </div>
+        <h3 class="rf-service-name">UX Research</h3>
+        <p class="rf-service-desc">Field research, usability testing, and data synthesis. We go where the users are — factory floors, hospital wards, military bases.</p>
+      </div>
+
+      <div class="rf-service-card">
+        <div class="rf-service-icon">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 38L18 14L26 28L34 20L42 32"/>
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M16 12h26"/>
+          </svg>
+        </div>
+        <h3 class="rf-service-name">Brand & Strategy</h3>
+        <p class="rf-service-desc">Positioning, visual identity, and go-to-market strategy. We help you figure out what to build before we build it.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 7: TESTIMONIALS
+       ═══════════════════════════════════════════════════════════════ -->
+  <section class="rf-testimonials" id="rf-testimonials">
+    <div class="rf-test-header">
+      <p class="rf-test-eyebrow">Client Voices</p>
+      <h2 class="rf-test-title">From the people<br>we've <em>partnered with</em></h2>
+    </div>
+
+    <div class="rf-test-layout">
+      <!-- Client list -->
+      <div class="rf-test-clients">
+        <button class="rf-test-client-btn active" data-slide="0">Sagun Nagar — Klu POS</button>
+        <button class="rf-test-client-btn" data-slide="1">Jason Chacko — Glenmark</button>
+        <button class="rf-test-client-btn" data-slide="2">Anitha S — PETA India</button>
+      </div>
+
+      <!-- Quotes -->
+      <div class="rf-test-quote-area">
+        <div class="rf-test-slide active" data-index="0">
+          <p class="rf-test-quote">Working with rabbitsfoot was an absolute game-changer for our product. Their innovative approach to UI/UX not only elevated user experience but directly contributed to our business objectives. We couldn't have achieved our goals without their insightful ideas and dedicated support.</p>
+          <div class="rf-test-author">
+            <img src="images/portfolio-assets/FzGpn8msoq5rAwt1Cg3DEOG8iQU.png" alt="Sagun Nagar" class="rf-test-avatar">
+            <div>
+              <div class="rf-test-name">Sagun Nagar</div>
+              <div class="rf-test-role">Founder, Klu POS</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rf-test-slide" data-index="1">
+          <p class="rf-test-quote">rabbitsfoot took the challenge of cutting off SAP in our organisation. A stunning display of hard work and a year of effort led to an in-house warehouse management system which saved the company's good fortune. Exceptional design presentation.</p>
+          <div class="rf-test-author">
+            <img src="images/portfolio-assets/K61SS0zlgr576S63EDtLwujRs3k.png" alt="Jason Chacko" class="rf-test-avatar">
+            <div>
+              <div class="rf-test-name">Jason Chacko</div>
+              <div class="rf-test-role">Factory Automations, Glenmark</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rf-test-slide" data-index="2">
+          <p class="rf-test-quote">I had no idea that a design studio could pull off a donation-focused web app UX, campaign, photography and visual design simultaneously. The best masters of all creative disciplines I have ever worked with.</p>
+          <div class="rf-test-author">
+            <img src="images/portfolio-assets/BbJPbr8KlEAN39uoSpBYnHMRzM-1.png" alt="Anitha S" class="rf-test-avatar">
+            <div>
+              <div class="rf-test-name">Anitha S</div>
+              <div class="rf-test-role">PETA India</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nav arrows -->
+        <div class="rf-test-nav">
+          <button class="rf-test-arrow" id="rfTestPrev" aria-label="Previous testimonial">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="rf-test-arrow" id="rfTestNext" aria-label="Next testimonial">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SECTION 8: FOOTER / CONTACT
+       ═══════════════════════════════════════════════════════════════ -->
+  <footer class="rf-footer" id="rf-contact">
+    <div class="rf-footer-cta">
+      <p class="rf-footer-cta-eyebrow">Ready to start?</p>
+      <h2 class="rf-footer-cta-title">Let's <em>talk</em></h2>
+      <a href="mailto:hello@rabbitsfoot.studio" class="rf-footer-cta-btn">
+        Get in Touch
+        <svg viewBox="0 0 14 14" fill="none">
+          <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="rf-footer-bottom">
+      <span class="rf-footer-brand">rabbitsfoot</span>
+      <span class="rf-footer-copy">© rabbitsfoot (2025). All Rights Reserved.</span>
+      <div class="rf-footer-socials" id="rfFooterSocials">
+        <!-- char-hover links injected by JS -->
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       SCRIPTS
+       ═══════════════════════════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ─── THREE.JS STUDIO HERO VISUAL (ORDER FROM CHAOS) ───────────
+    (function () {
+      if (prefersReduced || typeof THREE === 'undefined') return;
+
+      var canvas = document.getElementById('rfThreeCanvas');
+      if (!canvas) return;
+
+      var scene = new THREE.Scene();
+      
+      // camera
+      var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
+      camera.position.z = 600;
+
+      // renderer
+      var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+
+      // texture for soft glow points
+      function createCircleTexture() {
+        var c = document.createElement('canvas');
+        c.width = 32; c.height = 32;
+        var ctx = c.getContext('2d');
+        var grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.3, 'rgba(255, 255, 255, 0.7)');
+        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(16, 16, 16, 0, Math.PI * 2);
+        ctx.fill();
+        return new THREE.CanvasTexture(c);
+      }
+      var texture = createCircleTexture();
+
+      // particles count & structures
+      var count = 1200;
+      var geom = new THREE.BufferGeometry();
+      var positions = new Float32Array(count * 3);
+      var colors = new Float32Array(count * 3);
+
+      var chaosPositions = [];
+      var gridPositions = [];
+
+      // color tokens
+      var cBrass = new THREE.Color('#C4956A');
+      var cOxblood = new THREE.Color('#8B3A3A');
+      var cOffWhite = new THREE.Color('#F4F1EA');
+
+      for (var i = 0; i < count; i++) {
+        // Chaos points layout
+        var cx = (Math.random() - 0.5) * 1400;
+        var cy = (Math.random() - 0.5) * 1400;
+        var cz = (Math.random() - 0.5) * 1400;
+        chaosPositions.push(new THREE.Vector3(cx, cy, cz));
+
+        // Grid spherical layout
+        var phi = Math.acos(1 - 2 * (i + 0.5) / count);
+        var theta = Math.PI * (1 + Math.sqrt(5)) * i;
+        var radius = 220;
+        var gx = radius * Math.sin(phi) * Math.cos(theta);
+        var gy = radius * Math.sin(phi) * Math.sin(theta);
+        var gz = radius * Math.cos(phi);
+        gridPositions.push(new THREE.Vector3(gx, gy, gz));
+
+        positions[i*3] = cx;
+        positions[i*3+1] = cy;
+        positions[i*3+2] = cz;
+
+        // blend color
+        var color = cOffWhite;
+        var rand = Math.random();
+        if (rand < 0.45) color = cBrass;
+        else if (rand < 0.9) color = cOxblood;
+
+        colors[i*3] = color.r;
+        colors[i*3+1] = color.g;
+        colors[i*3+2] = color.b;
+      }
+
+      geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      var mat = new THREE.PointsMaterial({
+        size: 5,
+        map: texture,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        vertexColors: true
+      });
+
+      var points = new THREE.Points(geom, mat);
+      scene.add(points);
+
+      // Connective wireframe line segments
+      var lineGeom = new THREE.BufferGeometry();
+      var linePositions = new Float32Array(count * 6);
+      var lineColors = new Float32Array(count * 6);
+      
+      var lineIdx = 0;
+      for (var i = 0; i < count - 1; i++) {
+        linePositions[lineIdx] = gridPositions[i].x;
+        linePositions[lineIdx+1] = gridPositions[i].y;
+        linePositions[lineIdx+2] = gridPositions[i].z;
+        linePositions[lineIdx+3] = gridPositions[i+1].x;
+        linePositions[lineIdx+4] = gridPositions[i+1].y;
+        linePositions[lineIdx+5] = gridPositions[i+1].z;
+
+        var lColor = cBrass;
+        lineColors[lineIdx] = lColor.r;
+        lineColors[lineIdx+1] = lColor.g;
+        lineColors[lineIdx+2] = lColor.b;
+        lineColors[lineIdx+3] = lColor.r;
+        lineColors[lineIdx+4] = lColor.g;
+        lineColors[lineIdx+5] = lColor.b;
+        lineIdx += 6;
+      }
+      lineGeom.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+      lineGeom.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+      var lineMat = new THREE.LineBasicMaterial({
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending,
+        vertexColors: true
+      });
+      var lines = new THREE.LineSegments(lineGeom, lineMat);
+      scene.add(lines);
+
+      // scroll / mouse triggers
+      var mouseX = 0, mouseY = 0;
+      var targetMouseX = 0, targetMouseY = 0;
+      var scrollProgress = 0;
+      var targetScrollProgress = 0;
+
+      window.addEventListener('mousemove', function (e) {
+        targetMouseX = (e.clientX - window.innerWidth / 2) * 0.4;
+        targetMouseY = (e.clientY - window.innerHeight / 2) * 0.4;
+      }, { passive: true });
+
+      window.addEventListener('scroll', function () {
+        var h = window.innerHeight;
+        var y = window.scrollY;
+        targetScrollProgress = Math.min(y / h, 1.5);
+      }, { passive: true });
+
+      function resize() {
+        var w = canvas.offsetWidth;
+        var h = canvas.offsetHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }
+      window.addEventListener('resize', resize, { passive: true });
+
+      // render loop
+      var clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        if (document.hidden) return;
+
+        var time = clock.getElapsedTime();
+
+        // spring animations
+        mouseX += (targetMouseX - mouseX) * 0.05;
+        mouseY += (targetMouseY - mouseY) * 0.05;
+        scrollProgress += (targetScrollProgress - scrollProgress) * 0.08;
+
+        var posAttr = geom.getAttribute('position');
+        var posArray = posAttr.array;
+
+        var t = Math.min(scrollProgress, 1.0);
+        var easeT = t * t * (3 - 2 * t); // smoothstep
+
+        for (var i = 0; i < count; i++) {
+          var chaos = chaosPositions[i];
+          var grid = gridPositions[i];
+
+          // wave drift on chaos state
+          var driftX = Math.sin(time * 0.2 + i) * 60;
+          var driftY = Math.cos(time * 0.15 + i * 2) * 60;
+          var driftZ = Math.sin(time * 0.25 + i * 3) * 60;
+
+          var currX = THREE.MathUtils.lerp(chaos.x + driftX, grid.x, easeT);
+          var currY = THREE.MathUtils.lerp(chaos.y + driftY, grid.y, easeT);
+          var currZ = THREE.MathUtils.lerp(chaos.z + driftZ, grid.z, easeT);
+
+          // mouse interactive swirl attraction
+          var dx = currX - mouseX;
+          var dy = currY - (-mouseY);
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 180) {
+            var push = (180 - dist) * 0.3 * (1 - easeT);
+            currX += (dx / dist) * push;
+            currY += (dy / dist) * push;
+          }
+
+          posArray[i*3] = currX;
+          posArray[i*3+1] = currY;
+          posArray[i*3+2] = currZ;
+        }
+        posAttr.needsUpdate = true;
+
+        // rotation
+        points.rotation.y = time * 0.05 + mouseX * 0.0005;
+        points.rotation.x = time * 0.02 + mouseY * 0.0005;
+
+        lines.rotation.y = points.rotation.y;
+        lines.rotation.x = points.rotation.x;
+        
+        // fade lines in/out based on scroll
+        var lineOpacity = Math.max(0, easeT * 0.25);
+        if (scrollProgress > 1.0) {
+          lineOpacity *= (1.5 - scrollProgress) * 2;
+        }
+        lineMat.opacity = Math.max(0, lineOpacity);
+
+        // camera parallax flythrough
+        camera.position.z = 600 - (scrollProgress * 200);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+    })();
+
+
+    // ─── HERO CHAR REVEAL ─────────────────────────────────────────
+    (function () {
+      var headline = document.getElementById('rfHeroHeadline');
+      if (!headline) return;
+
+      // Split text into chars (preserving <em> tags)
+      function splitIntoChars(el) {
+        var children = Array.from(el.childNodes);
+        children.forEach(function (node) {
+          if (node.nodeType === 3) { // text node
+            var text = node.textContent;
+            var frag = document.createDocumentFragment();
+            for (var i = 0; i < text.length; i++) {
+              var ch = text[i];
+              if (ch === '\n' || ch === '\r') continue;
+              var span = document.createElement('span');
+              span.className = 'char';
+              span.textContent = ch === ' ' ? '\u00A0' : ch;
+              frag.appendChild(span);
+            }
+            node.parentNode.replaceChild(frag, node);
+          } else if (node.nodeType === 1 && node.tagName === 'BR') {
+            // keep BRs
+          } else if (node.nodeType === 1) {
+            splitIntoChars(node);
+          }
+        });
+      }
+
+      splitIntoChars(headline);
+
+      var chars = headline.querySelectorAll('.char');
+      if (prefersReduced) {
+        chars.forEach(function (c) { c.style.opacity = 1; });
+        return;
+      }
+
+      var tl = gsap.timeline({ delay: 0.3 });
+      tl.to(chars, {
+        opacity: 1,
+        filter: 'blur(0px)',
+        y: 0,
+        stagger: 0.02,
+        duration: 0.5,
+        ease: 'power2.out',
+        onStart: function () {
+          // set initial state
+          chars.forEach(function (c) {
+            gsap.set(c, { opacity: 0, filter: 'blur(8px)', y: '0.3em' });
+          });
+        }
+      });
+
+      // fade in sub-elements
+      tl.from('.rf-hero-eyebrow', { opacity: 0, y: 16, duration: 0.6, ease: 'power2.out' }, 0.1);
+      tl.from('.rf-hero-sub', { opacity: 0, y: 20, duration: 0.7, ease: 'power2.out' }, 0.8);
+      tl.from('.rf-hero-cta', { opacity: 0, y: 16, duration: 0.6, ease: 'power2.out' }, 1.0);
+      tl.from('#rfScrollCue', { opacity: 0, y: 12, duration: 0.5, ease: 'power2.out' }, 1.2);
+    })();
+
+
+    // ─── THESIS — SCROLL-SCRUBBED BRIGHTNESS ─────────────────────
+    (function () {
+      var statement = document.getElementById('rfThesisStatement');
+      if (!statement || prefersReduced) return;
+
+      gsap.to(statement, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.rf-thesis',
+          start: 'top 70%',
+          end: 'top 20%',
+          scrub: 0.5
+        }
+      });
+
+      // columns fade in
+      ScrollTrigger.create({
+        trigger: '.rf-thesis-columns',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          gsap.from('.rf-thesis-copy, .rf-thesis-link', {
+            opacity: 0, y: 30, stagger: 0.15, duration: 0.8, ease: 'power2.out'
+          });
+        }
+      });
+    })();
+
+
+    // ─── STRIPE WIPE ─────────────────────────────────────────────
+    (function () {
+      if (prefersReduced) return;
+      var stripes = document.querySelectorAll('.rf-stripe');
+      if (!stripes.length) return;
+
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.rf-stripe-wipe',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.8,
+          pin: false
+        }
+      });
+
+      stripes.forEach(function (stripe, i) {
+        tl.to(stripe, {
+          scaleY: 1,
+          duration: 0.3,
+          ease: 'none'
+        }, i * 0.06);
+      });
+    })();
+
+
+    // ─── KEY FACTS — 3D FLIP + NUMBER ROLLER ─────────────────────
+    (function () {
+      var cards = document.querySelectorAll('.rf-fact-card');
+
+      // Build digit columns
+      cards.forEach(function (card) {
+        var target = parseInt(card.dataset.target, 10);
+        var suffix = card.dataset.suffix || '';
+        var numEl = card.querySelector('.rf-fact-number');
+        if (!numEl || isNaN(target)) return;
+
+        var digits = String(target).split('');
+        var html = '';
+
+        digits.forEach(function (d) {
+          html += '<div class="rf-digit-col" data-digit="' + d + '">';
+          for (var n = 0; n <= 9; n++) {
+            html += '<span>' + n + '</span>';
+          }
+          html += '</div>';
+        });
+
+        if (suffix) {
+          html += '<span class="rf-fact-suffix">' + suffix + '</span>';
+        }
+
+        numEl.innerHTML = html;
+      });
+
+      if (prefersReduced) {
+        cards.forEach(function (card) {
+          card.style.transform = 'none';
+          card.style.opacity = 1;
+          card.classList.add('revealed');
+          card.querySelectorAll('.rf-digit-col').forEach(function (col) {
+            var d = parseInt(col.dataset.digit, 10);
+            col.style.transform = 'translateY(-' + (d * 80) + 'px)';
+          });
+        });
+        return;
+      }
+
+      ScrollTrigger.create({
+        trigger: '.rf-facts',
+        start: 'top 70%',
+        once: true,
+        onEnter: function () {
+          cards.forEach(function (card, i) {
+            gsap.to(card, {
+              rotateX: 0,
+              opacity: 1,
+              duration: 0.8,
+              delay: i * 0.15,
+              ease: 'power3.out',
+              onComplete: function () {
+                card.classList.add('revealed');
+                // animate digit columns
+                card.querySelectorAll('.rf-digit-col').forEach(function (col, ci) {
+                  var d = parseInt(col.dataset.digit, 10);
+                  gsap.to(col, {
+                    y: -(d * 80),
+                    duration: 1.2,
+                    delay: ci * 0.1,
+                    ease: 'power2.out'
+                  });
+                });
+              }
+            });
+          });
+        }
+      });
+    })();
+
+
+    // ─── HORIZONTAL WORK TRACK (DESKTOP) ─────────────────────────
+    (function () {
+      if (window.innerWidth <= 1024) return;
+
+      var track = document.getElementById('rfWorkTrack');
+      var pin = document.getElementById('rfWorkPin');
+      if (!track || !pin) return;
+
+      // wait for images to figure out track width
+      function initHorizontalScroll() {
+        var trackWidth = track.scrollWidth;
+        var viewportWidth = window.innerWidth;
+        var scrollDistance = trackWidth - viewportWidth + 160; // extra padding
+
+        if (scrollDistance <= 0) return;
+
+        // set pin height to control scroll duration
+        pin.style.height = (scrollDistance + viewportWidth) + 'px';
+
+        gsap.to(track, {
+          x: -scrollDistance,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pin,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1,
+            pin: '.rf-work-track-wrapper',
+            anticipatePin: 1
+          }
+        });
+      }
+
+      // init after layout settles
+      if (document.readyState === 'complete') {
+        initHorizontalScroll();
+      } else {
+        window.addEventListener('load', initHorizontalScroll);
+      }
+    })();
+
+
+    // ─── SERVICES — GLASS CARD REVEAL + WORD ROTATE ──────────────
+    (function () {
+      var serviceCards = document.querySelectorAll('.rf-service-card');
+
+      if (prefersReduced) {
+        serviceCards.forEach(function (c) {
+          c.style.opacity = 1;
+          c.style.transform = 'none';
+          c.classList.add('revealed');
+        });
+        return;
+      }
+
+      ScrollTrigger.create({
+        trigger: '.rf-services-grid',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          serviceCards.forEach(function (card, i) {
+            gsap.to(card, {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              delay: i * 0.12,
+              ease: 'power2.out',
+              onComplete: function () { card.classList.add('revealed'); }
+            });
+          });
+        }
+      });
+
+      // rotating bg word
+      var words = ['Strategy', 'Design', 'Systems', 'Research', 'Branding'];
+      var wordIdx = 0;
+      var wordEl = document.getElementById('rfServiceWord');
+      if (!wordEl) return;
+
+      setInterval(function () {
+        wordIdx = (wordIdx + 1) % words.length;
+        gsap.to(wordEl, {
+          opacity: 0, duration: 0.4, onComplete: function () {
+            wordEl.textContent = words[wordIdx];
+            gsap.to(wordEl, { opacity: 0.03, duration: 0.6 });
+          }
+        });
+      }, 3000);
+    })();
+
+
+    // ─── TESTIMONIALS CAROUSEL ───────────────────────────────────
+    (function () {
+      var slides = document.querySelectorAll('.rf-test-slide');
+      var btns = document.querySelectorAll('.rf-test-client-btn');
+      var prevBtn = document.getElementById('rfTestPrev');
+      var nextBtn = document.getElementById('rfTestNext');
+      var current = 0;
+
+      function showSlide(idx) {
+        slides.forEach(function (s) { s.classList.remove('active'); });
+        btns.forEach(function (b) { b.classList.remove('active'); });
+        slides[idx].classList.add('active');
+        btns[idx].classList.add('active');
+        current = idx;
+      }
+
+      btns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          showSlide(parseInt(btn.dataset.slide, 10));
+        });
+      });
+
+      if (prevBtn) prevBtn.addEventListener('click', function () {
+        showSlide((current - 1 + slides.length) % slides.length);
+      });
+      if (nextBtn) nextBtn.addEventListener('click', function () {
+        showSlide((current + 1) % slides.length);
+      });
+
+      // auto-advance
+      setInterval(function () {
+        showSlide((current + 1) % slides.length);
+      }, 6000);
+
+      // blur-in header
+      if (!prefersReduced) {
+        ScrollTrigger.create({
+          trigger: '.rf-testimonials',
+          start: 'top 75%',
+          once: true,
+          onEnter: function () {
+            gsap.from('.rf-test-title', {
+              opacity: 0, filter: 'blur(12px)', y: 20, duration: 0.9, ease: 'power2.out'
+            });
+            gsap.from('.rf-test-layout', {
+              opacity: 0, y: 30, duration: 0.8, delay: 0.2, ease: 'power2.out'
+            });
+          }
+        });
+      }
+    })();
+
+
+    // ─── FOOTER — CHAR HOVER LINKS ───────────────────────────────
+    (function () {
+      var container = document.getElementById('rfFooterSocials');
+      if (!container) return;
+
+      var socials = [
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aayushran/' },
+        { label: 'Instagram', href: 'https://www.instagram.com/aayushrajputt__' },
+        { label: 'Medium', href: 'https://medium.com/@aayushux' }
+      ];
+
+      socials.forEach(function (s) {
+        var a = document.createElement('a');
+        a.href = s.href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'rf-char-link';
+
+        var orig = '<span class="rf-char-original">';
+        var clone = '<span class="rf-char-clone">';
+        for (var i = 0; i < s.label.length; i++) {
+          var ch = s.label[i] === ' ' ? '&nbsp;' : s.label[i];
+          orig += '<span>' + ch + '</span>';
+          clone += '<span>' + ch + '</span>';
+        }
+        orig += '</span>';
+        clone += '</span>';
+        a.innerHTML = orig + clone;
+        container.appendChild(a);
+      });
+    })();
+
+
+    // ─── FOOTER CTA ANIMATION ────────────────────────────────────
+    if (!prefersReduced) {
+      ScrollTrigger.create({
+        trigger: '.rf-footer-cta',
+        start: 'top 80%',
+        once: true,
+        onEnter: function () {
+          gsap.from('.rf-footer-cta-eyebrow', { opacity: 0, y: 12, duration: 0.6, ease: 'power2.out' });
+          gsap.from('.rf-footer-cta-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.1, ease: 'power2.out' });
+          gsap.from('.rf-footer-cta-btn', { opacity: 0, y: 16, duration: 0.6, delay: 0.3, ease: 'power2.out' });
+        }
+      });
+    }
+
+  </script>
+
+  <script src="studio-nav.js"></script>
+
+</body>
+</html>
