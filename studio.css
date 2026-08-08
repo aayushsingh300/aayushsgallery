@@ -8,20 +8,20 @@
 
 /* ─── CSS CUSTOM PROPERTIES ─── */
 :root {
-  /* brand palette — aerospace tech theme */
-  --rf-bg:          #0A0E14;
-  --rf-bg-warm:     #0F1419;
-  --rf-surface:     #151B27;
-  --rf-surface-2:   #1E2432;
-  --rf-text:        #E8EAED;
-  --rf-text-dim:    rgba(232, 234, 237, 0.65);
-  --rf-text-muted:  rgba(232, 234, 237, 0.40);
-  --rf-accent:      #00D4FF;
-  --rf-accent-light:#00F0FF;
-  --rf-brass:       #FF6600;
-  --rf-brass-dim:   rgba(255, 102, 0, 0.5);
-  --rf-border:      rgba(232, 234, 237, 0.08);
-  --rf-border-light:rgba(232, 234, 237, 0.15);
+  /* brand palette */
+  --rf-bg:          #0C0C0C;
+  --rf-bg-warm:     #111110;
+  --rf-surface:     #1A1918;
+  --rf-surface-2:   #242322;
+  --rf-text:        #F4F1EA;
+  --rf-text-dim:    rgba(244, 241, 234, 0.55);
+  --rf-text-muted:  rgba(244, 241, 234, 0.35);
+  --rf-accent:      #8B3A3A;
+  --rf-accent-light:#A94A4A;
+  --rf-brass:       #C4956A;
+  --rf-brass-dim:   rgba(196, 149, 106, 0.6);
+  --rf-border:      rgba(244, 241, 234, 0.08);
+  --rf-border-light:rgba(244, 241, 234, 0.14);
 
   /* type */
   --rf-font-body:    'Inter', -apple-system, sans-serif;
@@ -165,23 +165,35 @@ ul, ol { list-style: none; }
   padding: 0 var(--rf-page-pad) 100px;
 }
 
-#rfThreeCanvas {
-  position: absolute;
+/* ─── drone stage ───────────────────────────────────────────────────
+   One fixed canvas the aircraft flies across for the entire document.
+   It sits above the sections, but under the hero copy and the header,
+   so the drone passes in front of the page without ever fighting text.
+   ─────────────────────────────────────────────────────────────────── */
+#rfDroneStage {
+  position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+  width: 100vw;
+  height: 100svh;
+  z-index: 2;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s var(--rf-ease-smooth);
 }
 
+#rfDroneStage.is-ready { opacity: 1; }
+
+/* Keeps the headline readable without dimming the upper-right air the
+   drone occupies, which the old centred radial was doing. */
 .rf-hero-vignette {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 55% 55% at 60% 40%, transparent 0%, var(--rf-bg) 100%),
-    linear-gradient(180deg, transparent 40%, var(--rf-bg) 100%);
+    linear-gradient(180deg, rgba(12, 12, 12, 0.62) 0%, rgba(12, 12, 12, 0) 26%),
+    linear-gradient(0deg, var(--rf-bg) 3%, rgba(12, 12, 12, 0.6) 30%, rgba(12, 12, 12, 0) 58%),
+    radial-gradient(ellipse 78% 62% at 14% 82%, rgba(12, 12, 12, 0.7), transparent 72%);
 }
 
 .rf-hero-content {
@@ -482,115 +494,147 @@ ul, ol { list-style: none; }
 .rf-work {
   position: relative;
   background: var(--rf-bg);
+  padding-bottom: clamp(48px, 8vw, 104px);
 }
 
 .rf-work-header {
-  padding: 160px var(--rf-page-pad) 80px;
-}
-
-.rf-work-eyebrow {
-  font-family: var(--rf-font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--rf-brass);
-  margin-bottom: 16px;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: clamp(120px, 16vw, 200px) var(--rf-page-pad) clamp(56px, 7vw, 96px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 5vw, 80px);
+  align-items: end;
 }
 
 .rf-work-title {
   font-size: clamp(40px, 6vw, 80px);
   font-weight: 700;
-  letter-spacing: -2px;
-  line-height: 1.05;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
   color: var(--rf-text);
+  text-wrap: balance;
 }
 
-.rf-work-title em {
-  font-family: var(--rf-font-serif);
-  font-style: italic;
-  font-weight: 500;
-  color: var(--rf-brass);
+.rf-work-note {
+  font-size: 15px;
+  color: var(--rf-text-dim);
+  line-height: 1.7;
+  max-width: 46ch;
+  text-wrap: pretty;
 }
 
-/* ─── project panel ─── */
-.rf-panel {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 75vh;
-  min-height: 480px;
-  overflow: hidden;
+/* ─── the rail: alternating sides, so the page has a rhythm and the
+       drone always has an open gutter to fly down ─── */
+.rf-work-rail {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 var(--rf-page-pad);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(80px, 11vw, 176px);
+}
+
+.rf-project {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(20px, 3vw, 48px);
+  align-items: end;
+  color: var(--rf-text);
   text-decoration: none;
-  color: var(--rf-text);
 }
 
-.rf-panel + .rf-panel {
-  margin-top: 3px;
-}
+.rf-project.is-left  .rf-project-media { grid-column: 1 / span 8; grid-row: 1; }
+.rf-project.is-left  .rf-project-meta  { grid-column: 9 / span 4; grid-row: 1; }
+.rf-project.is-right .rf-project-media { grid-column: 5 / span 8; grid-row: 1; }
+.rf-project.is-right .rf-project-meta  { grid-column: 1 / span 4; grid-row: 1; }
 
-.rf-panel-image {
-  position: absolute;
-  inset: -8%;
+/* two weights instead of six equal slabs */
+.rf-project.is-lead  .rf-project-media { aspect-ratio: 16 / 10; }
+.rf-project.is-inset .rf-project-media { aspect-ratio: 4 / 3; }
+
+.rf-project.is-inset.is-left  .rf-project-media { grid-column: 1 / span 7; }
+.rf-project.is-inset.is-left  .rf-project-meta  { grid-column: 8 / span 5; }
+.rf-project.is-inset.is-right .rf-project-media { grid-column: 6 / span 7; }
+.rf-project.is-inset.is-right .rf-project-meta  { grid-column: 1 / span 5; }
+
+.rf-project-media {
+  position: relative;
   overflow: hidden;
-  will-change: transform;
+  background: var(--rf-surface);
+  border: 1px solid var(--rf-border);
 }
 
-.rf-panel-image img {
+.rf-project-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1s var(--rf-ease-smooth);
+  transform: scale(1.02);
+  filter: saturate(0.92);
+  transition: transform 0.9s var(--rf-ease-smooth), filter 0.6s var(--rf-ease-smooth);
 }
 
-.rf-panel:hover .rf-panel-image img {
-  transform: scale(1.04);
+.rf-project:hover .rf-project-media img,
+.rf-project:focus-visible .rf-project-media img {
+  transform: scale(1.06);
+  filter: saturate(1.04);
 }
 
-/* VIGIL special case — no image, styled bg */
-.rf-panel--vigil .rf-panel-image {
+/* warm wash on approach */
+.rf-project-media::after {
+  content: '';
+  position: absolute;
   inset: 0;
-  background: #0A0E14;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 45%, rgba(196, 149, 106, 0.12) 100%);
+  opacity: 0;
+  transition: opacity 0.55s var(--rf-ease-smooth);
+}
+
+.rf-project:hover .rf-project-media::after { opacity: 1; }
+
+.rf-project:focus-visible {
+  outline: 2px solid var(--rf-brass);
+  outline-offset: 6px;
+}
+
+/* VIGIL ships no photography, so the mark gets a stage of its own */
+.rf-project-media--mark {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 45%, rgba(74, 222, 128, 0.07), transparent 70%),
+    #0A0E14;
 }
 
 .rf-vigil-icon {
-  width: 220px;
-  height: 220px;
-  opacity: 0.7;
-  transition: opacity 0.6s;
+  width: min(46%, 210px);
+  height: auto;
+  opacity: 0.78;
+  transition: opacity 0.6s var(--rf-ease-smooth), transform 0.9s var(--rf-ease-smooth);
 }
 
-.rf-panel--vigil:hover .rf-vigil-icon {
-  opacity: 0.9;
+.rf-project:hover .rf-vigil-icon { opacity: 1; transform: translateY(-6px); }
+
+/* ─── meta column ─── */
+.rf-project-meta { padding-bottom: 4px; }
+
+.rf-project-title {
+  font-size: clamp(24px, 2.6vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 14px 0 12px;
+  text-wrap: balance;
 }
 
-/* gradient scrim */
-.rf-panel-scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(12, 12, 12, 0) 0%,
-    rgba(12, 12, 12, 0.1) 30%,
-    rgba(12, 12, 12, 0.65) 65%,
-    rgba(12, 12, 12, 0.92) 100%
-  );
-}
-
-/* panel info overlay */
-.rf-panel-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  padding: 48px var(--rf-page-pad) 56px;
-  max-width: 700px;
+.rf-project-desc {
+  font-size: 15px;
+  color: var(--rf-text-dim);
+  line-height: 1.7;
+  margin-bottom: 22px;
+  max-width: 42ch;
+  text-wrap: pretty;
 }
 
 .rf-panel-badge {
@@ -603,32 +647,12 @@ ul, ol { list-style: none; }
   padding: 5px 12px;
   border-radius: 2px;
   background: rgba(12, 12, 12, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   color: var(--rf-text);
   border: 1px solid var(--rf-border-light);
-  margin-bottom: 20px;
 }
 
-.rf-panel-badge.shipped { color: #7FE08A; border-color: rgba(127,224,138,0.25); }
-.rf-panel-badge.concept { color: var(--rf-brass); border-color: rgba(196,149,106,0.25); }
-
-.rf-panel-title {
-  font-size: clamp(28px, 4.5vw, 56px);
-  font-weight: 700;
-  letter-spacing: -1px;
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-
-.rf-panel-desc {
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--rf-text-dim);
-  line-height: 1.7;
-  margin-bottom: 24px;
-  max-width: 540px;
-}
+.rf-panel-badge.shipped { color: #7FE08A; border-color: rgba(127, 224, 138, 0.28); }
+.rf-panel-badge.concept { color: var(--rf-brass); border-color: rgba(196, 149, 106, 0.28); }
 
 .rf-panel-link {
   display: inline-flex;
@@ -641,38 +665,34 @@ ul, ol { list-style: none; }
   text-transform: uppercase;
   color: var(--rf-brass);
   padding-bottom: 4px;
-  border-bottom: 1px solid var(--rf-brass-dim);
+  border-bottom: 1px solid transparent;
   transition: border-color 0.3s;
 }
 
-.rf-panel:hover .rf-panel-link {
-  border-color: var(--rf-brass);
-}
+.rf-project:hover .rf-panel-link { border-color: var(--rf-brass); }
 
 .rf-panel-link svg {
   width: 12px; height: 12px;
   transition: transform 0.3s var(--rf-ease-smooth);
 }
 
-.rf-panel:hover .rf-panel-link svg {
-  transform: translate(3px, -3px);
-}
+.rf-project:hover .rf-panel-link svg { transform: translate(3px, -3px); }
 
-/* "View All Projects" strip */
+/* "View all projects" strip */
 .rf-view-all-strip {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  padding: 80px var(--rf-page-pad);
+  margin-top: clamp(80px, 11vw, 160px);
+  padding: 72px var(--rf-page-pad);
+  border-top: 1px solid var(--rf-border);
   text-decoration: none;
   color: var(--rf-text);
   transition: background 0.4s;
 }
 
-.rf-view-all-strip:hover {
-  background: var(--rf-surface);
-}
+.rf-view-all-strip:hover { background: var(--rf-surface); }
 
 .rf-view-all-text {
   font-family: var(--rf-font-mono);
@@ -684,9 +704,7 @@ ul, ol { list-style: none; }
   transition: color 0.3s;
 }
 
-.rf-view-all-strip:hover .rf-view-all-text {
-  color: var(--rf-brass);
-}
+.rf-view-all-strip:hover .rf-view-all-text { color: var(--rf-brass); }
 
 .rf-view-all-strip svg {
   width: 24px; height: 24px;
@@ -694,9 +712,7 @@ ul, ol { list-style: none; }
   transition: transform 0.3s var(--rf-ease-smooth);
 }
 
-.rf-view-all-strip:hover svg {
-  transform: translate(4px, -4px);
-}
+.rf-view-all-strip:hover svg { transform: translate(4px, -4px); }
 
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -1443,8 +1459,26 @@ ul, ol { list-style: none; }
   .rf-fact + .rf-fact { border-left: none; border-top: 1px solid var(--rf-border); padding-top: 56px; }
   .rf-fact { padding: 0; }
 
-  /* panels */
-  .rf-panel { height: 60vh; min-height: 400px; }
+  /* work rail — media stacks above its meta */
+  .rf-work-header { grid-template-columns: 1fr; gap: 24px; }
+
+  .rf-project.is-left  .rf-project-media,
+  .rf-project.is-right .rf-project-media,
+  .rf-project.is-inset.is-left  .rf-project-media,
+  .rf-project.is-inset.is-right .rf-project-media {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .rf-project.is-left  .rf-project-meta,
+  .rf-project.is-right .rf-project-meta,
+  .rf-project.is-inset.is-left  .rf-project-meta,
+  .rf-project.is-inset.is-right .rf-project-meta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .rf-project-desc { max-width: 60ch; }
 
   /* accordion */
   .rf-accord-desc { padding-left: 24px; }
@@ -1472,8 +1506,13 @@ ul, ol { list-style: none; }
 
   .rf-thesis { padding: 120px var(--rf-page-pad) 100px; }
 
-  .rf-panel { height: auto; min-height: 70vh; }
-  .rf-panel-image { inset: -4%; }
+  .rf-project.is-lead  .rf-project-media,
+  .rf-project.is-inset .rf-project-media { aspect-ratio: 3 / 2; }
+
+  .rf-project-title { font-size: clamp(22px, 6vw, 30px); }
+
+  /* the cue collides with the CTA once the hero tightens up */
+  .rf-scroll-cue { display: none; }
 
   .rf-accord-name { font-size: 18px; }
   .rf-accord-icon { width: 32px; height: 32px; }

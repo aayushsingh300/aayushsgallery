@@ -12,26 +12,28 @@
 
 <body class="rf-body">
 
+  <!-- The aircraft flies over the whole document, not just the hero. -->
+  <canvas id="rfDroneStage" aria-hidden="true"></canvas>
+
 
   <!-- ═══════════════════════════════════════════════════════════════
-       SECTION 1: HERO — Interactive 3D Drone + Scroll-Driven Animation
+       SECTION 1: HERO — Cinematic 3D + Split-Line Reveal
        ═══════════════════════════════════════════════════════════════ -->
   <section class="rf-hero" id="rf-hero">
-    <canvas id="rfThreeCanvas"></canvas>
     <div class="rf-hero-vignette"></div>
 
     <div class="rf-hero-content">
-      <p class="rf-hero-eyebrow" id="rfEyebrow">Aerial Operations — Est. 2017</p>
+      <p class="rf-hero-eyebrow" id="rfEyebrow">Design Studio — Est. 2017</p>
       <h1 class="rf-hero-headline" id="rfHeroHeadline">
-        <span class="rf-line"><span class="rf-line-inner">Command the</span></span>
-        <span class="rf-line"><span class="rf-line-inner">aerial <em>frontier.</em></span></span>
-        <span class="rf-line"><span class="rf-line-inner">Precision from above.</span></span>
+        <span class="rf-line"><span class="rf-line-inner">We design things</span></span>
+        <span class="rf-line"><span class="rf-line-inner">that have to <em>work</em></span></span>
+        <span class="rf-line"><span class="rf-line-inner">the first time.</span></span>
       </h1>
       <p class="rf-hero-sub" id="rfHeroSub">
-        Advanced drone coordination systems for agriculture, defense, and enterprise operations. Engineering autonomous flight for complex environments where precision and reliability define success.
+        A studio at the intersection of strategy, craft, and engineering: products for healthcare, enterprise, and retail, and defense programs delivered with partner agencies under NDA.
       </p>
       <a href="#rf-contact" class="rf-hero-cta" id="rfHeroCta">
-        Start a Flight
+        Start a Project
         <svg viewBox="0 0 14 14" fill="none">
           <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -40,7 +42,7 @@
 
     <div class="rf-scroll-cue" id="rfScrollCue">
       <div class="rf-pulse-ring"></div>
-      <span>Scroll to explore</span>
+      <span>Scroll</span>
     </div>
   </section>
 
@@ -50,21 +52,21 @@
        ═══════════════════════════════════════════════════════════════ -->
   <section class="rf-thesis" id="rf-thesis">
     <h2 class="rf-thesis-statement" id="rfThesisStatement">
-      Agricultural operations, defense logistics, and autonomous inspection — we've engineered solutions for all of them. Our work thrives where a single error cascades across entire operations.
+      Surgeons, soldiers, and shoppers — we've built for all of them. Our work thrives where failure isn't an option and complexity is the starting point.
     </h2>
 
     <div class="rf-thesis-columns">
       <div>
         <p class="rf-thesis-copy">
-          We specialize in drone systems that operate at scale — whether coordinating 12 units across 2,760 hectares in a 48-hour window, managing ammunition loads in armored vehicles, or providing surveillance for complex operations. Every flight path is optimized. Every variable is monitored in real-time.
+          We specialize in systems that survive reality — whether that's a high-pressure clinical environment, an armored vehicle interior, or a luxury retail launch. Every pixel earns its place. Every interaction is tested against the worst case, not the demo.
         </p>
       </div>
       <div>
         <p class="rf-thesis-copy">
-          Based in Bengaluru with operations across Europe and India, rabbitsfoot brings aerospace-grade precision to every project. After years in the field — from agricultural drones to tactical wearables — we've learned that anything less than perfect doesn't fly.
+          Based in Bengaluru with partner agencies at project locations across Europe and India, rabbitsfoot brings a "don't-fail" discipline to every engagement. After years designing for hospitals, armored vehicles, and retail floors, we've forgotten how to make things that break.
         </p>
         <a href="studio-about.html" class="rf-thesis-link">
-          More about our approach
+          More about the studio
           <svg viewBox="0 0 12 12" fill="none">
             <path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -78,31 +80,30 @@
        SECTION 3: KEY FACTS — Massive Typographic Counters
        ═══════════════════════════════════════════════════════════════ -->
   <section class="rf-facts" id="rf-facts">
-    <p class="rf-facts-eyebrow">Operations at scale</p>
+    <p class="rf-facts-eyebrow">The numbers</p>
     <div class="rf-facts-grid">
 
-      <div class="rf-fact" data-target="12">
+      <div class="rf-fact" data-target="25">
         <div class="rf-fact-num-wrap">
           <span class="rf-fact-number" id="rfFact1">0</span>
-          <span class="rf-fact-suffix"> Drones</span>
+          <span class="rf-fact-suffix">+</span>
         </div>
-        <p class="rf-fact-label">Coordinated per mission</p>
+        <p class="rf-fact-label">Projects Shipped</p>
       </div>
 
-      <div class="rf-fact" data-target="2760">
+      <div class="rf-fact" data-target="8">
         <div class="rf-fact-num-wrap">
           <span class="rf-fact-number" id="rfFact2">0</span>
-          <span class="rf-fact-suffix"> Ha</span>
+          <span class="rf-fact-suffix">+</span>
         </div>
-        <p class="rf-fact-label">Coverage in 48 hours</p>
+        <p class="rf-fact-label">Years in the Field</p>
       </div>
 
-      <div class="rf-fact" data-target="99.8">
+      <div class="rf-fact" data-target="6">
         <div class="rf-fact-num-wrap">
           <span class="rf-fact-number" id="rfFact3">0</span>
-          <span class="rf-fact-suffix">%</span>
         </div>
-        <p class="rf-fact-label">Mission success rate</p>
+        <p class="rf-fact-label">Domains Covered</p>
       </div>
 
     </div>
@@ -114,126 +115,97 @@
        ═══════════════════════════════════════════════════════════════ -->
   <section class="rf-work" id="rf-work">
     <div class="rf-work-header">
-      <p class="rf-work-eyebrow">Selected Work</p>
-      <h2 class="rf-work-title">Projects we're<br><em>proud of</em></h2>
+      <h2 class="rf-work-title">Selected work</h2>
+      <p class="rf-work-note">Six programmes across healthcare, defense, agriculture, and retail. Defense work is published under NDA with partner agencies.</p>
     </div>
 
-    <!-- Panel 1: Parkbeheer NL -->
-    <a href="parkbeheer.html" class="rf-panel">
-      <div class="rf-panel-image">
-        <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png" alt="Parkbeheer NL" loading="lazy">
-      </div>
-      <div class="rf-panel-scrim"></div>
-      <div class="rf-panel-info">
-        <span class="rf-panel-badge concept">Under NDA</span>
-        <h3 class="rf-panel-title">Parkbeheer NL</h3>
-        <p class="rf-panel-desc">Replacing a 20-year-old spreadsheet system with an enterprise platform for 120+ parking officers managing 923K spaces across the Netherlands.</p>
-        <span class="rf-panel-link">
-          Explore project
-          <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </div>
-    </a>
+    <div class="rf-work-rail">
+      <a class="rf-project is-left is-lead" href="parkbeheer.html">
+        <div class="rf-project-media">
+          <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png" alt="Parkbeheer NL enforcement platform shown on desktop" loading="lazy" decoding="async">
+        </div>
+        <div class="rf-project-meta">
+          <span class="rf-panel-badge concept">Under NDA</span>
+          <h3 class="rf-project-title">Parkbeheer NL</h3>
+          <p class="rf-project-desc">Replacing a 20-year-old spreadsheet system with an enterprise platform for 120+ parking officers managing 923K spaces across the Netherlands.</p>
+          <span class="rf-panel-link">Explore project <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
 
-    <!-- Panel 2: CHARGEUR -->
-    <a href="chargeur.html" class="rf-panel">
-      <div class="rf-panel-image">
-        <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="CHARGEUR" loading="lazy">
-      </div>
-      <div class="rf-panel-scrim"></div>
-      <div class="rf-panel-info">
-        <span class="rf-panel-badge concept">Under NDA</span>
-        <h3 class="rf-panel-title">CHARGEUR</h3>
-        <p class="rf-panel-desc">Redesigning ammunition load management for the ALT-3 armored vehicle fleet. Zero mismatch errors. 41% faster type-switch time.</p>
-        <span class="rf-panel-link">
-          Explore project
-          <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </div>
-    </a>
+      <a class="rf-project is-right is-lead" href="chargeur.html">
+        <div class="rf-project-media">
+          <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="CHARGEUR ammunition load management interface" loading="lazy" decoding="async">
+        </div>
+        <div class="rf-project-meta">
+          <span class="rf-panel-badge concept">Under NDA</span>
+          <h3 class="rf-project-title">CHARGEUR</h3>
+          <p class="rf-project-desc">Redesigning ammunition load management for the ALT-3 armored vehicle fleet. Zero mismatch errors. 41% faster type-switch time.</p>
+          <span class="rf-panel-link">Explore project <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
 
-    <!-- Panel 3: VIGIL (no image — styled bg + SVG) -->
-    <a href="vigil.html" class="rf-panel rf-panel--vigil">
-      <div class="rf-panel-image">
-        <svg class="rf-vigil-icon" viewBox="0 0 160 160">
-          <rect x="52" y="28" width="56" height="104" rx="20" fill="#111827" stroke="#4ADE80" stroke-width="1.5"/>
-          <rect x="62" y="10" width="36" height="20" rx="6" fill="#1a2332"/>
-          <rect x="62" y="130" width="36" height="20" rx="6" fill="#1a2332"/>
-          <rect x="58" y="38" width="44" height="52" rx="6" fill="#0A0E14"/>
-          <circle cx="80" cy="64" r="14" fill="none" stroke="#4ADE80" stroke-width="0.8" stroke-opacity="0.5"/>
-          <polygon points="80,52 83,62 80,60 77,62" fill="#4ADE80"/>
-          <polygon points="80,76 83,66 80,68 77,66" fill="#4ADE80" opacity="0.4"/>
-          <circle cx="80" cy="108" r="3" fill="#4ADE80"/>
-          <text x="80" y="119" font-family="monospace" font-size="5" fill="#4ADE80" text-anchor="middle" opacity="0.7">OPERATIONAL</text>
-        </svg>
-      </div>
-      <div class="rf-panel-scrim"></div>
-      <div class="rf-panel-info">
-        <span class="rf-panel-badge concept">Under NDA</span>
-        <h3 class="rf-panel-title">VIGIL</h3>
-        <p class="rf-panel-desc">Designing a tactical wearable for NATO infantry — in darkness, under fire, with gloves on. 67 screens. Wear OS 4 + iOS/Android.</p>
-        <span class="rf-panel-link">
-          Explore project
-          <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </div>
-    </a>
+      <a class="rf-project is-left is-inset" href="vigil.html">
+        <div class="rf-project-media rf-project-media--mark">
+          <svg class="rf-vigil-icon" viewBox="0 0 160 160" aria-hidden="true">
+            <rect x="52" y="28" width="56" height="104" rx="20" fill="#111827" stroke="#4ADE80" stroke-width="1.5"/>
+            <rect x="62" y="10" width="36" height="20" rx="6" fill="#1a2332"/>
+            <rect x="62" y="130" width="36" height="20" rx="6" fill="#1a2332"/>
+            <rect x="58" y="38" width="44" height="52" rx="6" fill="#0A0E14"/>
+            <circle cx="80" cy="64" r="14" fill="none" stroke="#4ADE80" stroke-width="0.8" stroke-opacity="0.5"/>
+            <polygon points="80,52 83,62 80,60 77,62" fill="#4ADE80"/>
+            <polygon points="80,76 83,66 80,68 77,66" fill="#4ADE80" opacity="0.4"/>
+            <circle cx="80" cy="108" r="3" fill="#4ADE80"/>
+            <text x="80" y="119" font-family="monospace" font-size="5" fill="#4ADE80" text-anchor="middle" opacity="0.7">OPERATIONAL</text>
+          </svg>
+        </div>
+        <div class="rf-project-meta">
+          <span class="rf-panel-badge concept">Under NDA</span>
+          <h3 class="rf-project-title">VIGIL</h3>
+          <p class="rf-project-desc">Designing a tactical wearable for NATO infantry — in darkness, under fire, with gloves on. 67 screens. Wear OS 4 + iOS/Android.</p>
+          <span class="rf-panel-link">Explore project <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
 
-    <!-- Panel 4: MUSPELL -->
-    <a href="muspell.html" class="rf-panel">
-      <div class="rf-panel-image">
-        <img src="gallery/muspell images/hero-mockup.png" alt="MUSPELL" loading="lazy">
-      </div>
-      <div class="rf-panel-scrim"></div>
-      <div class="rf-panel-info">
-        <span class="rf-panel-badge shipped">Shipped</span>
-        <h3 class="rf-panel-title">MUSPELL</h3>
-        <p class="rf-panel-desc">Clinical data visualisation platform — turning complex patient data into clear, actionable interfaces for healthcare teams.</p>
-        <span class="rf-panel-link">
-          Explore project
-          <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </div>
-    </a>
+      <a class="rf-project is-right is-inset" href="muspell.html">
+        <div class="rf-project-media">
+          <img src="gallery/muspell images/hero-mockup.png" alt="MUSPELL clinical data visualisation dashboard" loading="lazy" decoding="async">
+        </div>
+        <div class="rf-project-meta">
+          <span class="rf-panel-badge shipped">Shipped</span>
+          <h3 class="rf-project-title">MUSPELL</h3>
+          <p class="rf-project-desc">Clinical data visualisation platform — turning complex patient data into clear, actionable interfaces for healthcare teams.</p>
+          <span class="rf-panel-link">Explore project <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
 
-    <!-- Panel 5: ROJNICA -->
-    <a href="rojnica.html" class="rf-panel">
-      <div class="rf-panel-image">
-        <img src="images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png" alt="ROJNICA" loading="lazy">
-      </div>
-      <div class="rf-panel-scrim"></div>
-      <div class="rf-panel-info">
-        <span class="rf-panel-badge concept">Under NDA</span>
-        <h3 class="rf-panel-title">ROJNICA</h3>
-        <p class="rf-panel-desc">Coordinating 12 agricultural drones across 2,760 hectares within a 48-hour treatment window. Three interfaces, one system.</p>
-        <span class="rf-panel-link">
-          Explore project
-          <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </div>
-    </a>
+      <a class="rf-project is-left is-lead" href="rojnica.html">
+        <div class="rf-project-media">
+          <img src="images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png" alt="ROJNICA agricultural drone fleet coordination screens" loading="lazy" decoding="async">
+        </div>
+        <div class="rf-project-meta">
+          <span class="rf-panel-badge concept">Under NDA</span>
+          <h3 class="rf-project-title">ROJNICA</h3>
+          <p class="rf-project-desc">Coordinating 12 agricultural drones across 2,760 hectares within a 48-hour treatment window. Three interfaces, one system.</p>
+          <span class="rf-panel-link">Explore project <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
 
-    <!-- Panel 6: Titan EYEx -->
-    <a href="titaneyeplus_casestudy.html" class="rf-panel">
-      <div class="rf-panel-image">
-        <img src="images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp" alt="Titan EYEx" loading="lazy">
-      </div>
-      <div class="rf-panel-scrim"></div>
-      <div class="rf-panel-info">
-        <span class="rf-panel-badge shipped">Shipped</span>
-        <h3 class="rf-panel-title">Titan EYEx</h3>
-        <p class="rf-panel-desc">Redesigning the eyewear browsing and selection experience for Titan's optical retail brand — combining prescription and style discovery.</p>
-        <span class="rf-panel-link">
-          Explore project
-          <svg viewBox="0 0 12 12" fill="none"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-      </div>
-    </a>
+      <a class="rf-project is-right is-inset" href="titaneyeplus_casestudy.html">
+        <div class="rf-project-media">
+          <img src="images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp" alt="Titan EYEx eyewear browsing experience" loading="lazy" decoding="async">
+        </div>
+        <div class="rf-project-meta">
+          <span class="rf-panel-badge shipped">Shipped</span>
+          <h3 class="rf-project-title">Titan EYEx</h3>
+          <p class="rf-project-desc">Redesigning the eyewear browsing and selection experience for Titan's optical retail brand — combining prescription and style discovery.</p>
+          <span class="rf-panel-link">Explore project <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H5M11 1V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </a>
+    </div>
 
-    <!-- View All Strip -->
     <a href="all-works.html" class="rf-view-all-strip">
-      <span class="rf-view-all-text">View All Projects</span>
-      <svg viewBox="0 0 32 32" fill="none">
+      <span class="rf-view-all-text">View all projects</span>
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
         <path d="M8 24L24 8M24 8H14M24 8V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
@@ -418,209 +390,51 @@
   <!-- ═══════════════════════════════════════════════════════════════
        SCRIPTS
        ═══════════════════════════════════════════════════════════════ -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@r128/examples/js/loaders/FBXLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+  <!-- three.js runs as a module; GSAP stays global for the text choreography -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.168.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="studio-drone.js"></script>
+
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
     var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
-    // ─── THREE.JS HERO — INTERACTIVE DRONE MODEL WITH SCROLL SYNC ─────
+    // ─── SMOOTH SCROLL — drives both the drone and ScrollTrigger ──
     (function () {
-      if (prefersReduced || typeof THREE === 'undefined') return;
+      if (prefersReduced || typeof Lenis === 'undefined') return;
 
-      var canvas = document.getElementById('rfThreeCanvas');
-      if (!canvas) return;
+      var lenis = new Lenis({
+        duration: 1.05,
+        easing: function (t) { return 1 - Math.pow(1 - t, 4); },
+        smoothWheel: true
+      });
 
-      var w = canvas.offsetWidth;
-      var h = canvas.offsetHeight;
-      var scene = new THREE.Scene();
-      scene.background = null;
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
 
-      // camera
-      var camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
-      camera.position.set(0, 2, 8);
-
-      // renderer
-      var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(w, h);
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.2;
-
-      // lighting for drone (more tech-industrial)
-      scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-
-      var keyLight = new THREE.DirectionalLight(0x00d4ff, 1.5);
-      keyLight.position.set(8, 8, 10);
-      scene.add(keyLight);
-
-      var fillLight = new THREE.DirectionalLight(0xff6600, 0.8);
-      fillLight.position.set(-10, 6, -8);
-      scene.add(fillLight);
-
-      var rimLight = new THREE.PointLight(0x00ffff, 1, 50);
-      rimLight.position.set(-12, 10, 0);
-      scene.add(rimLight);
-
-      // drone group (will contain loaded FBX)
-      var droneGroup = new THREE.Group();
-      scene.add(droneGroup);
-
-      // load FBX drone model
-      var textureLoader = new THREE.TextureLoader();
-      var droneMesh = null;
-
-      // Create a simple fallback drone shape if FBX doesn't load
-      function createFallbackDrone() {
-        var group = new THREE.Group();
-
-        // Fuselage
-        var fuselageGeom = new THREE.BoxGeometry(0.2, 0.6, 1.2);
-        var droneMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e, metalness: 0.8, roughness: 0.3 });
-        var fuselage = new THREE.Mesh(fuselageGeom, droneMat);
-        group.add(fuselage);
-
-        // Arms (4)
-        for (var i = 0; i < 4; i++) {
-          var armGeom = new THREE.BoxGeometry(0.08, 0.08, 1.4);
-          var arm = new THREE.Mesh(armGeom, droneMat);
-          arm.position.x = (i < 2 ? 1 : -1) * 0.6;
-          arm.position.z = (i % 2 ? 0.4 : -0.4);
-          group.add(arm);
-
-          // Motors
-          var motorGeom = new THREE.CylinderGeometry(0.15, 0.15, 0.1, 16);
-          var motorMat = new THREE.MeshStandardMaterial({ color: 0xff6600, metalness: 0.9 });
-          var motor = new THREE.Mesh(motorGeom, motorMat);
-          motor.position.copy(arm.position);
-          motor.position.z += 0.7;
-          group.add(motor);
-
-          // Propellers
-          var propGeom = new THREE.BoxGeometry(0.05, 2, 0.3);
-          var propMat = new THREE.MeshStandardMaterial({ color: 0x00ffff, metalness: 0.7, emissive: 0x00aa88 });
-          var prop = new THREE.Mesh(propGeom, propMat);
-          prop.position.copy(motor.position);
-          prop.rotation.z = Math.random() * Math.PI;
-          group.add(prop);
-        }
-
-        // Camera gimbal
-        var gimbalGeom = new THREE.SphereGeometry(0.2, 8, 8);
-        var gimbalMat = new THREE.MeshStandardMaterial({ color: 0x00ffff, metalness: 0.6, emissive: 0x0066ff });
-        var gimbal = new THREE.Mesh(gimbalGeom, gimbalMat);
-        gimbal.position.z = 0.5;
-        group.add(gimbal);
-
-        return group;
-      }
-
-      droneMesh = createFallbackDrone();
-      droneGroup.add(droneMesh);
-
-      // Try to load FBX if available
-      if (typeof THREE.FBXLoader !== 'undefined') {
-        var fbxLoader = new THREE.FBXLoader();
-        fbxLoader.load('models/drone.fbx', function(fbx) {
-          droneGroup.remove(droneMesh);
-          fbx.scale.set(0.01, 0.01, 0.01);
-          fbx.traverse(function(child) {
-            if (child.isMesh) {
-              child.castShadow = true;
-              child.receiveShadow = true;
-            }
-          });
-          droneGroup.add(fbx);
-          droneMesh = fbx;
-        }, undefined, function(error) {
-          console.log('FBX load fallback', error);
+      // in-page anchors need to go through Lenis to stay smooth
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var target = document.querySelector(a.getAttribute('href'));
+          if (!target) return;
+          e.preventDefault();
+          lenis.scrollTo(target, { offset: 0 });
         });
-      } else {
-        console.log('FBXLoader not available, using procedural drone');
-      }
-
-      // scroll state for anime.js integration
-      var scrollProgress = { value: 0 };
-
-      // Setup anime.js scroll-driven animation
-      function updateDroneFromScroll() {
-        var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var scrollPercent = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
-
-        if (droneMesh) {
-          // Rotation based on scroll
-          droneMesh.rotation.y = scrollPercent * Math.PI * 4;
-          droneMesh.rotation.x = Math.sin(scrollPercent * Math.PI * 2) * 0.3;
-          droneMesh.rotation.z = Math.cos(scrollPercent * Math.PI) * 0.2;
-
-          // Position based on scroll (vertical movement)
-          droneMesh.position.y = Math.sin(scrollPercent * Math.PI * 2) * 2;
-
-          // Scale breathing effect
-          var scale = 1 + Math.sin(scrollPercent * Math.PI * 4) * 0.1;
-          droneMesh.scale.setScalar(scale);
-        }
-
-        // Canvas opacity fade on scroll
-        var heroH = window.innerHeight;
-        var scrollFade = Math.max(0, 1 - (window.scrollY / (heroH * 0.7)));
-        canvas.style.opacity = scrollFade;
-
-        renderer.render(scene, camera);
-      }
-
-      // Mouse parallax
-      var mouseX = 0, mouseY = 0;
-      var targetMX = 0, targetMY = 0;
-
-      window.addEventListener('mousemove', function (e) {
-        targetMX = (e.clientX / window.innerWidth - 0.5) * 0.3;
-        targetMY = (e.clientY / window.innerHeight - 0.5) * 0.3;
-      }, { passive: true });
-
-      function resize() {
-        w = canvas.offsetWidth;
-        h = canvas.offsetHeight;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
-      }
-      window.addEventListener('resize', resize, { passive: true });
-      window.addEventListener('scroll', updateDroneFromScroll, { passive: true });
-
-      // main animation loop
-      var clock = new THREE.Clock();
-      function animate() {
-        requestAnimationFrame(animate);
-        if (document.hidden) return;
-
-        var t = clock.getElapsedTime();
-
-        // smooth mouse parallax
-        mouseX += (targetMX - mouseX) * 0.06;
-        mouseY += (targetMY - mouseY) * 0.06;
-
-        if (droneMesh) {
-          // apply mouse parallax on top of scroll
-          droneMesh.rotation.y += mouseX * 0.01;
-          droneMesh.rotation.x += mouseY * 0.01;
-        }
-
-        // animate lights
-        keyLight.position.x = 8 + Math.sin(t * 0.3) * 3;
-        keyLight.position.y = 8 + Math.cos(t * 0.4) * 2;
-        rimLight.position.z = Math.sin(t * 0.25) * 5;
-
-        renderer.render(scene, camera);
-      }
-      animate();
+      });
     })();
-
 
     // ─── HERO SPLIT-LINE REVEAL ──────────────────────────────────
     (function () {
@@ -769,54 +583,57 @@
         start: 'top 75%',
         once: true,
         onEnter: function () {
-          gsap.from('.rf-work-eyebrow', { opacity: 0, y: 12, duration: 0.6, ease: 'power2.out' });
-          gsap.from('.rf-work-title', { opacity: 0, y: 30, duration: 0.8, delay: 0.1, ease: 'power2.out' });
+          gsap.from('.rf-work-title', { opacity: 0, y: 30, duration: 0.8, ease: 'power2.out' });
+          gsap.from('.rf-work-note', { opacity: 0, y: 16, duration: 0.7, delay: 0.15, ease: 'power2.out' });
         }
       });
     })();
 
 
-    // ─── WORK — PANEL PARALLAX + INFO REVEAL ────────────────────
+    // ─── WORK — MEDIA DRIFT + META REVEAL ───────────────────────
     (function () {
       if (prefersReduced) return;
 
-      // parallax on image containers
-      document.querySelectorAll('.rf-panel').forEach(function (panel) {
-        if (panel.classList.contains('rf-panel--vigil')) return;
+      document.querySelectorAll('.rf-project').forEach(function (project) {
+        var img = project.querySelector('.rf-project-media img');
 
-        var panelImage = panel.querySelector('.rf-panel-image');
-        if (!panelImage) return;
-
-        gsap.fromTo(panelImage,
-          { y: -40 },
-          {
-            y: 40,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: panel,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true
+        // slow vertical drift inside the frame, so the rail breathes
+        if (img) {
+          gsap.fromTo(img,
+            { yPercent: -3 },
+            {
+              yPercent: 3,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: project,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+              }
             }
-          }
-        );
-      });
+          );
+        }
 
-      // info stagger reveal
-      document.querySelectorAll('.rf-panel-info').forEach(function (info) {
-        var panel = info.closest('.rf-panel');
-        gsap.from(info.children, {
-          y: 40,
-          opacity: 0,
-          stagger: 0.08,
-          duration: 0.7,
+        // the frame wipes open, then the meta lands
+        gsap.from(project.querySelector('.rf-project-media'), {
+          clipPath: 'inset(0% 0% 100% 0%)',
+          duration: 1.1,
           ease: 'power3.out',
-          scrollTrigger: {
-            trigger: panel,
-            start: 'top 55%',
-            once: true
-          }
+          scrollTrigger: { trigger: project, start: 'top 78%', once: true }
         });
+
+        var meta = project.querySelector('.rf-project-meta');
+        if (meta) {
+          gsap.from(meta.children, {
+            y: 26,
+            opacity: 0,
+            stagger: 0.07,
+            duration: 0.7,
+            delay: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: project, start: 'top 78%', once: true }
+          });
+        }
       });
     })();
 
