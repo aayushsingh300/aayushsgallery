@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHARGEUR — Ammunition Load Management Case Study</title>
+    <title>Chargeur · Ammunition Load Management Case Study</title>
     <meta name="description"
-        content="Redesigning ammunition management for an armored vehicle fleet. A UX case study by Aayush R, published with details altered under NDA.">
+        content="Redesigning ammunition management for an armoured vehicle fleet. A UX case study by Aayush R, published with details altered under NDA.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -20,22 +20,22 @@
         }
 
         :root {
-            --bg-primary: #0D0F14;
-            --bg-surface: #161A22;
-            --bg-elevated: #1E2430;
-            --bg-alt: #0F1119;
-            --ofl: #4A9EFF;
-            --occ: #FF8C42;
-            --oe: #7BC67E;
-            --alert-amber: #FFB800;
-            --alert-red: #FF4444;
-            --alert-green: #3DD68C;
-            --text-primary: #F0F2F5;
-            --text-secondary: #8B95A6;
-            --border: #2A3142;
-            --font-heading: 'Space Grotesk', sans-serif;
-            --font-data: 'Space Mono', monospace;
-            --font-body: 'Inter', sans-serif;
+            --bg-primary: #0A0A0B;
+            --bg-surface: #121314;
+            --bg-elevated: #1A1B1D;
+            --bg-alt: #0E0F10;
+            --ofl: #8FA6BC;
+            --occ: #C08A5E;
+            --oe: #93A583;
+            --alert-amber: #E9A13B;
+            --alert-red: #E04B4B;
+            --alert-green: #9DA1A5;
+            --text-primary: #ECEDEE;
+            --text-secondary: #9DA1A5;
+            --border: #2B2D2F;
+            --font-heading: 'Archivo', -apple-system, sans-serif;
+            --font-data: 'Spline Sans Mono', ui-monospace, SFMono-Regular, monospace;
+            --font-body: 'Archivo', -apple-system, sans-serif;
         }
 
         body {
@@ -115,22 +115,23 @@
         }
 
         .hero-tag {
-            font-family: var(--font-data);
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
+            font-size: 14px;
             color: var(--text-secondary);
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+            padding-left: 14px;
+            border-left: 1px solid var(--border);
+            max-width: 560px;
         }
 
         .hero h1 {
             font-family: var(--font-heading);
-            font-size: 52px;
+            font-size: clamp(38px, 4.4vw, 58px);
             font-weight: 700;
-            line-height: 1.1;
-            max-width: 700px;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
+            line-height: 1.06;
+            max-width: 15ch;
+            margin-bottom: 28px;
+            letter-spacing: -0.032em;
+            text-wrap: balance;
         }
 
         .hero h1 em {
@@ -154,20 +155,19 @@
         }
 
         .hero-chips span {
-            font-family: var(--font-data);
-            font-size: 11px;
-            padding: 5px 14px;
+            font-size: 13px;
+            padding: 5px 13px;
             border-radius: 3px;
             background: var(--bg-surface);
             border: 1px solid var(--border);
             color: var(--text-secondary);
         }
 
-        /* Hero composition */
+        /* Hero composition: three surfaces, staggered so each one stays readable */
         .hero-comp {
             position: relative;
-            height: 480px;
-            margin-top: 20px;
+            height: 512px;
+            margin-top: 44px;
         }
 
         .hero-screen {
@@ -175,45 +175,9 @@
             border-radius: 8px;
             overflow: hidden;
             background: var(--bg-surface);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
             pointer-events: none;
-        }
-
-        .hero-screen .chrome {
-            background: #1E2430;
-            padding: 6px 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .hero-screen .chrome .d {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-
-        .hero-screen .chrome .d:nth-child(1) {
-            background: #FF5F57;
-        }
-
-        .hero-screen .chrome .d:nth-child(2) {
-            background: #FFBD2E;
-        }
-
-        .hero-screen .chrome .d:nth-child(3) {
-            background: #28CA41;
-        }
-
-        .hero-screen .chrome .url {
-            flex: 1;
-            margin-left: 8px;
-            font-family: var(--font-data);
-            font-size: 9px;
-            color: var(--text-secondary);
-            background: var(--bg-primary);
-            padding: 2px 8px;
-            border-radius: 3px;
         }
 
         .hero-screen iframe {
@@ -223,51 +187,48 @@
         }
 
         .hero-screen.main {
-            left: 50%;
-            transform: translateX(-50%);
-            width: 740px;
-            height: 440px;
+            left: 0;
+            top: 0;
+            width: 748px;
+            height: 468px;
             z-index: 2;
         }
 
         .hero-screen.main iframe {
-            width: 1280px;
-            height: 800px;
-            transform: scale(0.578);
+            width: 1440px;
+            height: 900px;
+            transform: scale(0.5194);
         }
 
         .hero-screen.back-left {
-            left: 0;
-            top: 40px;
-            width: 340px;
-            height: 230px;
+            right: 0;
+            top: 8px;
+            width: 344px;
+            height: 215px;
             z-index: 1;
-            opacity: 0.7;
-            transform: perspective(1200px) rotateY(15deg);
+            opacity: 0.88;
         }
 
         .hero-screen.back-left iframe {
-            width: 1280px;
-            height: 800px;
-            transform: scale(0.265);
+            width: 1440px;
+            height: 900px;
+            transform: scale(0.2389);
         }
 
         .hero-screen.front-right {
             right: 0;
-            top: 100px;
-            width: 280px;
-            height: 200px;
+            bottom: 0;
+            width: 452px;
+            height: 283px;
             z-index: 3;
-            box-shadow: 0 24px 80px rgba(255, 184, 0, 0.15), 0 16px 40px rgba(0, 0, 0, 0.4);
         }
 
         .hero-screen.front-right iframe {
-            width: 1280px;
-            height: 800px;
-            transform: scale(0.218);
+            width: 1440px;
+            height: 900px;
+            transform: scale(0.3139);
         }
 
-        /* Stats strip */
         .hero-stats {
             display: flex;
             gap: 40px;
@@ -280,14 +241,14 @@
         }
 
         .hero-stats .stat {
-            font-family: var(--font-data);
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
         }
 
         .hero-stats .stat strong {
-            color: var(--alert-green);
-            font-weight: 700;
+            font-family: var(--font-data);
+            font-weight: 500;
+            color: var(--text-primary);
         }
 
         /* ── Pull Quote ── */
@@ -299,18 +260,17 @@
             line-height: 1.4;
             max-width: 680px;
             margin: 40px 0;
-            padding-left: 24px;
-            border-left: 3px solid var(--ofl);
+            padding-left: 22px;
+            border-left: 1px solid var(--border);
         }
 
         /* ── Crew Quote ── */
         .crew-quote {
-            font-family: var(--font-data);
-            font-size: 15px;
+            font-size: 17px;
             color: var(--text-secondary);
             line-height: 1.6;
-            padding: 24px 0 24px 24px;
-            border-left: 3px solid var(--ofl);
+            padding: 20px 0 20px 22px;
+            border-left: 1px solid var(--border);
             margin: 32px 0;
         }
 
@@ -595,7 +555,7 @@
             border-radius: 4px;
         }
         .ann-note-title {
-            font-family: 'Space Mono', monospace;
+            font-family: var(--font-data);
             font-size: 9.5px;
             font-weight: 700;
             margin-bottom: 4px;
@@ -604,7 +564,7 @@
         }
         .ann-note-body {
             font-size: 11px;
-            color: #8B95A6;
+            color: #9DA1A5;
             line-height: 1.5;
         }
 
@@ -774,33 +734,38 @@
         }
 
         /* Defensive global: prevent rogue inline-width content from forcing a horizontal scrollbar */
-        html, body { overflow-x: hidden; }
+        html,
+        body {
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
 
         /* ── Responsive ── */
         @media (max-width: 860px) {
             .container { padding: 0 24px; }
             .section { padding: 64px 0; }
 
-            /* ── Hero typography — tame the eyebrow tag and intro paragraph for phones.
+            /* ── Hero typography, tame the eyebrow tag and intro paragraph for phones.
                The inline style on .hero-sub adds font-size:20px on desktop; the !important here
                keeps the mobile size from being overridden by that inline rule. ── */
             .hero { padding: 72px 0 0; }
-            .hero-tag { font-size: 10px; letter-spacing: 0.12em; }
+            .hero-tag { font-size: 13px; }
             .hero h1 { font-size: 32px; line-height: 1.15; }
             .hero-sub { font-size: 15px !important; line-height: 1.55; }
             .hero-chips { gap: 8px; }
             .hero-chips span { font-size: 10px; padding: 4px 10px; }
             .hero-stats { flex-wrap: wrap; gap: 20px; padding: 24px 0; }
 
-            /* Hide complex hero composition — too wide for mobile */
+            /* Hide complex hero composition, too wide for mobile */
             .hero-comp { display: none; }
 
             /* ── Mobile: keep the iframe visible, proportionally scaled to fit the viewport.
                JS scaleEmbeds() computes scale = clientWidth / 1440 (≈0.25 on a phone).
-               DO NOT override transform/width/height here — JS owns sizing. ── */
+               DO NOT override transform/width/height here, JS owns sizing. ── */
             .screen-embed { overflow: hidden; max-width: 100%; }
 
-            /* Annotations, pin dots, connector lines — desktop-only. Mobile shows the screen alone. */
+            /* Annotations, pin dots, connector lines, desktop-only. Mobile shows the screen alone. */
             .ann-sidebar, .ann-svg, .ann-lines { display: none !important; }
             .screen-annotated { gap: 0 !important; }
 
@@ -842,6 +807,68 @@
             .pull-quote { font-size: 17px; padding-left: 14px; }
             .section h2 { font-size: 22px; }
         }
+
+        /* ── Reveals ──────────────────────────────────────────────────────────
+           Scroll-driven, not script-driven. Content is visible by default and
+           the motion is an enhancement on top, so a blocked CDN or a browser
+           without scroll timelines still renders a complete page. ── */
+        @keyframes rise-in {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes settle-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.992);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+
+                .section h2,
+                .section h3,
+                .section p,
+                .section li,
+                .metric-card,
+                .card,
+                .timeline-step,
+                .insight-card,
+                .outcome-card,
+                .quote-block,
+                .pull-quote,
+                .two-col>*,
+                .three-col>*,
+                .four-col>* {
+                    animation: rise-in linear both;
+                    animation-timeline: view();
+                    animation-range: entry 2% entry 42%;
+                }
+
+                .screen-annotated,
+                .screen-embed,
+                figure,
+                .section img:not(.nav-logo-img) {
+                    animation: settle-in linear both;
+                    animation-timeline: view();
+                    animation-range: entry 0% entry 38%;
+                }
+            }
+        }
+
     </style>
 <link rel="stylesheet" href="site-globals.css">
 </head>
@@ -850,64 +877,43 @@
 
     <!-- Disclosure: consulting engagement published under NDA -->
     <div class="concept-note"
-        style="position:relative;z-index:60;padding:11px 24px;text-align:center;background:rgba(255,255,255,0.045);border-bottom:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:0.03em;color:var(--text-secondary,#8b95a6);">
+        style="position:relative;z-index:60;margin-top:73px;padding:11px 24px;text-align:center;background:rgba(255,255,255,0.045);border-bottom:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:0.03em;color:var(--text-secondary,#8b95a6);">
         Consulting engagement under NDA, delivered with a partner agency. Names, program identifiers, and incident details have been altered; the process and outcomes are real.
     </div>
 
     <!-- HERO -->
     <section class="hero">
         <div class="container" style="position:relative;z-index:2;">
-            <div class="hero-tag">CHARGEUR PROGRAM · 2024</div>
+            <div class="hero-tag">A French main battle tank programme, 2024. Four quarters as lead UX designer,
+                through a Paris defence agency, with four escorted site visits.</div>
             <h1>Making lethal decisions on a tablet interface</h1>
             <p class="hero-sub" style="font-size: 20px; color: var(--text-primary); margin-top: 16px;">
                 <strong>CHARGEUR</strong> is a tablet-based ammunition management system for the <strong>ALT-3 Main
                     Battle Tank</strong>.
-                I redesigned the interface to ensure that commanders and gunners—operating under extreme stress inside a
-                cramped, vibrating vehicle—can instantly verify what they are about to fire.
+                I redesigned the interface to ensure that commanders and gunners working under extreme stress inside a
+                cramped, vibrating vehicle can instantly verify what they are about to fire.
             </p>
             <div class="hero-chips" style="margin-top: 24px;">
                 <span>Lead UX Designer</span>
-                <span>Tablet UI</span>
-                <span>Military & Defense</span>
+                <span>Rugged tablet UI</span>
+                <span>Defence</span>
             </div>
             <div class="hero-comp">
-                <!-- Back left: Fleet map -->
-                <div class="hero-screen back-left">
-                    <div class="chrome">
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="url">chargeur.app/fleet</div>
-                    </div>
-                    <iframe src="chargeur-app.html#fleet" tabindex="-1"></iframe>
-                </div>
                 <!-- Center: Commander panel -->
                 <div class="hero-screen main">
-                    <div class="chrome">
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="url">chargeur.app/vehicle</div>
-                    </div>
                     <iframe src="chargeur-app.html#vehicle" tabindex="-1"></iframe>
                 </div>
                 <!-- Front right: Mismatch alert -->
-                <div class="hero-screen front-right" style="border: 1px solid rgba(255,184,0,0.3);">
-                    <div class="chrome">
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="url">chargeur.app/vehicle · ALERT</div>
-                    </div>
+                <div class="hero-screen front-right" style="border: 1px solid rgba(233,161,59,0.3);">
                     <iframe src="chargeur-app.html#vehicle/mismatch" tabindex="-1"></iframe>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="hero-stats">
-                <div class="stat">↓ <strong>41%</strong> type-switch time</div>
-                <div class="stat"><strong>0</strong> mismatch errors in evaluation</div>
-                <div class="stat"><strong>67</strong> MIL-SPEC components</div>
+                <div class="stat">Type-switch time down <strong>41%</strong></div>
+                <div class="stat"><strong>24</strong> reruns of the Victor 4 scenario, <strong>0</strong> mismatches</div>
+                <div class="stat"><strong>67</strong> components built to MIL-STD-1472</div>
             </div>
         </div>
     </section>
@@ -915,9 +921,9 @@
     <!-- QUICK INTRO -->
     <section style="padding: 0;">
         <div class="container">
-            <div style="border: 1px solid rgba(74,158,255,0.28); padding: 20px 24px; background: var(--bg-surface); border-radius: 8px; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
+            <div style="border: 1px solid rgba(143,166,188,0.28); padding: 20px 24px; background: var(--bg-surface); border-radius: 8px; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
                 <strong style="color: var(--text-primary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">What you're about to read</strong><br style="margin-bottom: 8px;">
-                This is the story of redesigning the ammunition management interface for a French main battle tank. A near-miss incident — where the wrong round was loaded because the interface couldn't clearly communicate what was chambered — kicked off a complete UI overhaul. You'll follow the journey from field research with real tank crews, through the design of a new commander panel and fleet dashboard, to the final test results.
+                This is the story of redesigning the ammunition management interface for a French main battle tank. A near-miss incident, where the wrong round was loaded because the interface could not clearly communicate what was chambered, kicked off a complete UI overhaul. You'll follow the journey from field research with real tank crews, through the design of a new commander panel and fleet dashboard, to the final test results.
                 <span style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-secondary); opacity: 0.7;">Reading time: ~8 minutes</span>
             </div>
         </div>
@@ -927,10 +933,10 @@
     <section class="section">
         <div class="container">
             <div class="incident-block"
-                style="border: 1px solid rgba(255,184,0,0.35); padding: 32px; background: rgba(255,184,0,0.06); border-radius: 8px; margin-top: -40px;">
-                <p style="margin-bottom: 24px;">On a training exercise in Champagne, <strong>Victor 4</strong> — a
-                    three-man crew in their third year on the ALT-3 tank — engaged a simulated target.</p>
-                <p style="margin-bottom: 24px;">The commander requested an armor-piercing round. The amber light
+                style="border: 1px solid rgba(233,161,59,0.35); padding: 32px; background: rgba(233,161,59,0.06); border-radius: 8px; margin-top: -40px;">
+                <p style="margin-bottom: 24px;">On a training exercise in Champagne, <strong>Victor 4</strong>, a
+                    three-man crew in their third year on the ALT-3 tank, engaged a simulated target.</p>
+                <p style="margin-bottom: 24px;">The commander requested an armour-piercing round. The amber light
                     confirmed it. <strong style="color: var(--alert-red);">The gunner fired a shaped charge
                         instead.</strong></p>
                 <p style="margin-bottom: 24px;">In the debrief, the crew couldn't explain it. The interface had
@@ -941,18 +947,17 @@
         </div>
     </section>
 
-    <!-- 02 — ORIGIN STORY -->
+    <!-- 02, ORIGIN STORY -->
     <section class="section alt">
         <div class="container">
-            <div class="section-label">HOW THIS STARTED</div>
             <h2>Koramangala → Paris → Champagne</h2>
             <div class="two-col">
                 <div>
-                    <p>In early 2024 I was working out of a shared studio in Koramangala, Bengaluru — the kind of place
+                    <p>In early 2024 I was working out of a shared studio in Koramangala, Bengaluru, the kind of place
                         where three product teams share a single espresso machine and everyone pretends the wifi is
                         fine.</p>
-                    <p>I got an email from <strong style="color:var(--text-primary)">Atelier Numérique Défense</strong>
-                        — a 12-person boutique agency in Paris that bridges defense contractors with UX capabilities
+                    <p>I got an email from <strong style="color:var(--text-primary)">Atelier Numérique Défense</strong>,
+                        a 12-person boutique agency in Paris that bridges defence contractors with UX capabilities
                         they don't have in-house. Their lead, <strong style="color:var(--text-primary)">Léa
                             Marchetti</strong>, had spent six months convincing the engineering team that their software
                         problem was a design problem.</p>
@@ -967,51 +972,36 @@
         </div>
     </section>
 
-    <!-- PROJECT OVERVIEW -->
+    <!-- WHAT THIS IS -->
     <section class="section" style="padding-top: 0; padding-bottom: 40px;">
         <div class="container">
-            <div class="section-label">EXECUTIVE SUMMARY</div>
-            <h2>Project Overview</h2>
-            <div class="meta-card"
-                style="margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; border: none; background: transparent; padding: 0;">
-                <div
-                    style="background: var(--bg-surface); border: 1px solid var(--border); padding: 32px; border-radius: 8px;">
-                    <div class="meta-label" style="color: var(--ofl); font-size: 12px; margin-bottom: 16px;">The Product
-                    </div>
-                    <p style="font-size: 15px; color: var(--text-primary); line-height: 1.6;"><strong>CHARGEUR</strong>
-                        is the ammunition load management software used within the ALT-3 main battle tank.</p>
-                </div>
-                <div
-                    style="background: var(--bg-surface); border: 1px solid var(--border); padding: 32px; border-radius: 8px;">
-                    <div class="meta-label" style="color: var(--occ); font-size: 12px; margin-bottom: 16px;">The Users
-                    </div>
-                    <p style="font-size: 15px; color: var(--text-primary); line-height: 1.6;"><strong>Commanders &
-                            Gunners</strong> inside the cramped vehicle, and external <strong>Logistics
-                            Officers</strong>.</p>
-                </div>
-                <div
-                    style="background: var(--bg-surface); border: 1px solid var(--border); padding: 32px; border-radius: 8px;">
-                    <div class="meta-label" style="color: var(--alert-red); font-size: 12px; margin-bottom: 16px;">Why
-                        it's Critical</div>
-                    <p style="font-size: 15px; color: var(--text-primary); line-height: 1.6;">Misreading ammo types
-                        costs critical seconds. Design flaws here don't hurt adoption metrics—they risk crew survival.
-                    </p>
-                </div>
-            </div>
+            <h2>What the software is, and who is holding it</h2>
+            <dl class="spec">
+                <dt>The software</dt>
+                <dd><strong>CHARGEUR</strong> manages the ammunition load inside the ALT-3 main battle tank: what is
+                    stowed, what is chambered, and what the fire order asked for.</dd>
+
+                <dt>Who uses it</dt>
+                <dd>Two people in the turret, a commander and a gunner, on a rugged tablet each. Outside the vehicle, a
+                    logistics officer running resupply for a sector of eight.</dd>
+
+                <dt>Why it is not a normal brief</dt>
+                <dd>Misreading a round type costs seconds the crew does not have. A flaw here does not show up as a drop
+                    in engagement; it shows up as a wrong shot.</dd>
+            </dl>
         </div>
     </section>
 
-    <!-- 03 — CONTEXT -->
+    <!-- 03, CONTEXT -->
     <section class="section" style="padding-top: 40px;">
         <div class="container">
-            <div class="section-label">CHAPTER 01 · CONTEXT</div>
             <h2>A machine you never touch, but have to trust completely</h2>
             <img src="./gallery/leclerc-tank.jpg" alt="Main Battle Tank in the field"
                 style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin-bottom: 32px;">
             <div class="two-col">
                 <div>
                     <p>Here's the thing about the ALT-3 autoloader: it's genuinely impressive. A sealed carousel with 30
-                        rounds — <strong style="color:var(--ofl)">OFL</strong> (armour-piercing, for punching through plate), <strong
+                        rounds, <strong style="color:var(--ofl)">OFL</strong> (armour-piercing, for punching through plate), <strong
                             style="color:var(--occ)">OCC</strong> (shaped charge, for penetrating fortifications), and <strong
                             style="color:var(--oe)">OE</strong> (high-explosive, for everything else). The commander picks a type, the
                         carousel spins, and in eight seconds there's a round ready to fire.</p>
@@ -1019,7 +1009,7 @@
                         a button, they wait, and they trust.</p>
                 </div>
                 <div>
-                    <p>And that's the thing — <em>trust.</em> Three different round types, three different tactical
+                    <p>And that is the thing: <em>trust.</em> Three different round types, three different tactical
                         purposes, and the only thing standing between the right call and a wrong shot is a small amber
                         light on a panel designed before most of the crew was born.</p>
                     <p style="color:var(--text-primary);font-weight:500;">That trust is the entire design problem.</p>
@@ -1027,21 +1017,320 @@
             </div>
             <img src="./images/chargeur-tank-interior.png" alt="Commander operating the CHARGEUR tablet interface inside the cramped ALT-3 tank interior"
                 style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
-            <p style="font-family: var(--font-data); font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: -24px; margin-bottom: 32px;">The operating environment: a cramped vehicle interior, low light, vibration, and a tablet that has to earn trust in under a second.</p>
+            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); max-width: 68ch; margin-top: -24px; margin-bottom: 32px;">The operating environment: a cramped vehicle interior, low light, vibration, and a tablet that has to earn trust in under a second.</p>
             <div class="pull-quote">"They never touch the ammunition. They push a button and trust. That's the whole
                 design problem in one sentence."</div>
-            <img src="./images/carousel.png" alt="Autoloader carousel diagram"
-                style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
-            <img src="./images/chargeur-data-flow.png" alt="System data flow: Autoloader Carousel → Sensor Array → Tablet Interface → Commander and Gunner"
-                style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 16px 0 32px;">
-            <p style="font-family: var(--font-data); font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: -24px; margin-bottom: 0;">How sensor data flows from the autoloader through the tablet to both crew members — the technology pipeline behind every screen in CHARGEUR.</p>
+<figure class="diagram">
+            <svg viewBox="0 0 1040 600" role="img"
+                aria-label="Top-down view of the ALT-3 autoloader carousel: thirty rounds of three types around a ring, one lifted to the breech">
+                <rect width="1040" height="600" fill="#0E0F10"/>
+
+                <!-- Ring structure -->
+                <circle cx="300" cy="300" r="248" fill="none" stroke="#2B2D2F"/>
+                <circle cx="300" cy="300" r="166" fill="none" stroke="#2B2D2F"/>
+                <circle cx="300" cy="300" r="64" fill="none" stroke="#2B2D2F"/>
+                <circle cx="300" cy="300" r="18" fill="none" stroke="#2B2D2F"/>
+
+                <g transform="rotate(-90.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="1"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="1"/></g>
+            <g transform="rotate(-78.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+            <g transform="rotate(-66.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(-54.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(-42.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(-30.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+            <g transform="rotate(-18.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(-6.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(6.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(18.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+            <g transform="rotate(30.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(42.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(54.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(66.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(78.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+            <g transform="rotate(90.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(102.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(114.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(126.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+            <g transform="rotate(138.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(150.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(162.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+            <g transform="rotate(174.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(186.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(198.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(210.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+            <g transform="rotate(222.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(234.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#8FA6BC" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#8FA6BC" opacity="0.82"/></g>
+            <g transform="rotate(246.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#93A583" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#93A583" opacity="0.82"/></g>
+            <g transform="rotate(258.00 300 300)"><rect x="474" y="291" width="46" height="18" rx="3" fill="#C08A5E" opacity="0.82"/><path d="M520 291 L534 300 L520 309 Z" fill="#C08A5E" opacity="0.82"/></g>
+
+                <!-- The round on its way to the breech -->
+                <circle cx="300" cy="92" r="30" fill="none" stroke="#ECEDEE" stroke-width="1.5" opacity="0.85"/>
+                <path d="M300 58 L300 20" stroke="#ECEDEE" stroke-width="1.5"/>
+                <path d="M293 28 L300 18 L307 28" fill="none" stroke="#ECEDEE" stroke-width="1.5"/>
+                <text x="320" y="32" class="dg-note">to the breech</text>
+
+                <text x="300" y="306" class="dg-mid">30</text>
+                <text x="300" y="326" class="dg-midsub">rounds stowed</text>
+
+                <!-- Legend -->
+                <g transform="translate(660,150)">
+                    <text x="0" y="0" class="dg-title">Autoloader carousel</text>
+                    <text x="0" y="26" class="dg-sub">Sealed. The crew never sees inside it.</text>
+
+                    <rect x="0" y="66" width="16" height="16" rx="2" fill="#8FA6BC"/>
+                    <text x="30" y="79" class="dg-key">OFL</text>
+                    <text x="86" y="79" class="dg-keysub">Obus flèche · armour-piercing</text>
+
+                    <rect x="0" y="104" width="16" height="16" rx="2" fill="#C08A5E"/>
+                    <text x="30" y="117" class="dg-key">OCC</text>
+                    <text x="86" y="117" class="dg-keysub">Obus à charge creuse · shaped charge</text>
+
+                    <rect x="0" y="142" width="16" height="16" rx="2" fill="#93A583"/>
+                    <text x="30" y="155" class="dg-key">OE</text>
+                    <text x="86" y="155" class="dg-keysub">Obus explosif · high explosive</text>
+
+                    <line x1="0" y1="192" x2="330" y2="192" stroke="#2B2D2F"/>
+                    <text x="0" y="220" class="dg-keysub">Three types, one tube, four seconds a cycle.</text>
+                    <text x="0" y="244" class="dg-keysub">Before this project, the panel said only</text>
+                    <text x="0" y="268" class="dg-keysub">whether a round was ready, never which one.</text>
+                </g>
+
+                <style>
+                    .dg-title { font: 600 20px Archivo, sans-serif; fill: #ECEDEE; }
+                    .dg-sub { font: 400 14px Archivo, sans-serif; fill: #9DA1A5; }
+                    .dg-key { font: 600 14px Archivo, sans-serif; fill: #ECEDEE; }
+                    .dg-keysub { font: 400 14px Archivo, sans-serif; fill: #6B6F73; }
+                    .dg-note { font: 400 13px Archivo, sans-serif; fill: #9DA1A5; }
+                    .dg-mid { font: 500 26px 'Spline Sans Mono', monospace; fill: #ECEDEE; text-anchor: middle; }
+                    .dg-midsub { font: 400 12px Archivo, sans-serif; fill: #6B6F73; text-anchor: middle; }
+                </style>
+            </svg>
+            <figcaption>Thirty rounds, three types, one breech. The commander picks a type and waits four seconds
+                without seeing anything move.</figcaption>
+        </figure>
+<figure class="diagram">
+            <svg viewBox="0 0 1040 420" role="img"
+                aria-label="Data path: the autoloader and its sensors feed one tablet, which feeds the commander and the gunner the same state">
+                <rect width="1040" height="420" fill="#0E0F10"/>
+
+                <g stroke="#2B2D2F" fill="#141516">
+                    <rect x="40" y="150" width="180" height="120" rx="6"/>
+                    <rect x="290" y="150" width="180" height="120" rx="6"/>
+                    <rect x="540" y="150" width="180" height="120" rx="6"/>
+                    <rect x="820" y="70" width="180" height="100" rx="6"/>
+                    <rect x="820" y="250" width="180" height="100" rx="6"/>
+                </g>
+
+                <!-- Autoloader -->
+                <text x="130" y="140" class="fl-cap">Autoloader</text>
+                <circle cx="130" cy="210" r="34" fill="none" stroke="#2B2D2F"/>
+                <circle cx="130" cy="210" r="12" fill="none" stroke="#2B2D2F"/>
+                <rect x="124" y="170" width="12" height="14" rx="2" fill="#8FA6BC"/>
+                <rect x="156" y="196" width="12" height="14" rx="2" fill="#C08A5E" transform="rotate(90 162 203)"/>
+                <rect x="92" y="196" width="12" height="14" rx="2" fill="#93A583" transform="rotate(-90 98 203)"/>
+
+                <!-- Sensors -->
+                <text x="380" y="140" class="fl-cap">Sensor array</text>
+                <text x="316" y="186" class="fl-item">Breech position</text>
+                <text x="316" y="214" class="fl-item">Barrel temperature</text>
+                <text x="316" y="242" class="fl-item">Hydraulic pressure</text>
+
+                <!-- Tablet -->
+                <text x="630" y="140" class="fl-cap">One tablet</text>
+                <rect x="588" y="176" width="84" height="68" rx="5" fill="none" stroke="#6B6F73"/>
+                <rect x="598" y="186" width="40" height="8" rx="2" fill="#8FA6BC"/>
+                <rect x="598" y="202" width="64" height="5" rx="2" fill="#2B2D2F"/>
+                <rect x="598" y="213" width="52" height="5" rx="2" fill="#2B2D2F"/>
+                <rect x="598" y="224" width="58" height="5" rx="2" fill="#2B2D2F"/>
+
+                <!-- Crew -->
+                <text x="910" y="60" class="fl-cap">Commander</text>
+                <text x="910" y="110" class="fl-item2">Round in the breech</text>
+                <text x="910" y="134" class="fl-item2">Magazine remaining</text>
+                <text x="910" y="158" class="fl-item2">Mismatch, if any</text>
+
+                <text x="910" y="240" class="fl-cap">Gunner</text>
+                <text x="910" y="290" class="fl-item2">Round in the breech</text>
+                <text x="910" y="314" class="fl-item2">Contacts and range</text>
+                <text x="910" y="338" class="fl-item2">Mismatch, if any</text>
+
+                <!-- Path -->
+                <g stroke="#6B6F73" fill="none" stroke-width="1.5">
+                    <path d="M220 210 H284"/>
+                    <path d="M470 210 H534"/>
+                    <path d="M720 210 H770 V120 H814"/>
+                    <path d="M720 210 H770 V300 H814"/>
+                </g>
+                <g fill="#6B6F73">
+                    <path d="M284 210 l-9 -5 v10 z"/>
+                    <path d="M534 210 l-9 -5 v10 z"/>
+                    <path d="M814 120 l-9 -5 v10 z"/>
+                    <path d="M814 300 l-9 -5 v10 z"/>
+                </g>
+
+                <text x="756" y="202" class="fl-note" text-anchor="end">same state,</text>
+                <text x="756" y="222" class="fl-note" text-anchor="end">both seats</text>
+
+                <style>
+                    .fl-cap { font: 600 15px Archivo, sans-serif; fill: #ECEDEE; text-anchor: middle; }
+                    .fl-item { font: 400 13px Archivo, sans-serif; fill: #9DA1A5; }
+                    .fl-item2 { font: 400 13px Archivo, sans-serif; fill: #9DA1A5; text-anchor: middle; }
+                    .fl-note { font: 400 12px Archivo, sans-serif; fill: #E9A13B; }
+            
+        /* ── Drawn diagrams ── */
+        .diagram {
+            margin: 36px 0 40px;
+        }
+
+        .diagram svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .diagram figcaption {
+            margin-top: 14px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 68ch;
+        }
+
+
+        /* ── Spec list: a short reference block, not another card grid ── */
+        .spec {
+            margin-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+
+        .spec dt {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding-top: 20px;
+        }
+
+        .spec dd {
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--text-secondary);
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            max-width: 70ch;
+        }
+
+        @media (min-width: 860px) {
+            .spec {
+                display: grid;
+                grid-template-columns: 220px minmax(0, 1fr);
+                column-gap: 40px;
+            }
+
+            .spec dt {
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 20px;
+                align-self: stretch;
+            }
+        }
+
+
+        /* ── Gap list ── */
+        .gaps {
+            margin: 8px 0 44px;
+            border-top: 1px solid var(--border);
+        }
+
+        .gaps dt {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding-top: 16px;
+        }
+
+        .gaps dd {
+            font-size: 16px;
+            color: var(--text-secondary);
+            padding-top: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        @media (min-width: 760px) {
+            .gaps {
+                display: grid;
+                grid-template-columns: 200px minmax(0, 1fr);
+                column-gap: 32px;
+            }
+
+            .gaps dt {
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 16px;
+            }
+        }
+
+        .sub-head {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin: 48px 0 22px;
+        }
+
+        /* Three field accounts. Voices, not a card grid. */
+        .failures {
+            display: grid;
+            gap: 4px;
+        }
+
+        .failures blockquote {
+            display: grid;
+            gap: 6px;
+            padding: 22px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .failures blockquote:last-child {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .failures p {
+            font-size: 18px;
+            line-height: 1.55;
+            color: var(--text-primary);
+            max-width: 62ch;
+            margin: 0;
+        }
+
+        .failures footer {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        @media (min-width: 900px) {
+            .failures blockquote {
+                grid-template-columns: 210px minmax(0, 1fr);
+                gap: 32px;
+                align-items: start;
+            }
+
+            .failures footer {
+                order: -1;
+                padding-top: 4px;
+            }
+        }
+
+    </style>
+            </svg>
+            <figcaption>The autoloader already knew what was chambered. The old panel just never passed it on.
+                Both crew members now read the same state from the same source.</figcaption>
+        </figure>
         </div>
     </section>
 
-    <!-- 04 — MY ROLE -->
+    <!-- 04, MY ROLE -->
     <section class="section alt">
         <div class="container">
-            <div class="section-label">CHAPTER 01 · MY ROLE</div>
             <h2>Sole designer, remote-first, four escorted site visits</h2>
             <div class="meta-card">
                 <div>
@@ -1086,82 +1375,64 @@
         </div>
     </section>
 
-    <!-- 05 — BEFORE: VEHICLE -->
+    <!-- 05, BEFORE: VEHICLE -->
     <section class="section">
         <div class="container">
-            <div class="section-label">CHAPTER 02 · THE PROBLEM</div>
             <h2>What they were trusting was this.</h2>
             <p style="margin-bottom: 16px;">Before CHARGEUR, crews relied on a primitive software console that suffered
                 from critical UX failures:</p>
-            <ul style="list-style: none; margin-left: 0; margin-bottom: 40px;">
-                <li style="margin-bottom: 12px; display: flex; gap: 12px; align-items: start;"><span
-                        style="color: var(--alert-red); font-weight: bold; font-family: var(--font-data);">[✗]</span>
-                    <span style="color: var(--text-secondary);"><strong style="color: var(--text-primary);">No text
-                            labels:</strong> The UI relied entirely on cryptic status codes and glowing block
-                        indicators.</span>
-                </li>
-                <li style="margin-bottom: 12px; display: flex; gap: 12px; align-items: start;"><span
-                        style="color: var(--alert-red); font-weight: bold; font-family: var(--font-data);">[✗]</span>
-                    <span style="color: var(--text-secondary);"><strong style="color: var(--text-primary);">No ammo
-                            count totals:</strong> Crews had to memorize remaining stock or use analog tally
-                        marks.</span>
-                </li>
-                <li style="margin-bottom: 12px; display: flex; gap: 12px; align-items: start;"><span
-                        style="color: var(--alert-red); font-weight: bold; font-family: var(--font-data);">[✗]</span>
-                    <span style="color: var(--text-secondary);"><strong style="color: var(--text-primary);">No load
-                            verification:</strong> It was impossible to reliably confirm the chambered ammo type before
-                        firing.</span>
-                </li>
-            </ul>
-            <h3 style="font-family:var(--font-heading);font-size:20px;margin-top:48px;margin-bottom:24px;">Three ways it
-                fails</h3>
-            <div class="constraints">
-                <div class="constraint" style="border-top:3px solid var(--alert-amber);">
-                    <h4 style="color:var(--alert-amber);">"The light said ready"</h4>
-                    <p>Victor 4 asked for an armor-piercing round. They got a shaped charge instead. The amber light
-                        still said "ready." Nobody in that crew had any way to catch the mistake before pulling the
-                        trigger.</p>
-                </div>
-                <div class="constraint" style="border-top:3px solid var(--ofl);">
-                    <h4 style="color:var(--ofl);">The gunner fires blind</h4>
-                    <p>The commander picks the round type. The gunner pulls the trigger. But the gunner has no screen,
-                        no status, nothing. One crew member told me: "The commander's on the radio and I'm just…
-                        hoping."</p>
-                </div>
-                <div class="constraint" style="border-top:3px solid var(--occ);">
-                    <h4 style="color:var(--occ);">"How many do I have left?"</h4>
-                    <p>A simple question the panel couldn't answer. So crews guessed. They kept tally marks on tape.
-                        They called counts over the intercom. After three years of incident reports, four of them came
-                        down to the same thing: guessing wrong.</p>
-                </div>
+            <dl class="gaps">
+                <dt>No text labels</dt>
+                <dd>Status codes and glowing blocks. Nothing on the panel spelled out a round type.</dd>
+                <dt>No totals</dt>
+                <dd>Crews memorised what was left, or kept tally marks on tape.</dd>
+                <dt>No verification</dt>
+                <dd>Nothing on the panel could confirm the chambered round before firing.</dd>
+            </dl>
+
+            <h3 class="sub-head">Three ways that failed in the field</h3>
+            <div class="failures">
+                <blockquote>
+                    <p>Victor 4 asked for an armour-piercing round and got a shaped charge. The amber light still said
+                        ready. Nobody in that crew had a way to catch it before the trigger.</p>
+                    <footer>The light said ready</footer>
+                </blockquote>
+                <blockquote>
+                    <p>"The commander's on the radio and I'm just… hoping." The commander picks the round. The gunner
+                        pulls the trigger, with no screen, no status, nothing.</p>
+                    <footer>The gunner fires blind</footer>
+                </blockquote>
+                <blockquote>
+                    <p>How many are left is a simple question the panel could not answer, so crews guessed and called
+                        counts over the intercom. Four incident reports in three years came down to guessing wrong.</p>
+                    <footer>Nobody knew the count</footer>
+                </blockquote>
             </div>
         </div>
     </section>
 
-    <!-- 06 — BEFORE: FLEET -->
+    <!-- 06, BEFORE: FLEET -->
     <section class="section alt">
         <div class="container">
-            <div class="section-label">CHAPTER 02 · THE PROBLEM — FLEET LEVEL</div>
             <h2>And outside the tank? Even less.</h2>
             <p>The supply officer's job was to keep eight vehicles armed and running. His tool was a shared Excel
                 spreadsheet. Columns for each vehicle. Rows for round counts. Updated by radio, whenever someone
                 remembered to call in.</p>
             <div class="crew-quote">
-                "6 rounds remaining — <em>est.</em>" That one word. <strong
+                "6 rounds remaining, <em>est.</em>" That one word. <strong
                     style="color:var(--text-primary);">Est.</strong> Estimate. The supply officer was making
                 life-or-death logistics decisions based on a number that a three-person crew guessed over the radio,
                 mid-mission.
-                <cite>— Supply Officer, Camp de Mourmelon</cite>
+                <cite>Supply Officer, Camp de Mourmelon</cite>
             </div>
             <img src="./gallery/real-spreadsheet.jpg" alt="Legacy resupply spreadsheet photo"
                 style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
         </div>
     </section>
 
-    <!-- 07 — RESEARCH -->
+    <!-- 07, RESEARCH -->
     <section class="section">
         <div class="container">
-            <div class="section-label">CHAPTER 03 · RESEARCH</div>
             <h2>I went to find out how often this happened.</h2>
             <div class="research-timeline">
                 <div class="timeline-step">
@@ -1188,11 +1459,11 @@
 
             <h3 style="font-family:var(--font-heading);font-size:20px;margin-top:48px;margin-bottom:16px;">Visit 2,
                 March 2024, 06:00 briefing</h3>
-            <p>The pre-mission loading sequence took 34 minutes. Two crew members physically handled each round — one to
+            <p>The pre-mission loading sequence took 34 minutes. Two crew members physically handled each round: one to
                 retrieve, one to confirm the type label verbally before handing it to the loader. Every round was
                 announced aloud: <em>"OFL, slot three." "OCC, slot four."</em> A ritual. A verbal design that the
                 software had never matched.</p>
-            <p>I sat in the corner and counted. Fourteen rounds without incident. On round fifteen — an OE — there was a
+            <p>I sat in the corner and counted. Fourteen rounds without incident. On round fifteen, an OE, there was a
                 two-second pause before the verbal confirmation. The crew member had picked up an OCC. He caught it. Set
                 it down. Retrieved the correct round.</p>
             <p style="font-weight:500;color:var(--text-primary);">That pause was 2 seconds. In the field, under stress,
@@ -1204,7 +1475,7 @@
             <div class="findings">
                 <div class="finding">
                     <p><strong style="color:var(--text-primary);">Mismatch rate:</strong> 4 confirmed mismatches in 22
-                        incidents — 18% of all reported training incidents involved the wrong round type</p>
+                        incidents, 18% of all reported training incidents involved the wrong round type</p>
                 </div>
                 <div class="finding">
                     <p><strong style="color:var(--text-primary);">Blind handoff:</strong> In 100% of observed
@@ -1216,15 +1487,15 @@
                 </div>
                 <div class="finding">
                     <p><strong style="color:var(--text-primary);">Existing workarounds:</strong> Every crew had invented
-                        at least one unofficial method — tally marks on tape, verbal call-outs, or a written log</p>
+                        at least one unofficial method, tally marks on tape, verbal call-outs, or a written log</p>
                 </div>
             </div>
-            <p style="font-style:italic;color:var(--text-secondary);">Every workaround was a design that already existed
-                — just not in the software.</p>
+            <p style="font-style:italic;color:var(--text-secondary);">Every workaround was a design that already existed,
+                just not in the software.</p>
         </div>
     </section>
 
-    <!-- 08 — REFRAME -->
+    <!-- 08, REFRAME -->
     <section class="section alt reframe">
         <div class="container">
             <h2>The system shows <em style="color:var(--text-secondary);">state.</em></h2>
@@ -1233,96 +1504,87 @@
         </div>
     </section>
 
-    <!-- 09 — DESIGN: VEHICLE -->
+    <!-- 09, DESIGN: VEHICLE -->
     <section class="section">
         <div class="container">
-            <div class="section-label">CHAPTER 04 · DESIGN</div>
             <h2>One screen, three answers, zero ambiguity</h2>
             <p>The commander panel is a single-screen tablet interface that answers three questions at a glance:
                 What's loaded? How much is left? Is the system ready? The top bar shows telemetry (barrel temp,
                 hydraulics, target distance) and autoloader status. The center shows the chambered round type in
-                massive, color-coded text — blue for OFL, orange for OCC, green for OE. A green "READY TO FIRE"
+                massive, color-coded text, blue for OFL, orange for OCC, green for OE. A green "READY TO FIRE"
                 badge confirms the match. The right column shows three clickable ammo inventory cards. Tap one to
                 request a type switch.</p>
 
             <!-- C1: Normal state -->
             <div class="screen-annotated">
                 <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="330" data-pin-y="22" data-color="#8B95A6">
-                        <div class="ann-note-title" style="color:#8B95A6;">Telemetry Topbar</div>
-                        <div class="ann-note-body">BRL temp, hydraulics, target distance — always visible.</div>
+                    <div class="ann-note" data-pin-x="330" data-pin-y="22" data-color="#9DA1A5">
+                        <div class="ann-note-title" style="color:#9DA1A5;">Telemetry Topbar</div>
+                        <div class="ann-note-body">BRL temp, hydraulics, target distance, always visible.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="480" data-pin-y="390" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Type Display</div>
-                        <div class="ann-note-body">96px text — OFL=blue, OCC=orange, OE=green. Zero ambiguity.</div>
+                    <div class="ann-note" data-pin-x="480" data-pin-y="390" data-color="#8FA6BC">
+                        <div class="ann-note-title" style="color:#8FA6BC;">Type Display</div>
+                        <div class="ann-note-body">96px text, OFL=blue, OCC=orange, OE=green. Zero ambiguity.</div>
                     </div>
                 </div>
                 <div class="screen-embed" style="position:relative;">
-                    <div class="chrome">
-                        <div class="d"></div><div class="d"></div><div class="d"></div>
-                        <div class="url">chargeur.app/vehicle</div>
-                    </div>
                     <iframe src="chargeur-app.html#vehicle" style="height:900px;"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="330" cy="22" r="6" fill="#8B95A6" opacity="0.9"/>
-                        <circle cx="480" cy="390" r="6" fill="#4A9EFF" opacity="0.9"/>
-                        <circle cx="845" cy="486" r="6" fill="#3DD68C" opacity="0.9"/>
-                        <circle cx="1150" cy="822" r="6" fill="#4A9EFF" opacity="0.9"/>
+                        <circle cx="330" cy="22" r="6" fill="#9DA1A5" opacity="0.9"/>
+                        <circle cx="480" cy="390" r="6" fill="#8FA6BC" opacity="0.9"/>
+                        <circle cx="845" cy="486" r="6" fill="#9DA1A5" opacity="0.9"/>
+                        <circle cx="1150" cy="822" r="6" fill="#8FA6BC" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption">Commander panel — OFL loaded, system nominal. Barrel temp, target distance, ammo counts all visible at a glance.</div>
+                    <div class="screen-caption">Commander panel, OFL loaded, system nominal. Barrel temp, target distance, ammo counts all visible at a glance.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="845" data-pin-y="486" data-color="#3DD68C">
-                        <div class="ann-note-title" style="color:#3DD68C;">Match Badge</div>
+                    <div class="ann-note" data-pin-x="845" data-pin-y="486" data-color="#9DA1A5">
+                        <div class="ann-note-title" style="color:#9DA1A5;">Match Badge</div>
                         <div class="ann-note-body">Green only when chambered type equals requested type.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="1150" data-pin-y="822" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Inventory Bars</div>
-                        <div class="ann-note-body">Live count per type — fill bar + number. Tap to switch.</div>
+                    <div class="ann-note" data-pin-x="1150" data-pin-y="822" data-color="#8FA6BC">
+                        <div class="ann-note-title" style="color:#8FA6BC;">Inventory Bars</div>
+                        <div class="ann-note-body">Live count per type, fill bar + number. Tap to switch.</div>
                     </div>
                 </div>
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
             </div>
 
             <p style="margin-top:40px;">And when something doesn't match? The panel doesn't just turn yellow and leave
-                you guessing. It tells you exactly what went wrong — shows both the requested and the chambered type —
+                you guessing. It tells you exactly what went wrong, shows both the requested and the chambered type,
                 and gives you two clear options: abort and recycle, or confirm the override. No alarm bells, no noise.
                 Just the truth, and a choice.</p>
 
             <!-- C2: Mismatch -->
             <div class="screen-annotated">
                 <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="140" data-pin-y="232" data-color="#FFB800">
-                        <div class="ann-note-title" style="color:#FFB800;">Named Alert</div>
-                        <div class="ann-note-body">Not just a light — crew knows exactly what triggered it.</div>
+                    <div class="ann-note" data-pin-x="140" data-pin-y="232" data-color="#E9A13B">
+                        <div class="ann-note-title" style="color:#E9A13B;">Named Alert</div>
+                        <div class="ann-note-body">Not just a light, crew knows exactly what triggered it.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="100" data-pin-y="560" data-color="#FFB800">
-                        <div class="ann-note-title" style="color:#FFB800;">Actual vs. Expected</div>
-                        <div class="ann-note-body">Both types shown at once — crew sees exactly what's wrong.</div>
+                    <div class="ann-note" data-pin-x="100" data-pin-y="560" data-color="#E9A13B">
+                        <div class="ann-note-title" style="color:#E9A13B;">Actual vs. Expected</div>
+                        <div class="ann-note-body">Both types shown at once, crew sees exactly what's wrong.</div>
                     </div>
                 </div>
-                <div class="screen-embed" style="border-color:rgba(255,184,0,0.35);position:relative;">
-                    <div class="chrome">
-                        <div class="d"></div><div class="d"></div><div class="d"></div>
-                        <div class="url" style="color:rgba(255,184,0,0.8);">chargeur.app/vehicle · ⚠ MISMATCH DETECTED</div>
-                    </div>
+                <div class="screen-embed" style="border-color:rgba(233,161,59,0.35);position:relative;">
                     <iframe src="chargeur-app.html#vehicle/mismatch" style="height:900px;"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="140" cy="232" r="6" fill="#FFB800" opacity="0.9"/>
-                        <circle cx="100" cy="560" r="6" fill="#FFB800" opacity="0.9"/>
-                        <circle cx="1380" cy="22" r="6" fill="#FFB800" opacity="0.9"/>
-                        <circle cx="1300" cy="645" r="6" fill="#8B95A6" opacity="0.9"/>
+                        <circle cx="140" cy="232" r="6" fill="#E9A13B" opacity="0.9"/>
+                        <circle cx="100" cy="560" r="6" fill="#E9A13B" opacity="0.9"/>
+                        <circle cx="1380" cy="22" r="6" fill="#E9A13B" opacity="0.9"/>
+                        <circle cx="1300" cy="645" r="6" fill="#9DA1A5" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption" style="border-top:1px solid rgba(255,184,0,0.2);">Mismatch state — OCC chambered when OFL was requested. Crew sees both types and must make an explicit choice.</div>
+                    <div class="screen-caption" style="border-top:1px solid rgba(233,161,59,0.2);">Mismatch state, OCC chambered when OFL was requested. Crew sees both types and must make an explicit choice.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="1380" data-pin-y="22" data-color="#FFB800">
-                        <div class="ann-note-title" style="color:#FFB800;">System Alert State</div>
+                    <div class="ann-note" data-pin-x="1380" data-pin-y="22" data-color="#E9A13B">
+                        <div class="ann-note-title" style="color:#E9A13B;">System Alert State</div>
                         <div class="ann-note-body">Amber topbar shifts entire UI before finger touches trigger.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="1300" data-pin-y="645" data-color="#8B95A6">
-                        <div class="ann-note-title" style="color:#8B95A6;">Two Explicit Choices</div>
-                        <div class="ann-note-body">Abort or override — no hidden defaults, no accidental fires.</div>
+                    <div class="ann-note" data-pin-x="1300" data-pin-y="645" data-color="#9DA1A5">
+                        <div class="ann-note-title" style="color:#9DA1A5;">Two Explicit Choices</div>
+                        <div class="ann-note-body">Abort or override, no hidden defaults, no accidental fires.</div>
                     </div>
                 </div>
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
@@ -1333,43 +1595,39 @@
             <h3 style="font-family:var(--font-heading);font-size:20px;margin-top:60px;margin-bottom:16px;">Giving the
                 gunner a proximity sensor</h3>
             <p>In every crew I spoke to, the gunner was always the last to know what was happening around the vehicle.
-                So I gave the gunner a range map — a radar-sweep display showing detected hostiles with distance,
+                So I gave the gunner a range map, a radar-sweep display showing detected hostiles with distance,
                 threat classification, and vector data. The chambered round type is always visible, and a proximity
                 alert panel surfaces target data the moment contacts appear.</p>
 
             <!-- D1: Range Map display -->
             <div class="screen-annotated">
                 <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="497" data-pin-y="399" data-color="#FF4444">
-                        <div class="ann-note-title" style="color:#FF4444;">Threat Contact</div>
+                    <div class="ann-note" data-pin-x="497" data-pin-y="399" data-color="#E04B4B">
+                        <div class="ann-note-title" style="color:#E04B4B;">Threat Contact</div>
                         <div class="ann-note-body">Red=hostile, amber=unknown. Each blip labeled and ranged.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="320" data-pin-y="472" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Live Radar Sweep</div>
+                    <div class="ann-note" data-pin-x="320" data-pin-y="472" data-color="#8FA6BC">
+                        <div class="ann-note-title" style="color:#8FA6BC;">Live Radar Sweep</div>
                         <div class="ann-note-body">360° tracking within 2,000m engagement radius.</div>
                     </div>
                 </div>
                 <div class="screen-embed" style="position:relative;">
-                    <div class="chrome">
-                        <div class="d"></div><div class="d"></div><div class="d"></div>
-                        <div class="url">chargeur.app/vehicle/gunner</div>
-                    </div>
                     <iframe src="chargeur-app.html#vehicle/gunner"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="497" cy="399" r="6" fill="#FF4444" opacity="0.9"/>
-                        <circle cx="320" cy="472" r="6" fill="#4A9EFF" opacity="0.9"/>
-                        <circle cx="1430" cy="112" r="6" fill="#3DD68C" opacity="0.9"/>
-                        <circle cx="1430" cy="400" r="6" fill="#FF4444" opacity="0.9"/>
+                        <circle cx="497" cy="399" r="6" fill="#E04B4B" opacity="0.9"/>
+                        <circle cx="320" cy="472" r="6" fill="#8FA6BC" opacity="0.9"/>
+                        <circle cx="1430" cy="112" r="6" fill="#9DA1A5" opacity="0.9"/>
+                        <circle cx="1430" cy="400" r="6" fill="#E04B4B" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption">Proximity sensor — animated radar sweep with hostile contacts, distance markers, and threat classification panel.</div>
+                    <div class="screen-caption">Proximity sensor, animated radar sweep with hostile contacts, distance markers, and threat classification panel.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="1430" data-pin-y="112" data-color="#3DD68C">
-                        <div class="ann-note-title" style="color:#3DD68C;">Chambered Type</div>
-                        <div class="ann-note-body">Always visible — gunner never has to ask what's loaded.</div>
+                    <div class="ann-note" data-pin-x="1430" data-pin-y="112" data-color="#9DA1A5">
+                        <div class="ann-note-title" style="color:#9DA1A5;">Chambered Type</div>
+                        <div class="ann-note-body">Always visible, gunner never has to ask what's loaded.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="1430" data-pin-y="400" data-color="#FF4444">
-                        <div class="ann-note-title" style="color:#FF4444;">Proximity Alert</div>
+                    <div class="ann-note" data-pin-x="1430" data-pin-y="400" data-color="#E04B4B">
+                        <div class="ann-note-title" style="color:#E04B4B;">Proximity Alert</div>
                         <div class="ann-note-body">Fires when contact enters engagement range. Auto-triggered.</div>
                     </div>
                 </div>
@@ -1380,12 +1638,11 @@
         </div>
     </section>
 
-    <!-- 10 — DESIGN: FLEET -->
+    <!-- 10, DESIGN: FLEET -->
     <section class="section alt">
         <div class="container">
-            <div class="section-label">CHAPTER 05 · FLEET</div>
             <h2>Replacing the spreadsheet with a tactical map</h2>
-            <p>The supply officer needed to see his entire fleet at once — which vehicles are running low, how
+            <p>The supply officer needed to see his entire fleet at once, which vehicles are running low, how
                 urgently, and what to send them. So I built Fleet Command: a tactical map with diamond-shaped vehicle
                 markers (green for nominal, amber for low), plus an inline priority queue at the bottom showing
                 urgent vehicles with a one-click ASSIGN button to dispatch resupply.</p>
@@ -1393,37 +1650,33 @@
             <!-- E1: Fleet map -->
             <div class="screen-annotated">
                 <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="669" data-pin-y="198" data-color="#FFB800">
-                        <div class="ann-note-title" style="color:#FFB800;">Low Status</div>
+                    <div class="ann-note" data-pin-x="669" data-pin-y="198" data-color="#E9A13B">
+                        <div class="ann-note-title" style="color:#E9A13B;">Low Status</div>
                         <div class="ann-note-body">Amber = running low but still operational. Act soon.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="612" data-pin-y="575" data-color="#FF4444">
-                        <div class="ann-note-title" style="color:#FF4444;">Critical Status</div>
+                    <div class="ann-note" data-pin-x="612" data-pin-y="575" data-color="#E04B4B">
+                        <div class="ann-note-title" style="color:#E04B4B;">Critical Status</div>
                         <div class="ann-note-body">Pulsing red diamond = critical. Readable from any distance.</div>
                     </div>
                 </div>
                 <div class="screen-embed" style="position:relative;">
-                    <div class="chrome">
-                        <div class="d"></div><div class="d"></div><div class="d"></div>
-                        <div class="url">chargeur.app/fleet</div>
-                    </div>
                     <iframe src="chargeur-app.html#fleet"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="669" cy="198" r="6" fill="#FFB800" opacity="0.9"/>
-                        <circle cx="612" cy="575" r="6" fill="#FF4444" opacity="0.9"/>
-                        <circle cx="1430" cy="40" r="6" fill="#8B95A6" opacity="0.9"/>
-                        <circle cx="1430" cy="220" r="6" fill="#FF4444" opacity="0.9"/>
+                        <circle cx="669" cy="198" r="6" fill="#E9A13B" opacity="0.9"/>
+                        <circle cx="612" cy="575" r="6" fill="#E04B4B" opacity="0.9"/>
+                        <circle cx="1430" cy="40" r="6" fill="#9DA1A5" opacity="0.9"/>
+                        <circle cx="1430" cy="220" r="6" fill="#E04B4B" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption">Fleet overview — eight vehicles on the tactical map. Green means fine. Red means act now.</div>
+                    <div class="screen-caption">Fleet overview, eight vehicles on the tactical map. Green means fine. Red means act now.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="1430" data-pin-y="40" data-color="#8B95A6">
-                        <div class="ann-note-title" style="color:#8B95A6;">Fleet Summary</div>
+                    <div class="ann-note" data-pin-x="1430" data-pin-y="40" data-color="#9DA1A5">
+                        <div class="ann-note-title" style="color:#9DA1A5;">Fleet Summary</div>
                         <div class="ann-note-body">5 OK · 2 LOW · 1 CRIT at a glance.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="1430" data-pin-y="220" data-color="#FF4444">
-                        <div class="ann-note-title" style="color:#FF4444;">Sidebar List</div>
-                        <div class="ann-note-body">Critical surfaces first — same hierarchy as the map.</div>
+                    <div class="ann-note" data-pin-x="1430" data-pin-y="220" data-color="#E04B4B">
+                        <div class="ann-note-title" style="color:#E04B4B;">Sidebar List</div>
+                        <div class="ann-note-body">Critical surfaces first, same hierarchy as the map.</div>
                     </div>
                 </div>
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
@@ -1431,53 +1684,47 @@
 
             <h3 style="font-family:var(--font-heading);font-size:20px;margin-top:60px;margin-bottom:16px;">Who needs
                 help first?</h3>
-            <p>When three vehicles are low and you've got one resupply truck, you need priorities. The queue sorts them
-                — most critical first, one click to dispatch. When a vehicle goes from red to green, the supply officer
+            <p>When three vehicles are low and you've got one resupply truck, you need priorities. The queue sorts them:
+                most critical first, one click to dispatch. When a vehicle goes from red to green, the supply officer
                 sees it happen. For the first time, the loop actually closes.</p>
 
             <!-- E3: Priority queue -->
             <div class="screen-annotated">
                 <!-- Left sidebar: PRIORITY SORT -->
                 <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="44" data-pin-y="187" data-color="#FF4444">
-                        <div class="ann-note-title" style="color:#FF4444;">Priority Sort</div>
-                        <div class="ann-note-body">P1 at top — auto-sorted by severity, not arrival order.</div>
+                    <div class="ann-note" data-pin-x="44" data-pin-y="187" data-color="#E04B4B">
+                        <div class="ann-note-title" style="color:#E04B4B;">Priority Sort</div>
+                        <div class="ann-note-body">P1 at top, auto-sorted by severity, not arrival order.</div>
                     </div>
                 </div>
 
                 <!-- Center screen -->
                 <div class="screen-embed" style="position:relative;">
-                    <div class="chrome">
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="d"></div>
-                        <div class="url">chargeur.app/fleet/queue</div>
-                    </div>
                     <iframe src="chargeur-app.html#fleet/queue"></iframe>
-                    <!-- Circle pins only — labels live in sidebars, lines drawn by JS -->
+                    <!-- Circle pins only, labels live in sidebars, lines drawn by JS -->
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="44" cy="187" r="6" fill="#FF4444" opacity="0.9"/>
-                        <circle cx="1310" cy="82" r="6" fill="#4A9EFF" opacity="0.9"/>
-                        <circle cx="1326" cy="187" r="6" fill="#3DD68C" opacity="0.9"/>
-                        <circle cx="1136" cy="187" r="6" fill="#4A9EFF" opacity="0.9"/>
+                        <circle cx="44" cy="187" r="6" fill="#E04B4B" opacity="0.9"/>
+                        <circle cx="1310" cy="82" r="6" fill="#8FA6BC" opacity="0.9"/>
+                        <circle cx="1326" cy="187" r="6" fill="#9DA1A5" opacity="0.9"/>
+                        <circle cx="1136" cy="187" r="6" fill="#8FA6BC" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption">Priority queue — critical vehicles first. Assign a truck, watch them drop
+                    <div class="screen-caption">Priority queue, critical vehicles first. Assign a truck, watch them drop
                         off the list.</div>
                 </div>
 
                 <!-- Right sidebar: BATCH DISPATCH, ONE-CLICK, PER-TYPE -->
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="1310" data-pin-y="82" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Batch Dispatch</div>
+                    <div class="ann-note" data-pin-x="1310" data-pin-y="82" data-color="#8FA6BC">
+                        <div class="ann-note-title" style="color:#8FA6BC;">Batch Dispatch</div>
                         <div class="ann-note-body">All critical vehicles dispatched in one tap.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="1326" data-pin-y="187" data-color="#3DD68C">
-                        <div class="ann-note-title" style="color:#3DD68C;">One-Click Dispatch</div>
+                    <div class="ann-note" data-pin-x="1326" data-pin-y="187" data-color="#9DA1A5">
+                        <div class="ann-note-title" style="color:#9DA1A5;">One-Click Dispatch</div>
                         <div class="ann-note-body">Assign truck without leaving the queue. Loop closes.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="1136" data-pin-y="187" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Per-Type Counts</div>
-                        <div class="ann-note-body">OFL/OCC/OE shown per vehicle — not just "low".</div>
+                    <div class="ann-note" data-pin-x="1136" data-pin-y="187" data-color="#8FA6BC">
+                        <div class="ann-note-title" style="color:#8FA6BC;">Per-Type Counts</div>
+                        <div class="ann-note-body">OFL/OCC/OE shown per vehicle, not just "low".</div>
                     </div>
                 </div>
 
@@ -1487,28 +1734,26 @@
         </div>
     </section>
 
-    <!-- 11 — DESIGN SYSTEM -->
+    <!-- 11, DESIGN SYSTEM -->
     <section class="section">
         <div class="container">
-            <div class="section-label">CHAPTER 05 · DESIGN SYSTEM</div>
             <h2>Something I'm quietly proud of</h2>
-            <p>I built 67 components that meet military display standards — and honestly, I'm more proud of this part
+            <p>I built 67 components that meet military display standards, and honestly, I'm more proud of this part
                 than any individual screen. The whole system runs on three colors: <span
                     style="color:var(--ofl);font-weight:600;">blue for OFL</span>, <span
                     style="color:var(--occ);font-weight:600;">orange for OCC</span>, and <span
                     style="color:var(--oe);font-weight:600;">green for OE</span>. Once you learn those three colors,
                 every screen in the system reads the same way. Agency's engineering team adopted the system for two
-                more programs — without changing a single token.</p>
+                more programs, without changing a single token.</p>
             <img src="./images/design-system.png" alt="Chargeur design system"
                 style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
         </div>
     </section>
 
-    <!-- 12 — BEFORE → AFTER -->
+    <!-- 12, BEFORE → AFTER -->
     <section class="section alt">
         <div class="container">
-            <div class="section-label">COMPARISON</div>
-            <h2>Before → After</h2>
+            <h2>Before and after</h2>
             <table class="compare-table">
                 <thead>
                     <tr>
@@ -1548,10 +1793,9 @@
         </div>
     </section>
 
-    <!-- 13 — OUTCOMES -->
+    <!-- 13, OUTCOMES -->
     <section class="section">
         <div class="container">
-            <div class="section-label">CHAPTER 06 · OUTCOMES</div>
             <h2>We recreated the Victor 4 scenario. 24 times.</h2>
             <div class="metrics">
                 <div class="metric-card">
@@ -1572,27 +1816,26 @@
                 </div>
             </div>
             <p>Six commanders, four sessions each. We deliberately loaded the wrong round every time. With the new
-                panel, every single one of them caught it. Every one chose the right action — abort or override. <strong
+                panel, every single one of them caught it. Every one chose the right action, abort or override. <strong
                     style="color:var(--text-primary);">Nobody fired on a mismatched round.</strong></p>
             <p>With the old panel? Four out of six missed it completely and pulled the trigger.</p>
             <div class="crew-quote">
-                "For the first time, I feel like the interface is on my side. Not just telling me things — actually
+                "For the first time, I feel like the interface is on my side. Not just telling me things, actually
                 helping me."
-                <cite>— Commander, Victor 7, post-evaluation debrief</cite>
+                <cite>Commander, Victor 7, post-evaluation debrief</cite>
             </div>
         </div>
     </section>
 
-    <!-- 14 — RETROSPECTIVE -->
+    <!-- 14, RETROSPECTIVE -->
     <section class="section alt">
         <div class="container">
-            <div class="section-label">CHAPTER 07 · RETROSPECTIVE</div>
             <h2>What I'd do differently</h2>
             <div class="constraints">
                 <div class="constraint">
                     <h4>I designed screens before I understood the machine</h4>
                     <p>Three weeks in, I was laying out UI zones without fully understanding how the autoloader actually
-                        worked — 30 slots, each with a type and a position, in a carousel that rotates. I was designing
+                        worked, 30 slots, each with a type and a position, in a carousel that rotates. I was designing
                         from layout intuition instead of from the data. Once I mapped the state machine properly, the
                         screens basically designed themselves. Should've done that on day one.</p>
                 </div>
@@ -1693,7 +1936,7 @@
             wrapper.querySelectorAll('.ann-note[data-pin-x]').forEach(function(note) {
                 var pinX = parseFloat(note.dataset.pinX);
                 var pinY = parseFloat(note.dataset.pinY);
-                var color = note.dataset.color || '#8B95A6';
+                var color = note.dataset.color || '#9DA1A5';
                 var px = svgLeft + pinX * scaleX;
                 var py = svgTop + pinY * scaleY;
                 var nRect = note.getBoundingClientRect();
@@ -1735,39 +1978,7 @@
 })();
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script>
-  gsap.registerPlugin(ScrollTrigger);
-  // Section reveals
-  gsap.utils.toArray('.section-title, .section-label, .section-intro, .section-header, h1, h2, h3').forEach(function(el) {
-    gsap.from(el, {
-      opacity: 0, y: 28, duration: 0.75, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-    });
-  });
-  // Cards and blocks
-  gsap.utils.toArray('.metric-card, .card, .timeline-step, .insight-card, .outcome-card, .quote-block, .two-col > *, .three-col > *, .four-col > *').forEach(function(el, i) {
-    gsap.from(el, {
-      opacity: 0, y: 36, duration: 0.65, delay: (i % 4) * 0.08, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-    });
-  });
-  // Images
-  gsap.utils.toArray('img:not(.nav-logo-img)').forEach(function(el) {
-    gsap.from(el, {
-      opacity: 0, scale: 0.97, duration: 0.8, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 92%', once: true }
-    });
-  });
-  // Screen embeds
-  gsap.utils.toArray('.screen-annotated, .screen-embed').forEach(function(el) {
-    gsap.from(el, {
-      opacity: 0, y: 40, duration: 0.9, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-    });
-  });
-</script>
+
 <script>
 </script>
 
