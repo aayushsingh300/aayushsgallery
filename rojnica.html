@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROJNICA — Drone Fleet Management Case Study</title>
+    <title>Rojnica · Drone Fleet Management Case Study</title>
     <meta name="description"
         content="Case study: Designing ROJNICA, a drone fleet management platform for precision agriculture in Poland.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -20,23 +20,25 @@
         }
 
         :root {
-            --bg-primary: #0A0A0B;
-            --bg-section: #111113;
-            --bg-surface: #181A1E;
-            --bg-elevated: #1F2228;
-            --text-primary: #EAEDF1;
-            --text-secondary: #7C828E;
-            --accent: #4A9EFF;
-            --accent-2: #7BC67E;
-            --accent-3: #FFB800;
-            --accent-4: #FF4444;
-            --border: #2A2D35;
-            --font-heading: 'Space Grotesk', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-mono: 'Space Mono', monospace;
+            --bg-primary: #0B0D0C;
+            --bg-section: #10130F;
+            --bg-surface: #161A18;
+            --bg-elevated: #1E2321;
+            --text-primary: #E4E7E5;
+            --text-secondary: #98A29E;
+            --accent: #4FA37A;
+            --accent-2: #79AE7D;
+            --accent-3: #D6A03C;
+            --accent-4: #E86A5A;
+            --border: #282F2D;
+            --font-heading: 'Geist', -apple-system, sans-serif;
+            --font-body: 'Geist', -apple-system, sans-serif;
+            --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
         }
 
         html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
             scroll-behavior: auto;
             overflow-anchor: none;
         }
@@ -70,20 +72,23 @@
         }
 
         .hero-eyebrow {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            padding-left: 14px;
+            border-left: 1px solid var(--border);
+            max-width: 560px;
         }
 
         .hero h1 {
             font-family: var(--font-heading);
-            font-size: 52px;
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 20px;
+            font-size: clamp(36px, 4.2vw, 56px);
+            font-weight: 600;
+            line-height: 1.08;
+            letter-spacing: -0.032em;
+            max-width: 17ch;
+            margin-bottom: 22px;
+            text-wrap: balance;
         }
 
         .hero-sub {
@@ -93,10 +98,11 @@
             margin-bottom: 48px;
         }
 
+        /* Hero composition: three surfaces, staggered so each one stays readable */
         .hero-comp {
             position: relative;
-            height: 480px;
-            margin-top: 20px;
+            height: 440px;
+            margin-top: 44px;
         }
 
         .hero-screen {
@@ -104,65 +110,78 @@
             border-radius: 8px;
             overflow: hidden;
             background: var(--bg-surface);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
             pointer-events: none;
         }
 
+        .hero-screen iframe {
+            border: none;
+            display: block;
+            transform-origin: top left;
+        }
+
         .hero-screen.main {
-            left: 50%;
-            transform: translateX(-50%);
-            width: 740px;
-            height: 440px;
+            left: 0;
+            top: 0;
+            width: 632px;
+            height: 395px;
             z-index: 2;
         }
 
         .hero-screen.main iframe {
-            width: 1280px;
-            height: 800px;
-            transform: scale(0.578);
-            transform-origin: top left;
-            border: none;
+            width: 1440px;
+            height: 900px;
+            transform: scale(0.4389);
         }
 
         .hero-screen.back-left {
-            left: 0;
-            top: 40px;
-            width: 280px;
-            height: 200px;
+            right: 0;
+            top: 8px;
+            width: 344px;
+            height: 215px;
             z-index: 1;
+            opacity: 0.88;
         }
 
         .hero-screen.back-left iframe {
-            width: 1280px;
-            height: 800px;
-            transform: scale(0.218);
-            transform-origin: top left;
-            border: none;
+            width: 1440px;
+            height: 900px;
+            transform: scale(0.2389);
         }
 
         .hero-screen.front-right {
-            right: 0;
+            right: 18px;
             bottom: 0;
-            width: 340px;
-            height: 240px;
+            width: 396px;
+            height: 248px;
             z-index: 3;
         }
 
         .hero-screen.front-right iframe {
-            width: 1280px;
-            height: 800px;
-            transform: scale(0.265);
-            transform-origin: top left;
-            border: none;
+            width: 1440px;
+            height: 900px;
+            transform: scale(0.275);
         }
 
         /* Stats strip */
         .stats-strip {
-            display: flex;
-            gap: 48px;
             margin-top: 40px;
-            padding-top: 32px;
+            padding-top: 28px;
             border-top: 1px solid var(--border);
+        }
+
+        .stats-strip p {
+            max-width: 74ch;
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--text-secondary);
+        }
+
+        .stats-strip strong {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--text-primary);
         }
 
         .stat-item .stat-val {
@@ -254,8 +273,8 @@
 
         /* Pull quote */
         .pull-quote {
-            border-left: 3px solid var(--accent);
-            padding: 24px 32px;
+            border-left: 1px solid var(--border);
+            padding: 20px 30px;
             margin: 40px 0;
             font-family: var(--font-heading);
             font-size: 20px;
@@ -440,7 +459,7 @@
             border-radius: 4px;
         }
         .ann-note-title {
-            font-family: 'Space Mono', monospace;
+            font-family: var(--font-mono);
             font-size: 9.5px;
             font-weight: 700;
             margin-bottom: 4px;
@@ -681,7 +700,7 @@
             overflow: hidden;
         }
 
-        .drone-spec .spec-eyebrow {
+        .drone-spec .spec-eyebrow-unused {
             font-family: var(--font-mono);
             font-size: 11px;
             letter-spacing: 0.15em;
@@ -753,11 +772,8 @@
         }
 
         .spec-label .spec-tag .st-key {
-            font-family: var(--font-mono);
-            font-size: 10px;
+            font-size: 12px;
             color: var(--text-secondary);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
         }
 
         .spec-label.left {
@@ -771,10 +787,21 @@
         }
 
         .spec-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 16px;
-            margin-top: 56px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px 32px;
+            margin-top: 44px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .spec-grid b {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            color: var(--text-primary);
         }
 
         .spec-stat {
@@ -821,15 +848,15 @@
 
             /* ── Mobile: keep the iframe visible but proportionally scaled to fit the viewport.
                JS scaleEmbeds() computes scale = clientWidth / 1440 (≈0.25 on a phone).
-               DO NOT override transform/width/height here — JS owns sizing. ── */
+               DO NOT override transform/width/height here, JS owns sizing. ── */
             .screen-embed { overflow: hidden; max-width: 100%; }
 
-            /* Annotations, pin dots, and connector lines are desktop-only — never on mobile.
+            /* Annotations, pin dots, and connector lines are desktop-only, never on mobile.
                The screen alone (no labels) keeps mobile clean. */
             .ann-sidebar, .ann-svg, .ann-lines { display: none !important; }
             .screen-annotated { gap: 0 !important; }
 
-            /* Chapter typography — keep paragraphs comfortable, not overwhelming */
+            /* Chapter typography, keep paragraphs comfortable, not overwhelming */
             .chapter { padding: 64px 0; }
             .chapter h2 { font-size: 26px; }
             .chapter h3 { font-size: 18px; margin: 28px 0 12px; }
@@ -839,8 +866,7 @@
             .tl-row { flex-direction: column; gap: 4px; }
             .tl-time { width: auto; }
 
-            /* Grids — single column on mobile so nothing wraps one-word-per-line */
-            .stats-strip,
+            /* Grids, single column on mobile so nothing wraps one-word-per-line */
             .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
 
             .findings,
@@ -857,7 +883,6 @@
             .tension-grid .tg-head,
             .tension-grid .tg-cell { border-right: none; }
 
-            .spec-grid { grid-template-columns: repeat(3, 1fr); }
 
             .spec-label { display: none; }
 
@@ -872,6 +897,68 @@
             .spec-grid { grid-template-columns: repeat(2, 1fr); }
             h2 { font-size: 24px; }
         }
+
+        /* ── Reveals ──────────────────────────────────────────────────────────
+           Scroll-driven, not script-driven. Content is visible by default and
+           the motion is an enhancement on top, so a blocked CDN or a browser
+           without scroll timelines still renders a complete page. ── */
+        @keyframes rise-in {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes settle-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.992);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+
+                .section h2,
+                .section h3,
+                .section p,
+                .section li,
+                .metric-card,
+                .card,
+                .timeline-step,
+                .insight-card,
+                .outcome-card,
+                .quote-block,
+                .pull-quote,
+                .two-col>*,
+                .three-col>*,
+                .four-col>* {
+                    animation: rise-in linear both;
+                    animation-timeline: view();
+                    animation-range: entry 2% entry 42%;
+                }
+
+                .screen-annotated,
+                .screen-embed,
+                figure,
+                .section img:not(.nav-logo-img) {
+                    animation: settle-in linear both;
+                    animation-timeline: view();
+                    animation-range: entry 0% entry 38%;
+                }
+            }
+        }
+
     </style>
 <link rel="stylesheet" href="site-globals.css">
 </head>
@@ -879,17 +966,18 @@
 <body>
     <!-- Disclosure: consulting engagement published under NDA -->
     <div class="concept-note"
-        style="position:relative;z-index:60;padding:11px 24px;text-align:center;background:rgba(255,255,255,0.045);border-bottom:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:0.03em;color:var(--text-secondary,#8b95a6);">
+        style="position:relative;z-index:60;margin-top:73px;padding:11px 24px;text-align:center;background:rgba(255,255,255,0.045);border-bottom:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:0.03em;color:var(--text-secondary,#8b95a6);">
         Consulting engagement under NDA, delivered with a partner agency. Client and fleet identifiers have been altered; the process and outcomes are real.
     </div>
 
     <!-- HERO -->
     <section class="hero">
         <div class="container">
-            <div class="hero-eyebrow">Case Study — Precision Agriculture</div>
-            <h1>ROJNICA</h1>
-            <div class="hero-sub">"The field doesn't care about your Gantt chart."<br>Fleet management for 2,760
-                hectares, 12 drones, and a 48-hour window that won't negotiate.</div>
+            <div class="hero-eyebrow">Agrodron Polska, Wielkopolska, 2024. Fourteen weeks as lead product designer,
+                alongside two engineers and an agronomist.</div>
+            <h1>Twelve drones, 2,760 hectares, and a window that closes in 48 hours</h1>
+            <div class="hero-sub">Septoria does not wait for a spreadsheet. I designed the three interfaces that
+                turn an agronomist's prescription into a flight plan, a night shift, and a reload bay.</div>
             <div class="hero-comp">
                 <div class="hero-screen back-left">
                     <iframe src="rojnica-app.html#planner" loading="lazy" sandbox="allow-scripts"></iframe>
@@ -902,22 +990,10 @@
                 </div>
             </div>
             <div class="stats-strip">
-                <div class="stat-item">
-                    <div class="stat-val">2,760</div>
-                    <div class="stat-label">Hectares managed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-val">12</div>
-                    <div class="stat-label">Drones in fleet</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-val">48h</div>
-                    <div class="stat-label">Treatment window</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-val">3</div>
-                    <div class="stat-label">Interfaces designed</div>
-                </div>
+                <p>Three interfaces: a planner that turns a PDF prescription into <strong>24 sorties</strong>, a night
+                    console for <strong>12 aircraft</strong>, and a reload bay screen readable from three metres with
+                    gloves on. Built against a treatment window of <strong>48 hours</strong>, of which roughly
+                    <strong>31</strong> are actually sprayable.</p>
             </div>
         </div>
     </section>
@@ -925,9 +1001,9 @@
     <!-- QUICK INTRO -->
     <section style="padding: 0;">
         <div class="container">
-            <div style="border: 1px solid rgba(74,158,255,0.28); padding: 20px 24px; background: var(--bg-surface, rgba(255,255,255,0.04)); border-radius: 8px; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
+            <div style="border: 1px solid rgba(79,163,122,0.28); padding: 20px 24px; background: var(--bg-surface, rgba(255,255,255,0.04)); border-radius: 8px; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
                 <strong style="color: var(--text-primary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">The short version</strong><br style="margin-bottom: 8px;">
-                A Polish agricultural cooperative runs 12 spray drones across 2,760 hectares of wheat. They had 48 hours to treat a fungal outbreak and no software to coordinate the fleet. This is the story of designing three interconnected interfaces — a mission planner, a live fleet dashboard, and a field reload station — that turned chaos into a system.
+                A Polish agricultural cooperative runs 12 spray drones across 2,760 hectares of wheat. They had 48 hours to treat a fungal outbreak and no software to coordinate the fleet. This is the story of designing three interconnected interfaces: a mission planner, a live fleet dashboard, and a field reload station.
                 <span style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-secondary); opacity: 0.7;">Reading time: ~9 minutes</span>
             </div>
         </div>
@@ -936,8 +1012,7 @@
     <!-- DRONE SPEC -->
     <section class="drone-spec">
         <div class="container">
-            <div class="spec-eyebrow">The Hardware</div>
-            <h2>AG-X12 Agricultural Sprayer</h2>
+            <h2>The aircraft I was designing around</h2>
             <div class="spec-sub">12 units deployed across the Kalisz cooperative fleet</div>
             <div class="drone-hero-wrap">
                 <img src="images/rojnica-drone-spec.png" alt="AG-X12 Agricultural Drone">
@@ -962,7 +1037,7 @@
                 <div class="spec-label right" style="top:12%;right:0;">
                     <div class="spec-dot"></div>
                     <div class="spec-line"></div>
-                    <div class="spec-tag"><span class="st-val">RTK GPS</span><span class="st-key">High-precision positioning (±2cm)</span>
+                    <div class="spec-tag"><span class="st-val">RTK GPS</span><span class="st-key">Positioning, ±2 cm</span>
                     </div>
                 </div>
                 <div class="spec-label right" style="top:48%;right:-2%;">
@@ -979,30 +1054,10 @@
                 </div>
             </div>
             <div class="spec-grid">
-                <div class="spec-stat">
-                    <div class="ss-val">40<span class="ss-unit">L</span></div>
-                    <div class="ss-label">Tank capacity</div>
-                </div>
-                <div class="spec-stat">
-                    <div class="ss-val">11<span class="ss-unit">m</span></div>
-                    <div class="ss-label">Spray width</div>
-                </div>
-                <div class="spec-stat">
-                    <div class="ss-val">25<span class="ss-unit">min</span></div>
-                    <div class="ss-label">Flight time</div>
-                </div>
-                <div class="spec-stat">
-                    <div class="ss-val">15<span class="ss-unit">m/s</span></div>
-                    <div class="ss-label">Max speed</div>
-                </div>
-                <div class="spec-stat">
-                    <div class="ss-val">±2<span class="ss-unit">cm</span></div>
-                    <div class="ss-label">RTK accuracy</div>
-                </div>
-                <div class="spec-stat">
-                    <div class="ss-val">4<span class="ss-unit">ha</span></div>
-                    <div class="ss-label">Per sortie</div>
-                </div>
+                <span><b>11 m</b> spray width</span>
+                <span><b>25 min</b> in the air</span>
+                <span><b>15 m/s</b> top speed</span>
+                <span><b>4 ha</b> per sortie before it has to come home</span>
             </div>
         </div>
     </section>
@@ -1035,15 +1090,14 @@
         </div>
     </section>
 
-    <!-- CH.01 — CONTEXT -->
+    <!-- CH.01 · CONTEXT -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 01</div>
-                <h2>What Agrodron Does (and What It Didn't Have)</h2>
+                <h2>The fleet tripled. The software did not.</h2>
                 <p>Agrodron Polska operates Poland's largest commercial drone fleet for precision agriculture. Their
                     service: spray fungicides, herbicides, and foliar nutrients across cooperative farmland in
-                    Wielkopolska — the country's breadbasket.</p>
+                    Wielkopolska, the country's breadbasket.</p>
                 <p>The fleet had grown from 3 drones in 2022 to 12 by 2024. <strong>The software hadn't.</strong></p>
                 <p>Operations were coordinated through a patchwork of DJI Terra, WhatsApp voice notes, handwritten field
                     notebooks, and a shared Google Sheet cheerfully nicknamed "the Chaos Spreadsheet." The CTO called it
@@ -1065,18 +1119,17 @@
                         station logistics.</strong></p>
                 <p>Each interface was either built for a single drone (DJI), built for a different domain entirely
                     (Google Sheets), or built for nobody in particular (WhatsApp). The team needed one cohesive system.
-                    They named the project after the Polish word <em>różnica</em> — "the difference" — because that's
+                    They named the project after the Polish word <em>różnica</em>, "the difference", because that's
                     what they wanted to make.</p>
             </div>
         </div>
     </section>
 
-    <!-- CH.02 — INCITING INCIDENT -->
+    <!-- CH.02 · INCITING INCIDENT -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 02</div>
-                <h2>The Wielkopolska Window</h2>
+                <h2>Forty-eight hours in Wielkopolska</h2>
                 <p>June 2024. Satellite imagery flagged Septoria tritici spreading across 6 cooperative wheat fields
                     near Kalisz. The agronomist prescribed emergency fungicide treatment. The catch: <strong>Septoria
                         has a 48-hour optimal treatment window.</strong> After that, yield losses compound
@@ -1084,7 +1137,7 @@
                 <p>Marek, the senior operator, attempted to coordinate the response using the existing tools.</p>
             </div>
             <div class="timeline-artifact">
-                <h4>The 48 Hours — A reconstruction</h4>
+                <h4>The 48 hours, reconstructed</h4>
                 <div class="tl-row">
                     <div class="tl-time">T+0h</div>
                     <div class="tl-content"><strong>Prescription received.</strong> Agronomist sends field priority map
@@ -1093,7 +1146,7 @@
                 <div class="tl-row">
                     <div class="tl-time">T+2h</div>
                     <div class="tl-content"><strong>Planning begins.</strong> Marek manually calculates sortie
-                        assignments in Excel. Three drone batteries are flat — nobody logged them.</div>
+                        assignments in Excel. Three drone batteries are flat, nobody logged them.</div>
                 </div>
                 <div class="tl-row">
                     <div class="tl-time">T+4h</div>
@@ -1126,7 +1179,7 @@
                 <div class="pull-quote">
                     "We have twelve drones that can spray a field in twenty minutes. We spent eight hours figuring out
                     which drone goes where."
-                    <cite>— Marek Kowalski, Senior Drone Operator</cite>
+                    <cite>Marek Kowalski, Senior Drone Operator</cite>
                 </div>
                 <p>The Kalisz incident became the founding artefact for ROJNICA. The board approved the project the
                     following week. I joined two weeks later.</p>
@@ -1134,12 +1187,11 @@
         </div>
     </section>
 
-    <!-- CH.03 — DISCOVERY -->
+    <!-- CH.03 · DISCOVERY -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 03</div>
-                <h2>Discovery: Three Days in Wielkopolska</h2>
+                <h2>Three days at the ground station</h2>
                 <p>I spent three days embedded with the Agrodron team during a scheduled herbicide campaign. Mornings at
                     the ground station. Afternoons in the field. Evenings transcribing notes while the drones charged.
                 </p>
@@ -1155,25 +1207,25 @@
             </div>
             <div class="insight-grid">
                 <div class="insight-card">
-                    <h4>The Attention Split</h4>
+                    <h4>The attention split</h4>
                     <p>Operators divide attention between the physical drone (eyes up) and the digital interface (eyes
-                        down). Any notification must survive this split — if it only exists on screen, it's invisible
+                        down). Any notification must survive this split. If it only exists on screen, it is invisible
                         for up to 45 seconds.</p>
                 </div>
                 <div class="insight-card">
-                    <h4>Exception ≠ Emergency</h4>
+                    <h4>An exception is not an emergency</h4>
                     <p>Operators react to anomalies proportionally. A nozzle flow warning gets a glance. A GPS loss gets
                         full attention. The interface should match this gradient, not treat every alert as a five-alarm
                         fire.</p>
                 </div>
                 <div class="insight-card">
-                    <h4>The Ground Station Paradox</h4>
-                    <p>Jakub needs the simplest interface of anyone — but his context is the most chaotic. Drones land,
+                    <h4>The ground station paradox</h4>
+                    <p>Jakub needs the simplest interface of anyone, and his context is the most chaotic. Drones land,
                         batteries swap, chemicals refill, all while a queue of incoming drones counts down. His UI must
                         be scannable from 2 metres.</p>
                 </div>
                 <div class="insight-card">
-                    <h4>Planning ≠ Operating</h4>
+                    <h4>Planning is not operating</h4>
                     <p>Mission planning happens in an office, on a desktop, with coffee. Fleet operations happen in a
                         field, on a tablet, in the rain. These are not the same context, and they do not want the same
                         UI.</p>
@@ -1182,12 +1234,11 @@
         </div>
     </section>
 
-    <!-- CH.04 — STRATEGY -->
+    <!-- CH.04 · STRATEGY -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 04</div>
-                <h2>Strategy: Three Interfaces, One System</h2>
+                <h2>Three interfaces, one system</h2>
                 <p>The discovery findings led to an uncomfortable but necessary architectural decision: <strong>ROJNICA
                         would be three separate interfaces optimized for three distinct contexts</strong>, connected by
                     a shared data model.</p>
@@ -1195,25 +1246,25 @@
             <div class="principle-grid">
                 <div class="principle-card">
                     <div class="pc-num">Principle 01</div>
-                    <h4>Calm Until It's Not</h4>
+                    <h4>Calm until it is not</h4>
                     <p>Default state is minimal. Information escalates in tiers, not all at once. Green doesn't shout.
                     </p>
                 </div>
                 <div class="principle-card">
                     <div class="pc-num">Principle 02</div>
-                    <h4>Attention Is a Budget</h4>
-                    <p>Every notification competes with a physical drone in the sky. Spend attention like money —
+                    <h4>Attention is a budget</h4>
+                    <p>Every notification competes with a physical drone in the sky. Spend attention like money:
                         sparingly.</p>
                 </div>
                 <div class="principle-card">
                     <div class="pc-num">Principle 03</div>
-                    <h4>Plan for the Replan</h4>
-                    <p>No mission survives first contact with the field. Auto-reassignment isn't a fallback — it's a
+                    <h4>Plan for the replan</h4>
+                    <p>No mission survives first contact with the field. Auto-reassignment is not a fallback; it is a
                         primary feature.</p>
                 </div>
             </div>
             <div class="narrow">
-                <h3>Stakeholder Tensions</h3>
+                <h3>Where the stakeholders pulled apart</h3>
                 <p>Three users, three different needs, some directly contradictory:</p>
             </div>
             <div class="tension-grid">
@@ -1231,7 +1282,7 @@
                 <div class="tg-cell tg-b">One big "problem" indicator</div>
                 <div class="tg-cell">Chemical tracking</div>
                 <div class="tg-cell tg-a">Inventory dashboard with forecasts</div>
-                <div class="tg-cell tg-b">Tank level gauge — that's it</div>
+                <div class="tg-cell tg-b">Tank level gauge, and that is it</div>
             </div>
             <div class="narrow">
                 <p>The resolution: <strong>stratify by interface.</strong> Marek's dashboard gets the telemetry depth.
@@ -1241,49 +1292,48 @@
         </div>
     </section>
 
-    <!-- CH.05 — MISSION PLANNER -->
+    <!-- CH.05 · MISSION PLANNER -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 05</div>
-                <h2>Design: Mission Planner</h2>
+                <h2>The planner: turning a PDF into 24 sorties</h2>
                 <p>The planner is a desktop-first application, light-themed, designed for the office
                     environment where Marek prepares operations. It follows a three-step flow:
                     <strong>Prescription → Fleet → Assignment.</strong>
                 </p>
                 <p>The agronomist's prescription (field priorities, chemicals, urgency) loads into the left
-                    panel. The map renders field boundaries with priority-coded borders — red for urgent,
+                    panel. The map renders field boundaries with priority-coded borders: red for urgent,
                     amber for preventive, green for monitoring. No mystery colours. No legend required.</p>
             </div>
             <div class="screen-annotated">
                 <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="280" data-pin-y="300" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Priority Sidebar</div>
-                        <div class="ann-note-body">2 of 6 fields visible — scrollable list sorted by urgency, not alphabetically.</div>
+                    <div class="ann-note" data-pin-x="280" data-pin-y="300" data-color="#4FA37A">
+                        <div class="ann-note-title" style="color:#4FA37A;">Priority Sidebar</div>
+                        <div class="ann-note-body">2 of 6 fields visible, scrollable list sorted by urgency, not alphabetically.</div>
                     </div>
                 </div>
                 <div class="screen-embed">
                     <iframe src="rojnica-app.html#planner" loading="lazy" sandbox="allow-scripts"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="280" cy="300" r="6" fill="#4A9EFF" opacity="0.9"/>
-                        <circle cx="900" cy="200" r="6" fill="#FF4444" opacity="0.9"/>
+                        <circle cx="280" cy="300" r="6" fill="#4FA37A" opacity="0.9"/>
+                        <circle cx="900" cy="200" r="6" fill="#E86A5A" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption">Mission Planner — Prescription View: field boundaries with urgency coding, prescription sidebar with treatment details.</div>
+                    <div class="screen-caption">Mission planner, prescription view: field boundaries with urgency coding, prescription sidebar with treatment details.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="900" data-pin-y="200" data-color="#FF4444">
-                        <div class="ann-note-title" style="color:#FF4444;">Field Border Colour</div>
+                    <div class="ann-note" data-pin-x="900" data-pin-y="200" data-color="#E86A5A">
+                        <div class="ann-note-title" style="color:#E86A5A;">Field Border Colour</div>
                         <div class="ann-note-body">Red border = urgent, no legend needed. Colour IS the hierarchy.</div>
                     </div>
                 </div>
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
             </div>
             <div class="narrow">
-                <h3>Fleet Configuration</h3>
+                <h3>Fleet configuration</h3>
                 <p>Tab two reveals the fleet in a 2-column grid. Available drones show battery, payload, and
                     chemical assignment. Unavailable units (maintenance, charging) grey out with reason
                     codes. No guesswork about why AG-08 isn't in the roster.</p>
-                <p>Chemical inventory sits below — not in a separate screen, not in a modal. Right there.
+                <p>Chemical inventory sits below, not in a separate screen, not in a modal. Right there.
                     Because Marek told me: "I've launched drones without checking chemical stock twice. Both
                     times were bad."</p>
             </div>
@@ -1291,20 +1341,20 @@
                 <div class="screen-embed">
                     <iframe src="rojnica-app.html#fleet" loading="lazy" sandbox="allow-scripts"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="1380" cy="738" r="6" fill="#4A9EFF" opacity="0.9"/>
+                        <circle cx="1380" cy="738" r="6" fill="#4FA37A" opacity="0.9"/>
                     </svg>
                     <div class="screen-caption">Fleet Configuration: 12 drones in availability grid, chemical inventory gauges, battery status.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="1380" data-pin-y="738" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Chemical Inventory</div>
-                        <div class="ann-note-body">Inventory on same screen as fleet — no tab-switching to check stock.</div>
+                    <div class="ann-note" data-pin-x="1380" data-pin-y="738" data-color="#4FA37A">
+                        <div class="ann-note-title" style="color:#4FA37A;">Chemical Inventory</div>
+                        <div class="ann-note-body">Inventory on same screen as fleet, no tab-switching to check stock.</div>
                     </div>
                 </div>
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
             </div>
             <div class="narrow">
-                <h3>Auto-Assignment</h3>
+                <h3>Auto-assignment</h3>
                 <p>The third tab is where the algorithm earns its keep. Click "Generate Plan" and ROJNICA
                     assigns drones to fields, optimising for: priority (urgent fields first), proximity
                     (minimize transit), battery efficiency (avoid mid-sortie returns), and chemical
@@ -1328,22 +1378,22 @@
             </div>
             <div class="narrow">
                 <p>The result renders as <strong>colour-coded flight paths on the map</strong> and a
-                    <strong>Gantt chart</strong> at the bottom — every drone row showing its sortie
+                    <strong>Gantt chart</strong> at the bottom, every drone row showing its sortie
                     sequence, reload gaps, and field assignments. The operator can read the entire 6-hour
                     operation at a glance.
                 </p>
             </div>
             <div class="screen-annotated">
                 <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="43" data-pin-y="846" data-color="#FFB800">
-                        <div class="ann-note-title" style="color:#FFB800;">Gantt Chart</div>
-                        <div class="ann-note-body">Not in the spec — operators requested it after first prototype. Now their primary briefing tool.</div>
+                    <div class="ann-note" data-pin-x="43" data-pin-y="846" data-color="#D6A03C">
+                        <div class="ann-note-title" style="color:#D6A03C;">Gantt Chart</div>
+                        <div class="ann-note-body">Not in the spec. Operators asked for it after first prototype. Now their primary briefing tool.</div>
                     </div>
                 </div>
                 <div class="screen-embed">
                     <iframe src="rojnica-app.html#assignment" loading="lazy" sandbox="allow-scripts"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="43" cy="846" r="6" fill="#FFB800" opacity="0.9"/>
+                        <circle cx="43" cy="846" r="6" fill="#D6A03C" opacity="0.9"/>
                     </svg>
                     <div class="screen-caption">Auto-Assignment: colour-coded flight paths on map, Gantt chart below with sortie sequence and reload gaps.</div>
                 </div>
@@ -1352,12 +1402,11 @@
         </div>
     </section>
 
-    <!-- CH.06 — FLEET DASHBOARD -->
+    <!-- CH.06 · FLEET DASHBOARD -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 06</div>
-                <h2>Design: Fleet Operations Dashboard</h2>
+                <h2>The console: twelve aircraft at two in the morning</h2>
                 <p>The dashboard is the centrepiece. Dark mode. Real-time. Designed to run on a large
                     monitor at the ground station during active operations.</p>
                 <p>The core design philosophy: <strong>calm by default.</strong> When 10 drones are flying
@@ -1367,38 +1416,38 @@
             </div>
             <div class="pull-quote">
                 "If your dashboard looks exciting during normal operations, your dashboard is broken."
-                <cite>— A design principle I will die on a hill for</cite>
+                <cite>A design principle I will die on a hill for</cite>
             </div>
             <div class="screen-annotated">
                 <div class="screen-embed">
                     <iframe src="rojnica-app.html#dashboard" loading="lazy" sandbox="allow-scripts"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="1152" cy="36" r="6" fill="#3DD68C" opacity="0.9"/>
-                        <circle cx="1411" cy="135" r="6" fill="#4A9EFF" opacity="0.9"/>
+                        <circle cx="1411" cy="135" r="6" fill="#4FA37A" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption">Fleet Dashboard — nominal state. All systems green. The calm screen the operator hopes to see all shift.</div>
+                    <div class="screen-caption">Fleet Dashboard, nominal state. All systems green. The calm screen the operator hopes to see all shift.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
                     <div class="ann-note" data-pin-x="1152" data-pin-y="36" data-color="#3DD68C">
                         <div class="ann-note-title" style="color:#3DD68C;">All Nominal</div>
-                        <div class="ann-note-body">Deliberately understated — green doesn't shout. Calm is safe.</div>
+                        <div class="ann-note-body">Deliberately understated, green doesn't shout. Calm is safe.</div>
                     </div>
-                    <div class="ann-note" data-pin-x="1411" data-pin-y="135" data-color="#4A9EFF">
-                        <div class="ann-note-title" style="color:#4A9EFF;">Attention Sort</div>
+                    <div class="ann-note" data-pin-x="1411" data-pin-y="135" data-color="#4FA37A">
+                        <div class="ann-note-title" style="color:#4FA37A;">Attention Sort</div>
                         <div class="ann-note-body">Exceptions float to top, nominal drones drift down automatically.</div>
                     </div>
                 </div>
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
             </div>
             <div class="narrow">
-                <h3>The Exception Tiers</h3>
+                <h3>Three tiers of exception</h3>
                 <p>The escalation system has three tiers, each calibrated to the operator's real-world
                     response gradient:</p>
             </div>
             <div class="tier-card">
                 <div class="tier-indicator" style="background:var(--accent-2);"></div>
                 <div>
-                    <h4>Tier 1 — Informational</h4>
+                    <h4>Tier 1: worth knowing</h4>
                     <p>Log entry only. No visual change. "AG-07 completed sortie 2." The operator doesn't
                         need to know this urgently. It's there when they check.</p>
                 </div>
@@ -1406,7 +1455,7 @@
             <div class="tier-card">
                 <div class="tier-indicator" style="background:var(--accent-3);"></div>
                 <div>
-                    <h4>Tier 2 — Action Needed</h4>
+                    <h4>Tier 2: worth a look</h4>
                     <p>Amber card border. Pulsing map ring. Notification slides in from the right with
                         context and two action buttons. "Crop stress detected in northeast sector of Pole
                         Wschodnie." Operator decides: redirect or mark for follow-up.</p>
@@ -1415,7 +1464,7 @@
             <div class="tier-card">
                 <div class="tier-indicator" style="background:var(--accent-4);"></div>
                 <div>
-                    <h4>Tier 3 — Critical</h4>
+                    <h4>Tier 3: act now</h4>
                     <p>Red card. Dashboard dims. Blinking map marker. Auto-return countdown begins. "AG-09:
                         GPS LOST. Hovering at last known position." The operator has two choices: return now
                         or hold position. Nothing else matters.</p>
@@ -1438,8 +1487,8 @@
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
             </div>
             <div class="narrow">
-                <h3>The Replan Cascade</h3>
-                <p>When a drone is withdrawn — GPS loss, mechanical failure, nozzle malfunction — its
+                <h3>The replan cascade</h3>
+                <p>When a drone is withdrawn, GPS loss, mechanical failure, nozzle malfunction, its
                     remaining hectares need redistribution. In the old system, this was a 14-minute WhatsApp
                     scramble. In ROJNICA, it's a modal.</p>
                 <p>The replan modal shows the affected fields, the original paths (dashed), the proposed new
@@ -1455,18 +1504,17 @@
         </div>
     </section>
 
-    <!-- CH.07 — RELOAD STATION -->
+    <!-- CH.07 · RELOAD STATION -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 07</div>
-                <h2>Design: Reload Station View</h2>
+                <h2>The reload bay: gloves on, three metres back</h2>
                 <p>Jakub's interface. Tablet-optimised. Dark mode for outdoor visibility. And the design
                     constraint that made it interesting: <strong>56-pixel minimum touch targets, because
                         Jakub wears gloves.</strong></p>
                 <p>The reload view is deliberately simple. An incoming drone queue with countdown timers.
                     Each card shows what needsto happen: battery swap, chemical reload, nozzle check. A fat
-                    ✓ checkbox when it's ready to launch. A recently-launched log at the bottom so he can
+                    A single wide button to mark the bay ready. A recently-launched log at the bottom so he can
                     confirm what he just sent back up.</p>
             </div>
             <img src="images/rojnica-operator-tablet.png" alt="Operator viewing drone telemetry on tablet in the field"
@@ -1475,14 +1523,14 @@
                 <div class="screen-embed">
                     <iframe src="rojnica-app.html#reload" loading="lazy" sandbox="allow-scripts" style="height:640px;"></iframe>
                     <svg class="ann-svg" viewBox="0 0 1440 640" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="1397" cy="315" r="6" fill="#FFB800" opacity="0.9"/>
+                        <circle cx="1397" cy="315" r="6" fill="#D6A03C" opacity="0.9"/>
                     </svg>
                     <div class="screen-caption">Reload Station: large touch targets, 3-step reload verification sequence, chemical level gauges.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="1397" data-pin-y="315" data-color="#FFB800">
-                        <div class="ann-note-title" style="color:#FFB800;">56px Targets</div>
-                        <div class="ann-note-body">Sized for gloves in direct sunlight — Jakub's exact constraint.</div>
+                    <div class="ann-note" data-pin-x="1397" data-pin-y="315" data-color="#D6A03C">
+                        <div class="ann-note-title" style="color:#D6A03C;">56px Targets</div>
+                        <div class="ann-note-body">Sized for gloves in direct sunlight, Jakub's exact constraint.</div>
                     </div>
                 </div>
                 <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
@@ -1496,14 +1544,13 @@
         </div>
     </section>
 
-    <!-- CH.08 — OUTCOMES -->
+    <!-- CH.08 · OUTCOMES -->
     <section class="chapter">
         <div class="container">
             <div class="narrow">
-                <div class="chapter-num">Chapter 08</div>
-                <h2>Outcomes</h2>
+                <h2>What happened when they ran Kalisz again</h2>
                 <p>ROJNICA deployed for a pilot season covering two cooperative campaigns. The numbers told
-                    the story we hoped for — and one we didn't expect.</p>
+                    the story we hoped for, and one we didn't expect.</p>
             </div>
             <div class="metrics-grid">
                 <div class="metric-card">
@@ -1523,19 +1570,19 @@
                 </div>
             </div>
             <div class="narrow">
-                <h3>The Kalisz Replay</h3>
+                <h3>The Kalisz replay</h3>
                 <p>The real test came when Septoria returned to the Kalisz cooperative in the second
                     campaign season. Same pathogen. Same 48-hour window. Same 2,760 hectares. Different
                     outcome.</p>
                 <p>Marek loaded the prescription at 07:00. Generated the mission plan by 07:12. First drones
-                    launched at 07:30. AG-09 threw a nozzle warning at 09:15 — Tier 2, handled in 12 seconds
+                    launched at 07:30. AG-09 threw a nozzle warning at 09:15, Tier 2, handled in 12 seconds
                     with a redirect to the nearest reload station. <strong>All six fields treated within 38
                         hours.</strong> Ten hours inside the window.</p>
                 <div class="pull-quote">
                     "Last year Kalisz nearly cost us. This year I was home for dinner."
-                    <cite>— Marek Kowalski, Senior Drone Operator</cite>
+                    <cite>Marek Kowalski, Senior Drone Operator</cite>
                 </div>
-                <h3>Retrospective</h3>
+                <h3>What I would do differently</h3>
                 <p>What I'd do differently: the offline resilience layer was under-specified. We designed
                     for it but didn't prototype the local-first data sync thoroughly enough. When Jakub's
                     tablet lost connectivity for 90 seconds during a reload cycle, the queue froze. Fixable,
@@ -1684,39 +1731,7 @@
 })();
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script>
-  gsap.registerPlugin(ScrollTrigger);
-  // Section reveals
-  gsap.utils.toArray('.section-title, .section-label, .section-intro, .section-header, h1, h2, h3').forEach(function(el) {
-    gsap.from(el, {
-      opacity: 0, y: 28, duration: 0.75, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-    });
-  });
-  // Cards and blocks
-  gsap.utils.toArray('.metric-card, .card, .timeline-step, .insight-card, .outcome-card, .quote-block, .two-col > *, .three-col > *, .four-col > *').forEach(function(el, i) {
-    gsap.from(el, {
-      opacity: 0, y: 36, duration: 0.65, delay: (i % 4) * 0.08, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-    });
-  });
-  // Images
-  gsap.utils.toArray('img:not(.nav-logo-img)').forEach(function(el) {
-    gsap.from(el, {
-      opacity: 0, scale: 0.97, duration: 0.8, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 92%', once: true }
-    });
-  });
-  // Screen embeds
-  gsap.utils.toArray('.screen-annotated, .screen-embed').forEach(function(el) {
-    gsap.from(el, {
-      opacity: 0, y: 40, duration: 0.9, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-    });
-  });
-</script>
+
 <script>
 </script>
 
