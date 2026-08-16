@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0908">
+  <meta name="description" content="rabbitsfoot is an independent product design studio creating systems for the moments that matter.">
+  <title>rabbitsfoot — Products for the moments that matter</title>
+  <link rel="stylesheet" href="studio-pear.css">
+</head>
+<body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader__word">rabbitsfoot<span>®</span></div>
+    <div class="loader__line"><i></i></div>
+    <span class="loader__count">00</span>
+  </div>
+
+  <canvas class="signal" id="signal" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><i></i><span>View</span></div>
+
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top" aria-label="rabbitsfoot home">
+      <svg viewBox="0 0 56 24" aria-hidden="true">
+        <path d="M2 21C12 20 17 14 17 4c7 1 10 7 9 16M16 9C11 2 5 3 2 6c1 7 6 11 14 11M27 19c9 4 19 1 26-9"/>
+      </svg>
+      <b>rabbitsfoot</b>
+    </a>
+    <nav class="nav__links" aria-label="Primary navigation">
+      <a href="#work">Work</a>
+      <a href="#method">Method</a>
+      <a href="#studio">Studio</a>
+    </nav>
+    <a class="nav__contact" href="#contact"><span>Start something</span><b>↗</b></a>
+    <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </header>
+
+  <aside class="menu" id="menu" aria-hidden="true">
+    <button class="menu__close" type="button" aria-label="Close menu">Close</button>
+    <nav>
+      <a href="#work"><small>01</small>Work</a>
+      <a href="#method"><small>02</small>Method</a>
+      <a href="#studio"><small>03</small>Studio</a>
+      <a href="#contact"><small>04</small>Contact</a>
+    </nav>
+    <p>Bengaluru · India<br><a href="mailto:hello@rabbitsfoot.studio">hello@rabbitsfoot.studio</a></p>
+  </aside>
+
+  <div class="progress" aria-hidden="true"><i></i></div>
+
+  <main id="top">
+    <section class="hero" data-theme="dark">
+      <div class="hero__meta reveal">
+        <span>Independent product studio</span>
+        <span>Bengaluru · Working worldwide</span>
+      </div>
+
+      <h1 class="hero__title" aria-label="Design for the moment it matters">
+        <span class="hero__line hero__line--one"><i>Design for the</i></span>
+        <span class="hero__line hero__line--two"><i><em>moment</em> it matters.</i></span>
+      </h1>
+
+      <div class="hero__foot reveal">
+        <p>We turn complex operations into calm, clear products—built for real people, real pressure, and no second chances.</p>
+        <a href="#work" class="round-link" aria-label="Explore selected work"><span>Explore<br>the work</span><b>↓</b></a>
+      </div>
+
+      <div class="hero__index" aria-hidden="true"><span>00</span><i></i><span>26</span></div>
+      <p class="hero__scroll" aria-hidden="true">Scroll to shape the signal</p>
+    </section>
+
+    <section class="belief" id="studio" data-theme="light">
+      <div class="belief__eyebrow reveal"><span>What we believe</span><span>( keep it human )</span></div>
+      <p class="belief__statement word-reveal">
+        Complexity should be felt by the designer, <em>not the person using the product.</em>
+      </p>
+      <div class="belief__notes">
+        <p class="reveal">We work on systems where the gap between “looks good” and “works beautifully” is enormous.</p>
+        <p class="reveal">Field research, systems thinking, interaction design and build support—one senior team from ambiguity to launch.</p>
+      </div>
+      <div class="belief__stamp" aria-hidden="true">
+        <svg viewBox="0 0 120 120">
+          <defs><path id="stampPath" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>
+          <text><textPath href="#stampPath">DESIGN IN THE REAL WORLD · EST. 2017 · </textPath></text>
+        </svg>
+        <span>✦</span>
+      </div>
+    </section>
+
+    <section class="work" id="work" data-theme="dark">
+      <header class="section-head">
+        <span>Selected work · 2022—2026</span>
+        <h2>Proof, not<br><em>promises.</em></h2>
+        <p>Four systems designed close to the people who depend on them.</p>
+      </header>
+
+      <div class="projects">
+        <a class="project project--amber cursor-view" href="parkbeheer.html" data-accent="#ff663d">
+          <div class="project__media">
+            <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png" alt="Parkbeheer enforcement operations platform" loading="lazy" decoding="async">
+            <span class="project__wash"></span>
+          </div>
+          <div class="project__top"><span>01 / Enterprise operations</span><span>Netherlands · 2025</span></div>
+          <div class="project__copy">
+            <h3>Parkbeheer</h3>
+            <p>923,000 parking spaces. One coherent operating system.</p>
+          </div>
+          <span class="project__arrow">↗</span>
+        </a>
+
+        <a class="project project--blue cursor-view" href="chargeur.html" data-accent="#6d8fff">
+          <div class="project__media">
+            <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="Chargeur armoured vehicle load management interface" loading="lazy" decoding="async">
+            <span class="project__wash"></span>
+          </div>
+          <div class="project__top"><span>02 / Mission-critical</span><span>Europe · 2024</span></div>
+          <div class="project__copy">
+            <h3>Chargeur</h3>
+            <p>Zero-mismatch load management for an armoured fleet.</p>
+          </div>
+          <span class="project__arrow">↗</span>
+        </a>
+
+        <a class="project project--green cursor-view" href="muspell.html" data-accent="#c6ff54">
+          <div class="project__media">
+            <img src="gallery/muspell images/hero-mockup.png" alt="Muspell clinical intelligence platform" loading="lazy" decoding="async">
+            <span class="project__wash"></span>
+          </div>
+          <div class="project__top"><span>03 / Clinical intelligence</span><span>Europe · 2023</span></div>
+          <div class="project__copy">
+            <h3>Muspell</h3>
+            <p>Patient complexity made clear enough to act on.</p>
+          </div>
+          <span class="project__arrow">↗</span>
+        </a>
+
+        <a class="project project--violet cursor-view" href="rojnica.html" data-accent="#c59aff">
+          <div class="project__media">
+            <img src="images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png" alt="Rojnica agricultural drone fleet system" loading="lazy" decoding="async">
+            <span class="project__wash"></span>
+          </div>
+          <div class="project__top"><span>04 / Autonomous systems</span><span>India · 2025</span></div>
+          <div class="project__copy">
+            <h3>Rojnica</h3>
+            <p>Twelve drones. One narrow window. No room for confusion.</p>
+          </div>
+          <span class="project__arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="method" id="method" data-theme="acid">
+      <header class="method__head">
+        <span class="reveal">How the work moves</span>
+        <h2 class="word-reveal">Close to the problem.<br>Closer to the people.</h2>
+      </header>
+
+      <div class="method__steps">
+        <article class="method-card reveal">
+          <span>01</span><i>Observe</i>
+          <h3>Go where the work is.</h3>
+          <p>Watch the hand-offs, workarounds and pressure points. The real environment becomes the brief.</p>
+        </article>
+        <article class="method-card reveal">
+          <span>02</span><i>Make</i>
+          <h3>Give the idea weight.</h3>
+          <p>Prototype early enough to expose the wrong assumptions while changing them is still cheap.</p>
+        </article>
+        <article class="method-card reveal">
+          <span>03</span><i>Stress</i>
+          <h3>Test the ugly moments.</h3>
+          <p>Gloves on. Alarm sounding. Network gone. Design for the moment the polished demo never shows.</p>
+        </article>
+        <article class="method-card reveal">
+          <span>04</span><i>Ship</i>
+          <h3>Stay until it is real.</h3>
+          <p>Work beside engineering, protect the intent and tune the product through the final mile.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="interlude" data-theme="dark" aria-label="Studio statement">
+      <div class="interlude__track" aria-hidden="true">
+        <span>Strategy · Research · Product · Systems · Interaction · Prototyping · </span>
+        <span>Strategy · Research · Product · Systems · Interaction · Prototyping · </span>
+      </div>
+      <div class="interlude__copy">
+        <span>Small by design</span>
+        <p>Senior people.<br>Direct access.<br><em>No theatre.</em></p>
+      </div>
+      <div class="interlude__orb" aria-hidden="true"><i></i><i></i><i></i><b>rf</b></div>
+    </section>
+
+    <section class="contact" id="contact" data-theme="coral">
+      <div class="contact__top"><span>Have a difficult product?</span><span>Good. We should talk.</span></div>
+      <a class="contact__link" href="mailto:hello@rabbitsfoot.studio">
+        <span>Bring us the</span>
+        <span>difficult bit.<b>↗</b></span>
+      </a>
+      <footer class="contact__foot">
+        <div><span>New business</span><a href="mailto:hello@rabbitsfoot.studio">hello@rabbitsfoot.studio</a></div>
+        <div><span>Based in</span><p>Bengaluru, India<br>Working worldwide</p></div>
+        <div><span>Elsewhere</span><p><a href="https://www.linkedin.com/in/aayushran/" target="_blank" rel="noopener">LinkedIn</a><br><a href="#top">Back to top ↑</a></p></div>
+        <p>© 2026 rabbitsfoot studio</p>
+      </footer>
+    </section>
+  </main>
+
+  <script src="studio-pear.js" defer></script>
+</body>
+</html>
