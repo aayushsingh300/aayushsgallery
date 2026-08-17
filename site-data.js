@@ -288,12 +288,12 @@
       personal: {
         subtitle: 'Cannabis-native Point of Sale',
         tagLabels: ['B2B', 'SaaS', 'Retail'],
-        blurb: 'Building a cannabis-native POS and operations system for Thai dispensaries: weight-first sales, parallel customer tabs, invisible compliance, and local payments.',
+        blurb: 'Building a cannabis-native POS and operations platform for Thai dispensaries: weight-first sales, live analytics, multi-outlet inventory, invisible compliance, and local payments.',
         meta: 'KLu · Thailand · 2024'
       },
       studio: {
         discipline: 'Consumer & commerce',
-        blurb: 'A cannabis-native till built around grams, consultations and regulation.',
+        blurb: 'A cannabis-native retail system connecting the counter to analytics, inventory and compliance.',
         meta: 'Thailand · 2024',
         accent: '#ff5c3f',
         accentClass: 'project--amber'

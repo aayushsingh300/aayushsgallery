@@ -510,6 +510,252 @@
     .promptpay h3 { font-size: clamp(37px, 4.5vw, 60px); line-height: 1.02; letter-spacing: -0.045em; margin: 20px 0; }
     .promptpay p { color: #4d5a53; }
 
+    /* SaaS OPERATIONS CHAPTER */
+    .saas-section {
+      background: #edf1e8;
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .saas-section .section-num { color: var(--mint-dark); }
+
+    .web-shell {
+      overflow: hidden;
+      border: 1px solid rgba(16, 33, 25, 0.17);
+      border-radius: 16px;
+      background: #f8faf8;
+      box-shadow: 0 26px 65px rgba(20, 51, 35, 0.14);
+    }
+
+    .web-shell-bar {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+      border-bottom: 1px solid rgba(16, 33, 25, 0.1);
+      background: #dae2dc;
+    }
+
+    .web-shell-bar i {
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(16, 33, 25, 0.24);
+    }
+
+    .web-shell-bar span {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #607067;
+    }
+
+    .web-shell img { width: 100%; background: #fff; }
+
+    .saas-overview {
+      position: relative;
+      margin-top: 62px;
+    }
+
+    .saas-overview::after {
+      content: 'OWNER VIEW / LIVE OPERATIONS';
+      position: absolute;
+      right: 24px;
+      bottom: -17px;
+      padding: 10px 14px;
+      border: 1px solid var(--ink);
+      border-radius: 6px;
+      background: var(--acid);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.07em;
+      box-shadow: 3px 3px 0 var(--ink);
+      transform: rotate(1deg);
+    }
+
+    .saas-scope-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 72px;
+    }
+
+    .saas-scope {
+      min-height: 210px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.5);
+    }
+
+    .saas-scope:nth-child(2) { background: var(--mint); }
+    .saas-scope span { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint-dark); }
+    .saas-scope h3 { margin: 26px 0 8px; font-size: 25px; letter-spacing: -0.03em; }
+    .saas-scope p { color: #4d5b53; font-size: 14px; line-height: 1.5; }
+
+    .saas-modules { margin-top: 104px; }
+
+    .saas-module {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 74px;
+      align-items: center;
+      padding: 92px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .saas-module.reverse { grid-template-columns: 1.28fr 0.72fr; }
+    .saas-module.reverse .saas-module-copy { order: 2; }
+    .saas-module.reverse .saas-module-visual { order: 1; }
+
+    .saas-module-index {
+      display: block;
+      margin-bottom: 16px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mint-dark);
+    }
+
+    .saas-module h3 {
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.03;
+      letter-spacing: -0.045em;
+      margin-bottom: 22px;
+    }
+
+    .saas-module-copy > p { color: #4c5b52; }
+
+    .design-read {
+      margin-top: 24px;
+      padding: 17px 18px;
+      border-left: 2px solid var(--mint-dark);
+      background: rgba(255,255,255,0.48);
+      font-size: 13px;
+      line-height: 1.52;
+      color: #3f5046;
+    }
+
+    .design-read b {
+      display: block;
+      margin-bottom: 5px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mint-dark);
+    }
+
+    .saas-module-visual { position: relative; }
+
+    .saas-secondary-proof {
+      width: 78%;
+      margin: -34px 0 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .saas-secondary-proof .web-shell { box-shadow: 0 18px 45px rgba(20, 51, 35, 0.19); }
+
+    .lens-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 24px;
+    }
+
+    .lens-list span {
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #516057;
+      background: rgba(255,255,255,0.45);
+    }
+
+    .inventory-ledger {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .inventory-ledger span {
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--forest);
+      color: var(--paper);
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 9px;
+      line-height: 1.4;
+    }
+
+    .saas-evidence {
+      padding-top: 90px;
+      border-top: 1px solid var(--line);
+    }
+
+    .saas-evidence-head {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 70px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .saas-evidence-head h3 {
+      font-size: clamp(36px, 4.5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    .saas-evidence-head p { color: #4d5b53; }
+
+    .saas-evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .evidence-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(255,255,255,0.53);
+    }
+
+    .evidence-card .web-shell { border-radius: 9px; box-shadow: none; }
+    .evidence-card .web-shell-bar { height: 24px; }
+    .evidence-card h4 { margin: 18px 8px 5px; font-size: 18px; }
+    .evidence-card p { margin: 0 8px 8px; min-height: 62px; color: #5c6961; font-size: 12px; line-height: 1.45; }
+
+    .saas-close {
+      margin-top: 72px;
+      padding: 42px;
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 36px;
+      align-items: center;
+      border-radius: 18px;
+      background: var(--forest);
+      color: var(--paper);
+    }
+
+    .saas-close span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+    .saas-close p { font-family: var(--serif); font-size: clamp(27px, 3vw, 40px); font-style: italic; line-height: 1.16; }
+
     .architecture {
       margin-top: 64px;
       padding: 44px;
@@ -651,6 +897,11 @@
       .arch-arrow { transform: rotate(90deg); }
       .outcome-grid { grid-template-columns: 1fr; }
       .lessons { grid-template-columns: 1fr 1fr; }
+      .saas-scope-grid { grid-template-columns: 1fr; }
+      .saas-scope { min-height: 170px; }
+      .saas-module, .saas-module.reverse, .saas-evidence-head { grid-template-columns: 1fr; gap: 38px; }
+      .saas-module.reverse .saas-module-copy, .saas-module.reverse .saas-module-visual { order: initial; }
+      .saas-evidence-grid { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 620px) {
@@ -679,6 +930,18 @@
       .annotation { position: static; max-width: none; margin-top: 12px; transform: none; box-shadow: 2px 2px 0 var(--ink); }
       .compliance-copy { padding: 26px; }
       .promptpay { padding-top: 68px; }
+      .web-shell { border-radius: 10px; }
+      .web-shell-bar { height: 25px; }
+      .saas-overview { margin-top: 42px; }
+      .saas-overview::after { position: static; display: inline-block; margin: 12px 0 0 4px; transform: none; }
+      .saas-scope-grid { margin-top: 55px; }
+      .saas-modules { margin-top: 72px; }
+      .saas-module { padding: 66px 0; }
+      .saas-secondary-proof { width: 88%; margin-top: -12px; }
+      .inventory-ledger { grid-template-columns: 1fr; }
+      .saas-evidence { padding-top: 66px; }
+      .saas-evidence-grid { grid-template-columns: 1fr; }
+      .saas-close { grid-template-columns: 1fr; padding: 27px; gap: 14px; }
       .architecture { padding: 20px; }
       .arch-rails { grid-template-columns: 1fr; }
       .lessons { grid-template-columns: 1fr; }
@@ -762,7 +1025,7 @@
 
           <article class="surface-card reveal">
             <div class="surface-label"><div><span>02 / Anywhere</span><strong>Operations PWA</strong></div><span>Reports · inventory · control</span></div>
-            <div class="screen-shell"><img src="images/klu/admin-analytics.jpg" alt="KLu web dashboard analytics screen with revenue, cost and profit metrics" loading="lazy"></div>
+            <div class="screen-shell"><img src="images/klu/saas-home.jpg" alt="KLu web operations dashboard with business KPIs, revenue history and top-selling products" loading="lazy"></div>
           </article>
         </div>
 
@@ -858,10 +1121,153 @@
       </div>
     </section>
 
+    <section class="section saas-section" aria-labelledby="saas-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="section-num">04 / The control plane</p>
+          <h2 class="section-title" id="saas-title">The counter is only <em>half the product.</em></h2>
+        </div>
+
+        <div class="narrow body-copy reveal">
+          <p class="lede">The POS makes a sale fast. The web app makes the business legible.</p>
+          <p>Every checkout changes several things at once: cash, stock, customer history, margin, compliance records and branch performance. The SaaS product turns that exhaust into an operating picture—without asking an owner to reconstruct the day from receipts and spreadsheets.</p>
+        </div>
+
+        <figure class="saas-overview reveal">
+          <div class="web-shell">
+            <div class="web-shell-bar"><i></i><i></i><i></i><span>dashboard.klupos.com / overview</span></div>
+            <img src="images/klu/saas-home.jpg" alt="KLu SaaS home showing revenue, average transaction value, transactions, new customers and top-selling products" loading="lazy">
+          </div>
+        </figure>
+
+        <div class="saas-scope-grid" aria-label="The three scopes of the KLu operations model">
+          <article class="saas-scope reveal">
+            <span>Scope 01 / Organization</span>
+            <div><h3>See the whole business</h3><p>Consolidated performance, branch comparison, team access and the patterns that only emerge across outlets.</p></div>
+          </article>
+          <article class="saas-scope reveal">
+            <span>Scope 02 / Branch</span>
+            <div><h3>Run one location well</h3><p>Local stock rooms, prices, promotions, cash drawers and staff—inside the context where action happens.</p></div>
+          </article>
+          <article class="saas-scope reveal">
+            <span>Scope 03 / Object</span>
+            <div><h3>Trace the thing itself</h3><p>Drill from a metric into the bill, product, customer, prescription or inventory movement behind it.</p></div>
+          </article>
+        </div>
+
+        <div class="saas-modules">
+          <article class="saas-module">
+            <div class="saas-module-copy reveal">
+              <span class="saas-module-index">System 01 / Analytics</span>
+              <h3>Metrics organized around decisions.</h3>
+              <p>A generic dashboard gives everyone the same charts. KLu separates the questions an operator actually asks: Are customers returning? Which flower types are moving? Where is capital sitting? What changed at this branch, in this period?</p>
+              <div class="lens-list" aria-label="Analytics lenses"><span>General</span><span>Customers</span><span>Cannabis flowers</span><span>Leaderboard</span><span>Inventory</span></div>
+              <div class="design-read"><b>Design read</b>Branch and date filters stay above the analytical lenses. Summary numbers lead, comparison charts explain, and tables remain available when an owner needs the record—not just the trend.</div>
+            </div>
+
+            <div class="saas-module-visual reveal">
+              <div class="web-shell">
+                <div class="web-shell-bar"><i></i><i></i><i></i><span>Analytics / customers</span></div>
+                <img src="images/klu/saas-analytics-customers.jpg" alt="Customer analytics in KLu showing new and returning customers, retention and demographic charts" loading="lazy">
+              </div>
+              <div class="saas-secondary-proof">
+                <div class="web-shell">
+                  <div class="web-shell-bar"><i></i><i></i><i></i><span>Analytics / inventory</span></div>
+                  <img src="images/klu/saas-analytics-inventory.jpg" alt="KLu inventory analytics showing cost, estimated value and category-level quantities" loading="lazy">
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="saas-module reverse">
+            <div class="saas-module-copy reveal">
+              <span class="saas-module-index">System 02 / Catalog + pricing</span>
+              <h3>A product is not the same thing as its price.</h3>
+              <p>The catalog separates product identity, strain attributes, branch inventory and commercial rules. That distinction matters: one strain can live in several rooms, cost different amounts by branch, and use tiered pricing by weight—without becoming four duplicate products.</p>
+              <div class="design-read"><b>Design read</b>Price strategy is modeled as a reusable rule. Operators can apply it by product or category, choose discount or flat-price logic, and build weight tiers in one compact form. Bulk upload handles the less glamorous but essential migration path.</div>
+            </div>
+
+            <div class="saas-module-visual reveal">
+              <div class="web-shell">
+                <div class="web-shell-bar"><i></i><i></i><i></i><span>Products / price strategy</span></div>
+                <img src="images/klu/saas-price-strategy.jpg" alt="KLu price strategy editor with product targeting, pricing type and configurable weight tiers" loading="lazy">
+              </div>
+            </div>
+          </article>
+
+          <article class="saas-module">
+            <div class="saas-module-copy reveal">
+              <span class="saas-module-index">System 03 / Inventory</span>
+              <h3>Stock is a ledger, not a number.</h3>
+              <p>A single quantity cannot explain cannabis inventory. KLu keeps room-level stock, quantity, average cost, estimated value and movement history together. Restock, transfer, reconcile and wastage are explicit workflows, so correcting reality never erases how the mismatch happened.</p>
+              <div class="inventory-ledger" aria-label="Inventory dimensions"><span>Quantity<br>by room</span><span>Average cost<br>+ estimated value</span><span>Movement<br>+ reconciliation log</span></div>
+              <div class="design-read"><b>Design read</b>The information architecture moves from overview to exception to evidence: spot a discrepancy, reconcile it, then retain the log. Multi-outlet control becomes auditable instead of magical.</div>
+            </div>
+
+            <div class="saas-module-visual reveal">
+              <div class="web-shell">
+                <div class="web-shell-bar"><i></i><i></i><i></i><span>Inventory / product detail</span></div>
+                <img src="images/klu/saas-inventory-detail.jpg" alt="KLu product inventory detail showing stock across rooms, value and an inventory log" loading="lazy">
+              </div>
+              <div class="saas-secondary-proof">
+                <div class="web-shell">
+                  <div class="web-shell-bar"><i></i><i></i><i></i><span>Inventory / reconciliation log</span></div>
+                  <img src="images/klu/saas-inventory-reconciliation.jpg" alt="KLu inventory reconciliation table showing discrepancies, status, staff and last update" loading="lazy">
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="saas-module reverse">
+            <div class="saas-module-copy reveal">
+              <span class="saas-module-index">System 04 / Reporting</span>
+              <h3>A report builder, not a pile of exports.</h3>
+              <p>Owners need different evidence for finance, operations and regulation. Instead of hard-coding dozens of near-identical downloads, KLu lets them compose the report: type, branch, payment method, sale status, sale type and date range—then save the result for the next cycle.</p>
+              <div class="design-read"><b>Design read</b>The form uses progressive specificity. Start with the question, narrow the operating scope, then name and generate the artifact. The complexity is real, but it arrives in the order a manager thinks.</div>
+            </div>
+
+            <div class="saas-module-visual reveal">
+              <div class="web-shell">
+                <div class="web-shell-bar"><i></i><i></i><i></i><span>Reports / generator</span></div>
+                <img src="images/klu/saas-report-builder.jpg" alt="KLu custom report builder with report type, branch, payment, status, sale type and date filters" loading="lazy">
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="saas-evidence">
+          <div class="saas-evidence-head reveal">
+            <h3>One operational trail, three ways to inspect it.</h3>
+            <p>Customer context, prescription status and cash movement are not disconnected admin modules. Together they explain who was served, whether the sale was valid, and how money moved through the branch.</p>
+          </div>
+
+          <div class="saas-evidence-grid">
+            <article class="evidence-card reveal">
+              <div class="web-shell"><div class="web-shell-bar"><i></i><i></i><i></i><span>Customers</span></div><img src="images/klu/saas-customers.jpg" alt="KLu customer table with membership, registration, points and prescription usage" loading="lazy"></div>
+              <h4>Customer memory</h4><p>Identity, membership, loyalty and prescription usage make the next consultation informed instead of anonymous.</p>
+            </article>
+            <article class="evidence-card reveal">
+              <div class="web-shell"><div class="web-shell-bar"><i></i><i></i><i></i><span>Prescriptions</span></div><img src="images/klu/saas-prescriptions.jpg" alt="KLu prescriptions table with prescriber, customer, expiry date, status and usage" loading="lazy"></div>
+              <h4>Compliance evidence</h4><p>Prescriber, expiry, status and usage remain visible as a reviewable record after checkout.</p>
+            </article>
+            <article class="evidence-card reveal">
+              <div class="web-shell"><div class="web-shell-bar"><i></i><i></i><i></i><span>Cash drawers</span></div><img src="images/klu/saas-cash-drawers.jpg" alt="KLu cash drawer log showing shifts, opening amounts, operations and totals" loading="lazy"></div>
+              <h4>Shift accountability</h4><p>Drawer events connect the digital sale to the physical till and the staff member responsible for it.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="saas-close reveal">
+          <span>The product relationship</span>
+          <p>The iPad removes friction from the moment of sale. The web app turns every sale into control, evidence and a better next decision.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="section dark-section" aria-labelledby="system-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="section-num">04 / Under the hood</p>
+          <p class="section-num">05 / Under the hood</p>
           <h2 class="section-title" id="system-title">The right tool for each job, <em>all the way down.</em></h2>
         </div>
 
@@ -890,7 +1296,7 @@
     <section class="section light-section" aria-labelledby="outcome-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="section-num">05 / Outcome</p>
+          <p class="section-num">06 / Outcome</p>
           <h2 class="section-title" id="outcome-title">The honest test: would people choose it <em>again?</em></h2>
         </div>
 
@@ -914,7 +1320,7 @@
     <section class="section dark-section" aria-labelledby="lessons-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="section-num">06 / What travels</p>
+          <p class="section-num">07 / What travels</p>
           <h2 class="section-title" id="lessons-title">Four principles that generalize <em>beyond weed.</em></h2>
         </div>
 
