@@ -279,22 +279,22 @@
 
     {
       id: 'klu-pos',
-      title: 'Klu POS',
-      href: null,
-      image: 'images/portfolio-assets/KDIsBR1Oo8sHA7wHGqSwpY6or4.webp',
-      imageAlt: 'Klu point of sale interface',
+      title: 'KLu POS',
+      href: 'klu-pos.html',
+      image: 'images/klu/pos-product-grid.jpg',
+      imageAlt: 'KLu cannabis point-of-sale product grid',
       tags: ['b2b', 'saas'],
-      status: 'wip',
+      status: 'live',
       personal: {
-        subtitle: 'Point of Sale System',
-        tagLabels: ['B2B', 'FinTech', 'Retail'],
-        blurb: 'A fast, touch-first point-of-sale interface for F&B and retail, designed for speed, error recovery, and end-of-day clarity.',
-        meta: 'FinTech · 2022'
+        subtitle: 'Cannabis-native Point of Sale',
+        tagLabels: ['B2B', 'SaaS', 'Retail'],
+        blurb: 'Building a cannabis-native POS and operations system for Thai dispensaries: weight-first sales, parallel customer tabs, invisible compliance, and local payments.',
+        meta: 'KLu · Thailand · 2024'
       },
       studio: {
         discipline: 'Consumer & commerce',
-        blurb: 'Touch-first tills built for speed and for the moment it goes wrong.',
-        meta: 'In progress · 2022',
+        blurb: 'A cannabis-native till built around grams, consultations and regulation.',
+        meta: 'Thailand · 2024',
         accent: '#ff5c3f',
         accentClass: 'project--amber'
       }
