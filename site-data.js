@@ -4,7 +4,7 @@
  * SINGLE SOURCE OF TRUTH for both faces of the same body of work.
  *
  *   Face A — personal portfolio   (index.html, all-works.html)    → aayushsgallery.vercel.app
- *   Face B — studio               (studio-*.html)                 → studio domain, TBD
+ *   Face B — studio               (studio.html, all four routes)  → studio domain, TBD
  *
  * Same projects. Same links. Two voices, two visual languages.
  * Add a project ONCE here and it appears on both faces.
@@ -23,7 +23,7 @@
 (function (global) {
   'use strict';
 
-  /* Studio filter lenses — order defines chip order on studio-works.html */
+  /* Studio filter lenses — order defines chip order on studio.html?p=works */
   var DISCIPLINES = [
     'Enterprise operations',
     'Mission-critical',

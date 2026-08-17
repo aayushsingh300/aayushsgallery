@@ -1,22 +1,36 @@
 /**
  * studio-render.js
  * ─────────────────────────────────────────────────────────────
- * The studio face's shared chrome and renderers.
+ * The studio face's routing, shared chrome and renderers.
  *
- * Every studio page ships the same header, menu, contact block and footer,
- * and every list of work is drawn from site-data.js — so a project is added
- * in exactly one place and both faces stay in step.
+ * The entire studio lives in ONE document, studio.html, holding four routes:
  *
- * Load order matters:  site-data.js → studio-render.js → studio-pear.js
+ *   studio.html            home
+ *   studio.html?p=works    works
+ *   studio.html?p=about    about
+ *   studio.html?p=contact  contact
+ *
+ * An inline script in studio.html's <head> validates ?p= and stamps it on
+ * <html data-route>; CSS hides every section group that is not the active
+ * route. This file reads that same attribute to pick the title, description
+ * and contact copy, and to mark the active nav tab. Nav links are ordinary
+ * <a href>, so each tab is a real document load — identical behaviour to when
+ * these were four separate HTML files.
+ *
+ * Every list of work is drawn from site-data.js, so a project is added in
+ * exactly one place and both faces stay in step.
+ *
+ * Load order matters:  site-data.js → studio-render.js → studio.js
  * (all with `defer`, which preserves document order). Rendering must finish
- * before studio-pear.js wires up observers against the resulting DOM.
+ * before studio.js wires up observers against the resulting DOM.
  *
  * Hooks, placed as empty elements in the HTML:
- *   data-render="chrome"          header + mobile menu + scroll progress
- *   data-render="featured-works"  the home page's large alternating cards
+ *   data-render="chrome"          header + menu + progress + overlays
+ *   data-render="featured-works"  the home route's large alternating cards
  *   data-render="works-index"     the full typographic work index + filters
  *   data-render="team"            the studio roster
  *   data-render="contact"         the coral contact block + footer
+ *   data-stamp="TEXT · "          a circular rotating type stamp
  */
 (function (global) {
   'use strict';
@@ -38,62 +52,140 @@
     return String(n).padStart(2, '0');
   }
 
+  /**
+   * A render hook, but only if it belongs to the route being shown.
+   * Hooks sitting outside any [data-page] group (the contact block) always
+   * resolve; the rest return null off-route so we never build a work index
+   * or roster into sections nobody is looking at.
+   */
   function slot(name) {
-    return document.querySelector('[data-render="' + name + '"]');
+    var host = document.querySelector('[data-render="' + name + '"]');
+    if (!host) return null;
+    var group = host.closest('[data-page]');
+    return !group || group.dataset.page === route ? host : null;
   }
 
-  /* Which studio page are we on? Drives nav active state. */
-  var page = (location.pathname.split('/').pop() || 'studio-pear.html');
-  if (page === '' || page === 'studio') page = 'studio-pear.html';
+  /* ── Routes ────────────────────────────────────────────────────── */
 
-  var NAV = [
-    { href: 'studio-works.html', label: 'Work' },
-    { href: 'studio-pear.html#method', label: 'Method', home: 'studio-pear.html' },
-    { href: 'studio-team.html', label: 'Studio' },
-    { href: 'studio-contact.html', label: 'Contact' }
-  ];
+  /* The <head> script already validated ?p= and fell back to home. */
+  var route = document.documentElement.dataset.route || 'home';
 
-  /* On the home page, Method is an in-page anchor; elsewhere it is a jump. */
-  function navHref(item) {
-    if (item.home && page === item.home) return item.href.slice(item.href.indexOf('#'));
-    return item.href;
+  /**
+   * Per-route head copy and contact-block wording. The contact block itself
+   * is defined once (renderContact) and appears on all four routes — only
+   * these four strings change with the route.
+   */
+  var ROUTES = {
+    home: {
+      label: 'Home',
+      title: 'rabbitsfoot — Products for the moments that matter',
+      description: 'rabbitsfoot is an independent product design studio creating systems for the moments that matter.',
+      contact: {
+        lead: 'Have a difficult product?',
+        reply: 'Good. We should talk.',
+        lineOne: 'Bring us the',
+        lineTwo: 'difficult bit.'
+      }
+    },
+    works: {
+      label: 'All works',
+      title: 'All works — rabbitsfoot',
+      description: 'Every project rabbitsfoot has shipped — enterprise operations, mission-critical systems, clinical intelligence and autonomous fleets.',
+      contact: {
+        lead: 'Seen something close to your problem?',
+        reply: 'Let’s talk about yours.',
+        lineOne: 'Start the',
+        lineTwo: 'next one.'
+      }
+    },
+    about: {
+      label: 'About us',
+      title: 'About us — rabbitsfoot',
+      description: 'rabbitsfoot is six senior designers, researchers and builders working directly on the problem — no account layer, no hand-off.',
+      contact: {
+        lead: 'Want the whole team on it?',
+        reply: 'That’s the only way we work.',
+        lineOne: 'Meet the',
+        lineTwo: 'six of us.'
+      }
+    },
+    contact: {
+      label: 'Contact us',
+      title: 'Contact us — rabbitsfoot',
+      description: 'Start a project with rabbitsfoot — book a 30-minute call, or send the difficult bit by email.',
+      contact: {
+        lead: 'Prefer the direct route?',
+        reply: 'It lands in a real inbox.',
+        lineOne: 'Say the',
+        lineTwo: 'first thing.'
+      }
+    }
+  };
+
+  var ORDER = ['home', 'works', 'about', 'contact'];
+  var HERE = ROUTES[route];
+
+  /** Home is the bare file; every other route carries ?p=. */
+  function href(name) {
+    return name === 'home' ? 'studio.html' : 'studio.html?p=' + name;
   }
 
-  function isActive(item) {
-    return item.href.split('#')[0] === page && !(item.home && page === item.home);
+  function applyHead() {
+    document.title = HERE.title;
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', HERE.description);
   }
 
-  /* ── Chrome: header, mobile menu, progress bar ─────────────────── */
+  /* ── Chrome: header, mobile menu, progress bar, overlays ───────── */
 
   function renderChrome() {
     var host = slot('chrome');
     if (!host) return;
 
-    var links = NAV.filter(function (i) { return i.label !== 'Contact'; })
-      .map(function (i) {
-        return '<a href="' + esc(navHref(i)) + '"' +
-          (isActive(i) ? ' aria-current="page"' : '') + '>' + esc(i.label) + '</a>';
-      }).join('');
-
-    var menuLinks = NAV.map(function (i, index) {
-      return '<a href="' + esc(navHref(i)) + '"' + (isActive(i) ? ' aria-current="page"' : '') +
-        '><small>' + pad(index + 1) + '</small>' + esc(i.label) + '</a>';
+    var links = ORDER.map(function (name) {
+      return '<a href="' + esc(href(name)) + '"' +
+        (name === route ? ' aria-current="page"' : '') + '>' +
+        esc(ROUTES[name].label) + '</a>';
     }).join('');
+
+    var menuLinks = ORDER.map(function (name, index) {
+      return '<a href="' + esc(href(name)) + '"' +
+        (name === route ? ' aria-current="page"' : '') +
+        '><small>' + pad(index + 1) + '</small>' + esc(ROUTES[name].label) + '</a>';
+    }).join('');
+
+    /* The signal canvas is drawn only behind the home hero, and the booking
+       overlay is only reachable from the contact route — so neither is put in
+       the document at all on the routes that never use them. */
+    var signal = route === 'home'
+      ? '<canvas class="signal" id="signal" aria-hidden="true"></canvas>'
+      : '';
+
+    var booking = route === 'contact'
+      ? '<div class="booking" data-booking hidden>' +
+          '<div class="booking__panel" role="dialog" aria-modal="true"' +
+          ' aria-label="Book a 30 minute call">' +
+            '<button class="booking__close" type="button" data-booking-close' +
+            ' aria-label="Close">Close ✕</button>' +
+            '<div class="booking__frame"></div>' +
+          '</div>' +
+        '</div>'
+      : '';
 
     host.outerHTML =
       /* Grain + custom cursor are pure overlay, so JS may own them.
-         The loader stays in each page's HTML: it must paint before parse ends. */
+         The loader stays in the page's HTML: it must paint before parse ends. */
+      signal +
       '<div class="noise" aria-hidden="true"></div>' +
       '<div class="cursor" aria-hidden="true"><i></i><span>View</span></div>' +
       '<header class="nav" id="nav">' +
-        '<a class="nav__brand" href="studio-pear.html" aria-label="' + esc(C.studioName) + ' home">' +
+        '<a class="nav__brand" href="studio.html" aria-label="' + esc(C.studioName) + ' home">' +
           '<svg viewBox="0 0 56 24" aria-hidden="true">' +
             '<path d="M2 21C12 20 17 14 17 4c7 1 10 7 9 16M16 9C11 2 5 3 2 6c1 7 6 11 14 11M27 19c9 4 19 1 26-9"/>' +
           '</svg>' +
           '<b>' + esc(C.studioName) + '</b>' +
         '</a>' +
         '<nav class="nav__links" aria-label="Primary navigation">' + links + '</nav>' +
-        '<a class="nav__contact" href="studio-contact.html"><span>Start something</span><b>↗</b></a>' +
         '<button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu">' +
           '<span></span><span></span></button>' +
       '</header>' +
@@ -102,7 +194,39 @@
         '<nav>' + menuLinks + '</nav>' +
         '<p>' + esc(C.location) + '<br><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a></p>' +
       '</aside>' +
-      '<div class="progress" aria-hidden="true"><i></i></div>';
+      '<div class="progress" aria-hidden="true"><i></i></div>' +
+      booking;
+  }
+
+  /* ── Deferred media ────────────────────────────────────────────── */
+
+  /* Markup parked in a <template> so it fetches nothing until its route is
+     the active one — a hidden <video> or <img> downloads regardless of
+     display:none, which on one file would mean paying for every route. */
+  function inflateMedia() {
+    document.querySelectorAll('template[data-media]').forEach(function (tpl) {
+      var group = tpl.closest('[data-page]');
+      if (group && group.dataset.page !== route) return;
+      tpl.parentNode.replaceChild(tpl.content.cloneNode(true), tpl);
+    });
+  }
+
+  /* ── Circular type stamps ──────────────────────────────────────── */
+
+  /* One definition for every stamp on the site. Each gets its own path id —
+     two stamps sharing an id would silently make the second render the
+     first one's arc. */
+  function renderStamps() {
+    document.querySelectorAll('[data-stamp]').forEach(function (host, index) {
+      var id = 'stamp-path-' + index;
+      host.innerHTML =
+        '<svg viewBox="0 0 120 120">' +
+          '<defs><path id="' + id + '"' +
+          ' d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>' +
+          '<text><textPath href="#' + id + '">' + esc(host.dataset.stamp) + '</textPath></text>' +
+        '</svg>' +
+        '<span>✦</span>';
+    });
   }
 
   /* ── Artwork: a couple of works have no photograph ─────────────── */
@@ -117,7 +241,7 @@
     return '<span class="project__art">' + (ARTWORK[work.artwork] || '') + '</span>';
   }
 
-  /* ── Home page: large alternating project cards ────────────────── */
+  /* ── Home route: large alternating project cards ───────────────── */
 
   function renderFeatured() {
     var host = slot('featured-works');
@@ -143,7 +267,7 @@
     }).join('');
   }
 
-  /* ── Work index page: filters + typographic rows + hover preview ─ */
+  /* ── Works route: filters + typographic rows + hover preview ───── */
 
   function renderWorksIndex() {
     var host = slot('works-index');
@@ -294,26 +418,23 @@
     }).join('');
   }
 
-  /* ── Contact block + footer, identical on every studio page ────── */
+  /* ── Contact block + footer, on every route ────────────────────── */
 
   function renderContact() {
     var host = slot('contact');
     if (!host) return;
 
-    var lead = host.dataset.lead || 'Have a difficult product?';
-    var reply = host.dataset.reply || 'Good. We should talk.';
-    var lineOne = host.dataset.lineOne || 'Bring us the';
-    var lineTwo = host.dataset.lineTwo || 'difficult bit.';
+    var copy = HERE.contact;
 
     host.className = 'contact';
     host.id = host.id || 'contact';
     host.setAttribute('data-theme', 'coral');
     host.removeAttribute('data-render');
     host.innerHTML =
-      '<div class="contact__top"><span>' + esc(lead) + '</span><span>' + esc(reply) + '</span></div>' +
+      '<div class="contact__top"><span>' + esc(copy.lead) + '</span><span>' + esc(copy.reply) + '</span></div>' +
       '<a class="contact__link" href="mailto:' + esc(C.email) + '">' +
-        '<span>' + esc(lineOne) + '</span>' +
-        '<span>' + esc(lineTwo) + '<b>↗</b></span>' +
+        '<span>' + esc(copy.lineOne) + '</span>' +
+        '<span>' + esc(copy.lineTwo) + '<b>↗</b></span>' +
       '</a>' +
       '<footer class="contact__foot">' +
         '<div><span>New business</span><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a></div>' +
@@ -366,7 +487,10 @@
 
   /* ── Go ────────────────────────────────────────────────────────── */
 
+  applyHead();
   renderChrome();
+  inflateMedia();
+  renderStamps();
   renderFeatured();
   renderWorksIndex();
   renderTeam();
