@@ -16,40 +16,30 @@
   </div>
 
   <canvas class="signal" id="signal" aria-hidden="true"></canvas>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="cursor" aria-hidden="true"><i></i><span>View</span></div>
 
-  <header class="nav" id="nav">
-    <a class="nav__brand" href="#top" aria-label="rabbitsfoot home">
-      <svg viewBox="0 0 56 24" aria-hidden="true">
-        <path d="M2 21C12 20 17 14 17 4c7 1 10 7 9 16M16 9C11 2 5 3 2 6c1 7 6 11 14 11M27 19c9 4 19 1 26-9"/>
-      </svg>
-      <b>rabbitsfoot</b>
-    </a>
-    <nav class="nav__links" aria-label="Primary navigation">
-      <a href="#work">Work</a>
-      <a href="#method">Method</a>
-      <a href="#studio">Studio</a>
-    </nav>
-    <a class="nav__contact" href="#contact"><span>Start something</span><b>↗</b></a>
-    <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
-  </header>
-
-  <aside class="menu" id="menu" aria-hidden="true">
-    <button class="menu__close" type="button" aria-label="Close menu">Close</button>
-    <nav>
-      <a href="#work"><small>01</small>Work</a>
-      <a href="#method"><small>02</small>Method</a>
-      <a href="#studio"><small>03</small>Studio</a>
-      <a href="#contact"><small>04</small>Contact</a>
-    </nav>
-    <p>Bengaluru · India<br><a href="mailto:hello@rabbitsfoot.studio">hello@rabbitsfoot.studio</a></p>
-  </aside>
-
-  <div class="progress" aria-hidden="true"><i></i></div>
+  <!-- header · mobile menu · scroll progress — built by studio-render.js -->
+  <div data-render="chrome"></div>
 
   <main id="top">
     <section class="hero" data-theme="dark">
+      <div class="hero__video-wrap" aria-hidden="true">
+        <video class="hero__video" autoplay loop muted playsinline poster="images/studio-pear-poster.jpg">
+          <source src="gallery/new her bg video.mp4" type="video/mp4">
+        </video>
+        <div class="hero__video-wash"></div>
+        <div class="hero__hud">
+          <div class="hud__item hud__item--tl">
+            <span class="hud__dot"></span>
+            <span class="hud__tag">THE MODEL</span>
+          </div>
+          <div class="hud__item hud__item--tr">
+            <span class="hud__pill">APPLY ↗</span>
+          </div>
+          <div class="hud__cross hud__cross--bl">+</div>
+          <div class="hud__cross hud__cross--br">+</div>
+        </div>
+      </div>
+
       <div class="hero__meta reveal">
         <span>Independent product studio</span>
         <span>Bengaluru · Working worldwide</span>
@@ -94,59 +84,12 @@
         <p>Four systems designed close to the people who depend on them.</p>
       </header>
 
-      <div class="projects">
-        <a class="project project--amber cursor-view" href="parkbeheer.html" data-accent="#ff663d">
-          <div class="project__media">
-            <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png" alt="Parkbeheer enforcement operations platform" loading="lazy" decoding="async">
-            <span class="project__wash"></span>
-          </div>
-          <div class="project__top"><span>01 / Enterprise operations</span><span>Netherlands · 2025</span></div>
-          <div class="project__copy">
-            <h3>Parkbeheer</h3>
-            <p>923,000 parking spaces. One coherent operating system.</p>
-          </div>
-          <span class="project__arrow">↗</span>
-        </a>
+      <!-- rendered from site-data.js — same projects as the personal face -->
+      <div data-render="featured-works"></div>
 
-        <a class="project project--blue cursor-view" href="chargeur.html" data-accent="#6d8fff">
-          <div class="project__media">
-            <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="Chargeur armoured vehicle load management interface" loading="lazy" decoding="async">
-            <span class="project__wash"></span>
-          </div>
-          <div class="project__top"><span>02 / Mission-critical</span><span>Europe · 2024</span></div>
-          <div class="project__copy">
-            <h3>Chargeur</h3>
-            <p>Zero-mismatch load management for an armoured fleet.</p>
-          </div>
-          <span class="project__arrow">↗</span>
-        </a>
-
-        <a class="project project--green cursor-view" href="muspell.html" data-accent="#c6ff54">
-          <div class="project__media">
-            <img src="gallery/muspell images/hero-mockup.png" alt="Muspell clinical intelligence platform" loading="lazy" decoding="async">
-            <span class="project__wash"></span>
-          </div>
-          <div class="project__top"><span>03 / Clinical intelligence</span><span>Europe · 2023</span></div>
-          <div class="project__copy">
-            <h3>Muspell</h3>
-            <p>Patient complexity made clear enough to act on.</p>
-          </div>
-          <span class="project__arrow">↗</span>
-        </a>
-
-        <a class="project project--violet cursor-view" href="rojnica.html" data-accent="#c59aff">
-          <div class="project__media">
-            <img src="images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png" alt="Rojnica agricultural drone fleet system" loading="lazy" decoding="async">
-            <span class="project__wash"></span>
-          </div>
-          <div class="project__top"><span>04 / Autonomous systems</span><span>India · 2025</span></div>
-          <div class="project__copy">
-            <h3>Rojnica</h3>
-            <p>Twelve drones. One narrow window. No room for confusion.</p>
-          </div>
-          <span class="project__arrow">↗</span>
-        </a>
-      </div>
+      <a class="section-more" href="studio-works.html">
+        <span>See every project</span><b>↗</b>
+      </a>
     </section>
 
     <section class="method" id="method" data-theme="acid">
@@ -188,24 +131,14 @@
         <span>Small by design</span>
         <p>Senior people.<br>Direct access.<br><em>No theatre.</em></p>
       </div>
-      <div class="interlude__orb" aria-hidden="true"><i></i><i></i><i></i><b>rf</b></div>
     </section>
 
-    <section class="contact" id="contact" data-theme="coral">
-      <div class="contact__top"><span>Have a difficult product?</span><span>Good. We should talk.</span></div>
-      <a class="contact__link" href="mailto:hello@rabbitsfoot.studio">
-        <span>Bring us the</span>
-        <span>difficult bit.<b>↗</b></span>
-      </a>
-      <footer class="contact__foot">
-        <div><span>New business</span><a href="mailto:hello@rabbitsfoot.studio">hello@rabbitsfoot.studio</a></div>
-        <div><span>Based in</span><p>Bengaluru, India<br>Working worldwide</p></div>
-        <div><span>Elsewhere</span><p><a href="https://www.linkedin.com/in/aayushran/" target="_blank" rel="noopener">LinkedIn</a><br><a href="#top">Back to top ↑</a></p></div>
-        <p>© 2026 rabbitsfoot studio</p>
-      </footer>
-    </section>
+    <!-- contact block + footer — one definition, shared by every studio page -->
+    <section id="contact" data-render="contact"></section>
   </main>
 
+  <script src="site-data.js" defer></script>
+  <script src="studio-render.js" defer></script>
   <script src="studio-pear.js" defer></script>
 </body>
 </html>

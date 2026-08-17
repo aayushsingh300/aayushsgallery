@@ -14,7 +14,7 @@
   const start = performance.now();
   function loadFrame(now) {
     const progress = reduced || previewMode ? 1 : clamp((now - start) / 920);
-    loaderCount.textContent = String(Math.round(progress * 100)).padStart(2, '0');
+    if (loaderCount) loaderCount.textContent = String(Math.round(progress * 100)).padStart(2, '0');
     if (progress < 1) {
       requestAnimationFrame(loadFrame);
     } else {
@@ -25,7 +25,7 @@
 
   if (previewMode) document.body.classList.add('is-ready', 'preview');
   const loaderFallback = setTimeout(() => {
-    loaderCount.textContent = '100';
+    if (loaderCount) loaderCount.textContent = '100';
     document.body.classList.add('is-ready');
   }, 1250);
   setTimeout(() => {
@@ -79,32 +79,36 @@
     document.body.classList.remove('menu-open');
   }
 
-  menuButton.addEventListener('click', openMenu);
-  menuClose.addEventListener('click', closeMenu);
-  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-  addEventListener('keydown', event => {
-    if (event.key === 'Escape') closeMenu();
-  });
+  if (menu && menuButton && menuClose) {
+    menuButton.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+    addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeMenu();
+    });
+  }
 
   const pointer = { x: innerWidth / 2, y: innerHeight / 2, tx: innerWidth / 2, ty: innerHeight / 2 };
   addEventListener('pointermove', event => {
     pointer.tx = event.clientX;
     pointer.ty = event.clientY;
-    cursor.classList.add('is-visible');
+    if (cursor) cursor.classList.add('is-visible');
   }, { passive: true });
 
-  addEventListener('pointerleave', () => cursor.classList.remove('is-visible'));
+  if (cursor) {
+    addEventListener('pointerleave', () => cursor.classList.remove('is-visible'));
 
-  document.querySelectorAll('.cursor-view').forEach(project => {
-    project.addEventListener('pointerenter', () => {
-      cursor.classList.add('is-view');
-      cursor.style.setProperty('--accent', project.dataset.accent);
+    document.querySelectorAll('.cursor-view').forEach(project => {
+      project.addEventListener('pointerenter', () => {
+        cursor.classList.add('is-view');
+        cursor.style.setProperty('--accent', project.dataset.accent);
+      });
+      project.addEventListener('pointerleave', () => cursor.classList.remove('is-view'));
     });
-    project.addEventListener('pointerleave', () => cursor.classList.remove('is-view'));
-  });
+  }
 
   const canvas = document.getElementById('signal');
-  const ctx = canvas.getContext('2d', { alpha: true });
+  const ctx = canvas ? canvas.getContext('2d', { alpha: true }) : null;
   let width = innerWidth;
   let height = innerHeight;
   let dpr = 1;
@@ -122,6 +126,7 @@
   function resizeCanvas() {
     width = innerWidth;
     height = innerHeight;
+    if (!canvas) return;
     dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
@@ -140,6 +145,7 @@
   }
 
   function drawSignal(time) {
+    if (!ctx) return;
     ctx.clearRect(0, 0, width, height);
     const heroFade = 1 - clamp(scrollCurrent / (height * .82));
     if (heroFade <= .002) return;
@@ -245,18 +251,31 @@
     });
   }
 
+  const heroVideoWrap = document.querySelector('.hero__video-wrap');
+  function updateHeroVideo() {
+    if (!heroVideoWrap) return;
+    const progress = clamp(scrollCurrent / Math.max(innerHeight, 1));
+    heroVideoWrap.style.transform = `translate3d(0, ${scrollCurrent * 0.3}px, 0)`;
+    heroVideoWrap.style.opacity = `${Math.max(0, 1 - progress * 1.25)}`;
+  }
+
   function frame(time) {
     scrollCurrent = lerp(scrollCurrent, scrollTarget, reduced ? 1 : .095);
     pointer.x = lerp(pointer.x, pointer.tx, .14);
     pointer.y = lerp(pointer.y, pointer.ty, .14);
 
     const maxScroll = document.documentElement.scrollHeight - innerHeight;
-    progressBar.style.transform = `scaleX(${maxScroll > 0 ? scrollCurrent / maxScroll : 0})`;
-    cursor.style.transform = `translate3d(${pointer.x - 36}px, ${pointer.y - 36}px, 0)`;
+    if (progressBar) {
+      progressBar.style.transform = `scaleX(${maxScroll > 0 ? scrollCurrent / maxScroll : 0})`;
+    }
+    if (cursor) {
+      cursor.style.transform = `translate3d(${pointer.x - 36}px, ${pointer.y - 36}px, 0)`;
+    }
 
     updateWords();
     if (!reduced) {
       drawSignal(time);
+      updateHeroVideo();
       updateProjects();
     }
     requestAnimationFrame(frame);

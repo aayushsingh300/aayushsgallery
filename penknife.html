@@ -1213,6 +1213,41 @@
       grid-row: 1;
     }
 
+    /* Wide viewports: the screenshot stage bleeds past the prose column. The rail
+       keeps a fixed width, so every extra pixel goes to the image itself. */
+    @media (min-width: 1120px) {
+      .annotated-screen {
+        --ann-bleed: clamp(0px, calc((100vw - 1160px) / 2 + 16px), 152px);
+        margin-left: calc(var(--ann-bleed) * -1);
+        margin-right: calc(var(--ann-bleed) * -1);
+        grid-template-columns: minmax(0, 1fr) 320px;
+      }
+
+      .annotated-screen.ann-left {
+        grid-template-columns: 320px minmax(0, 1fr);
+      }
+    }
+
+    /* Auto-touring frames grow to whatever the rail needs, so the annotations
+       never run past the bottom of the screenshot they describe. */
+    @media (min-width: 961px) {
+      .annotated-screen:has(.ann-screen.clip) {
+        align-items: stretch;
+      }
+
+      .annotated-screen:has(.ann-screen.clip)>.ann-col {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* flex-basis 0 keeps min-height (not the 2600px image) as the column's
+         intrinsic height, so the row sizes to the rail and the frame fills it */
+      .annotated-screen:has(.ann-screen.clip) .ann-screen.clip {
+        height: auto;
+        flex: 1 1 0;
+      }
+    }
+
     .ann-screen {
       overflow: hidden;
       border-radius: 10px;
@@ -1236,7 +1271,8 @@
 
     /* Long screens: show the top, fade out the rest */
     .ann-screen.clip {
-      height: 660px;
+      height: clamp(600px, 76vh, 840px);
+      min-height: clamp(600px, 76vh, 840px);
       max-height: none;
       isolation: isolate;
     }
@@ -1262,6 +1298,12 @@
     .ann-screen.clip:focus-visible {
       outline: 2px solid var(--pk);
       outline-offset: 4px;
+    }
+
+    /* low-resolution captures — the wider stage must not upscale them */
+    .ann-screen.cap-native {
+      max-width: 880px;
+      margin: 0 auto;
     }
 
     .pan-hint {
@@ -1386,6 +1428,65 @@
       right: -3px;
     }
 
+    /* ann-below — for screens that are wide and short (boards, tables), or whose
+       rail would otherwise run past the bottom of the image. The image takes the
+       whole stage and the annotations run underneath as a row. */
+    @media (min-width: 961px) {
+      .annotated-screen.ann-below {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .annotated-screen.ann-below>.ann-col {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .annotated-screen.ann-below>.ann-rail {
+        grid-column: 1;
+        grid-row: 2;
+        flex-direction: row;
+        margin-top: 30px;
+        border-top: 1px solid var(--pk-line);
+      }
+
+      .annotated-screen.ann-below .ann-rail::before {
+        display: none;
+      }
+
+      .annotated-screen.ann-below .ann-card {
+        flex: 1 1 0;
+        min-width: 0;
+        text-align: left;
+        padding: 22px 26px 0 0;
+        border-bottom: none;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .annotated-screen.ann-below .ann-card+.ann-card {
+        padding-left: 26px;
+      }
+
+      .annotated-screen.ann-below .ann-card:last-child {
+        padding-right: 0;
+        border-right: none;
+      }
+
+      .annotated-screen.ann-below .ann-card::before {
+        display: none;
+      }
+
+      /* dot sits on the top rule instead of the side rule */
+      .annotated-screen.ann-below .ann-card::after {
+        left: 0;
+        right: auto;
+        top: -4px;
+      }
+
+      .annotated-screen.ann-below .ann-card+.ann-card::after {
+        left: 26px;
+      }
+    }
+
     .ann-num {
       display: block;
       font-family: var(--fn-mono);
@@ -1415,11 +1516,13 @@
 
     .ann-caption {
       font-family: var(--fn-mono);
-      font-size: 10px;
-      color: var(--ink-muted);
-      letter-spacing: 0.07em;
-      padding-top: 12px;
+      font-size: 11.5px;
+      color: var(--ink-dim);
+      letter-spacing: 0.035em;
+      line-height: 1.6;
+      padding-top: 14px;
       padding-left: 2px;
+      max-width: 78ch;
     }
 
     .ann-col {
@@ -1427,7 +1530,7 @@
     }
 
     .ann-col .ann-caption {
-      padding-top: 12px;
+      padding-top: 14px;
     }
 
     /* image 11 is a marketing banner; crop hard to the Submissions board inside it */
@@ -1893,13 +1996,15 @@
     }
 
     .diagram figcaption {
-      margin-top: 14px;
+      margin-top: 16px;
+      padding-left: 14px;
+      border-left: 2px solid var(--pk-line);
       font-family: var(--fn-mono);
-      font-size: 10px;
-      letter-spacing: 0.07em;
-      color: var(--ink-muted);
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      color: var(--ink-dim);
       max-width: 76ch;
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
     .dgm .d-t {
@@ -1914,7 +2019,7 @@
 
     .dgm .d-s {
       font: 400 11.5px var(--fn-body);
-      fill: rgba(237, 240, 244, 0.5);
+      fill: rgba(237, 240, 244, 0.66);
     }
 
     .dgm .d-i {
@@ -1923,13 +2028,13 @@
     }
 
     .dgm .d-i.mute {
-      fill: rgba(237, 240, 244, 0.4);
+      fill: rgba(237, 240, 244, 0.62);
     }
 
     .dgm .d-m {
-      font: 400 9.5px var(--fn-mono);
+      font: 400 10px var(--fn-mono);
       letter-spacing: 0.12em;
-      fill: rgba(237, 240, 244, 0.42);
+      fill: rgba(237, 240, 244, 0.6);
     }
 
     .dgm .d-c {
@@ -2628,6 +2733,7 @@
 
       .ann-screen.clip {
         height: 520px;
+        min-height: 0;
       }
 
       /* Annotated screens: stack */
@@ -2975,6 +3081,26 @@
       overflow: visible;
     }
 
+    .role-illustration {
+      display: block;
+      width: 100%;
+      max-width: 140px;
+      height: 112px;
+      margin: 10px auto 10px;
+      object-fit: cover;
+      object-position: center 20%;
+      border-radius: 6px;
+      mix-blend-mode: multiply;
+      border: 1px solid rgba(78, 67, 50, 0.12);
+      box-shadow: 0 2px 8px rgba(60, 48, 30, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .role-moment:hover .role-illustration {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(60, 48, 30, 0.1);
+    }
+
     .role-sketch path,
     .role-sketch circle,
     .role-sketch rect,
@@ -3056,16 +3182,23 @@
     /* Dashboard: annotate only evidence visible in the real cover screen */
     .dashboard-reading {
       position: relative;
-      min-height: 900px;
       margin: 46px 0 0;
-      padding: 68px 0 50px;
+      padding: 78px 0 50px;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
 
+    @media (min-width: 1120px) {
+      .dashboard-reading {
+        --ann-bleed: clamp(0px, calc((100vw - 1160px) / 2 + 16px), 152px);
+        margin-left: calc(var(--ann-bleed) * -1);
+        margin-right: calc(var(--ann-bleed) * -1);
+      }
+    }
+
     .dashboard-reading>figcaption {
       position: absolute;
-      top: 20px;
+      top: 22px;
       left: 0;
       font-family: var(--fn-mono);
       font-size: 9px;
@@ -3074,28 +3207,86 @@
       color: var(--pk);
     }
 
+    /* image 1 carries ~5% side and ~14% top/bottom of marketing padding around the
+       app itself; crop to the screen so the callouts sit on real pixels */
     .dashboard-shot {
-      width: 74%;
-      margin: 92px auto 0;
+      position: relative;
+      aspect-ratio: 1435 / 992;
       overflow: hidden;
       border: 1px solid rgba(167, 139, 250, 0.42);
       border-radius: 10px;
       background: #ece8f4;
       box-shadow: 0 28px 75px rgba(0, 0, 0, 0.34);
-      transform: rotate(-0.35deg);
     }
 
     .dashboard-shot img {
-      display: block;
-      width: 100%;
+      position: absolute;
+      width: 110.94%;
+      max-width: none;
       height: auto;
+      left: -5.44%;
+      top: -18.85%;
+    }
+
+    /* the source screenshot ends mid-content; fade the cut so it reads as a
+       viewport edge rather than a truncated image */
+    .dashboard-shot::after {
+      content: '';
+      position: absolute;
+      z-index: 4;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: clamp(52px, 9%, 92px);
+      background: linear-gradient(to bottom, rgba(13, 15, 20, 0) 0%, rgba(13, 15, 20, 0.88) 76%, rgba(13, 15, 20, 0.96) 100%);
+      pointer-events: none;
+    }
+
+    /* Numbered regions rather than pins: each is sized as a share of the cropped
+       screen, so it stays over its own part of the UI at every width and never
+       covers the content it is pointing at. */
+    .hot {
+      position: absolute;
+      z-index: 3;
+      left: var(--x);
+      top: var(--y);
+      width: var(--w);
+      height: var(--h);
+      border: 1px solid rgba(126, 96, 220, 0.9);
+      border-radius: 6px;
+      background: rgba(167, 139, 250, 0.07);
+    }
+
+    .hot::before {
+      content: attr(data-n);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate(-1px, -50%);
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #6d4fae;
+      color: #fff;
+      font: 700 9px/1 var(--fn-mono);
+      letter-spacing: 0.08em;
+    }
+
+    .hot.tab-right::before {
+      left: auto;
+      right: 0;
+      transform: translate(1px, -50%);
+    }
+
+    .screen-notes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 44px;
     }
 
     .screen-note {
-      position: absolute;
-      z-index: 2;
-      width: 240px;
-      padding: 18px 18px 16px 44px;
+      position: relative;
+      padding: 18px 20px 16px 46px;
       color: #2d2822;
       border: 1px solid rgba(211, 198, 174, 0.78);
       border-radius: 3px;
@@ -3103,13 +3294,18 @@
       box-shadow: 0 13px 32px rgba(0, 0, 0, 0.25);
     }
 
+    .screen-note:nth-child(1) { transform: rotate(-0.7deg); }
+    .screen-note:nth-child(2) { transform: rotate(0.45deg); }
+    .screen-note:nth-child(3) { transform: rotate(-0.35deg); }
+
     .screen-note>span {
       position: absolute;
-      top: 18px;
-      left: 14px;
-      color: #7554b5;
+      top: 17px;
+      left: 16px;
+      color: #6d4fae;
       font-family: var(--fn-mono);
-      font-size: 9px;
+      font-size: 10px;
+      font-weight: 700;
     }
 
     .screen-note strong {
@@ -3121,37 +3317,23 @@
 
     .screen-note p {
       margin: 0;
-      color: rgba(45, 40, 34, 0.68);
-      font-size: 11.5px;
+      color: rgba(45, 40, 34, 0.72);
+      font-size: 12px;
       line-height: 1.5;
     }
 
-    .screen-note::after {
-      content: '';
-      position: absolute;
-      height: 1px;
-      background: #8e6bca;
-      transform-origin: left;
-    }
-
-    .note-queue { top: 68px; left: 1%; transform: rotate(-2deg); }
-    .note-queue::after { width: 160px; right: -145px; bottom: 3px; transform: rotate(23deg); }
-    .note-counts { left: 0; bottom: 42px; transform: rotate(1.2deg); }
-    .note-counts::after { width: 150px; right: -136px; top: 0; transform: rotate(-24deg); }
-    .note-interview { top: 85px; right: 0; transform: rotate(1.5deg); }
-    .note-interview::after { width: 145px; left: -132px; bottom: -8px; transform: rotate(158deg); }
-
     .dashboard-margin-note {
       position: absolute;
-      right: 2%;
-      bottom: 82px;
-      width: 220px;
+      right: 0;
+      top: 14px;
+      width: 236px;
       margin: 0;
+      text-align: right;
       color: rgba(237, 240, 244, 0.58);
       font-family: cursive;
       font-size: 15px;
       line-height: 1.45;
-      transform: rotate(-3deg);
+      transform: rotate(-2.5deg);
     }
 
     .dashboard-margin-note b { color: var(--ink); font-weight: 500; }
@@ -3279,11 +3461,11 @@
       .role-moment:nth-child(2n) { border-right: 0; }
       .role-moment::after { display: none; }
       .record-thread { grid-template-columns: 1fr; gap: 8px; }
-      .dashboard-reading { min-height: auto; padding-bottom: 20px; }
-      .dashboard-shot { width: 100%; margin-top: 52px; }
-      .screen-note { position: relative; inset: auto; width: auto; margin: 12px 0; transform: none; }
-      .screen-note::after { display: none; }
-      .dashboard-margin-note { position: relative; inset: auto; width: auto; margin: 22px 0 0; }
+      .dashboard-reading { padding: 62px 0 24px; }
+      .screen-notes { grid-template-columns: 1fr; gap: 14px; margin-top: 30px; }
+      .screen-note { transform: none; }
+      .hot::before { padding: 2px 5px; font-size: 8px; }
+      .dashboard-margin-note { position: relative; inset: auto; width: auto; text-align: left; margin: 26px 0 0; transform: none; }
     }
 
     @media (max-width: 700px) {
@@ -3729,7 +3911,7 @@
         <div class="role-strip">
           <article class="role-moment staffing">
             <span class="role-clock">08:08</span>
-            <svg class="role-sketch" viewBox="0 0 120 96" aria-hidden="true"><path d="M38 82c2-17 11-26 23-26s22 9 23 26M47 33c0-12 7-21 16-21s16 9 16 21c0 13-7 23-16 23S47 46 47 33Zm-8 1c-6 1-9 7-9 13 0 7 4 12 10 13M80 31c5 1 8 5 8 10v12M33 61l-9 8m64-11 8 7"/><circle cx="42" cy="48" r="3"/><path d="M54 35c6 3 13 3 19-1M58 45c3 2 7 2 10 0"/></svg>
+            <img class="role-illustration" src="penknife/role_recruiter.jpg" alt="Agency recruiter reviewing active pipelines" loading="lazy">
             <p class="role-kind">Agency recruiter</p>
             <h3>“Who needs moving today?”</h3>
             <p>Returns to followed records, active pipelines and the conversations already in motion.</p>
@@ -3737,7 +3919,7 @@
           </article>
           <article class="role-moment internal">
             <span class="role-clock">09:32</span>
-            <svg class="role-sketch" viewBox="0 0 120 96" aria-hidden="true"><path d="M36 83c2-18 11-27 24-27s23 9 25 27M45 31c0-12 7-21 16-21s17 9 17 21c0 14-7 24-17 24S45 45 45 31Zm1-9c8 4 18 4 28-2M51 40h7m7 0h7m-14 0h7M53 48c5 3 10 3 15 0"/><path d="M94 31v29m-8-14h16"/></svg>
+            <img class="role-illustration" src="penknife/role_talent_partner.jpg" alt="Hospital talent partner reviewing job requisitions" loading="lazy">
             <p class="role-kind">Hospital talent partner</p>
             <h3>“Which requisition is blocked?”</h3>
             <p>Starts with assigned jobs, stage counts, interviews and the department waiting on the hire.</p>
@@ -3745,7 +3927,7 @@
           </article>
           <article class="role-moment manager">
             <span class="role-clock">12:14</span>
-            <svg class="role-sketch" viewBox="0 0 120 96" aria-hidden="true"><path d="M35 83c2-18 11-27 25-27s23 9 25 27M45 32c0-13 7-22 16-22s16 9 16 22c0 13-7 23-16 23S45 45 45 32Zm2-10c9-8 20-6 29 2M53 41h5m7 0h5M55 49c4 2 8 2 12 0"/><path d="M92 58l6 6 12-15"/></svg>
+            <img class="role-illustration" src="penknife/role_hiring_manager.jpg" alt="Hiring manager reviewing candidate evidence dossier" loading="lazy">
             <p class="role-kind">Hiring manager</p>
             <h3>“Can I approve this person?”</h3>
             <p>Visits briefly between clinical work to review evidence, comment and make one decision.</p>
@@ -3753,7 +3935,7 @@
           </article>
           <article class="role-moment account">
             <span class="role-clock">15:40</span>
-            <svg class="role-sketch" viewBox="0 0 120 96" aria-hidden="true"><path d="M35 83c2-18 11-27 25-27s23 9 25 27M45 32c0-13 7-22 16-22s16 9 16 22c0 13-7 23-16 23S45 45 45 32Zm0-4c9-1 17-6 22-15 2 8 6 13 11 16M52 42h6m7 0h6M56 50c4 1 7 1 11-1"/><path d="M20 65h18m-9-9v18"/></svg>
+            <img class="role-illustration" src="penknife/role_account_manager.jpg" alt="Account manager reviewing hospital SLA and performance metrics" loading="lazy">
             <p class="role-kind">Account manager</p>
             <h3>“What do I owe the hospital?”</h3>
             <p>Reads delivery state, SLA and client risk without needing to operate the recruiting pipeline.</p>
@@ -3761,7 +3943,7 @@
           </article>
           <article class="role-moment candidate">
             <span class="role-clock">21:06</span>
-            <svg class="role-sketch" viewBox="0 0 120 96" aria-hidden="true"><path d="M36 83c2-18 11-27 24-27s23 9 25 27M45 31c0-12 7-21 16-21s16 9 16 21c0 14-7 24-16 24S45 45 45 31Zm1-6c8 3 18 2 28-3M52 41h6m7 0h6M55 49c4 3 8 3 12 0"/><rect x="88" y="41" width="20" height="34" rx="3"/><line x1="94" y1="47" x2="102" y2="47"/></svg>
+            <img class="role-illustration" src="penknife/role_candidate.jpg" alt="Candidate applying to hospital role from mobile phone" loading="lazy">
             <p class="role-kind">Candidate</p>
             <h3>“Is this role for me?”</h3>
             <p>Sees the hospital's careers site, never Penknife, while the same application record forms underneath.</p>
@@ -4303,7 +4485,7 @@
           </div>
         </div>
 
-        <div class="annotated-screen ann-left" style="margin-top:72px">
+        <div class="annotated-screen ann-below" style="margin-top:72px">
           <div class="ann-rail">
             <div class="ann-card">
               <span class="ann-num">The threshold belongs to the recruiter</span>
@@ -4360,15 +4542,22 @@
         </div>
         <figure class="dashboard-reading" aria-labelledby="dashboard-reading-title">
           <figcaption id="dashboard-reading-title">Reading the dashboard from left to right</figcaption>
-          <div class="dashboard-shot"><img src="penknife/image%201.jpg"
+          <div class="dashboard-shot">
+            <img src="penknife/image%201.jpg"
               alt="Penknife internal hiring dashboard with assigned jobs, applicant counts, calendar and scheduled interviews"
-              loading="lazy"></div>
-          <aside class="screen-note note-queue"><span>01</span><strong>The queue is the job list</strong><p>Assigned
-              requisitions come first; the recruiter sees the work they own before any aggregate chart.</p></aside>
-          <aside class="screen-note note-counts"><span>02</span><strong>Counts stay beside the requisition</strong><p>The
-              application total and stage counts are read in context, not recovered from a separate report.</p></aside>
-          <aside class="screen-note note-interview"><span>03</span><strong>The meeting carries its next action</strong><p>A
-              scheduled interview sits beside “View assessment card”, so the hand-off is visible in the same glance.</p></aside>
+              loading="lazy">
+            <b class="hot" data-n="01" style="--x:16.4%;--y:21.5%;--w:39.4%;--h:56.3%" aria-hidden="true"></b>
+            <b class="hot tab-right" data-n="02" style="--x:56.3%;--y:21.5%;--w:9.9%;--h:56.3%" aria-hidden="true"></b>
+            <b class="hot" data-n="03" style="--x:69.3%;--y:56.0%;--w:27.7%;--h:41.0%" aria-hidden="true"></b>
+          </div>
+          <div class="screen-notes">
+            <aside class="screen-note"><span>01</span><strong>The queue is the job list</strong><p>Assigned
+                requisitions come first; the recruiter sees the work they own before any aggregate chart.</p></aside>
+            <aside class="screen-note"><span>02</span><strong>Counts stay beside the requisition</strong><p>The
+                application total and stage counts are read in context, not recovered from a separate report.</p></aside>
+            <aside class="screen-note"><span>03</span><strong>The meeting carries its next action</strong><p>A
+                scheduled interview sits beside “View assessment card”, so the hand-off is visible in the same glance.</p></aside>
+          </div>
           <p class="dashboard-margin-note">A useful dashboard answers:<br><b>“Where do I restart?”</b></p>
         </figure>
       </div>
@@ -4531,7 +4720,7 @@
             slide-over, the same activity feed — pointed at deals instead of people.</p>
         </div>
 
-        <div class="annotated-screen">
+        <div class="annotated-screen ann-below">
           <div class="ann-col">
             <div class="ann-screen">
             <img src="penknife/image%206.jpg" alt="Penknife opportunities pipeline — Kanban stage view with deal values"
@@ -4672,7 +4861,7 @@
             two.</figcaption>
         </figure>
 
-        <div class="annotated-screen">
+        <div class="annotated-screen ann-below">
           <div class="ann-col">
             <div class="ann-screen">
             <img src="penknife/new%20screenshots/new%20Broadcasts%20page.png"
@@ -4811,11 +5000,11 @@
 
         <div class="annotated-screen">
           <div class="ann-col">
-            <div class="ann-screen">
+            <div class="ann-screen clip">
             <img src="penknife/image%209.jpg" alt="Fairview Hospital white-label careers portal powered by Penknife"
               loading="lazy">
           </div>
-            <p class="ann-caption">Fairview Hospital — white-label careers portal</p>
+            <p class="ann-caption">Fairview Hospital — white-label careers portal (the frame auto-tours the full page)</p>
           </div>
           <div class="ann-rail">
             <div class="ann-card">
@@ -4853,7 +5042,7 @@
             </div>
           </div>
           <div class="ann-col">
-            <div class="ann-screen">
+            <div class="ann-screen cap-native">
             <img src="penknife/image%2010.jpg" alt="White-label job detail page — candidate-facing view" loading="lazy">
           </div>
             <p class="ann-caption">White-label job detail — candidate-facing</p>

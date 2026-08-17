@@ -242,6 +242,9 @@
     .work-row:hover .work-arrow { border-color: var(--coral); background: rgba(164,120,100,0.12); }
     .work-arrow svg { width: 14px; height: 14px; }
 
+    /* works with drawn artwork instead of a photograph */
+    .work-drawn { width: 80px; height: 80px; opacity: 0.9; }
+
     /* status badge */
     .work-status {
       display: inline-block; font-size: 10px; font-weight: 600;
@@ -345,310 +348,69 @@
 </div>
 
 <!-- ── WORKS ─────────────────────────────────────── -->
-<div class="works-list" id="worksList">
+<div class="works-list" id="worksList"></div>
 
-  <!-- Muspell -->
-  <a href="muspell.html" class="work-row" data-tags="healthcare b2b saas">
-    <div class="work-image">
-      <img src="images/portfolio-assets/2uJ7RgaBPFgwEOtqN8tkdt0bYcM.png" alt="Muspell">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">Healthcare</span>
-          <span class="work-tag">B2B</span>
-        </div>
-        <h2 class="work-title">Muspell</h2>
-        <p class="work-subtitle">Clinical Health Data Platform</p>
-        <p class="work-desc">A clinical data platform relied on by thousands of clinicians: turning dense patient records into interfaces care teams can act on.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">314e Corporation · 2022</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
+<!-- Works render from site-data.js — the same list the studio face reads.
+     Classic (non-deferred) scripts so the rows exist before the filter
+     script further down queries for them. -->
+<script src="site-data.js"></script>
+<script>
+(function () {
+  var DATA = window.SITE_DATA;
+  var host = document.getElementById('worksList');
+  if (!DATA || !host) return;
 
-  <!-- Penknife ATS -->
-  <a href="penknife.html" class="work-row" data-tags="saas b2b healthcare">
-    <div class="work-image">
-      <img src="penknife/image%201.jpg" alt="Penknife ATS">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">Healthcare</span>
-          <span class="work-tag">SaaS</span>
-          <span class="work-tag">Service Design</span>
-        </div>
-        <h2 class="work-title">Penknife</h2>
-        <p class="work-subtitle">ATS + CRM · White-Label Healthcare Staffing</p>
-        <p class="work-desc">Unifying a fragmented four-tool recruitment stack into one white-label platform for US hospital networks. Live at UCLA Health. ATS + CRM collapsed into a single recruiter workflow.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">314e Corporation · Healthcare · 2021</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
+  function esc(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
 
-  <!-- Titan EYEx -->
-  <a href="titaneyeplus_casestudy.html" class="work-row" data-tags="b2c ecommerce">
-    <div class="work-image">
-      <img src="images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp" alt="Titan EYEx">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">B2C</span>
-          <span class="work-tag">Retail</span>
-        </div>
-        <h2 class="work-title">Titan EYEx</h2>
-        <p class="work-subtitle">Eyewear Product Experience</p>
-        <p class="work-desc">Redesigning the eyewear browsing and selection experience for Titan's optical retail brand, combining prescription management with style discovery.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Titan Company · 2020</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
+  var ARROW = '<span class="work-arrow"><svg viewBox="0 0 14 14" fill="none">' +
+    '<path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" ' +
+    'stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
 
-  <!-- Titan Eyeplus E-commerce -->
-  <a href="titaneyeplus_casestudy.html" class="work-row" data-tags="b2c ecommerce">
-    <div class="work-image">
-      <img src="images/portfolio-assets/5FjWGy3WVjOTw0gnaugcHjpZJE.png" alt="Titan Eyeplus">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">B2C</span>
-          <span class="work-tag">E-commerce</span>
-        </div>
-        <h2 class="work-title">Titan Eyeplus</h2>
-        <p class="work-subtitle">E-commerce Experiences</p>
-        <p class="work-desc">End-to-end e-commerce redesign for Titan's optical brand: from product discovery and virtual try-on to checkout and repeat purchase flows.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Titan Company · 2021</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
+  var WIP_OVERLAY = '<div class="wip-overlay"><div class="wip-overlay-inner">' +
+    '<span class="wip-badge">Work in Progress</span>' +
+    '<span class="wip-text">Case study coming soon</span></div></div>';
 
-  <!-- CHARGEUR -->
-  <a href="chargeur.html" class="work-row" data-tags="defence b2b concept">
-    <div class="work-image">
-      <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="CHARGEUR">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">Under NDA</span>
-          <span class="work-tag">Defence</span>
-          <span class="work-tag">B2B</span>
-        </div>
-        <h2 class="work-title">CHARGEUR</h2>
-        <p class="work-subtitle">Ammunition Management System</p>
-        <p class="work-desc">Redesigning ammunition load management for the ALT-3 armored vehicle fleet. 0 mismatch errors and 41% faster type-switching in evaluation.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Defence · Under NDA · 2024</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
+  host.innerHTML = DATA.works.map(function (work) {
+    var w = DATA.view(work, 'personal');
+    var wip = w.status === 'wip';
 
-  <!-- VIGIL -->
-  <a href="vigil.html" class="work-row" data-tags="defence b2b concept">
-    <div class="work-image" style="background:#0A0E14; display:flex; align-items:center; justify-content:center;">
-      <svg viewBox="0 0 80 80" width="80" height="80" style="opacity:0.9;">
-        <rect x="22" y="8" width="36" height="64" rx="12" fill="#111827" stroke="#4ADE80" stroke-width="1"/>
-        <rect x="29" y="16" width="22" height="30" rx="3" fill="#0A0E14"/>
-        <circle cx="40" cy="31" r="9" fill="none" stroke="#4ADE80" stroke-width="0.7" stroke-opacity="0.5"/>
-        <polygon points="40,23 42,29 40,28 38,29" fill="#4ADE80"/>
-        <text x="40" y="50" font-family="monospace" font-size="3.5" fill="#4ADE80" text-anchor="middle">VIGIL</text>
-        <circle cx="40" cy="60" r="2" fill="#4ADE80"/>
-      </svg>
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">Under NDA</span>
-          <span class="work-tag">Defence</span>
-          <span class="work-tag">Wearable</span>
-        </div>
-        <h2 class="work-title">VIGIL</h2>
-        <p class="work-subtitle">Tactical Wearable System</p>
-        <p class="work-desc">Designing a tactical wearable for NATO infantry who cannot touch a screen, in darkness, under fire, with gloves on. 67 screens. Wear OS 4 + iOS/Android.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Defence · Under NDA · 2025</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
+    var image = w.image
+      ? '<div class="work-image">' +
+          '<img src="' + esc(w.image) + '" alt="' + esc(w.title) + '">' +
+          (wip ? WIP_OVERLAY : '') +
+        '</div>'
+      : '<div class="work-image" style="background:#0A0E14; display:flex; ' +
+          'align-items:center; justify-content:center;">' +
+          (DATA.artwork[w.artwork] || '') +
+        '</div>';
 
-  <!-- PRAHARI -->
-  <a href="prahari.html" class="work-row" data-tags="defence b2b concept">
-    <div class="work-image">
-      <img src="images/hero/3258a21f2393a8a7a121be48522e00f1763cc596.png" alt="PRAHARI">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">Under NDA</span>
-          <span class="work-tag">Defence</span>
-          <span class="work-tag">B2B</span>
-        </div>
-        <h2 class="work-title">PRAHARI</h2>
-        <p class="work-subtitle">C-UAS Command &amp; Control</p>
-        <p class="work-desc">Designing the single surface that tells a duty officer whether to act on a drone threat in under five seconds. Client withheld under NDA.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Defence · Under NDA · 2023</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
+    var tags = (w.tagLabels || []).map(function (label) {
+      return '<span class="work-tag">' + esc(label) + '</span>';
+    }).join('');
 
-  <!-- ROJNICA -->
-  <a href="rojnica.html" class="work-row" data-tags="b2b enterprise concept">
-    <div class="work-image">
-      <img src="images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png" alt="ROJNICA">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">Under NDA</span>
-          <span class="work-tag">B2B</span>
-          <span class="work-tag">Agriculture</span>
-        </div>
-        <h2 class="work-title">ROJNICA</h2>
-        <p class="work-subtitle">Swarm Fleet Management</p>
-        <p class="work-desc">Coordinating 12 agricultural drones across 2,760 hectares within a 48-hour treatment window. Three interfaces, one system.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Agriculture · Under NDA · 2024</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Parkbeheer NL -->
-  <a href="parkbeheer.html" class="work-row" data-tags="b2b enterprise concept">
-    <div class="work-image">
-      <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png" alt="Parkbeheer NL">
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <div class="work-tags">
-          <span class="work-tag">Under NDA</span>
-          <span class="work-tag">B2B</span>
-          <span class="work-tag">Enterprise</span>
-          <span class="work-tag">Government</span>
-        </div>
-        <h2 class="work-title">Parkbeheer NL</h2>
-        <p class="work-subtitle">Enterprise B2G Platform</p>
-        <p class="work-desc">Replacing a 20-year-old spreadsheet system with an enterprise platform for 120+ parking officers managing 923K spaces across the Netherlands.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Government · Under NDA · 2018</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Lego Design System -->
-  <a href="#" class="work-row work-row-wip" data-tags="design-system b2b">
-    <div class="work-image">
-      <img src="images/portfolio-assets/DTDT1mezgd4M2D43u4CrreaHo4U.webp" alt="Lego Design System">
-      <div class="wip-overlay">
-        <div class="wip-overlay-inner">
-          <span class="wip-badge">Work in Progress</span>
-          <span class="wip-text">Case study coming soon</span>
-        </div>
-      </div>
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <span class="work-status work-status-wip">Work in Progress</span>
-        <div class="work-tags">
-          <span class="work-tag">Design System</span>
-          <span class="work-tag">B2B</span>
-        </div>
-        <h2 class="work-title">Lego Design System</h2>
-        <p class="work-subtitle">UI Architecture &amp; Components</p>
-        <p class="work-desc">Building a scalable, component-driven design system for modular product experiences. Consistency at every brick.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Design System · 2022</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Klu POS -->
-  <a href="#" class="work-row work-row-wip" data-tags="b2b saas">
-    <div class="work-image">
-      <img src="images/portfolio-assets/KDIsBR1Oo8sHA7wHGqSwpY6or4.webp" alt="Klu POS">
-      <div class="wip-overlay">
-        <div class="wip-overlay-inner">
-          <span class="wip-badge">Work in Progress</span>
-          <span class="wip-text">Case study coming soon</span>
-        </div>
-      </div>
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <span class="work-status work-status-wip">Work in Progress</span>
-        <div class="work-tags">
-          <span class="work-tag">B2B</span>
-          <span class="work-tag">FinTech</span>
-          <span class="work-tag">Retail</span>
-        </div>
-        <h2 class="work-title">Klu POS</h2>
-        <p class="work-subtitle">Point of Sale System</p>
-        <p class="work-desc">A fast, touch-first point-of-sale interface for F&amp;B and retail, designed for speed, error recovery, and end-of-day clarity.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">FinTech · 2022</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Increasing Conversions — Healthcare Product Web UI (WIP) -->
-  <a href="#" class="work-row work-row-wip" data-tags="b2c">
-    <div class="work-image">
-      <img src="images/portfolio-assets/ud9KeBMYBcqOvOmbmecKrZcxo.webp" alt="Healthcare Product Web UI">
-      <div class="wip-overlay">
-        <div class="wip-overlay-inner">
-          <span class="wip-badge">Work in Progress</span>
-          <span class="wip-text">Case study coming soon</span>
-        </div>
-      </div>
-    </div>
-    <div class="work-content">
-      <div class="work-top">
-        <span class="work-status work-status-wip">Work in Progress</span>
-        <div class="work-tags">
-          <span class="work-tag">B2C</span>
-          <span class="work-tag">Healthcare</span>
-          <span class="work-tag">Web</span>
-        </div>
-        <h2 class="work-title">Increasing conversions by just upgrading Healthcare product web UI</h2>
-        <p class="work-subtitle">Healthcare · Web · Conversion</p>
-        <p class="work-desc">Revamping healthcare product landing pages with a focus on conversion uplift, clarity of clinical claims, and brand alignment across digital touchpoints.</p>
-      </div>
-      <div class="work-bottom">
-        <span class="work-meta">Healthcare · Web · Conversion</span>
-        <span class="work-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </div>
-    </div>
-  </a>
-
-</div>
+    return '<a href="' + esc(w.href || '#') + '" class="work-row' +
+      (wip ? ' work-row-wip' : '') + '" data-tags="' + esc(w.tags.join(' ')) + '">' +
+      image +
+      '<div class="work-content">' +
+        '<div class="work-top">' +
+          (wip ? '<span class="work-status work-status-wip">Work in Progress</span>' : '') +
+          '<div class="work-tags">' + tags + '</div>' +
+          '<h2 class="work-title">' + esc(w.title) + '</h2>' +
+          '<p class="work-subtitle">' + esc(w.subtitle) + '</p>' +
+          '<p class="work-desc">' + esc(w.blurb) + '</p>' +
+        '</div>' +
+        '<div class="work-bottom">' +
+          '<span class="work-meta">' + esc(w.meta) + '</span>' + ARROW +
+        '</div>' +
+      '</div>' +
+    '</a>';
+  }).join('');
+})();
+</script>
 
 <!-- ── FOOTER ────────────────────────────────────── -->
 <footer class="page-footer">
@@ -658,10 +420,13 @@
 
 <script>
   // Nav scroll
+  // nav is injected by nav-component.js and may not carry this id
   const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('nav-scrolled', window.scrollY > 40);
-  });
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+    });
+  }
 
   // Filter logic
   const filterBtns = document.querySelectorAll('.filter-btn');
