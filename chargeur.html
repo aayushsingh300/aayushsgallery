@@ -8,7 +8,7 @@
     <meta name="description"
         content="Redesigning ammunition management for an armoured vehicle fleet. A UX case study by Aayush R, published with details altered under NDA.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&amp;family=Spline+Sans+Mono:wght@400;500&amp;display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -871,9 +871,11 @@
 
     </style>
 <link rel="stylesheet" href="site-globals.css">
+<link rel="stylesheet" href="critical-ops.css">
 </head>
 
-<body>
+<body class="case-critical chargeur-case">
+    <div class="case-progress" aria-hidden="true"></div>
 
     <!-- Disclosure: consulting engagement published under NDA -->
     <div class="concept-note"
@@ -884,14 +886,12 @@
     <!-- HERO -->
     <section class="hero">
         <div class="container" style="position:relative;z-index:2;">
-            <div class="hero-tag">A French main battle tank programme, 2024. Four quarters as lead UX designer,
-                through a Paris defence agency, with four escorted site visits.</div>
-            <h1>Making lethal decisions on a tablet interface</h1>
+            <div class="hero-tag">Case 01 / Armoured crew systems · 2024 · Under NDA</div>
+            <h1>What’s loaded.<br><em>What was ordered.</em></h1>
             <p class="hero-sub" style="font-size: 20px; color: var(--text-primary); margin-top: 16px;">
-                <strong>CHARGEUR</strong> is a tablet-based ammunition management system for the <strong>ALT-3 Main
-                    Battle Tank</strong>.
-                I redesigned the interface to ensure that commanders and gunners working under extreme stress inside a
-                cramped, vibrating vehicle can instantly verify what they are about to fire.
+                <strong>CHARGEUR</strong> is a load-state system for an armoured vehicle crew. I redesigned the
+                commander, gunner and fleet surfaces so a mismatch becomes impossible to miss—and every person reads
+                the same operational truth.
             </p>
             <div class="hero-chips" style="margin-top: 24px;">
                 <span>Lead UX Designer</span>
@@ -911,9 +911,9 @@
         </div>
         <div class="container">
             <div class="hero-stats">
-                <div class="stat">Type-switch time down <strong>41%</strong></div>
-                <div class="stat"><strong>24</strong> reruns of the Victor 4 scenario, <strong>0</strong> mismatches</div>
-                <div class="stat"><strong>67</strong> components built to MIL-STD-1472</div>
+                <div class="stat"><strong>41% faster</strong> Type-switch completion in evaluation</div>
+                <div class="stat"><strong>0 mismatches</strong> Across 24 reruns of the critical scenario</div>
+                <div class="stat"><strong>67 components</strong> A reusable, operator-first system</div>
             </div>
         </div>
     </section>
@@ -921,10 +921,13 @@
     <!-- QUICK INTRO -->
     <section style="padding: 0;">
         <div class="container">
-            <div style="border: 1px solid rgba(143,166,188,0.28); padding: 20px 24px; background: var(--bg-surface); border-radius: 8px; margin-top: -24px; margin-bottom: 0; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">
-                <strong style="color: var(--text-primary); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;">What you're about to read</strong><br style="margin-bottom: 8px;">
-                This is the story of redesigning the ammunition management interface for a French main battle tank. A near-miss incident, where the wrong round was loaded because the interface could not clearly communicate what was chambered, kicked off a complete UI overhaul. You'll follow the journey from field research with real tank crews, through the design of a new commander panel and fleet dashboard, to the final test results.
-                <span style="display: block; margin-top: 8px; font-size: 12px; color: var(--text-secondary); opacity: 0.7;">Reading time: ~8 minutes</span>
+            <div class="case-thesis">
+                <strong>Case in one line</strong>
+                <div>A near-miss exposed a state-communication failure—not a hardware failure. The redesign moved the
+                    product from “system ready” to a shared, explicit answer: requested type, chambered type, and what
+                    the crew should do next.
+                    <span class="reading-time">8 minute read · Product + service design</span>
+                </div>
             </div>
         </div>
     </section>
@@ -950,19 +953,16 @@
     <!-- 02, ORIGIN STORY -->
     <section class="section alt">
         <div class="container">
-            <h2>Koramangala → Paris → Champagne</h2>
+            <h2>The brief called it a refresh. The incident report said otherwise.</h2>
             <div class="two-col">
                 <div>
-                    <p>In early 2024 I was working out of a shared studio in Koramangala, Bengaluru, the kind of place
-                        where three product teams share a single espresso machine and everyone pretends the wifi is
-                        fine.</p>
-                    <p>I got an email from <strong style="color:var(--text-primary)">Atelier Numérique Défense</strong>,
-                        a 12-person boutique agency in Paris that bridges defence contractors with UX capabilities
-                        they don't have in-house. Their lead, <strong style="color:var(--text-primary)">Léa
-                            Marchetti</strong>, had spent six months convincing the engineering team that their software
-                        problem was a design problem.</p>
-                    <p style="color:var(--text-primary);font-weight:500;">My job was to come in and prove that was true.
-                    </p>
+                    <p>A specialist defence agency brought me into a European armoured-vehicle programme after four
+                        near-miss reports. The engineering brief asked for a visual refresh of the existing panel.</p>
+                    <p>The evidence pointed somewhere else: hardware state existed, but the interface collapsed
+                        “system ready” and “requested round loaded” into the same signal. This was not a styling problem.
+                        It was a broken contract between machine and crew.</p>
+                    <p style="color:var(--text-primary);font-weight:500;">My remit expanded from one panel to the shared
+                        state model across commander, gunner and resupply.</p>
                 </div>
                 <div>
                     <img src="./images/map.png" alt="Map mapping Bengaluru to Paris to Champagne"
@@ -1015,9 +1015,10 @@
                     <p style="color:var(--text-primary);font-weight:500;">That trust is the entire design problem.</p>
                 </div>
             </div>
-            <img src="./images/chargeur-tank-interior.png" alt="Commander operating the CHARGEUR tablet interface inside the cramped ALT-3 tank interior"
-                style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
-            <p style="font-size: 14px; line-height: 1.6; color: var(--text-secondary); max-width: 68ch; margin-top: -24px; margin-bottom: 32px;">The operating environment: a cramped vehicle interior, low light, vibration, and a tablet that has to earn trust in under a second.</p>
+            <img src="./images/chargeur-field-observation-v2.jpg" alt="Operator holding a blank rugged tablet inside a cramped armoured vehicle interior"
+                class="context-image">
+            <p class="context-caption">Reconstructed context image · The product had to remain readable in low light,
+                vibration and a workspace where the operator cannot change posture to accommodate the interface.</p>
             <div class="pull-quote">"They never touch the ammunition. They push a button and trust. That's the whole
                 design problem in one sentence."</div>
 <figure class="diagram">
@@ -1511,8 +1512,8 @@
             <p>The commander panel is a single-screen tablet interface that answers three questions at a glance:
                 What's loaded? How much is left? Is the system ready? The top bar shows telemetry (barrel temp,
                 hydraulics, target distance) and autoloader status. The center shows the chambered round type in
-                massive, color-coded text, blue for OFL, orange for OCC, green for OE. A green "READY TO FIRE"
-                badge confirms the match. The right column shows three clickable ammo inventory cards. Tap one to
+                massive, named text with a material colour for OFL, OCC and OE. A neutral verification state confirms
+                the match without spending warning colour on normal operation. The right column shows three clickable ammo inventory cards. Tap one to
                 request a type switch.</p>
 
             <!-- C1: Normal state -->
@@ -1540,7 +1541,7 @@
                 <div class="ann-sidebar ann-sidebar-right">
                     <div class="ann-note" data-pin-x="845" data-pin-y="486" data-color="#9DA1A5">
                         <div class="ann-note-title" style="color:#9DA1A5;">Match Badge</div>
-                        <div class="ann-note-body">Green only when chambered type equals requested type.</div>
+                        <div class="ann-note-body">A labelled, neutral confirmation appears only when requested and chambered types match.</div>
                     </div>
                     <div class="ann-note" data-pin-x="1150" data-pin-y="822" data-color="#8FA6BC">
                         <div class="ann-note-title" style="color:#8FA6BC;">Inventory Bars</div>
@@ -1592,49 +1593,11 @@
             <p style="color:var(--text-primary);font-weight:500;">If Victor 4 had had this screen, they would have
                 stopped. That's all I needed to hear.</p>
 
-            <h3 style="font-family:var(--font-heading);font-size:20px;margin-top:60px;margin-bottom:16px;">Giving the
-                gunner a proximity sensor</h3>
-            <p>In every crew I spoke to, the gunner was always the last to know what was happening around the vehicle.
-                So I gave the gunner a range map, a radar-sweep display showing detected hostiles with distance,
-                threat classification, and vector data. The chambered round type is always visible, and a proximity
-                alert panel surfaces target data the moment contacts appear.</p>
-
-            <!-- D1: Range Map display -->
-            <div class="screen-annotated">
-                <div class="ann-sidebar ann-sidebar-left">
-                    <div class="ann-note" data-pin-x="497" data-pin-y="399" data-color="#E04B4B">
-                        <div class="ann-note-title" style="color:#E04B4B;">Threat Contact</div>
-                        <div class="ann-note-body">Red=hostile, amber=unknown. Each blip labeled and ranged.</div>
-                    </div>
-                    <div class="ann-note" data-pin-x="320" data-pin-y="472" data-color="#8FA6BC">
-                        <div class="ann-note-title" style="color:#8FA6BC;">Live Radar Sweep</div>
-                        <div class="ann-note-body">360° tracking within 2,000m engagement radius.</div>
-                    </div>
-                </div>
-                <div class="screen-embed" style="position:relative;">
-                    <iframe src="chargeur-app.html#vehicle/gunner"></iframe>
-                    <svg class="ann-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="497" cy="399" r="6" fill="#E04B4B" opacity="0.9"/>
-                        <circle cx="320" cy="472" r="6" fill="#8FA6BC" opacity="0.9"/>
-                        <circle cx="1430" cy="112" r="6" fill="#9DA1A5" opacity="0.9"/>
-                        <circle cx="1430" cy="400" r="6" fill="#E04B4B" opacity="0.9"/>
-                    </svg>
-                    <div class="screen-caption">Proximity sensor, animated radar sweep with hostile contacts, distance markers, and threat classification panel.</div>
-                </div>
-                <div class="ann-sidebar ann-sidebar-right">
-                    <div class="ann-note" data-pin-x="1430" data-pin-y="112" data-color="#9DA1A5">
-                        <div class="ann-note-title" style="color:#9DA1A5;">Chambered Type</div>
-                        <div class="ann-note-body">Always visible, gunner never has to ask what's loaded.</div>
-                    </div>
-                    <div class="ann-note" data-pin-x="1430" data-pin-y="400" data-color="#E04B4B">
-                        <div class="ann-note-title" style="color:#E04B4B;">Proximity Alert</div>
-                        <div class="ann-note-body">Fires when contact enters engagement range. Auto-triggered.</div>
-                    </div>
-                </div>
-                <svg class="ann-lines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+            <div class="crew-quote" style="margin-top:64px;">The second screen does not create a second truth. The
+                gunner receives the same chambered type and match state from the same source—read-only, always visible,
+                and without a radio call.
+                <cite>One state model · two role-specific surfaces</cite>
             </div>
-            <p style="color:var(--text-primary);font-weight:500;margin-top:24px;">Now both crew members know what's
-                loaded, at the same moment. No radio call needed.</p>
         </div>
     </section>
 
@@ -1644,7 +1607,7 @@
             <h2>Replacing the spreadsheet with a tactical map</h2>
             <p>The supply officer needed to see his entire fleet at once, which vehicles are running low, how
                 urgently, and what to send them. So I built Fleet Command: a tactical map with diamond-shaped vehicle
-                markers (green for nominal, amber for low), plus an inline priority queue at the bottom showing
+                markers (neutral for nominal, amber for low), plus an inline priority queue at the bottom showing
                 urgent vehicles with a one-click ASSIGN button to dispatch resupply.</p>
 
             <!-- E1: Fleet map -->
@@ -1667,7 +1630,7 @@
                         <circle cx="1430" cy="40" r="6" fill="#9DA1A5" opacity="0.9"/>
                         <circle cx="1430" cy="220" r="6" fill="#E04B4B" opacity="0.9"/>
                     </svg>
-                    <div class="screen-caption">Fleet overview, eight vehicles on the tactical map. Green means fine. Red means act now.</div>
+                    <div class="screen-caption">Fleet overview, eight vehicles on the tactical map. Nominal vehicles recede; amber and red surface work.</div>
                 </div>
                 <div class="ann-sidebar ann-sidebar-right">
                     <div class="ann-note" data-pin-x="1430" data-pin-y="40" data-color="#9DA1A5">
@@ -1685,7 +1648,7 @@
             <h3 style="font-family:var(--font-heading);font-size:20px;margin-top:60px;margin-bottom:16px;">Who needs
                 help first?</h3>
             <p>When three vehicles are low and you've got one resupply truck, you need priorities. The queue sorts them:
-                most critical first, one click to dispatch. When a vehicle goes from red to green, the supply officer
+                most critical first, one click to dispatch. When a critical vehicle clears back to neutral, the supply officer
                 sees it happen. For the first time, the loop actually closes.</p>
 
             <!-- E3: Priority queue -->
@@ -1737,16 +1700,22 @@
     <!-- 11, DESIGN SYSTEM -->
     <section class="section">
         <div class="container">
-            <h2>Something I'm quietly proud of</h2>
-            <p>I built 67 components that meet military display standards, and honestly, I'm more proud of this part
-                than any individual screen. The whole system runs on three colors: <span
-                    style="color:var(--ofl);font-weight:600;">blue for OFL</span>, <span
-                    style="color:var(--occ);font-weight:600;">orange for OCC</span>, and <span
-                    style="color:var(--oe);font-weight:600;">green for OE</span>. Once you learn those three colors,
-                every screen in the system reads the same way. Agency's engineering team adopted the system for two
-                more programs, without changing a single token.</p>
-            <img src="./images/design-system.png" alt="Chargeur design system"
-                style="width:100%; height:auto; border-radius:6px; border:1px solid var(--border); margin: 32px 0;">
+            <h2>A shared foundation, not a shared skin</h2>
+            <p>I built 67 components around one rule: colour never carries meaning alone, and it only appears when it
+                helps an operator distinguish material, verify a choice or resolve an exception. The same critical-ops
+                foundation later informed PRAHARI, but Chargeur keeps a quieter, guided-workflow personality.</p>
+            <div class="ops-system" aria-label="Chargeur critical operations design system">
+                <div class="ops-system-head">
+                    <div><small>Critical Ops Foundation / Chargeur</small><strong>Truth before action</strong></div>
+                    <span>67 components · 4 state families</span>
+                </div>
+                <div class="ops-token-grid">
+                    <div class="ops-token"><small>01 / State</small><b>Text + shape + colour</b><p>OFL, OCC and OE are always named. Colour accelerates recognition; it never replaces the label.</p></div>
+                    <div class="ops-token"><small>02 / Hierarchy</small><b>Current truth dominates</b><p>Chambered type and match state outrank telemetry, history and secondary actions.</p></div>
+                    <div class="ops-token"><small>03 / Exception</small><b>Amber asks. Red stops.</b><p>A mismatch names expected and actual values before presenting two explicit paths.</p></div>
+                    <div class="ops-token"><small>04 / Touch</small><b>Glove-sized targets</b><p>Compact information density, generous action targets and no precision gestures in critical paths.</p></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1984,6 +1953,7 @@
 
 <script src="cursor-effects.js"></script>
 <script src="nav-component.js"></script>
+<script src="critical-ops.js"></script>
 </body>
 
 </html>

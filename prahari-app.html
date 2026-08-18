@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="critical-app prahari-product">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAHARI — C-UAS Command & Control</title>
+    <title>PRAHARI — C-UAS Command &amp; Control</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -1260,6 +1260,7 @@
             .log-filters { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
         }
     </style>
+    <link rel="stylesheet" href="critical-ops.css">
 </head>
 
 <body>
@@ -1285,10 +1286,10 @@
                 </div>
             </div>
             <div class="nav-tabs">
-                <button class="nav-tab active" onclick="showScreen('ops')">OPS</button>
-                <button class="nav-tab" onclick="showScreen('handover')">HANDOVER</button>
-                <button class="nav-tab" onclick="showScreen('log')">LOG</button>
-                <button class="nav-tab" onclick="showScreen('sensors')">SENSORS</button>
+                <button class="nav-tab active" onclick="navigateTo('ops')">OPS</button>
+                <button class="nav-tab" onclick="navigateTo('handover')">HANDOVER</button>
+                <button class="nav-tab" onclick="navigateTo('log')">LOG</button>
+                <button class="nav-tab" onclick="navigateTo('sensors')">SENSORS</button>
             </div>
             <div class="status-right">
                 <div class="jammer-status">● J-2 ACTIVE</div>
@@ -1320,18 +1321,18 @@
                     <!-- Legend -->
                     <div class="map-legend">
                         <span>
-                            <div class="ld" style="background:var(--act-now)"></div>Act Now
+                            <i class="ld" style="background:var(--act-now)"></i>Act Now
                         </span>
                         <span>
-                            <div class="ld" style="background:var(--tracking)"></div>Tracking
+                            <i class="ld" style="background:var(--tracking)"></i>Tracking
                         </span>
                         <span>
-                            <div class="ld" style="background:var(--cleared)"></div>Cleared
+                            <i class="ld" style="background:var(--cleared)"></i>Cleared
                         </span>
                         <span>
-                            <div class="ld"
+                            <i class="ld"
                                 style="background:var(--friendly);border-radius:2px;transform:rotate(45deg);width:7px;height:7px">
-                            </div>Friendly
+                            </i>Friendly
                         </span>
                     </div>
                     <div class="map-north">⬆ N</div>
@@ -1831,15 +1832,37 @@
 
         function actionEscalate() {
             if (!selectedContact) return;
-            alert('Contact ' + selectedContact.id + ' escalated to Commanding Officer.');
+            showSystemNote(selectedContact.id + ' escalated · event added to engagement log');
+        }
+
+        function showSystemNote(message) {
+            const existing = document.querySelector('.system-note');
+            if (existing) existing.remove();
+            const note = document.createElement('div');
+            note.className = 'system-note';
+            note.setAttribute('role', 'status');
+            note.textContent = message;
+            document.body.appendChild(note);
+            requestAnimationFrame(() => note.classList.add('visible'));
+            setTimeout(() => {
+                note.classList.remove('visible');
+                setTimeout(() => note.remove(), 220);
+            }, 2600);
         }
 
         // ── Screen Nav ──
         function showScreen(name) {
+            const target = document.getElementById('screen-' + name);
+            if (!target) name = 'ops';
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('screen-' + name).classList.add('active');
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => { if (t.textContent.trim().toLowerCase() === name) t.classList.add('active'); });
+        }
+
+        function navigateTo(name) {
+            if (location.hash === '#' + name) showScreen(name);
+            else location.hash = name;
         }
 
         // ── Hash routing ──
@@ -1861,7 +1884,7 @@
             if (e.key === 'e' || e.key === 'E') { if (selectedContact) actionEscalate(); }
             if (e.key === 'm' || e.key === 'M') { if (selectedContact) actionMonitor(); }
             if (e.key === 'c' || e.key === 'C') { if (selectedContact) { selectedContact.state = 'CLEARED'; closeDetail(); } }
-            if (e.key === 'h' || e.key === 'H') { showScreen('handover'); }
+            if (e.key === 'h' || e.key === 'H') { navigateTo('handover'); }
         });
 
         // ── Clock ──

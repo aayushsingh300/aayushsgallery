@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">Chargeur ammunition state interface</title>
+  <desc id="desc">A code-authored view of a verified chambered round and three ammunition counts.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#181816"/>
+      <stop offset="1" stop-color="#090a0a"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d8a155"/>
+      <stop offset="1" stop-color="#f0be72"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" fill="url(#bg)"/>
+  <path d="M0 0h640v640H0z" fill="none" stroke="#ffffff" stroke-opacity=".08"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity=".055">
+    <path d="M0 80h640M0 160h640M0 240h640M0 320h640M0 400h640M0 480h640M0 560h640"/>
+    <path d="M80 0v640M160 0v640M240 0v640M320 0v640M400 0v640M480 0v640M560 0v640"/>
+  </g>
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace">
+    <text x="42" y="54" fill="#d8d9d5" font-size="13" font-weight="700" letter-spacing="2">CHARGEUR / V4</text>
+    <text x="598" y="54" fill="#909492" font-size="10" text-anchor="end" letter-spacing="1">CREW DISPLAY</text>
+    <line x1="42" y1="74" x2="598" y2="74" stroke="#ffffff" stroke-opacity=".16"/>
+    <rect x="42" y="104" width="368" height="352" rx="8" fill="#111315" stroke="#ffffff" stroke-opacity=".16"/>
+    <text x="68" y="143" fill="#858a88" font-size="10" letter-spacing="2">IN THE BREECH</text>
+    <text x="66" y="270" fill="#8fa6bc" font-family="Arial,sans-serif" font-size="124" font-weight="700" letter-spacing="-8">OFL</text>
+    <text x="68" y="302" fill="#9da19f" font-size="11" letter-spacing="1">ARMOUR-PIERCING / TYPE 01</text>
+    <rect x="68" y="338" width="316" height="62" rx="5" fill="#d8a155" fill-opacity=".12" stroke="#d8a155" stroke-opacity=".54"/>
+    <text x="88" y="363" fill="#b0b3b0" font-size="9" letter-spacing="1.2">REQUESTED</text>
+    <text x="88" y="387" fill="#f0f0eb" font-size="18" font-weight="700">OFL</text>
+    <path d="M340 360l8 8 16-18" fill="none" stroke="url(#amber)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="364" y="385" fill="#d8a155" font-size="9" text-anchor="end" letter-spacing="1.2">VERIFIED</text>
+    <g transform="translate(430 104)">
+      <rect width="168" height="103" rx="8" fill="#111315" stroke="#ffffff" stroke-opacity=".16"/>
+      <text x="20" y="32" fill="#8fa6bc" font-size="16" font-weight="700">OFL</text><text x="146" y="32" fill="#d8d9d5" font-size="12" text-anchor="end">12 / 14</text>
+      <rect x="20" y="55" width="128" height="5" rx="2.5" fill="#24282a"/><rect x="20" y="55" width="110" height="5" rx="2.5" fill="#8fa6bc"/>
+      <text x="20" y="82" fill="#777c7a" font-size="9" letter-spacing="1">AVAILABLE</text>
+    </g>
+    <g transform="translate(430 219)">
+      <rect width="168" height="103" rx="8" fill="#111315" stroke="#ffffff" stroke-opacity=".16"/>
+      <text x="20" y="32" fill="#c08a5e" font-size="16" font-weight="700">OCC</text><text x="146" y="32" fill="#d8d9d5" font-size="12" text-anchor="end">8 / 12</text>
+      <rect x="20" y="55" width="128" height="5" rx="2.5" fill="#24282a"/><rect x="20" y="55" width="84" height="5" rx="2.5" fill="#c08a5e"/>
+      <text x="20" y="82" fill="#777c7a" font-size="9" letter-spacing="1">AVAILABLE</text>
+    </g>
+    <g transform="translate(430 334)">
+      <rect width="168" height="122" rx="8" fill="#111315" stroke="#ffffff" stroke-opacity=".16"/>
+      <text x="20" y="32" fill="#93a583" font-size="16" font-weight="700">OE</text><text x="146" y="32" fill="#d8d9d5" font-size="12" text-anchor="end">4 / 6</text>
+      <rect x="20" y="55" width="128" height="5" rx="2.5" fill="#24282a"/><rect x="20" y="55" width="85" height="5" rx="2.5" fill="#93a583"/>
+      <text x="20" y="82" fill="#777c7a" font-size="9" letter-spacing="1">AVAILABLE</text>
+      <text x="20" y="104" fill="#d8a155" font-size="9" letter-spacing="1">04 ABOVE RESERVE</text>
+    </g>
+    <line x1="42" y1="504" x2="598" y2="504" stroke="#ffffff" stroke-opacity=".16"/>
+    <text x="42" y="546" fill="#d8a155" font-size="10" letter-spacing="2">TRUTH BEFORE ACTION</text>
+    <text x="42" y="582" fill="#e8e7df" font-family="Arial,sans-serif" font-size="29" font-weight="700" letter-spacing="-1">One state. Shared by the crew.</text>
+  </g>
+</svg>

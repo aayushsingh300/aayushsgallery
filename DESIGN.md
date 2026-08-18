@@ -152,6 +152,18 @@ A warm-dark cosmic palette: a near-black void, an earth band of browns that grou
 ### Named Rules
 **The One Shout Rule.** Only the hero headline is allowed to fill the viewport. Below the fold, scale steps down hard; nothing else competes with the opening shout.
 
+## Critical Ops sub-system: Chargeur + Prahari
+
+Chargeur and Prahari share a foundation, not a visual skin. Both products use the same density, border, focus, type-role and status rules because both support consequential decisions under time pressure. Their information architecture stays product-specific.
+
+- **Shared foundation:** near-black solid surfaces, compact mono telemetry, 6px controls, explicit focus, visible evidence, and no decorative status colour.
+- **Chargeur:** guided workflow. The current load truth dominates; material colours distinguish OFL, OCC and OE; amber asks for verification and red stops an unsafe path.
+- **Prahari:** spatial triage. Map, queue and contact evidence form the primary hierarchy; red is reserved for action, amber for watch, and nominal states recede.
+- **The redundancy rule:** colour never carries a critical meaning alone. Every state is also named and reinforced through hierarchy, shape or position.
+- **The shared-truth rule:** role-specific surfaces may expose different controls, but they read operational state from the same source and use the same state language.
+
+Implementation lives in `critical-ops.css`; the case studies include product-specific specimens rather than generated design-system screenshots.
+
 ## 4. Elevation
 
 A hybrid system. The page floor is **tonal** — sections drift between warm-black tones (`#221616` / `#1a1010` / `#0d0808`) rather than using borders to separate. Lift is reserved for **interactive** elements and rendered with long, warm shadows plus motion, never a flat default drop-shadow.

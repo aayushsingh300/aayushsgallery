@@ -87,7 +87,7 @@
       id: 'chargeur',
       title: 'Chargeur',
       href: 'chargeur.html',
-      image: 'images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png',
+      image: 'images/chargeur-thumbnail-v2.svg',
       imageAlt: 'Chargeur armoured vehicle load management interface',
       tags: ['defence', 'b2b', 'concept'],
       status: 'live',
@@ -102,8 +102,8 @@
         discipline: 'Mission-critical',
         blurb: 'Zero-mismatch load management for an armoured fleet.',
         meta: 'Europe · 2024',
-        accent: '#6d8fff',
-        accentClass: 'project--blue',
+        accent: '#d9a35a',
+        accentClass: 'project--amber',
         featured: 2
       }
     },
@@ -138,7 +138,7 @@
       id: 'prahari',
       title: 'Prahari',
       href: 'prahari.html',
-      image: 'images/hero/3258a21f2393a8a7a121be48522e00f1763cc596.png',
+      image: 'images/prahari-thumbnail-v2.svg',
       imageAlt: 'Prahari counter-UAS command and control',
       tags: ['defence', 'b2b', 'concept'],
       status: 'live',
@@ -153,7 +153,7 @@
         discipline: 'Mission-critical',
         blurb: 'Act or hold — decided in under five seconds.',
         meta: 'India · 2023',
-        accent: '#ff5c3f',
+        accent: '#ef5b4c',
         accentClass: 'project--amber'
       }
     },
