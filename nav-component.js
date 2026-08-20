@@ -1,10 +1,21 @@
 /**
  * nav-component.js
- * Injects a consistent navigation bar into every page.
+ * Injects the PERSONAL PORTFOLIO navigation bar into every page.
  * Include this script in every HTML file; it auto-detects the active page.
+ *
+ * Case-study pages are shared with the studio face, which brings its own
+ * header (studio-nav.js / .rf-pnav). studio-nav.js decides which face is
+ * being read and stamps it on <html data-face>; when it says studio, this
+ * nav stands down so the page carries one identity, not two.
  */
 (function () {
   'use strict';
+
+  if (document.documentElement.dataset.face === 'studio') return;
+
+  /* Reaching any page wearing the portfolio nav ends the studio flow, so a
+     project opened from here later does not inherit the studio header. */
+  try { sessionStorage.setItem('rf-face', 'personal'); } catch (e) { /* private mode */ }
 
   var LINKS = [
     { href: 'index.html',      label: 'Home' },
@@ -57,7 +68,6 @@
 
   /* Insert nav + drawer as first children of body */
   document.body.insertAdjacentElement('afterbegin', drawer);
-    '</div>';
 
   /* Insert as first child of body */
   document.body.insertAdjacentElement('afterbegin', nav);

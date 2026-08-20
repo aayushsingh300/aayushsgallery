@@ -52,7 +52,7 @@
       },
       studio: {
         discipline: 'Clinical intelligence',
-        blurb: 'Patient complexity made clear enough to act on.',
+        blurb: 'A clinical intelligence platform that turns long, fragmented patient records into a clear view of what changed, what matters now and what care teams should do next.',
         meta: 'Europe · 2023', /* ⚠ year mismatch vs personal (2022) */
         accent: '#c6ff54',
         accentClass: 'project--green',
@@ -76,7 +76,7 @@
       },
       studio: {
         discipline: 'Workforce systems',
-        blurb: 'Four tools, five roles, one recruiter workflow.',
+        blurb: 'A single hiring platform for healthcare staffing teams. It replaces four disconnected tools so recruiters, managers and candidates can move from an open role to a filled shift without losing context.',
         meta: 'United States · 2021',
         accent: '#f0b429',
         accentClass: 'project--amber'
@@ -87,8 +87,8 @@
       id: 'chargeur',
       title: 'Chargeur',
       href: 'chargeur.html',
-      image: 'images/chargeur-thumbnail-v2.svg',
-      imageAlt: 'Chargeur armoured vehicle load management interface',
+      image: 'images/project-thumbnails/chargeur-operations.png',
+      imageAlt: 'Armoured vehicle crew member using the Chargeur ammunition load management interface',
       tags: ['defence', 'b2b', 'concept'],
       status: 'live',
       personal: {
@@ -100,7 +100,7 @@
       },
       studio: {
         discipline: 'Mission-critical',
-        blurb: 'Zero-mismatch load management for an armoured fleet.',
+        blurb: 'A load-management system for armoured-vehicle crews. It shows what ammunition is available, confirms the selected round and warns about mismatches before they become dangerous—cutting type-switch time by 41% in evaluation.',
         meta: 'Europe · 2024',
         accent: '#d9a35a',
         accentClass: 'project--amber',
@@ -112,11 +112,11 @@
       id: 'vigil',
       title: 'Vigil',
       href: 'vigil.html',
-      image: null,
-      imageAlt: 'Vigil tactical wearable system',
+      image: 'images/project-thumbnails/vigil-field.png',
+      imageAlt: 'Gloved field operator using the Vigil tactical wearable in rain at dusk',
       tags: ['defence', 'b2b', 'concept'],
       status: 'live',
-      /* No hero photograph — the artwork is drawn inline. */
+      /* The inline artwork remains available as a fallback for legacy views. */
       artwork: 'vigil',
       personal: {
         title: 'VIGIL',
@@ -127,7 +127,7 @@
       },
       studio: {
         discipline: 'Mission-critical',
-        blurb: 'A wrist you can read in the dark, with gloves on, under fire.',
+        blurb: 'A rugged smartwatch and companion system for soldiers working in darkness, rain and poor connectivity. Physical controls, haptics and glanceable alerts keep navigation, team status and health warnings usable with gloves on.',
         meta: 'NATO programme · 2025',
         accent: '#4ade80',
         accentClass: 'project--green'
@@ -138,8 +138,8 @@
       id: 'prahari',
       title: 'Prahari',
       href: 'prahari.html',
-      image: 'images/prahari-thumbnail-v2.svg',
-      imageAlt: 'Prahari counter-UAS command and control',
+      image: 'images/project-thumbnails/prahari-command.png',
+      imageAlt: 'Duty officer using the Prahari counter-drone command and control interface',
       tags: ['defence', 'b2b', 'concept'],
       status: 'live',
       personal: {
@@ -151,7 +151,7 @@
       },
       studio: {
         discipline: 'Mission-critical',
-        blurb: 'Act or hold — decided in under five seconds.',
+        blurb: 'A counter-drone command interface that brings radar, radio and camera detections onto one screen. It helps a duty officer understand whether a contact is real, see why the system believes it and decide what to do in under five seconds.',
         meta: 'India · 2023',
         accent: '#ef5b4c',
         accentClass: 'project--amber'
@@ -175,7 +175,7 @@
       },
       studio: {
         discipline: 'Autonomous systems',
-        blurb: 'Twelve drones. One narrow window. No room for confusion.',
+        blurb: 'A fleet-management system for 12 agricultural drones working across 2,760 hectares. It helps planners assign fields, pilots coordinate flights and managers see whether the full treatment window is still on track.',
         meta: 'India · 2025', /* ⚠ year mismatch vs personal (2024) */
         accent: '#c59aff',
         accentClass: 'project--violet',
@@ -200,7 +200,7 @@
       },
       studio: {
         discipline: 'Enterprise operations',
-        blurb: '923,000 parking spaces. One coherent operating system.',
+        blurb: 'An operations platform for teams managing 923,000 parking spaces across the Netherlands. It replaces spreadsheets with one shared workflow for planning patrols, recording field work and resolving mismatches.',
         meta: 'Netherlands · 2025', /* ⚠ year mismatch vs personal (2018) */
         accent: '#ff663d',
         accentClass: 'project--amber',
@@ -224,7 +224,7 @@
       },
       studio: {
         discipline: 'Consumer & commerce',
-        blurb: 'Prescription complexity, hidden behind a shopping experience.',
+        blurb: 'A simpler way to shop for eyewear online and in store. It helps people move from style discovery to a prescription-ready choice without making the clinical details feel overwhelming.',
         meta: 'India · 2020',
         accent: '#dfff45',
         accentClass: 'project--green'
@@ -247,7 +247,7 @@
       },
       studio: {
         discipline: 'Consumer & commerce',
-        blurb: 'Discovery to checkout, rebuilt around the repeat buyer.',
+        blurb: 'An end-to-end redesign of Titan Eyeplus’s online store—from finding the right frames and trying them virtually to managing prescriptions, checking out and returning for a repeat purchase.',
         meta: 'India · 2021',
         accent: '#6d8fff',
         accentClass: 'project--blue'
@@ -270,7 +270,7 @@
       },
       studio: {
         discipline: 'Design systems',
-        blurb: 'One component library holding a modular product family together.',
+        blurb: 'A reusable design system for a growing family of digital products. Shared components, patterns and rules let teams build faster while keeping every experience consistent and accessible.',
         meta: 'In progress · 2022',
         accent: '#dfff45',
         accentClass: 'project--green'
@@ -293,7 +293,7 @@
       },
       studio: {
         discipline: 'Consumer & commerce',
-        blurb: 'A cannabis-native retail system connecting the counter to analytics, inventory and compliance.',
+        blurb: 'A point-of-sale and operations platform built specifically for cannabis dispensaries in Thailand. It connects weight-based sales at the counter with inventory, local payments, compliance and live business reporting.',
         meta: 'Thailand · 2024',
         accent: '#ff5c3f',
         accentClass: 'project--amber'
@@ -317,7 +317,7 @@
       },
       studio: {
         discipline: 'Consumer & commerce',
-        blurb: 'Clinical claims made legible enough to convert on.',
+        blurb: 'A conversion-focused redesign of healthcare product pages. It reorganises dense clinical information so visitors can understand the benefit, trust the claims and know what to do next.',
         meta: 'In progress',
         accent: '#c59aff',
         accentClass: 'project--violet'

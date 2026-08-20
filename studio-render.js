@@ -27,7 +27,7 @@
  * Hooks, placed as empty elements in the HTML:
  *   data-render="chrome"          header + menu + progress + overlays
  *   data-render="featured-works"  the home route's large alternating cards
- *   data-render="works-index"     the full typographic work index + filters
+ *   data-render="works-index"     the full visual work index + filters
  *   data-render="team"            the studio roster
  *   data-render="contact"         the coral contact block + footer
  *   data-stamp="TEXT · "          a circular rotating type stamp
@@ -53,16 +53,27 @@
   }
 
   /**
-   * A render hook, but only if it belongs to the route being shown.
-   * Hooks sitting outside any [data-page] group (the contact block) always
-   * resolve; the rest return null off-route so we never build a work index
-   * or roster into sections nobody is looking at.
+   * Is this element on the route being shown?
+   *
+   * Elements outside any [data-page] group (the contact block) are on every
+   * route. A group may name MORE THAN ONE route — data-page="contact home"
+   * puts the same section on both, matching the CSS gate's ~= word test — so
+   * a block that belongs in two places is authored once.
+   */
+  function onRoute(element) {
+    var group = element.closest('[data-page]');
+    if (!group) return true;
+    return group.dataset.page.split(/\s+/).indexOf(route) !== -1;
+  }
+
+  /**
+   * A render hook, but only if it belongs to the route being shown, so we
+   * never build a work index or roster into sections nobody is looking at.
    */
   function slot(name) {
     var host = document.querySelector('[data-render="' + name + '"]');
     if (!host) return null;
-    var group = host.closest('[data-page]');
-    return !group || group.dataset.page === route ? host : null;
+    return onRoute(host) ? host : null;
   }
 
   /* ── Routes ────────────────────────────────────────────────────── */
@@ -130,6 +141,17 @@
     return name === 'home' ? 'studio.html' : 'studio.html?p=' + name;
   }
 
+  /**
+   * Case-study pages are shared with the personal portfolio, so a link out of
+   * the studio says which face it is leaving from: studio-nav.js reads
+   * ?face=studio and dresses the page in the studio's header instead of the
+   * portfolio's. See studio-nav.js for the full detection order.
+   */
+  function projectHref(href) {
+    if (!href) return href;
+    return href + (href.indexOf('?') === -1 ? '?' : '&') + 'face=studio';
+  }
+
   function applyHead() {
     document.title = HERE.title;
     var meta = document.querySelector('meta[name="description"]');
@@ -161,7 +183,12 @@
       ? '<canvas class="signal" id="signal" aria-hidden="true"></canvas>'
       : '';
 
-    var booking = route === 'contact'
+    /* The overlay is built wherever a "Book 30 minutes" button is actually
+       reachable — the contact page and, since it repeats there, the end of
+       home — and left out of the document on the routes that never open it. */
+    var wantsBooking = [].slice.call(document.querySelectorAll('[data-booking-open]')).some(onRoute);
+
+    var booking = wantsBooking
       ? '<div class="booking" data-booking hidden>' +
           '<div class="booking__panel" role="dialog" aria-modal="true"' +
           ' aria-label="Book a 30 minute call">' +
@@ -205,8 +232,7 @@
      display:none, which on one file would mean paying for every route. */
   function inflateMedia() {
     document.querySelectorAll('template[data-media]').forEach(function (tpl) {
-      var group = tpl.closest('[data-page]');
-      if (group && group.dataset.page !== route) return;
+      if (!onRoute(tpl)) return;
       tpl.parentNode.replaceChild(tpl.content.cloneNode(true), tpl);
     });
   }
@@ -251,7 +277,7 @@
     host.removeAttribute('data-render');
     host.innerHTML = DATA.featured().map(function (work, index) {
       var w = DATA.view(work, 'studio');
-      return '<a class="project ' + esc(w.accentClass) + ' cursor-view reveal" href="' + esc(w.href) + '"' +
+      return '<a class="project ' + esc(w.accentClass) + ' cursor-view reveal" href="' + esc(projectHref(w.href)) + '"' +
         ' data-accent="' + esc(w.accent) + '">' +
         '<div class="project__media">' + media(w) +
           '<span class="project__wash"></span><span class="project__arrow">↗</span>' +
@@ -267,7 +293,7 @@
     }).join('');
   }
 
-  /* ── Works route: filters + typographic rows + hover preview ───── */
+  /* ── Works route: filters + persistent visual project atlas ───── */
 
   function renderWorksIndex() {
     var host = slot('works-index');
@@ -288,7 +314,7 @@
       var live = Boolean(w.href);
       var tag = live ? 'a' : 'div';
       var attrs = live
-        ? ' href="' + esc(w.href) + '" class="index-row cursor-view"'
+        ? ' href="' + esc(projectHref(w.href)) + '" class="index-row cursor-view"'
         : ' class="index-row index-row--soon"';
 
       return '<' + tag + attrs +
@@ -311,11 +337,9 @@
     host.innerHTML =
       '<div class="index__filters" role="group" aria-label="Filter work by discipline">' + chips + '</div>' +
       '<div class="index__rows">' + rows + '</div>' +
-      '<p class="index__empty" hidden>Nothing in that lens yet.</p>' +
-      '<figure class="index-preview" aria-hidden="true"><img alt=""></figure>';
+      '<p class="index__empty" hidden>Nothing in that lens yet.</p>';
 
     wireFilters(host);
-    wirePreview(host);
   }
 
   function wireFilters(host) {
@@ -339,48 +363,6 @@
     });
   }
 
-  /* Large preview that trails the pointer while hovering a row. */
-  function wirePreview(host) {
-    var figure = host.querySelector('.index-preview');
-    var image = figure.querySelector('img');
-    if (matchMedia('(max-width: 900px), (prefers-reduced-motion: reduce)').matches) {
-      figure.remove();
-      return;
-    }
-
-    var target = { x: 0, y: 0 };
-    var current = { x: 0, y: 0 };
-    var active = false;
-
-    host.querySelectorAll('.index-row').forEach(function (row) {
-      var src = row.dataset.preview;
-      if (!src) return;
-      row.addEventListener('pointerenter', function () {
-        image.src = src;
-        figure.style.setProperty('--row-accent', row.dataset.accent);
-        figure.classList.add('is-on');
-        active = true;
-      });
-      row.addEventListener('pointerleave', function () {
-        figure.classList.remove('is-on');
-        active = false;
-      });
-    });
-
-    addEventListener('pointermove', function (event) {
-      target.x = event.clientX;
-      target.y = event.clientY;
-    }, { passive: true });
-
-    (function follow() {
-      requestAnimationFrame(follow);
-      if (!active) return;
-      current.x += (target.x - current.x) * 0.14;
-      current.y += (target.y - current.y) * 0.14;
-      figure.style.transform = 'translate3d(' + (current.x + 28) + 'px,' + (current.y - 130) + 'px,0)';
-    })();
-  }
-
   /* ── Studio roster ─────────────────────────────────────────────── */
 
   function monogram(member) {
@@ -396,7 +378,7 @@
     host.innerHTML = DATA.team.map(function (member, index) {
       var accent = member.accent || '#f1ede4';
       var link = member.linkedin
-        ? '<a class="member__link" href="' + esc(member.linkedin) + '" target="_blank" rel="noopener">' +
+        ? '<a class="member__link" href="' + esc(member.linkedin) + '" target="_blank" rel="noopener noreferrer">' +
           'LinkedIn<b>↗</b></a>'
         : '<span class="member__link member__link--none">LinkedIn soon</span>';
 
@@ -425,6 +407,7 @@
     if (!host) return;
 
     var copy = HERE.contact;
+    var contactHref = route === 'about' ? href('contact') : 'mailto:' + C.email;
 
     host.className = 'contact';
     host.id = host.id || 'contact';
@@ -432,7 +415,7 @@
     host.removeAttribute('data-render');
     host.innerHTML =
       '<div class="contact__top"><span>' + esc(copy.lead) + '</span><span>' + esc(copy.reply) + '</span></div>' +
-      '<a class="contact__link" href="mailto:' + esc(C.email) + '">' +
+      '<a class="contact__link" href="' + esc(contactHref) + '">' +
         '<span>' + esc(copy.lineOne) + '</span>' +
         '<span>' + esc(copy.lineTwo) + '<b>↗</b></span>' +
       '</a>' +
@@ -440,7 +423,7 @@
         '<div><span>New business</span><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a></div>' +
         '<div><span>Based in</span><p>' + esc(C.location) + '<br>' + esc(C.reach) + '</p></div>' +
         '<div><span>Elsewhere</span><p>' +
-          '<a href="' + esc(C.linkedin) + '" target="_blank" rel="noopener">LinkedIn</a><br>' +
+          '<a href="' + esc(C.linkedin) + '" target="_blank" rel="noopener noreferrer">LinkedIn</a><br>' +
           '<a href="index.html">Personal portfolio ↗</a></p></div>' +
         '<p>© 2026 ' + esc(C.studioName) + ' studio</p>' +
       '</footer>';

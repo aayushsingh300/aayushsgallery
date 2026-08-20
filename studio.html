@@ -16,11 +16,12 @@
       studio.html?p=about    About us
       studio.html?p=contact  Contact us
 
-    Every <section> is tagged data-page="<route>"; CSS hides the groups that
-    are not the current route. This inline script stamps the route on <html>
-    before the body is parsed, so only the right sections ever paint — no
-    flash, no JS show/hide after the fact. Titles, meta and the contact copy
-    are set per route in studio-render.js (ROUTES).
+    Every <section> is tagged data-page="<route>" — or a list of them,
+    data-page="contact home", for a block that belongs on more than one — and
+    CSS hides the groups that are not the current route. This inline script
+    stamps the route on <html> before the body is parsed, so only the right
+    sections ever paint — no flash, no JS show/hide after the fact. Titles,
+    meta and the contact copy are set per route in studio-render.js (ROUTES).
 
     Nav links are ordinary <a href> — each tab is a real document load, so the
     loader, scroll reset and entrance animations behave exactly as they did
@@ -106,6 +107,40 @@
       <div class="belief__stamp" data-stamp="DESIGN IN THE REAL WORLD · EST. 2017 · " aria-hidden="true"></div>
     </section>
 
+    <section class="craft" data-page="home" data-theme="dark">
+      <header class="craft__head">
+        <span class="reveal">Craft in the age of AI</span>
+        <span class="reveal">( tools change · care stays )</span>
+      </header>
+
+      <div class="craft__statement">
+        <p class="word-reveal">AI can accelerate the work. <em>It cannot care about the outcome.</em></p>
+      </div>
+
+      <div class="craft__intro reveal">
+        <p>We use new tools wherever they create room to think further and make better. But judgment, taste, empathy and responsibility stay human—because the final one percent is often where trust is won or lost.</p>
+        <p>We are senior designers shaped by different worlds: operational software, healthcare, defence, mobility and connected products. That range is our advantage. Every problem gets several expert lenses, then one carefully resolved point of view.</p>
+      </div>
+
+      <div class="craft__principles">
+        <article class="craft-card reveal">
+          <span>01 / Judgment</span>
+          <h3>Human at the helm.</h3>
+          <p>AI helps us explore. People decide what is useful, appropriate and worth putting into someone’s hands.</p>
+        </article>
+        <article class="craft-card reveal">
+          <span>02 / Range</span>
+          <h3>Different domains, shared table.</h3>
+          <p>Each specialist sees a different risk, behavior or possibility. Together, we see more of the whole product.</p>
+        </article>
+        <article class="craft-card reveal">
+          <span>03 / Finish</span>
+          <h3>Craft lives in the last mile.</h3>
+          <p>Every word, state, rhythm and hand-off is shaped by senior hands until the experience feels clear and inevitable.</p>
+        </article>
+      </div>
+    </section>
+
     <section class="work" id="work" data-page="home" data-theme="dark">
       <header class="section-head">
         <span>Selected work · 2022—2026</span>
@@ -172,12 +207,12 @@
       <h1 class="page-head__title">Every<br><em>project.</em></h1>
       <div class="page-head__foot">
         <p class="reveal">The complete record — shipped products, long consulting engagements, and the two still being built. Names and programme details on defence work are altered under NDA.</p>
-        <p class="reveal page-head__hint">Hover a row to see it. Filter by the kind of problem it was.</p>
+        <p class="reveal page-head__hint">A visual index of the work. Filter by the kind of problem it was.</p>
       </div>
     </section>
 
     <section class="index-section" id="index" data-page="works" data-theme="light">
-      <!-- filters, rows and hover preview all render from site-data.js -->
+      <!-- filters and the visual project atlas render from site-data.js -->
       <div data-render="works-index"></div>
     </section>
 
@@ -273,7 +308,22 @@
       </div>
     </section>
 
-    <section class="engage" data-page="contact" data-theme="light">
+    <!--
+      How to start. Lives on the contact route and repeats at the end of home
+      (data-page takes a list) so the home page closes on something actionable
+      instead of only the coral sign-off. One block, one place to edit it.
+    -->
+    <section class="engage" data-page="contact home" data-theme="light">
+      <!--
+        On contact the page head already introduces this block, so the lead-in
+        is tagged home-only: the route gate hides it there and shows it here,
+        giving the home page something to open the block with.
+      -->
+      <header class="engage__head" data-page="home">
+        <span>How to start</span>
+        <span>( 30 minutes · no deck )</span>
+      </header>
+
       <div class="engage__lines">
         <article class="engage__line reveal">
           <span>01</span>
@@ -328,7 +378,7 @@
         <div class="engage__card reveal">
           <span>Where we are</span>
           <p>Bengaluru, India<br>Working worldwide — most clients are 3 to 9 hours behind us.</p>
-          <a href="https://www.linkedin.com/in/aayushran/" target="_blank" rel="noopener">LinkedIn<b>↗</b></a>
+          <a href="https://www.linkedin.com/in/aayushran/" target="_blank" rel="noopener noreferrer">LinkedIn<b>↗</b></a>
         </div>
       </aside>
     </section>
