@@ -89,10 +89,10 @@
   var ROUTES = {
     home: {
       label: 'Home',
-      title: 'rabbitsfoot — Products for the moments that matter',
-      description: 'rabbitsfoot is an independent product design studio creating systems for the moments that matter.',
+      title: 'rabbitsfoot — Product design for the real world',
+      description: 'rabbitsfoot is an independent design studio rooted in product design and UX, bringing product rigour to ambitious design problems in every form.',
       contact: {
-        lead: 'Have a difficult product?',
+        lead: 'Have a design problem worth solving?',
         reply: 'Good. We should talk.',
         lineOne: 'Bring us the',
         lineTwo: 'difficult bit.'
@@ -112,18 +112,18 @@
     about: {
       label: 'About us',
       title: 'About us — rabbitsfoot',
-      description: 'rabbitsfoot is six senior designers, researchers and builders working directly on the problem — no account layer, no hand-off.',
+      description: 'rabbitsfoot is nine senior specialists spanning product, spatial, industrial, creative, technology and business design.',
       contact: {
         lead: 'Want the whole team on it?',
         reply: 'That’s the only way we work.',
         lineOne: 'Meet the',
-        lineTwo: 'six of us.'
+        lineTwo: 'nine of us.'
       }
     },
     contact: {
       label: 'Contact us',
       title: 'Contact us — rabbitsfoot',
-      description: 'Start a project with rabbitsfoot — book a 30-minute call, or send the difficult bit by email.',
+      description: 'Start a project with rabbitsfoot — book a 30-minute call, email rabbitsfootep@gmail.com or call +91 93982 25962.',
       contact: {
         lead: 'Prefer the direct route?',
         reply: 'It lands in a real inbox.',
@@ -156,6 +156,21 @@
     document.title = HERE.title;
     var meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', HERE.description);
+  }
+
+  /**
+   * Home deliberately ends with the practical invitation after the coral
+   * sign-off. On the dedicated contact route, keep the more natural reading
+   * order: page introduction, ways to start, then the final sign-off/footer.
+   * The loader covers this pre-render move, so it never creates layout shift.
+   */
+  function orderClosingSections() {
+    if (route !== 'contact') return;
+    var engage = document.querySelector('.engage[data-page~="contact"]');
+    var contact = document.querySelector('[data-render="contact"]');
+    if (engage && contact && engage.parentNode === contact.parentNode) {
+      contact.parentNode.insertBefore(engage, contact);
+    }
   }
 
   /* ── Chrome: header, mobile menu, progress bar, overlays ───────── */
@@ -219,7 +234,8 @@
       '<aside class="menu" id="menu" aria-hidden="true">' +
         '<button class="menu__close" type="button" aria-label="Close menu">Close</button>' +
         '<nav>' + menuLinks + '</nav>' +
-        '<p>' + esc(C.location) + '<br><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a></p>' +
+        '<p>' + esc(C.location) + '<br><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a>' +
+          '<br><a href="tel:' + esc(C.phoneHref) + '">' + esc(C.phone) + '</a></p>' +
       '</aside>' +
       '<div class="progress" aria-hidden="true"><i></i></div>' +
       booking;
@@ -420,7 +436,8 @@
         '<span>' + esc(copy.lineTwo) + '<b>↗</b></span>' +
       '</a>' +
       '<footer class="contact__foot">' +
-        '<div><span>New business</span><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a></div>' +
+        '<div><span>New business</span><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a>' +
+          '<br><a href="tel:' + esc(C.phoneHref) + '">' + esc(C.phone) + '</a></div>' +
         '<div><span>Based in</span><p>' + esc(C.location) + '<br>' + esc(C.reach) + '</p></div>' +
         '<div><span>Elsewhere</span><p>' +
           '<a href="' + esc(C.linkedin) + '" target="_blank" rel="noopener noreferrer">LinkedIn</a><br>' +
@@ -471,6 +488,7 @@
   /* ── Go ────────────────────────────────────────────────────────── */
 
   applyHead();
+  orderClosingSections();
   renderChrome();
   inflateMedia();
   renderStamps();

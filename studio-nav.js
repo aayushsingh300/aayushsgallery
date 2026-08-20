@@ -177,6 +177,7 @@
     '<div class="rf-menu__foot">' +
       '<span>' + esc(C.location) + ' — ' + esc(C.reach) + '</span>' +
       (C.email ? '<a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a>' : '') +
+      (C.phone && C.phoneHref ? '<a href="tel:' + esc(C.phoneHref) + '">' + esc(C.phone) + '</a>' : '') +
       (next ? '<a href="' + esc(studioHref(next.href)) + '">Next project — ' + esc(next.title) + ' ↗</a>' : '') +
       '<a href="index.html?face=personal">Personal portfolio ↗</a>' +
     '</div>';

@@ -33,6 +33,167 @@
     document.querySelector('.loader')?.remove();
   }, previewMode ? 0 : 2500);
 
+  /* Keep Product first, then let the headline demonstrate the studio's range. */
+  const cycle = document.querySelector('.hero__cycle');
+  const cycleWord = cycle?.querySelector('.hero__cycle-word');
+  const cycleWords = ['Product', 'Experience', 'Industrial', 'Spatial'];
+
+  if (cycle && cycleWord && !reduced) {
+    let cycleIndex = 0;
+
+    const lockCycleWidth = () => {
+      cycle.style.width = 'auto';
+      cycle.style.width = `${cycleWord.getBoundingClientRect().width}px`;
+    };
+
+    requestAnimationFrame(lockCycleWidth);
+    document.fonts?.ready.then(lockCycleWidth);
+
+    setInterval(() => {
+      cycleWord.classList.add('is-leaving');
+      setTimeout(() => {
+        cycleIndex = (cycleIndex + 1) % cycleWords.length;
+        cycleWord.classList.remove('is-leaving');
+        cycleWord.classList.add('is-entering');
+        cycleWord.textContent = cycleWords[cycleIndex];
+        /* The word itself is max-content, so this measures its real width
+           instead of the old grid track. The following copy can now close up
+           when Product/Industrial becomes the much shorter Spatial. */
+        const nextWidth = cycleWord.offsetWidth;
+        requestAnimationFrame(() => {
+          cycle.style.width = `${nextWidth}px`;
+          requestAnimationFrame(() => cycleWord.classList.remove('is-entering'));
+        });
+      }, 500);
+    }, 2600);
+  }
+
+  /* HTML video cannot use a negative playbackRate. Step backwards through the
+     same source after it ends, then hand playback back to the browser. */
+  const heroVideo = document.querySelector('.hero__video');
+  if (heroVideo && !reduced) {
+    let reversing = false;
+    let reversePrevious = 0;
+    let reverseAccumulator = 0;
+    let reversePosition = 0;
+
+    const reverseVideo = time => {
+      if (!reversing) return;
+      if (!reversePrevious) reversePrevious = time;
+      const elapsed = Math.min((time - reversePrevious) / 1000, .12);
+      reversePrevious = time;
+      reverseAccumulator += elapsed;
+      if (!document.hidden) reversePosition = Math.max(0, reversePosition - elapsed);
+
+      if (!document.hidden && reverseAccumulator >= 1 / 20) {
+        heroVideo.currentTime = reversePosition;
+        reverseAccumulator = 0;
+      }
+
+      if (reversePosition <= .04 && heroVideo.currentTime <= .04) {
+        reversing = false;
+        heroVideo.currentTime = 0;
+        heroVideo.play().catch(() => {});
+        return;
+      }
+      requestAnimationFrame(reverseVideo);
+    };
+
+    heroVideo.addEventListener('ended', () => {
+      reversing = true;
+      reversePrevious = 0;
+      reverseAccumulator = 0;
+      reversePosition = heroVideo.duration;
+      heroVideo.pause();
+      requestAnimationFrame(reverseVideo);
+    });
+  }
+
+  const btsCarousel = document.querySelector('[data-bts-carousel]');
+  if (btsCarousel && document.documentElement.dataset.route === 'about') {
+    const btsSlides = [...btsCarousel.querySelectorAll('.bts__slide')];
+    const btsCount = document.querySelector('[data-bts-count]');
+    const btsPrevious = document.querySelector('[data-bts-prev]');
+    const btsNext = document.querySelector('[data-bts-next]');
+    let btsFrame = 0;
+    let btsIndex = 0;
+    let dragging = false;
+    let dragStart = 0;
+    let scrollStart = 0;
+
+    const closestBtsSlide = () => {
+      const maxScroll = btsCarousel.scrollWidth - btsCarousel.clientWidth;
+      if (btsCarousel.scrollLeft >= maxScroll - 2) return btsSlides.length - 1;
+      const inlinePadding = parseFloat(getComputedStyle(btsCarousel).paddingLeft) || 0;
+      return btsSlides.reduce((closest, slide, index) => {
+        const distance = Math.abs(slide.offsetLeft - inlinePadding - btsCarousel.scrollLeft);
+        return distance < closest.distance ? { index, distance } : closest;
+      }, { index: 0, distance: Infinity }).index;
+    };
+
+    const updateBtsCount = () => {
+      btsIndex = closestBtsSlide();
+      if (btsCount) {
+        btsCount.textContent = `${String(btsIndex + 1).padStart(2, '0')} / ${String(btsSlides.length).padStart(2, '0')}`;
+      }
+    };
+
+    const goToBtsSlide = index => {
+      btsIndex = (index + btsSlides.length) % btsSlides.length;
+      const slide = btsSlides[btsIndex];
+      const inlinePadding = parseFloat(getComputedStyle(btsCarousel).paddingLeft) || 0;
+      const maxScroll = btsCarousel.scrollWidth - btsCarousel.clientWidth;
+      const left = btsIndex === btsSlides.length - 1 ? maxScroll : slide.offsetLeft - inlinePadding;
+      btsCarousel.scrollTo({ left: Math.max(0, left), behavior: reduced ? 'auto' : 'smooth' });
+      if (btsCount) {
+        btsCount.textContent = `${String(btsIndex + 1).padStart(2, '0')} / ${String(btsSlides.length).padStart(2, '0')}`;
+      }
+    };
+
+    btsCarousel.addEventListener('scroll', () => {
+      cancelAnimationFrame(btsFrame);
+      btsFrame = requestAnimationFrame(updateBtsCount);
+    }, { passive: true });
+
+    btsPrevious?.addEventListener('click', () => goToBtsSlide(closestBtsSlide() - 1));
+    btsNext?.addEventListener('click', () => goToBtsSlide(closestBtsSlide() + 1));
+
+    btsCarousel.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault();
+      goToBtsSlide(closestBtsSlide() + (event.key === 'ArrowRight' ? 1 : -1));
+    });
+
+    btsCarousel.addEventListener('pointerdown', event => {
+      if (event.pointerType !== 'mouse' || event.button !== 0) return;
+      dragging = true;
+      dragStart = event.clientX;
+      scrollStart = btsCarousel.scrollLeft;
+      btsCarousel.classList.add('is-dragging');
+      btsCarousel.setPointerCapture(event.pointerId);
+    });
+
+    btsCarousel.addEventListener('pointermove', event => {
+      if (!dragging) return;
+      btsCarousel.scrollLeft = scrollStart - (event.clientX - dragStart);
+    });
+
+    const endBtsDrag = event => {
+      if (!dragging) return;
+      dragging = false;
+      btsCarousel.classList.remove('is-dragging');
+      if (btsCarousel.hasPointerCapture(event.pointerId)) btsCarousel.releasePointerCapture(event.pointerId);
+      goToBtsSlide(closestBtsSlide());
+    };
+
+    btsCarousel.addEventListener('pointerup', endBtsDrag);
+    btsCarousel.addEventListener('pointercancel', endBtsDrag);
+    btsCarousel.addEventListener('lostpointercapture', () => {
+      dragging = false;
+      btsCarousel.classList.remove('is-dragging');
+    });
+  }
+
   function splitWords(element) {
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
     const nodes = [];

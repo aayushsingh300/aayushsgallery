@@ -56,7 +56,7 @@
         meta: 'Europe · 2023', /* ⚠ year mismatch vs personal (2022) */
         accent: '#c6ff54',
         accentClass: 'project--green',
-        featured: 3
+        featured: 4
       }
     },
 
@@ -104,7 +104,7 @@
         meta: 'Europe · 2024',
         accent: '#d9a35a',
         accentClass: 'project--amber',
-        featured: 2
+        featured: 3
       }
     },
 
@@ -179,7 +179,7 @@
         meta: 'India · 2025', /* ⚠ year mismatch vs personal (2024) */
         accent: '#c59aff',
         accentClass: 'project--violet',
-        featured: 4
+        featured: 5
       }
     },
 
@@ -203,28 +203,27 @@
         blurb: 'An operations platform for teams managing 923,000 parking spaces across the Netherlands. It replaces spreadsheets with one shared workflow for planning patrols, recording field work and resolving mismatches.',
         meta: 'Netherlands · 2025', /* ⚠ year mismatch vs personal (2018) */
         accent: '#ff663d',
-        accentClass: 'project--amber',
-        featured: 1
+        accentClass: 'project--amber'
       }
     },
 
     {
       id: 'titan-eyex',
       title: 'Titan EYEx',
-      href: 'titaneyeplus_casestudy.html',
-      image: 'images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp',
-      imageAlt: 'Titan EYEx eyewear product experience',
-      tags: ['b2c', 'ecommerce'],
+      href: 'titan-eyex.html',
+      image: 'images/eyex/eyex-hero.webp',
+      imageAlt: 'Titan EyeX smart glasses and companion app experience',
+      tags: ['b2c', 'wearable'],
       status: 'live',
       personal: {
-        subtitle: 'Eyewear Product Experience',
-        tagLabels: ['B2C', 'Retail'],
-        blurb: "Redesigning the eyewear browsing and selection experience for Titan's optical retail brand, combining prescription management with style discovery.",
+        subtitle: 'Smart Eyewear Ecosystem',
+        tagLabels: ['B2C', 'Wearable Tech'],
+        blurb: "Designing the connected experience for Titan EyeX—smart glasses, touch gestures and a companion app working as one everyday product.",
         meta: 'Titan Company · 2020'
       },
       studio: {
-        discipline: 'Consumer & commerce',
-        blurb: 'A simpler way to shop for eyewear online and in store. It helps people move from style discovery to a prescription-ready choice without making the clinical details feel overwhelming.',
+        discipline: 'Connected product',
+        blurb: 'A smart-eyewear system that makes open-ear audio, eye care, fitness and remote controls feel understandable across the frame and its companion app.',
         meta: 'India · 2020',
         accent: '#dfff45',
         accentClass: 'project--green'
@@ -250,7 +249,8 @@
         blurb: 'An end-to-end redesign of Titan Eyeplus’s online store—from finding the right frames and trying them virtually to managing prescriptions, checking out and returning for a repeat purchase.',
         meta: 'India · 2021',
         accent: '#6d8fff',
-        accentClass: 'project--blue'
+        accentClass: 'project--blue',
+        featured: 2
       }
     },
 
@@ -296,7 +296,8 @@
         blurb: 'A point-of-sale and operations platform built specifically for cannabis dispensaries in Thailand. It connects weight-based sales at the counter with inventory, local payments, compliance and live business reporting.',
         meta: 'Thailand · 2024',
         accent: '#ff5c3f',
-        accentClass: 'project--amber'
+        accentClass: 'project--amber',
+        featured: 1
       }
     },
 
@@ -350,9 +351,9 @@
     {
       id: 'kashish',
       name: 'Kashish',
-      role: 'Design Research',
-      specialty: 'Field research & behavioural insight',
-      note: 'Turns messy observation into the constraint everyone designs against.',
+      role: 'Retail & Spatial Experience',
+      specialty: 'Customer journeys, environments & service touchpoints',
+      note: 'Connects what people see, touch and do into one coherent experience.',
       photo: 'images/team/kashish.jpg',
       linkedin: null,
       accent: '#dfff45'
@@ -370,9 +371,9 @@
     {
       id: 'jovi',
       name: 'Jovi',
-      role: 'Visual Systems',
-      specialty: 'Design systems, typography & brand',
-      note: 'Keeps a hundred screens looking like they came from one hand.',
+      role: 'Design & Business Strategy',
+      specialty: 'Positioning, product direction & opportunity design',
+      note: 'Keeps the creative ambition connected to a viable business move.',
       photo: 'images/team/jovi.jpg',
       linkedin: null,
       accent: '#c59aff'
@@ -380,9 +381,9 @@
     {
       id: 'himshikha',
       name: 'Himshikha',
-      role: 'Product Design',
-      specialty: 'Service design & clinical workflows',
-      note: 'Maps the whole service, then designs the three screens that matter.',
+      role: 'Creative & Art Direction',
+      specialty: 'Visual worlds, campaigns & cross-medium expression',
+      note: 'Builds the visual point of view that lets every medium feel related.',
       photo: 'images/team/himshikha.jpg',
       linkedin: null,
       accent: '#f1ede4'
@@ -390,11 +391,41 @@
     {
       id: 'prashant',
       name: 'Prashant',
-      role: 'Prototyping & Front-end',
-      specialty: 'Motion, prototypes & build support',
-      note: 'Makes the idea real early enough to be argued with.',
+      role: 'Industrial Design',
+      specialty: 'Physical products, form & prototyping',
+      note: 'Turns an idea into something that can be held, tested and manufactured.',
       photo: 'images/team/prashant.jpg',
       linkedin: null
+    },
+    {
+      id: 'naman',
+      name: 'Naman',
+      role: 'Backend Technology',
+      specialty: 'Systems architecture, APIs & dependable infrastructure',
+      note: 'Makes sure the experience has a resilient technical spine behind it.',
+      photo: 'images/team/naman.jpg',
+      linkedin: null,
+      accent: '#6d8fff'
+    },
+    {
+      id: 'anand',
+      name: 'Anand',
+      role: 'Marketing',
+      specialty: 'Go-to-market thinking, communication & growth',
+      note: 'Finds the clearest bridge between a strong idea and the people it is for.',
+      photo: 'images/team/anand.jpg',
+      linkedin: null,
+      accent: '#f0b429'
+    },
+    {
+      id: 'sai',
+      name: 'Sai',
+      role: 'Operations & Finance',
+      specialty: 'Delivery, commercial operations & studio finance',
+      note: 'Keeps ambitious work moving with the right structure around it.',
+      photo: 'images/team/sai.jpg',
+      linkedin: null,
+      accent: '#4ade80'
     }
   ];
 
@@ -417,7 +448,9 @@
   /* ── Shared contact / identity facts, used by both faces ────────── */
   var CONTACT = {
     studioName: 'rabbitsfoot',
-    email: 'hello@rabbitsfoot.studio',
+    email: 'rabbitsfootep@gmail.com',
+    phone: '+91 93982 25962',
+    phoneHref: '+919398225962',
     personalEmail: 'aayushsingh300@gmail.com',
     location: 'Bengaluru, India',
     reach: 'Working worldwide',
