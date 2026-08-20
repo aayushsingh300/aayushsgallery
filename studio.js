@@ -120,6 +120,13 @@
     let dragging = false;
     let dragStart = 0;
     let scrollStart = 0;
+    let btsAutoplay = 0;
+    let btsInView = false;
+    let btsHovering = false;
+    let btsFocused = false;
+    let btsInteracting = false;
+    const btsSection = btsCarousel.closest('.bts');
+    const btsAutoplayDelay = 4200;
 
     const closestBtsSlide = () => {
       const maxScroll = btsCarousel.scrollWidth - btsCarousel.clientWidth;
@@ -150,18 +157,43 @@
       }
     };
 
+    const stopBtsAutoplay = () => {
+      clearInterval(btsAutoplay);
+      btsAutoplay = 0;
+    };
+
+    const startBtsAutoplay = () => {
+      if (reduced || !btsInView || btsHovering || btsFocused || btsInteracting ||
+          btsSlides.length < 2 || document.hidden || btsAutoplay) return;
+      btsAutoplay = setInterval(() => {
+        goToBtsSlide(closestBtsSlide() + 1);
+      }, btsAutoplayDelay);
+    };
+
+    const restartBtsAutoplay = () => {
+      stopBtsAutoplay();
+      startBtsAutoplay();
+    };
+
     btsCarousel.addEventListener('scroll', () => {
       cancelAnimationFrame(btsFrame);
       btsFrame = requestAnimationFrame(updateBtsCount);
     }, { passive: true });
 
-    btsPrevious?.addEventListener('click', () => goToBtsSlide(closestBtsSlide() - 1));
-    btsNext?.addEventListener('click', () => goToBtsSlide(closestBtsSlide() + 1));
+    btsPrevious?.addEventListener('click', () => {
+      goToBtsSlide(closestBtsSlide() - 1);
+      restartBtsAutoplay();
+    });
+    btsNext?.addEventListener('click', () => {
+      goToBtsSlide(closestBtsSlide() + 1);
+      restartBtsAutoplay();
+    });
 
     btsCarousel.addEventListener('keydown', event => {
       if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
       event.preventDefault();
       goToBtsSlide(closestBtsSlide() + (event.key === 'ArrowRight' ? 1 : -1));
+      restartBtsAutoplay();
     });
 
     btsCarousel.addEventListener('pointerdown', event => {
@@ -188,10 +220,56 @@
 
     btsCarousel.addEventListener('pointerup', endBtsDrag);
     btsCarousel.addEventListener('pointercancel', endBtsDrag);
+    btsCarousel.addEventListener('pointerdown', () => {
+      btsInteracting = true;
+      stopBtsAutoplay();
+    }, { passive: true });
+    const finishBtsInteraction = () => {
+      btsInteracting = false;
+      restartBtsAutoplay();
+    };
+    btsCarousel.addEventListener('pointerup', finishBtsInteraction);
+    btsCarousel.addEventListener('pointercancel', finishBtsInteraction);
     btsCarousel.addEventListener('lostpointercapture', () => {
       dragging = false;
+      btsInteracting = false;
       btsCarousel.classList.remove('is-dragging');
+      startBtsAutoplay();
     });
+
+    btsSection?.addEventListener('mouseenter', () => {
+      btsHovering = true;
+      stopBtsAutoplay();
+    });
+    btsSection?.addEventListener('mouseleave', () => {
+      btsHovering = false;
+      startBtsAutoplay();
+    });
+    btsSection?.addEventListener('focusin', () => {
+      btsFocused = true;
+      stopBtsAutoplay();
+    });
+    btsSection?.addEventListener('focusout', event => {
+      if (btsSection.contains(event.relatedTarget)) return;
+      btsFocused = false;
+      startBtsAutoplay();
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopBtsAutoplay();
+      else startBtsAutoplay();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const btsObserver = new IntersectionObserver(entries => {
+        btsInView = entries[0].intersectionRatio >= .25;
+        if (btsInView) startBtsAutoplay();
+        else stopBtsAutoplay();
+      }, { threshold: .25 });
+      btsObserver.observe(btsCarousel);
+    } else {
+      btsInView = true;
+      startBtsAutoplay();
+    }
   }
 
   function splitWords(element) {
