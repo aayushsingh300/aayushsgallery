@@ -9,7 +9,7 @@
   <link rel="icon" href="images/hero/Aayushsign.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="site-globals.css">
   <link rel="stylesheet" href="studio-nav.css">
   <link rel="stylesheet" href="titan-eyex.css">
@@ -30,7 +30,7 @@
         <div class="hero-meta">
           <span>UX &amp; interaction design</span>
           <span>June 2020</span>
-          <span>2.5 months</span>
+          <span>2.5 months + eye-care extension</span>
         </div>
       </div>
 
@@ -123,6 +123,16 @@
           <article class="insight-card reveal"><span>03</span><h3>Eye care was the brand’s unfair advantage.</h3><p>Users valued guided assessments and healthy-screen reminders more than our early assumptions predicted. It connected the technology back to Titan Eye+’s reason to exist.</p></article>
           <figure class="research-photo reveal"><img src="images/eyex/user-research.png" alt="User research sessions with people trying Titan EyeX glasses"><figcaption>Testing the concept on the move, where the product would actually be used.</figcaption></figure>
         </div>
+
+        <div class="audience-spectrum reveal">
+          <div class="audience-spectrum__intro">
+            <span>Three groups, one shared baseline</span>
+            <p>We spoke with spectacle wearers, non-wearers and smart-accessory users across three age bands. Their appetite for bonus features changed; their need for a dependable connection state did not.</p>
+          </div>
+          <article><small>24–30</small><strong>Explore</strong><p>Camera, fitness and remote tools made the frame feel worth discovering.</p></article>
+          <article><small>30–40</small><strong>Balance</strong><p>Connection, eye-care controls and useful extras had to coexist without clutter.</p></article>
+          <article><small>40+</small><strong>Reassure</strong><p>Readable setup, lens reminders and clear status mattered before novelty.</p></article>
+        </div>
       </div>
     </section>
 
@@ -146,6 +156,18 @@
           <summary><span>See the final information architecture</span><i>+</i></summary>
           <div><img src="images/eyex/information-architecture.png" alt="Final information architecture for the EyeX app"></div>
         </details>
+
+        <div class="journey-line reveal" aria-label="The EyeX first-use journey">
+          <span><b>01</b>Set readable type</span>
+          <i></i>
+          <span><b>02</b>Create profile</span>
+          <i></i>
+          <span><b>03</b>Charge &amp; wake</span>
+          <i></i>
+          <span><b>04</b>Find &amp; pair</span>
+          <i></i>
+          <span><b>05</b>Land on status</span>
+        </div>
       </div>
     </section>
 
@@ -175,50 +197,124 @@
         <div class="section-heading section-heading--dark reveal">
           <p class="section-kicker">07 / Final experience</p>
           <h2>Confidence first.<br>Features second.</h2>
-          <p>The final app puts connection and comprehension ahead of novelty. Select a chapter to inspect the system.</p>
+          <p>The app is a sequence, not a screen gallery: orient the wearer, establish trust, then reveal what the frame can do. Every major flow is visible below.</p>
         </div>
 
-        <div class="feature-explorer reveal">
-          <div class="feature-tabs" role="tablist" aria-label="EyeX experience chapters">
-            <button class="feature-tab is-active" role="tab" aria-selected="true" data-feature="connect"><span>01</span><b>Connect</b><small>Pairing &amp; device status</small></button>
-            <button class="feature-tab" role="tab" aria-selected="false" data-feature="care"><span>02</span><b>Care</b><small>Assessments &amp; reminders</small></button>
-            <button class="feature-tab" role="tab" aria-selected="false" data-feature="move"><span>03</span><b>Move</b><small>Steps &amp; activity</small></button>
-            <button class="feature-tab" role="tab" aria-selected="false" data-feature="control"><span>04</span><b>Control</b><small>Everyday remote tools</small></button>
+        <nav class="experience-nav reveal" aria-label="Jump to an EyeX app chapter">
+          <a href="#app-onboard"><span>01</span>Onboard</a>
+          <a href="#app-connect"><span>02</span>Connect</a>
+          <a href="#app-care"><span>03</span>Care</a>
+          <a href="#app-move"><span>04</span>Move</a>
+          <a href="#app-control"><span>05</span>Control</a>
+          <a href="#app-settings"><span>06</span>Settings</a>
+        </nav>
+
+        <article class="experience-chapter experience-chapter--onboard" id="app-onboard">
+          <header class="chapter-copy reveal">
+            <p class="chapter-index">01 / First run</p>
+            <h3>Start with the wearer, not the hardware.</h3>
+            <p>The first-run flow opens with font-size choice, phone verification and the profile inputs needed by fitness and location features. Only then does it introduce the frame.</p>
+            <ul>
+              <li>Readable type before account setup</li>
+              <li>Context before permissions</li>
+              <li>One action and one response per step</li>
+            </ul>
+          </header>
+          <figure class="flow-board flow-board--tall reveal" data-delay="1">
+            <img src="images/eyex/onboarding-flow.png" alt="Complete EyeX signup and onboarding flow, from font-size selection through profile setup and device education">
+            <figcaption><span>Signup + onboarding</span><b>The complete first-run path</b></figcaption>
+          </figure>
+        </article>
+
+        <article class="experience-chapter" id="app-connect">
+          <header class="chapter-copy reveal">
+            <p class="chapter-index">02 / Pair &amp; status</p>
+            <h3>Make invisible states feel physical.</h3>
+            <p>Charging, waking, searching and pairing each get a literal visual state. Once connected, the home screen keeps the frame and its two independently draining temple batteries in the highest-priority position.</p>
+            <div class="chapter-principles">
+              <span><b>Object</b>Show the exact frame</span>
+              <span><b>Action</b>Name the gesture</span>
+              <span><b>Response</b>Confirm the result</span>
+            </div>
+          </header>
+          <figure class="flow-board reveal" data-delay="1">
+            <img src="images/eyex/device-connection.png" alt="EyeX activation, search, selection and pairing flow">
+            <figcaption><span>Connection flow</span><b>From charger to trusted status</b></figcaption>
+          </figure>
+          <div class="screen-story screen-story--pair reveal">
+            <figure><img src="images/eyex/screens/dashboard.jpg" alt="EyeX dashboard with device status and separate left and right battery levels"><figcaption>Default home</figcaption></figure>
+            <div class="screen-story__note"><small>01</small><h4>Trust at first glance.</h4><p>The product—not the feature list—owns the top of the dashboard. Separate left and right battery levels make a hardware constraint understandable.</p></div>
+            <figure><img src="images/eyex/screens/settings.jpg" alt="EyeX device settings and account navigation"><figcaption>Device settings</figcaption></figure>
           </div>
-          <div class="feature-stage">
-            <figure class="feature-panel is-active" data-panel="connect">
-              <div class="screen-cluster screen-cluster--pair">
-                <img class="screen-shot screen-shot--hero" src="images/eyex/screens/dashboard.jpg" alt="EyeX dashboard showing connection and separate temple battery levels">
-                <img class="screen-shot screen-shot--back" src="images/eyex/screens/settings.jpg" alt="EyeX device settings">
-              </div>
-              <figcaption><b>Trust at first glance.</b><span>Clear pairing, feedback and battery states for each temple.</span></figcaption>
-            </figure>
-            <figure class="feature-panel" data-panel="care">
-              <div class="screen-cluster screen-cluster--pair">
-                <img class="screen-shot screen-shot--hero" src="images/eyex/screens/eyecare-menu.jpg" alt="EyeX eye care menu with reminders and assessments">
-                <img class="screen-shot screen-shot--back" src="images/eyex/screens/eye-assessments.jpg" alt="EyeX eye assessment library">
-              </div>
-              <figcaption><b>Care without nagging.</b><span>Optional checks, 20–20–20 breaks and reminders under the wearer’s control.</span></figcaption>
-            </figure>
-            <figure class="feature-panel" data-panel="move">
-              <div class="screen-cluster screen-cluster--trio">
-                <img class="screen-shot" src="images/eyex/screens/fitness-week.jpg" alt="Weekly fitness view in EyeX">
-                <img class="screen-shot screen-shot--hero" src="images/eyex/screens/fitness-daily.jpg" alt="Daily steps and calorie view in EyeX">
-                <img class="screen-shot" src="images/eyex/screens/fitness-goals.jpg" alt="Fitness goal settings in EyeX">
-              </div>
-              <figcaption><b>Useful movement, lightly worn.</b><span>Head movement powers simple steps and calorie trends—without another band.</span></figcaption>
-            </figure>
-            <figure class="feature-panel" data-panel="control">
-              <div class="screen-cluster screen-cluster--quad">
-                <img class="screen-shot" src="images/eyex/screens/find-device.jpg" alt="Find my EyeX device tool">
-                <img class="screen-shot screen-shot--hero" src="images/eyex/screens/device-tools.jpg" alt="EyeX device tool dashboard">
-                <img class="screen-shot" src="images/eyex/screens/presentation.jpg" alt="Presentation remote in EyeX">
-                <img class="screen-shot" src="images/eyex/screens/camera-remote.jpg" alt="Camera remote in EyeX">
-              </div>
-              <figcaption><b>The frame as a remote.</b><span>Presentation control, phone camera capture and locating a misplaced frame.</span></figcaption>
-            </figure>
+        </article>
+
+        <article class="experience-chapter experience-chapter--dark" id="app-care">
+          <header class="chapter-copy reveal">
+            <p class="chapter-index">03 / Eye care</p>
+            <h3>Turn the brand promise into product utility.</h3>
+            <p>Research pulled eye care into the roadmap and extended the project. With Titan’s optometry team, we designed five guided assessments plus contact-lens, blink and 20–20–20 reminders—all voluntary and easy to silence.</p>
+            <div class="assessment-list" aria-label="Eye assessments designed for EyeX">
+              <span>Duochrome</span><span>Visual acuity</span><span>Central vision</span><span>Colour blindness</span><span>Astigmatism</span>
+            </div>
+          </header>
+          <figure class="flow-board flow-board--ink reveal" data-delay="1">
+            <img src="images/eyex/eyecare-ui.png" alt="EyeX eye-care assessment and reminder screens with design annotations">
+            <figcaption><span>Eye-care ecosystem</span><b>Assessment, prevention and routine care</b></figcaption>
+          </figure>
+          <div class="screen-story screen-story--focus reveal">
+            <figure><img src="images/eyex/screens/eye-assessments.jpg" alt="Library of five self-guided EyeX eye assessments"><figcaption>Assessment library</figcaption></figure>
+            <figure><img src="images/eyex/screens/eyecare-menu.jpg" alt="EyeX eye-care menu with reminders, assessments and eye-care tips"><figcaption>Care controls</figcaption></figure>
+            <div class="screen-story__note"><small>05 tests</small><h4>Care without coercion.</h4><p>Every wellbeing prompt is reversible. The wearer can use individual checks, keep reminders, or silence the system completely.</p></div>
           </div>
-        </div>
+        </article>
+
+        <article class="experience-chapter" id="app-move">
+          <header class="chapter-copy reveal">
+            <p class="chapter-index">04 / Fitness</p>
+            <h3>Useful movement, lightly worn.</h3>
+            <p>The motion sensor interprets head movement as activity. We borrowed familiar fitness conventions—goals, rings and day/week/month views—so the unusual input never created an unusual learning curve.</p>
+          </header>
+          <figure class="flow-board reveal" data-delay="1">
+            <img src="images/eyex/fitness-ui.png" alt="Daily and weekly EyeX fitness views with interaction annotations">
+            <figcaption><span>Fitness detail</span><b>Steps, distance, calories and goals</b></figcaption>
+          </figure>
+          <div class="screen-ribbon reveal" aria-label="EyeX fitness screens">
+            <figure><img src="images/eyex/screens/fitness-daily.jpg" alt="Daily steps, distance and calories in EyeX"><figcaption>Today</figcaption></figure>
+            <figure><img src="images/eyex/screens/fitness-week.jpg" alt="Weekly activity trend in EyeX"><figcaption>Week</figcaption></figure>
+            <figure><img src="images/eyex/screens/fitness-goals.jpg" alt="Fitness goal settings in EyeX"><figcaption>Goals</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="experience-chapter experience-chapter--dark" id="app-control">
+          <header class="chapter-copy reveal">
+            <p class="chapter-index">05 / Remote tools</p>
+            <h3>Let the frame do things a phone cannot.</h3>
+            <p>The My Device area turns a temple gesture into a camera shutter or presentation control. Find My Device handles both sides of failure: ring nearby glasses, or show their last location after disconnection.</p>
+          </header>
+          <figure class="flow-board flow-board--ink reveal" data-delay="1">
+            <img src="images/eyex/device-tools.png" alt="EyeX camera remote, Find My Device and presentation-control flows">
+            <figcaption><span>My Device</span><b>Camera, presentation and recovery</b></figcaption>
+          </figure>
+          <div class="screen-ribbon screen-ribbon--four reveal" aria-label="EyeX remote-tool screens">
+            <figure><img src="images/eyex/screens/device-tools.jpg" alt="EyeX remote tools menu"><figcaption>Toolbox</figcaption></figure>
+            <figure><img src="images/eyex/screens/find-device.jpg" alt="Find My Device ringing tool"><figcaption>Find</figcaption></figure>
+            <figure><img src="images/eyex/screens/presentation.jpg" alt="EyeX presentation remote"><figcaption>Present</figcaption></figure>
+            <figure><img src="images/eyex/screens/camera-remote.jpg" alt="EyeX camera remote"><figcaption>Capture</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="experience-chapter experience-chapter--settings" id="app-settings">
+          <header class="chapter-copy reveal">
+            <p class="chapter-index">06 / System depth</p>
+            <h3>The quiet screens make the product complete.</h3>
+            <p>Notifications, profile data and measurement units are not hero moments, but they make fitness, reminders and cross-device use reliable. The system respects local units and keeps every optional behavior editable.</p>
+          </header>
+          <div class="settings-grid reveal" data-delay="1">
+            <figure><img src="images/eyex/screens/notifications.jpg" alt="EyeX notification settings"><figcaption><span>01</span>Notification control</figcaption></figure>
+            <figure><img src="images/eyex/screens/profile.jpg" alt="EyeX profile information"><figcaption><span>02</span>Profile &amp; fitness inputs</figcaption></figure>
+            <figure><img src="images/eyex/screens/units.jpg" alt="EyeX unit preferences"><figcaption><span>03</span>Measurement units</figcaption></figure>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -255,6 +351,8 @@
           <figure class="reveal"><img src="images/eyex/eyex-packaging-product.png" alt="Titan EyeX glasses resting on the final product packaging"><figcaption>One system, all the way to the box.</figcaption></figure>
           <figure class="reveal" data-delay="1"><img src="images/eyex/eyex-hoarding-portrait.jpg" alt="Titan EyeX launch campaign on a city hoarding"><figcaption>EyeX entered the real world.</figcaption></figure>
         </div>
+
+        <figure class="review-strip reveal"><img src="images/eyex/reviews.png" alt="Published product reviews of Titan EyeX after launch"><figcaption><span>In use, not just on a canvas</span><b>Independent reviewers tested the calling, audio, fitness and everyday-wear proposition.</b></figcaption></figure>
       </div>
     </section>
 
@@ -281,7 +379,6 @@
   </main>
 
   <script src="titan-eyex.js"></script>
-  <script src="cursor-effects.js"></script>
   <script src="site-data.js"></script>
   <script src="studio-nav.js"></script>
   <script src="nav-component.js"></script>

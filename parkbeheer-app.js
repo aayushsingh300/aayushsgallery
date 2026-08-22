@@ -9,10 +9,13 @@ const SCREENS = {
     dataviz: { shell: false, el: 'screen-dataviz', title: 'Data Visualisation Guidelines' },
     ia: { shell: false, el: 'screen-ia', title: 'Information Architecture' },
     overview: { shell: true, el: 'view-overview', title: 'Overview', breadcrumb: '<span class="current">Overview</span>' },
-    detail: { shell: true, el: 'view-detail', title: 'Lots', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <a href="#" onclick="navigateTo(\'list\')">Car Parks</a> <span>/</span> <span class="current">Blk 130 Ang Mo Kio St 12 (AM80)</span>' },
+    detail: { shell: true, el: 'view-detail', title: 'Lots', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <a href="#" onclick="navigateTo(\'list\')">Car Parks</a> <span>/</span> <span class="current">Oosterdok 3, Amsterdam (AMS-080)</span>' },
     list: { shell: true, el: 'view-list', title: 'Car Parks', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <span class="current">Car Parks (Filtered)</span>' },
     map: { shell: true, el: 'view-map', title: 'Map', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <span class="current">Map</span>' },
-    lots: { shell: true, el: 'view-lots', title: 'Lots Allocation', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <a href="#" onclick="navigateTo(\'detail\')">Blk 130 Ang Mo Kio St 12</a> <span>/</span> <span class="current">Lots Allocation</span>' },
+    lots: { shell: true, el: 'view-lots', title: 'Lots Allocation', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <a href="#" onclick="navigateTo(\'detail\')">Oosterdok 3, Amsterdam</a> <span>/</span> <span class="current">Lots Allocation</span>' },
+    compliance: { shell: true, el: 'view-compliance', title: 'Compliance', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <span class="current">Compliance workbench</span>' },
+    bulk: { shell: true, el: 'view-bulk', title: 'Bulk update', breadcrumb: '<a href="#" onclick="navigateTo(\'list\')">Car Parks</a> <span>/</span> <span class="current">Review bulk update</span>' },
+    audit: { shell: true, el: 'view-audit', title: 'Audit history', breadcrumb: '<a href="#" onclick="navigateTo(\'overview\')">Overview</a> <span>/</span> <span class="current">Audit history</span>' },
     tour: { shell: true, el: 'view-tour', title: 'Guided Tour', breadcrumb: '<span class="current">Overview</span>' },
     settings: { shell: true, el: 'view-settings', title: 'Settings', breadcrumb: '<span class="current">Settings</span>' }
 };
@@ -111,10 +114,14 @@ function buildIADiagram() {
                 'Enforcement', 'Land & building', 'Log sheet'
             ]
         },
+        {
+            name: 'Compliance', sub: 'Naleving', children: [
+                'Exception queue', 'Policy rules', 'Evidence exports'
+            ]
+        },
         { name: 'Notifications', sub: 'Meldingen', children: [] },
-        { name: 'History', sub: 'Geschiedenis', children: [] },
+        { name: 'Audit history', sub: 'Geschiedenis', children: [] },
         { name: 'Knowledge Base', sub: 'Kennisbank', children: [] },
-        { name: 'Help', sub: '', children: [] },
         { name: 'Settings', sub: 'Instellingen', children: [] }
     ];
 

@@ -386,6 +386,8 @@
   .rf-pnav__next small,
   .rf-pnav__next b { display: none; }
   .rf-pnav__next { padding: 8px 11px; }
+  .rf-pnav__next { min-width: 44px; min-height: 44px; justify-content: center; }
+  .rf-pnav__menu { width: 44px; height: 44px; }
 }
 
 @media (max-width: 560px) {

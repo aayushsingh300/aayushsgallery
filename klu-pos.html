@@ -908,17 +908,19 @@
       body { font-size: 16px; }
       .wrap, .narrow { width: calc(100% - 30px); }
       .hero { padding: 116px 0 68px; }
-      .hero-title { font-size: clamp(48px, 14.5vw, 62px); }
+      .hero-title { font-size: clamp(48px, 14.5vw, 62px); line-height: .84; letter-spacing: -.055em; }
       .hero-title em { display: block; }
+      .hero-title em + br { display: none; }
       .hero-title .strike::after { height: 3px; }
       .kicker { font-size: 9px; letter-spacing: 0.08em; }
       .hero-intro { margin: 34px 0 44px; }
+      .hero-dek { font-size: 18px; line-height: 1.5; }
       .hero-meta { grid-template-columns: 1fr; }
       .hero-meta div:nth-child(even) { padding-left: 0; border-left: 0; }
       .hero-note { position: static; width: auto; margin: 18px 3px 4px; transform: none; }
       .screen-shell { padding: 6px; border-radius: 12px; }
       .screen-shell img { border-radius: 8px; }
-      .section { padding: 78px 0; }
+      .section { padding: 70px 0; }
       .section-head { margin-bottom: 42px; }
       .problem-grid { margin-top: 44px; }
       .field-quote { min-height: 350px; padding: 28px; }
@@ -947,6 +949,7 @@
       .lessons { grid-template-columns: 1fr; }
       .lesson { min-height: 210px; }
       .footer-row { align-items: flex-start; flex-direction: column; }
+      .next-project { display: inline-flex; align-items: center; min-height: 44px; }
     }
   </style>
 </head>

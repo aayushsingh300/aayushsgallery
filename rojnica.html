@@ -841,7 +841,7 @@
 
             .hero { padding: 72px 0 40px; min-height: auto; }
             .hero h1 { font-size: 36px; line-height: 1.2; }
-            .hero-sub { font-size: 16px; }
+            body.rojnica-case .hero-sub { font-size: 17px !important; line-height: 1.55 !important; }
 
             /* Hide fixed-width hero composition */
             .hero-comp { display: none; }
@@ -879,12 +879,25 @@
 
             .metrics-grid { grid-template-columns: 1fr !important; }
 
-            .tension-grid { grid-template-columns: 1fr; }
-            .tension-grid .tg-head,
-            .tension-grid .tg-cell { border-right: none; }
+            .tension-grid {
+                grid-template-columns: minmax(180px, 2fr) repeat(2, minmax(128px, 1fr));
+                overflow-x: auto;
+                overscroll-behavior-inline: contain;
+                scrollbar-width: thin;
+                scrollbar-color: var(--text-secondary) transparent;
+            }
+            .tension-grid:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
 
 
             .spec-label { display: none; }
+            .drone-spec { padding: 64px 0; }
+            .drone-hero-wrap img { width: min(100%, 480px); }
+            .spec-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+            .spec-grid span { padding: 10px; text-align: center; }
 
             .proj-nav { grid-template-columns: 1fr; }
             .proj-nav-link { padding: 28px 24px; }
@@ -894,7 +907,10 @@
         @media (max-width: 540px) {
             .container { padding: 0 16px; }
             .hero h1 { font-size: 30px; }
-            .spec-grid { grid-template-columns: repeat(2, 1fr); }
+            body.rojnica-case .hero-sub { font-size: 16px !important; }
+            .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .meta-item:last-child { grid-column: 1 / -1; }
+            .drone-spec { padding: 48px 0; }
             h2 { font-size: 24px; }
         }
 
@@ -963,7 +979,7 @@
 <link rel="stylesheet" href="site-globals.css"><link rel="stylesheet" href="studio-nav.css">
 </head>
 
-<body>
+<body class="rojnica-case">
     <!-- Disclosure: consulting engagement published under NDA -->
     <div class="concept-note"
         style="position:relative;z-index:60;margin-top:73px;padding:11px 24px;text-align:center;background:rgba(255,255,255,0.045);border-bottom:1px solid rgba(255,255,255,0.12);font-family:ui-monospace,SFMono-Regular,monospace;font-size:12.5px;letter-spacing:0.03em;color:var(--text-secondary,#8b95a6);">
@@ -1267,7 +1283,7 @@
                 <h3>Where the stakeholders pulled apart</h3>
                 <p>Three users, three different needs, some directly contradictory:</p>
             </div>
-            <div class="tension-grid">
+            <div class="tension-grid" role="region" aria-label="Stakeholder decision trade-offs" tabindex="0">
                 <div class="tg-head">Decision</div>
                 <div class="tg-head">Marek wants</div>
                 <div class="tg-head">Jakub wants</div>

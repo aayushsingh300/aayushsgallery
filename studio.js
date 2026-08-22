@@ -68,44 +68,17 @@
     }, 2600);
   }
 
-  /* HTML video cannot use a negative playbackRate. Step backwards through the
-     same source after it ends, then hand playback back to the browser. */
+  /* Videos inflated from <template> need an explicit play request in Safari
+     and some embedded previews, even when the autoplay attribute is present. */
   const heroVideo = document.querySelector('.hero__video');
-  if (heroVideo && !reduced) {
-    let reversing = false;
-    let reversePrevious = 0;
-    let reverseAccumulator = 0;
-    let reversePosition = 0;
-
-    const reverseVideo = time => {
-      if (!reversing) return;
-      if (!reversePrevious) reversePrevious = time;
-      const elapsed = Math.min((time - reversePrevious) / 1000, .12);
-      reversePrevious = time;
-      reverseAccumulator += elapsed;
-      if (!document.hidden) reversePosition = Math.max(0, reversePosition - elapsed);
-
-      if (!document.hidden && reverseAccumulator >= 1 / 20) {
-        heroVideo.currentTime = reversePosition;
-        reverseAccumulator = 0;
-      }
-
-      if (reversePosition <= .04 && heroVideo.currentTime <= .04) {
-        reversing = false;
-        heroVideo.currentTime = 0;
-        heroVideo.play().catch(() => {});
-        return;
-      }
-      requestAnimationFrame(reverseVideo);
-    };
-
-    heroVideo.addEventListener('ended', () => {
-      reversing = true;
-      reversePrevious = 0;
-      reverseAccumulator = 0;
-      reversePosition = heroVideo.duration;
-      heroVideo.pause();
-      requestAnimationFrame(reverseVideo);
+  if (heroVideo) {
+    heroVideo.muted = true;
+    heroVideo.playsInline = true;
+    const playHeroVideo = () => heroVideo.play().catch(() => {});
+    playHeroVideo();
+    heroVideo.addEventListener('canplay', playHeroVideo, { once: true });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && heroVideo.paused) playHeroVideo();
     });
   }
 

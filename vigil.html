@@ -215,167 +215,180 @@
 <p class="caption">Performance values are design targets for prototyping, not certified production claims.</p>
 </div>
 </section>
-<section class="section">
+<section class="section" id="watch-interface">
 <div class="shell">
 <p class="eyebrow reveal">04 / Interaction model</p>
-<h2 class="reveal">Three inputs. One muscle memory.</h2>
-<p class="lede reveal">Primary tasks never require a precise tap. The same physical grammar works across navigation, alerts and team signals.</p>
+<h2 class="reveal">Four controls. One muscle memory.</h2>
+<p class="lede reveal">Primary tasks never require a precise tap. Each control keeps the same job across navigation, alerts and team signals—so action remains predictable in gloves, darkness or stress.</p>
 <div class="inputs reveal">
 <article class="input">
-<div class="glyph">
-<i>
-</i>
-</div>
-<small>PADDLES / SHORT PRESS</small>
-<h3>Move through options</h3>
-<p>Large opposing controls always map to previous and next.</p>
+<div class="control-diagram control-up"><span>01</span><i></i></div>
+<small>UPPER PADDLE / PRESS</small>
+<h3>Previous or increase</h3>
+<p>A raised double ridge distinguishes it by touch. Holding repeats the action.</p>
 </article>
 <article class="input">
-<div class="glyph">
-<i>
-</i>
-</div>
+<div class="control-diagram control-down"><span>02</span><i></i></div>
+<small>LOWER PADDLE / PRESS</small>
+<h3>Next or decrease</h3>
+<p>A concave face makes the lower control unambiguous without looking.</p>
+</article>
+<article class="input">
+<div class="control-diagram control-crown"><span>03</span><i></i></div>
 <small>AMBER CROWN / PRESS</small>
-<h3>Confirm the obvious action</h3>
-<p>One tactile accent carries the primary decision on every screen.</p>
+<h3>Confirm the primary action</h3>
+<p>One short press accepts. A 1.5-second hold returns to the mission face.</p>
 </article>
-<article class="input">
-<div class="glyph">
-<i>
-</i>
-</div>
-<small>HAPTICS / PATTERN</small>
-<h3>Receive without looking</h3>
-<p>Direction, rally and danger use distinct rhythms, not subtle strength.</p>
+<article class="input input-critical">
+<div class="control-diagram control-sos"><span>04</span><i></i></div>
+<small>GUARDED KEY / HOLD 3 SEC</small>
+<h3>Open emergency reporting</h3>
+<p>A recessed key prevents accidental use; haptic pulses confirm the hold.</p>
 </article>
 </div>
 <div class="watch-lab reveal">
 <div class="watch-stage">
+<span class="strap strap-top" aria-hidden="true"></span>
 <div class="watch">
+<span class="watch-screw screw-a" aria-hidden="true"></span><span class="watch-screw screw-b" aria-hidden="true"></span><span class="watch-screw screw-c" aria-hidden="true"></span><span class="watch-screw screw-d" aria-hidden="true"></span>
 <div class="screen">
 <div class="watch-view active" data-view="navigate">
-<div class="watch-top">
-<span>08:42</span>
-<span class="live">● LINK</span>
+<div class="watch-top"><span>08:42</span><span class="watch-status"><i class="mesh-bars"></i><b>AES</b><i class="battery"><i></i></i></span></div>
+<div class="screen-context"><span>ROUTE 02</span><b>OBJ LIMA</b></div>
+<div class="bearing bearing-detailed">
+<div class="compass-scale"><span>330</span><span>N</span><span>030</span><i></i></div>
+<div class="nav-core"><div class="arrow"></div><div><div class="big">287</div><div class="unit">METRES TO TURN</div></div></div>
+<div class="confidence"><span>GNSS</span><i><b style="width:72%"></b></i><strong>±18 M</strong></div>
 </div>
-<div class="bearing">
-<div>
-<div class="arrow">
-</div>
-<div class="big">287</div>
-<div class="unit">METRES · OBJ LIMA</div>
-</div>
-</div>
-<div class="watch-foot">
-<span>HDG 024°</span>
-<span>ETA 04:10</span>
-</div>
+<div class="watch-foot"><span>▲ PREV</span><b>024°</b><span>NEXT ▼</span></div>
 </div>
 <div class="watch-view" data-view="health">
-<div class="watch-top">
-<span>SELF STATUS</span>
-<span class="live">● STABLE</span>
+<div class="watch-top"><span>08:42</span><span class="watch-status"><b>LOCAL</b><i class="battery"><i></i></i></span></div>
+<div class="screen-context"><span>SELF CHECK</span><b>BODY LOAD</b></div>
+<div class="health-state">
+<div class="trend-head"><strong>ELEVATED</strong><span>12 MIN</span></div>
+<div class="trend-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="sensor-evidence"><div><span>HEART</span><b>+18%</b></div><div><span>SKIN TEMP</span><b>+0.8°</b></div><div><span>MOTION</span><b>HIGH</b></div></div>
+<p>Hydrate when safe. Recheck in 10 min.</p>
 </div>
-<div class="bearing">
-<div class="ring">
-<span>72<small>READINESS</small>
-</span>
-</div>
-</div>
-<div class="watch-foot">
-<span>HR 118</span>
-<span>HEAT +1.4°</span>
-</div>
+<div class="watch-foot"><span>▲ DETAILS</span><b>● OK</b><span>LATER ▼</span></div>
 </div>
 <div class="watch-view alert" data-view="alert">
-<div class="watch-top">
-<span>PRIORITY</span>
-<span>00:12</span>
-</div>
-<h4>IMMOBILITY DETECTED</h4>
+<div class="watch-top"><span>08:42</span><span class="alert-priority">PRIORITY 1</span></div>
+<div class="alert-symbol"><i></i><span>CHECK REQUIRED</span></div>
 <div class="alert-main">
-<b>CHECK IN</b>
-<span>Press crown if you are able.<br>Escalation begins in 12 seconds.</span>
+<b>ARE YOU OK?</b>
+<span>Impact and no motion detected.<br>Alerting team in</span>
+<strong>00:12</strong>
+<i class="countdown"><b></b></i>
 </div>
-<div class="watch-foot">
-<span>CROWN · I'M OK</span>
-<span>HOLD · HELP</span>
+<div class="watch-foot"><span>● I'M OK</span><b>HOLD SOS · HELP</b></div>
 </div>
+<div class="watch-view signal-view" data-view="signal">
+<div class="watch-top"><span>08:42</span><span class="live">● RECEIVED</span></div>
+<div class="screen-context"><span>FROM A-1 LEAD</span><b>TACTICAL SIGNAL</b></div>
+<div class="signal-main"><div class="signal-icon"><i></i><i></i><i></i></div><strong>RALLY</strong><b>POINT SURYA</b><span>HAPTIC · — · · —</span></div>
+<div class="watch-foot"><span>▼ REPEAT</span><b>● ACK</b></div>
 </div>
 <div class="watch-view" data-view="squad">
-<div class="watch-top">
-<span>ALPHA / 06</span>
-<span class="live">● MESH</span>
-</div>
+<div class="watch-top"><span>08:42</span><span class="watch-status"><b>ALPHA 06</b><i class="battery"><i></i></i></span></div>
+<div class="screen-context"><span>SQUAD PULSE</span><b>2 EXCEPTIONS</b></div>
 <div class="team">
-<div>
-<i>
-</i>
-<b>A-1 LEAD</b>
-<span>84</span>
+<div class="urgent"><i></i><span><b>A-3 · CHECK OVERDUE</b><small>02:14 · LAST AT WP 04</small></span><strong>P1</strong></div>
+<div class="warn"><i></i><span><b>A-5 · LINK WEAK</b><small>LAST PACKET 38 SEC</small></span><strong>P2</strong></div>
+<div class="team-clear"><i></i><span><b>4 MEMBERS NOMINAL</b><small>NO ACTION REQUIRED</small></span><strong>OK</strong></div>
+</div>
+<div class="watch-foot"><span>▲ PREV</span><b>● OPEN</b><span>NEXT ▼</span></div>
+</div>
+</div>
+<span class="watch-control watch-control-up" aria-hidden="true"></span><span class="watch-control watch-control-down" aria-hidden="true"></span><span class="watch-control watch-control-crown" aria-hidden="true"></span><span class="watch-control watch-control-sos" aria-hidden="true"></span>
+</div>
+<span class="strap strap-bottom" aria-hidden="true"></span>
+<div class="watch-annotation annotation-crown"><span>03</span>CROWN / CONFIRM</div>
+<div class="watch-annotation annotation-sos"><span>04</span>GUARDED / SOS</div>
 </div>
 <div>
-<i>
-</i>
-<b>A-2 MEDIC</b>
-<span>91</span>
-</div>
-<div class="warn">
-<i>
-</i>
-<b>A-3 RIFLE</b>
-<span>58</span>
-</div>
-<div>
-<i>
-</i>
-<b>A-4 COMMS</b>
-<span>76</span>
-</div>
-</div>
-<div class="watch-foot">
-<span>1 ATTENTION</span>
-<span>SELECT</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div>
-<p class="eyebrow">The watch experience</p>
-<h3>One dominant decision per screen.</h3>
+<p class="eyebrow">Interactive watch prototype</p>
+<h3>One dominant decision. Enough context to trust it.</h3>
 <div class="tabs">
 <button class="tab active" data-mode="navigate">
 <span>01</span>
 <span>Navigate</span>
-<small>BEARING · DISTANCE</small>
+<small>BEARING · CONFIDENCE</small>
 </button>
 <button class="tab" data-mode="health">
 <span>02</span>
 <span>Self status</span>
-<small>TREND · READINESS</small>
+<small>TREND · EVIDENCE</small>
 </button>
 <button class="tab" data-mode="alert">
 <span>03</span>
 <span>Critical alert</span>
-<small>ACK · ESCALATE</small>
+<small>TIMER · RESPONSE</small>
+</button>
+<button class="tab" data-mode="signal">
+<span>04</span>
+<span>Silent signal</span>
+<small>PATTERN · ACK</small>
 </button>
 <button class="tab" data-mode="squad">
-<span>04</span>
+<span>05</span>
 <span>Squad pulse</span>
-<small>EXCEPTION ONLY</small>
+<small>PRIORITY · AGE</small>
 </button>
 </div>
 <p class="mode-copy" id="modeCopy">Directional guidance stays useful under GPS degradation by showing source confidence and switching to heading-plus-distance when map precision is unreliable.</p>
+<dl class="mode-spec" id="modeSpec"><div><dt>GLANCE GOAL</dt><dd>Where next, and how reliable?</dd></div><div><dt>PRIMARY CONTROL</dt><dd>Paddles cycle route points</dd></div><div><dt>FALLBACK</dt><dd>Heading + last trusted fix</dd></div></dl>
 </div>
 </div>
 </div>
 </section>
-<section class="section soft">
+<section class="section soft" id="watch-system">
 <div class="shell">
 <p class="eyebrow reveal">05 / Watch capability model</p>
 <h2 class="reveal">The wrist does more—without asking for more attention.</h2>
 <p class="lede reveal">Features are organized by mission moment, not app icons. Most run passively, become haptic before visual, and reveal detail only after the soldier asks.</p>
+<div class="ui-rules reveal">
+<article><small>01 / HIERARCHY</small><b>One answer above the fold</b><span>Secondary evidence stays available, never competitive.</span></article>
+<article><small>02 / LEGIBILITY</small><b>24 px critical minimum</b><span>Primary values remain readable through motion and glare.</span></article>
+<article><small>03 / COLOUR</small><b>Status, not decoration</b><span>Green confirms, amber cautions, red demands action.</span></article>
+<article><small>04 / TRUST</small><b>Age + confidence shown</b><span>Location and sensor data never appear more certain than they are.</span></article>
+</div>
+<div class="watch-flows reveal">
+<article class="watch-flow">
+<div class="flow-head"><div><small>FLOW 01 / NAVIGATION</small><h3>Graceful degradation</h3></div><span>3 STATES</span></div>
+<div class="flow-screens">
+<div class="mini-ui"><div class="mini-top"><span>ROUTE 02</span><b>LINK</b></div><div class="mini-nav"><i class="mini-arrow"></i><strong>287</strong><span>M · TURN</span></div><div class="mini-foot"><span>GNSS</span><b>±18 M</b></div></div>
+<div class="flow-connector"><i></i><span>confidence drops</span></div>
+<div class="mini-ui caution"><div class="mini-top"><span>ROUTE 02</span><b>DEGRADED</b></div><div class="mini-nav"><i class="mini-arrow"></i><strong>301</strong><span>M · ESTIMATE</span></div><div class="mini-foot"><span>LAST FIX</span><b>00:38</b></div></div>
+<div class="flow-connector"><i></i><span>fallback</span></div>
+<div class="mini-ui"><div class="mini-top"><span>COMPASS</span><b>LOCAL</b></div><div class="mini-nav"><i class="mini-arrow"></i><strong>024°</strong><span>HOLD HEADING</span></div><div class="mini-foot"><span>RALLY</span><b>2.4 KM</b></div></div>
+</div>
+<p>The interface changes the claim it makes—from precise route guidance to an honest heading based on the last trusted fix.</p>
+</article>
+<article class="watch-flow">
+<div class="flow-head"><div><small>FLOW 02 / SILENT SIGNAL</small><h3>Feel, identify, acknowledge</h3></div><span>2 ACTIONS</span></div>
+<div class="flow-screens">
+<div class="mini-ui haptic-ui"><div class="mini-top"><span>INCOMING</span><b>A-1</b></div><div class="haptic-bars"><i></i><i></i><i></i><i></i></div><strong>— · · —</strong><div class="mini-foot"><span>SCREEN OFF</span><b>HAPTIC</b></div></div>
+<div class="flow-connector"><i></i><span>glance</span></div>
+<div class="mini-ui signal-ui"><div class="mini-top"><span>SIGNAL</span><b>VERIFIED</b></div><div class="rally-mark"><i></i></div><strong>RALLY</strong><span>POINT SURYA</span><div class="mini-foot"><span>▼ REPEAT</span><b>● ACK</b></div></div>
+<div class="flow-connector"><i></i><span>crown</span></div>
+<div class="mini-ui receipt-ui"><div class="mini-top"><span>RECEIPT</span><b>QUEUED</b></div><div class="receipt-mark">✓</div><strong>ACK SENT</strong><span>DELIVERY PENDING</span><div class="mini-foot"><span>08:42:16</span><b>LOCAL</b></div></div>
+</div>
+<p>The delivery state is explicit: an acknowledgement can be safely queued without pretending the network has delivered it.</p>
+</article>
+<article class="watch-flow">
+<div class="flow-head"><div><small>FLOW 03 / HEALTH GUARD</small><h3>Sense, ask, corroborate</h3></div><span>3 LEVELS</span></div>
+<div class="flow-screens">
+<div class="mini-ui"><div class="mini-top"><span>PASSIVE</span><b>LOCAL</b></div><div class="micro-trend"><i></i><i></i><i></i><i></i><i></i></div><strong>DRIFT</strong><span>3 SIGNALS · 12 MIN</span><div class="mini-foot"><span>PRIVATE</span><b>MONITOR</b></div></div>
+<div class="flow-connector"><i></i><span>threshold</span></div>
+<div class="mini-ui caution"><div class="mini-top"><span>SELF CHECK</span><b>AMBER</b></div><div class="prompt-mark">?</div><strong>NEED A PAUSE?</strong><span>● OK &nbsp; ▼ LATER</span><div class="mini-foot"><span>10 MIN</span><b>RECHECK</b></div></div>
+<div class="flow-connector"><i></i><span>no response</span></div>
+<div class="mini-ui danger-ui"><div class="mini-top"><span>ESCALATION</span><b>P1</b></div><div class="alert-mark">!</div><strong>TEAM ALERTED</strong><span>3 SIGNALS AGREE</span><div class="mini-foot"><span>SEALED</span><b>08:53</b></div></div>
+</div>
+<p>No single reading becomes a diagnosis. The system asks privately first and escalates only when evidence and policy agree.</p>
+</article>
+</div>
 <div class="capabilities reveal">
 <article class="capability">
 <small>01 / ORIENT</small>
@@ -1125,7 +1138,18 @@
 </div>
 </section>
 </main>
-<script>const copy={navigate:'Directional guidance stays useful under GPS degradation by showing source confidence and switching to heading-plus-distance when map precision is unreliable.',health:'The wearer sees a readiness trend while raw readings remain secondary. The product suggests recovery; it does not pretend to diagnose.',alert:'Critical flows remove all clutter. One screen presents the event, time to escalation and two physical responses.',squad:'The watch never becomes a command dashboard. It shows only exceptions: who needs attention and how urgent it is.'};document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.watch-view').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelector(`[data-view="${b.dataset.mode}"]`).classList.add('active');document.getElementById('modeCopy').textContent=copy[b.dataset.mode]});document.querySelectorAll('.phone-tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.phone-tabs button,.app').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelector(`[data-app="${b.dataset.phone}"]`).classList.add('active')});const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));</script>
+<script>
+const watchModes={
+navigate:{copy:'Directional guidance stays useful under GPS degradation by showing source confidence and switching to heading-plus-distance when map precision is unreliable.',specs:[['GLANCE GOAL','Where next, and how reliable?'],['PRIMARY CONTROL','Paddles cycle route points'],['FALLBACK','Heading + last trusted fix']]},
+health:{copy:'The wearer sees a cautious trend and the signals behind it. The product suggests a safe next step; it does not pretend to diagnose.',specs:[['GLANCE GOAL','What changed, and for how long?'],['PRIMARY CONTROL','Crown confirms self-check'],['PRIVACY','Remains local until policy threshold']]},
+alert:{copy:'Critical flows remove all clutter while preserving why the alert fired, time to escalation and two unmistakable physical responses.',specs:[['GLANCE GOAL','What happened, what must I do?'],['PRIMARY CONTROL','Crown: OK · SOS key: help'],['FAILSAFE','No response escalates with evidence']]},
+signal:{copy:'The haptic arrives first; the screen identifies its verified sender and meaning. Acknowledgement state remains honest when the mesh is unavailable.',specs:[['GLANCE GOAL','What signal, from whom?'],['PRIMARY CONTROL','Crown acknowledges'],['FALLBACK','Receipt queues store-and-forward']]},
+squad:{copy:'The watch never becomes a command dashboard. It ranks only exceptions, showing urgency, event age and the last trustworthy context.',specs:[['GLANCE GOAL','Who needs attention first?'],['PRIMARY CONTROL','Paddles rank · crown opens'],['DATA RULE','No raw health score broadcast']]}
+};
+document.querySelectorAll('.tab').forEach(button=>button.onclick=()=>{const mode=watchModes[button.dataset.mode];document.querySelectorAll('.tab,.watch-view').forEach(item=>item.classList.remove('active'));button.classList.add('active');document.querySelector(`[data-view="${button.dataset.mode}"]`).classList.add('active');document.getElementById('modeCopy').textContent=mode.copy;document.getElementById('modeSpec').innerHTML=mode.specs.map(([term,detail])=>`<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')});
+document.querySelectorAll('.phone-tabs button').forEach(button=>button.onclick=()=>{document.querySelectorAll('.phone-tabs button,.app').forEach(item=>item.classList.remove('active'));button.classList.add('active');document.querySelector(`[data-app="${button.dataset.phone}"]`).classList.add('active')});
+const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(item=>io.observe(item));
+</script>
 <script src="cursor-effects.js">
 </script>
 <script src="site-data.js">

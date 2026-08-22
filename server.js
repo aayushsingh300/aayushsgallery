@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8888;
+const PORT = Number(process.env.PARKIN_PORT) || 8888;
 
 const MIME_TYPES = {
     '.html': 'text/html',
@@ -58,8 +58,54 @@ http.createServer((request, response) => {
                 response.end(`Sorry, check with the site admin for error: ${error.code} ..\n`);
             }
         } else {
-            response.writeHead(200, { 'Content-Type': contentType });
-            response.end(content, 'utf-8');
+            const headers = {
+                'Content-Type': contentType,
+                'Content-Length': content.length
+            };
+
+            // Browsers (especially Safari and embedded previews) request MP4s
+            // in byte ranges so they can begin decoding before the full file
+            // has downloaded. Returning 200 for a Range request can leave the
+            // video parked on its first frame.
+            if (extname === '.mp4') {
+                headers['Accept-Ranges'] = 'bytes';
+                const range = request.headers.range;
+
+                if (range) {
+                    const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+                    let start = match && match[1] ? Number(match[1]) : 0;
+                    let end = match && match[2] ? Number(match[2]) : content.length - 1;
+
+                    // A suffix range (for example bytes=-500) asks for the
+                    // final 500 bytes rather than bytes 0 through 500.
+                    if (match && !match[1] && match[2]) {
+                        const suffixLength = Number(match[2]);
+                        start = Math.max(0, content.length - suffixLength);
+                        end = content.length - 1;
+                    }
+
+                    if (!match || (!match[1] && !match[2]) || start > end || end >= content.length) {
+                        response.writeHead(416, {
+                            'Content-Range': `bytes */${content.length}`,
+                            'Accept-Ranges': 'bytes'
+                        });
+                        response.end();
+                        return;
+                    }
+
+                    const chunk = content.subarray(start, end + 1);
+                    response.writeHead(206, {
+                        ...headers,
+                        'Content-Length': chunk.length,
+                        'Content-Range': `bytes ${start}-${end}/${content.length}`
+                    });
+                    response.end(request.method === 'HEAD' ? undefined : chunk);
+                    return;
+                }
+            }
+
+            response.writeHead(200, headers);
+            response.end(request.method === 'HEAD' ? undefined : content);
         }
     });
 }).listen(PORT, () => {

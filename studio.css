@@ -575,8 +575,8 @@ section {
 .hero__line {
   display: block;
   overflow: hidden;
-  padding: .09em .04em .16em;
-  margin: -.09em -.04em -.16em;
+  padding: .25em .04em .22em;
+  margin: -.25em -.04em -.22em;
 }
 
 .hero__line i {
@@ -828,15 +828,37 @@ section {
 .belief__art {
   position: relative;
   z-index: 1;
-  margin: clamp(84px, 12vh, 150px) calc(var(--pad) * -1) -12vh;
+  aspect-ratio: 4 / 1;
+  margin: clamp(40px, 5vh, 64px) calc(var(--pad) * -1) -12vh;
   overflow: hidden;
   background: var(--paper);
 }
 
-.belief__art img {
+.belief__art img,
+.belief__art video {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  /* Lift the footage within the wide crop while retaining an upper-frame bias. */
+  object-position: center 40%;
+  mix-blend-mode: multiply;
+  /* Let the paper section show through at the join, then gradually bring the
+     footage in. This removes the video's rectangular beige top edge. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    rgba(0, 0, 0, .12) 8%,
+    rgba(0, 0, 0, .58) 20%,
+    #000 36%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    rgba(0, 0, 0, .12) 8%,
+    rgba(0, 0, 0, .58) 20%,
+    #000 36%
+  );
 }
 
 @keyframes spin {

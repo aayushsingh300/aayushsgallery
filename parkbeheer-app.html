@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parkbeheer NL — Car Park Management</title>
   <meta name="description"
-    content="Parkbeheer NL: Enterprise car park management system for the Dutch National Enterprise Agency (RVO). Monitor, manage and enforce 923,000+ parking spaces across the Netherlands.">
+    content="Parkbeheer NL: Enterprise car park management system for a national Dutch parking programme. Monitor, manage and enforce 923,000+ parking spaces across the Netherlands.">
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -24,7 +24,7 @@
             P</div>
           <span style="font-weight:700;font-size:16px;color:var(--primary);">Parkbeheer NL</span>
         </div>
-        <h2>Welcome back, Wen Li</h2>
+        <h2>Welcome back, Mara</h2>
         <p class="subtitle">Here's where you left off. Complete your setup to get full access.</p>
         <div class="progress-dots">
           <div class="dot completed"></div>
@@ -238,6 +238,13 @@
           </svg>
           Map
         </a>
+        <a href="#" data-screen="compliance" onclick="navigateTo('compliance')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3l8 4v5c0 5-3.4 8-8 9-4.6-1-8-4-8-9V7l8-4z" />
+            <path d="M8.5 12l2.2 2.2 4.8-5" />
+          </svg>
+          Compliance
+        </a>
         <a href="#" data-screen="notifications">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
@@ -245,12 +252,12 @@
           </svg>
           Notifications
         </a>
-        <a href="#" data-screen="history">
+        <a href="#" data-screen="audit" onclick="navigateTo('audit')">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10" />
             <polyline points="12 6 12 12 16 14" />
           </svg>
-          History
+          Audit history
         </a>
         <a href="#" data-screen="dataviz" onclick="navigateTo('dataviz')">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -278,7 +285,7 @@
       </div>
       <div class="sidebar-footer">
         <div class="avatar">WL</div>
-        <span class="user-name">Wen Li Tay</span>
+        <span class="user-name">Mara de Wit</span>
         <button class="logout-btn" title="Logout">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
@@ -358,24 +365,23 @@
             <div class="card-body">
               <ul class="zone-list">
                 <li>
-                  <span class="zone-name"><span class="zone-bar" style="background:#2563EB"></span> Central Zone</span>
+                  <span class="zone-name"><span class="zone-bar" style="background:#2563EB"></span> Utrecht</span>
                   <span class="zone-count">41,806</span>
                 </li>
                 <li>
-                  <span class="zone-name"><span class="zone-bar" style="background:#0F2044"></span> East Zone</span>
+                  <span class="zone-name"><span class="zone-bar" style="background:#0F2044"></span> South Holland</span>
                   <span class="zone-count">193,001</span>
                 </li>
                 <li>
-                  <span class="zone-name"><span class="zone-bar" style="background:#22C55E"></span> North-East
-                    Zone</span>
+                  <span class="zone-name"><span class="zone-bar" style="background:#22C55E"></span> North Holland</span>
                   <span class="zone-count">321,003</span>
                 </li>
                 <li>
-                  <span class="zone-name"><span class="zone-bar" style="background:#F59E0B"></span> North Zone</span>
+                  <span class="zone-name"><span class="zone-bar" style="background:#F59E0B"></span> Groningen</span>
                   <span class="zone-count">80,002</span>
                 </li>
                 <li>
-                  <span class="zone-name"><span class="zone-bar" style="background:#9CA3AF"></span> West Zone</span>
+                  <span class="zone-name"><span class="zone-bar" style="background:#9CA3AF"></span> North Brabant</span>
                   <span class="zone-count">70,008</span>
                 </li>
               </ul>
@@ -431,17 +437,17 @@
                 <input type="text" class="search-input" placeholder="Search...">
                 <select class="filter-select">
                   <option>Zone ▾</option>
-                  <option>CZ</option>
-                  <option>EZ</option>
-                  <option>NEZ</option>
-                  <option>NZ</option>
-                  <option>WZ</option>
+                  <option>UT</option>
+                  <option>ZH</option>
+                  <option>NH</option>
+                  <option>GR</option>
+                  <option>NB</option>
                 </select>
                 <select class="filter-select">
                   <option>Type ▾</option>
-                  <option>MS</option>
-                  <option>US</option>
-                  <option>BG</option>
+                  <option>Garage</option>
+                  <option>Surface</option>
+                  <option>Underground</option>
                 </select>
                 <select class="filter-select">
                   <option>Status ▾</option>
@@ -466,66 +472,66 @@
               <tbody>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A1</td>
-                  <td>Blk 315 Ang Mo Kio St 22</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>AMS-014</td>
+                  <td>Prins Hendrikkade 25, Amsterdam</td>
+                  <td>NH</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-active">Active</span></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A10</td>
-                  <td>Blk 307 Ang Mo Kio St 22</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>AMS-027</td>
+                  <td>Oosterdok 3, Amsterdam</td>
+                  <td>NH</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-active">Active</span></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A100</td>
-                  <td>Blk 051 Ang Mo Kio St 81</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>UTR-031</td>
+                  <td>Jaarbeursplein 6, Utrecht</td>
+                  <td>UT</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-inactive">Inactive</span></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A11</td>
-                  <td>Blk 231/232/328A Ang Mo Kio St 22</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>RTD-022</td>
+                  <td>Westblaak 88, Rotterdam</td>
+                  <td>ZH</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-active">Active</span></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A12</td>
-                  <td>Blk 232 Ang Mo Kio St 21</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>EIN-016</td>
+                  <td>Mathildelaan 1, Eindhoven</td>
+                  <td>NB</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-active">Active</span></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A13</td>
-                  <td>Blk 266 Ang Mo Kio St 22</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>GRN-009</td>
+                  <td>Damsterdiep 12, Groningen</td>
+                  <td>GR</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-active">Active</span></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A154</td>
-                  <td>226A Ang Mo Kio St 22</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>RTD-044</td>
+                  <td>Coolsingel 44, Rotterdam</td>
+                  <td>ZH</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-inactive">Inactive</span></td>
                 </tr>
                 <tr>
                   <td><input type="checkbox"></td>
-                  <td>A6</td>
-                  <td>Blk 258 Ang Mo Kio St 21</td>
-                  <td>NEZ</td>
-                  <td>US</td>
+                  <td>UTR-018</td>
+                  <td>Neude 5, Utrecht</td>
+                  <td>UT</td>
+                  <td>Surface</td>
                   <td><span class="pill pill-active">Active</span></td>
                 </tr>
               </tbody>
@@ -654,9 +660,9 @@
                 </svg>
               </div>
               <div class="sc-body">
-                <p style="font-weight:600;font-size:12px;color:var(--text);margin-bottom:4px;">Singapore EV-charging
-                  plan 2030</p>
-                <p>The Singapore Green Plan 2030 or the Green Plan is a...</p>
+                <p style="font-weight:600;font-size:12px;color:var(--text);margin-bottom:4px;">Dutch Climate Agreement ·
+                  EV infrastructure</p>
+                <p>National targets translated into municipal parking rules…</p>
                 <a href="#" class="read-more">Read more →</a>
               </div>
             </div>
@@ -671,8 +677,8 @@
         <div class="table-controls">
           <div class="table-controls-left">
             <input type="text" class="search-input" placeholder="Search...">
-            <span class="filter-chip">NEZ <span class="remove-chip">×</span></span>
-            <span class="filter-chip">US <span class="remove-chip">×</span></span>
+            <span class="filter-chip">NH <span class="remove-chip">×</span></span>
+            <span class="filter-chip">Surface <span class="remove-chip">×</span></span>
             <select class="filter-select">
               <option>Status ▾</option>
             </select>
@@ -681,7 +687,7 @@
         </div>
         <div class="bulk-bar">
           <span class="count">1 selected</span>
-          <button class="btn btn-outline" style="padding:4px 12px;">Edit</button>
+          <button class="btn btn-outline" style="padding:4px 12px;" onclick="navigateTo('bulk')">Edit</button>
           <button class="btn btn-outline" style="padding:4px 12px;">Delete</button>
           <button class="btn btn-outline" style="padding:4px 12px;">Export</button>
         </div>
@@ -700,98 +706,98 @@
             <tbody>
               <tr class="selected">
                 <td><input type="checkbox" checked></td>
-                <td>A1</td>
-                <td>Blk 315 Ang Mo Kio St 22</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>AMS-014</td>
+                <td>Prins Hendrikkade 25, Amsterdam</td>
+                <td>NH</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A10</td>
-                <td>Blk 307 Ang Mo Kio St 22</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>AMS-027</td>
+                <td>Oosterdok 3, Amsterdam</td>
+                <td>NH</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A100</td>
-                <td>Blk 051 Ang Mo Kio St 81</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>UTR-031</td>
+                <td>Jaarbeursplein 6, Utrecht</td>
+                <td>UT</td>
+                <td>Surface</td>
                 <td><span class="pill pill-inactive">Inactive</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A11</td>
-                <td>Blk 231/232/328A Ang Mo Kio St 22</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>RTD-022</td>
+                <td>Westblaak 88, Rotterdam</td>
+                <td>ZH</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A12</td>
-                <td>Blk 232 Ang Mo Kio St 21</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>EIN-016</td>
+                <td>Mathildelaan 1, Eindhoven</td>
+                <td>NB</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A13</td>
-                <td>Blk 266 Ang Mo Kio St 22</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>GRN-009</td>
+                <td>Damsterdiep 12, Groningen</td>
+                <td>GR</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A154</td>
-                <td>226A Ang Mo Kio St 22</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>RTD-044</td>
+                <td>Coolsingel 44, Rotterdam</td>
+                <td>ZH</td>
+                <td>Surface</td>
                 <td><span class="pill pill-inactive">Inactive</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A6</td>
-                <td>Blk 258 Ang Mo Kio St 21</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>UTR-018</td>
+                <td>Neude 5, Utrecht</td>
+                <td>UT</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A7</td>
-                <td>Blk 201 Ang Mo Kio St 23</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>AMS-042</td>
+                <td>Spui 70, Amsterdam</td>
+                <td>NH</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A8</td>
-                <td>Blk 340 Ang Mo Kio Ave 1</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>GRN-018</td>
+                <td>Grote Markt 18, Groningen</td>
+                <td>GR</td>
+                <td>Surface</td>
                 <td><span class="pill pill-inactive">Inactive</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A9</td>
-                <td>Blk 152 Ang Mo Kio Ave 5</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>EIN-023</td>
+                <td>Stationsplein 22, Eindhoven</td>
+                <td>NB</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></td>
-                <td>A15</td>
-                <td>Blk 333 Ang Mo Kio Ave 1</td>
-                <td>NEZ</td>
-                <td>US</td>
+                <td>RTD-061</td>
+                <td>Blaak 16, Rotterdam</td>
+                <td>ZH</td>
+                <td>Surface</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
             </tbody>
@@ -853,7 +859,7 @@
             421
             <div class="cluster-tooltip">
               <div style="font-weight:600;margin-bottom:2px;">421 car parks</div>
-              <div style="color:var(--text-muted);">Central Zone · Click to explore</div>
+              <div style="color:var(--text-muted);">North Holland · Click to explore</div>
             </div>
           </div>
           <div class="cluster-marker large" style="top:380px;left:32%;">278</div>
@@ -878,7 +884,7 @@
               <div class="toggle active" onclick="this.classList.toggle('active')"></div>
             </div>
             <div class="layer-row">
-              <span>CPG gantry</span>
+              <span>Entry barriers</span>
               <div class="toggle active" onclick="this.classList.toggle('active')"></div>
             </div>
           </div>
@@ -896,7 +902,7 @@
          ═══════════════════════════════════════ -->
       <div id="view-lots" class="content screen">
         <div class="alert-banner warning">
-          ⚠️ EV charging capacity below target for Q4 2018 — <a href="#">Review allocation →</a>
+          ⚠️ EV charging capacity below target for Q4 2018 — <a href="#" onclick="navigateTo('compliance')">Review allocation →</a>
         </div>
         <div class="header-detail" style="margin-bottom:var(--space-md);">
           <span class="status-chip active"><span class="status-dot"></span> Active</span>
@@ -939,7 +945,7 @@
                     </div><span style="font-size:11px;color:var(--text-muted)">0%</span>
                   </div>
                 </td>
-                <td>CZ</td>
+                <td>UT</td>
                 <td><span class="pill pill-inactive">—</span></td>
               </tr>
               <tr>
@@ -965,7 +971,7 @@
                     </div><span style="font-size:11px;color:var(--text-muted)">1%</span>
                   </div>
                 </td>
-                <td>NEZ</td>
+                <td>NH</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr class="highlight" style="background:#FEF3C7;">
@@ -978,7 +984,7 @@
                     </div><span style="font-size:11px;color:#92400E">8%</span>
                   </div>
                 </td>
-                <td>NEZ</td>
+                <td>NH</td>
                 <td><span class="pill" style="background:#FEF3C7;color:#92400E;">Review</span></td>
               </tr>
               <tr>
@@ -1017,7 +1023,7 @@
                     </div><span style="font-size:11px;color:var(--text-muted)">11%</span>
                   </div>
                 </td>
-                <td>EZ</td>
+                <td>ZH</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
@@ -1043,7 +1049,7 @@
                     </div><span style="font-size:11px;color:var(--text-muted)">11%</span>
                   </div>
                 </td>
-                <td>NEZ</td>
+                <td>NH</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr>
@@ -1056,7 +1062,7 @@
                     </div><span style="font-size:11px;color:var(--text-muted)">1%</span>
                   </div>
                 </td>
-                <td>NEZ</td>
+                <td>NH</td>
                 <td><span class="pill pill-active">Active</span></td>
               </tr>
               <tr style="font-weight:700;border-top:2px solid var(--border);">
@@ -1074,6 +1080,117 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 6 — COMPLIANCE WORKBENCH
+         ═══════════════════════════════════════ -->
+      <div id="view-compliance" class="content screen ops-screen">
+        <div class="ops-page-head">
+          <div>
+            <span class="ops-kicker">Monday review · Q4 2018</span>
+            <h2>Compliance workbench</h2>
+            <p>One prioritised queue for every site that needs attention—calculated from live allocation data and current policy rules.</p>
+          </div>
+          <div class="ops-head-actions"><button class="btn btn-outline">Export review</button><button class="btn btn-primary">Assign selected</button></div>
+        </div>
+
+        <div class="ops-metrics">
+          <article><span class="ops-metric-icon danger">!</span><div><strong>18</strong><p>Critical exceptions</p><small>Action due within 7 days</small></div></article>
+          <article><span class="ops-metric-icon warning">↘</span><div><strong>47</strong><p>Below target</p><small>Across 9 municipalities</small></div></article>
+          <article><span class="ops-metric-icon success">✓</span><div><strong>96.8%</strong><p>Network compliance</p><small>+4.1% this quarter</small></div></article>
+          <article><span class="ops-metric-icon neutral">↻</span><div><strong>06:10</strong><p>Rules evaluated</p><small>923,021 records checked</small></div></article>
+        </div>
+
+        <div class="ops-layout">
+          <section class="ops-panel ops-exceptions">
+            <div class="ops-panel-head"><div><h3>Exceptions requiring review</h3><p>Ordered by severity, deadline and size of compliance gap.</p></div><div class="ops-filters"><span>All regions</span><span>EV provision</span><span class="active">Open only</span></div></div>
+            <table class="ops-table">
+              <thead><tr><th><input type="checkbox"></th><th>Site</th><th>Rule</th><th>Current / required</th><th>Gap</th><th>Due</th><th>Owner</th></tr></thead>
+              <tbody>
+                <tr class="is-critical"><td><input type="checkbox" checked></td><td><b>AMS-080</b><small>Oosterdok, Amsterdam</small></td><td>EV-04 · Charging bays</td><td><b>25 / 36</b><div class="ops-progress"><i style="width:69%"></i></div></td><td><span class="ops-gap danger">−11</span></td><td><b>3 days</b></td><td><span class="ops-owner">MD</span></td></tr>
+                <tr><td><input type="checkbox" checked></td><td><b>RTD-022</b><small>Westblaak, Rotterdam</small></td><td>EV-04 · Charging bays</td><td><b>18 / 26</b><div class="ops-progress"><i style="width:69%"></i></div></td><td><span class="ops-gap warning">−8</span></td><td>8 days</td><td><span class="ops-owner muted">—</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><b>UTR-031</b><small>Jaarbeursplein, Utrecht</small></td><td>ACC-02 · Accessible bays</td><td><b>6 / 10</b><div class="ops-progress"><i style="width:60%"></i></div></td><td><span class="ops-gap warning">−4</span></td><td>12 days</td><td><span class="ops-owner">JV</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><b>EIN-016</b><small>Mathildelaan, Eindhoven</small></td><td>DOC-07 · Permit evidence</td><td><b>2 / 3</b><div class="ops-progress"><i style="width:66%"></i></div></td><td><span class="ops-gap neutral">1 doc</span></td><td>18 days</td><td><span class="ops-owner">KP</span></td></tr>
+                <tr><td><input type="checkbox"></td><td><b>GRN-009</b><small>Damsterdiep, Groningen</small></td><td>EV-04 · Charging bays</td><td><b>12 / 15</b><div class="ops-progress"><i style="width:80%"></i></div></td><td><span class="ops-gap neutral">−3</span></td><td>21 days</td><td><span class="ops-owner muted">—</span></td></tr>
+              </tbody>
+            </table>
+            <div class="ops-table-foot"><span>Showing 5 of 65 exceptions</span><button class="btn btn-ghost">View all exceptions →</button></div>
+          </section>
+
+          <aside class="ops-review-rail">
+            <div class="ops-rail-head"><span>Review progress</span><b>2 of 4</b></div>
+            <ol class="ops-checklist">
+              <li class="done"><span>✓</span><div><b>Scope confirmed</b><small>9 municipalities · EV + accessibility</small></div></li>
+              <li class="active"><span>2</span><div><b>Review exceptions</b><small>18 critical · 47 below target</small></div></li>
+              <li><span>3</span><div><b>Assign owners</b><small>12 exceptions still unassigned</small></div></li>
+              <li><span>4</span><div><b>Export evidence</b><small>Generate policy-ready record</small></div></li>
+            </ol>
+            <div class="ops-rule-card"><small>Why is AMS-080 flagged?</small><b>EV-04 · Minimum 12.5%</b><p>25 of 282 bays are EV-enabled (8.9%). The current requirement is 36 bays.</p><a href="#">View rule and source ↗</a></div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 7 — GUARDED BULK UPDATE
+         ═══════════════════════════════════════ -->
+      <div id="view-bulk" class="content screen ops-screen">
+        <div class="ops-page-head bulk-title">
+          <div><span class="ops-kicker">Bulk change · Step 2 of 3</span><h2>Review before applying</h2><p>Update 48 selected car parks without hiding conflicts, permissions or downstream consequences.</p></div>
+          <div class="ops-stepper"><span class="done">✓ Select</span><i></i><span class="active">2 Review</span><i></i><span>3 Confirm</span></div>
+        </div>
+        <div class="bulk-scope-banner"><div><b>48 selected</b><span>North Holland · Surface + garage · Active sites</span></div><button onclick="navigateTo('list')">Change selection</button></div>
+
+        <div class="bulk-workspace">
+          <section class="bulk-editor ops-panel">
+            <div class="ops-panel-head"><div><h3>Changes to apply</h3><p>Only fields enabled below will be changed. Everything else is preserved.</p></div></div>
+            <div class="bulk-field enabled"><label><input type="checkbox" checked><span>Status</span></label><div><select><option>Under review</option></select><small>Current status will be retained in audit history.</small></div></div>
+            <div class="bulk-field enabled"><label><input type="checkbox" checked><span>Review deadline</span></label><div><input value="17 December 2018"><small>Required when status changes to “Under review”.</small></div></div>
+            <div class="bulk-field"><label><input type="checkbox"><span>Assigned officer</span></label><div><select disabled><option>Keep existing owner</option></select></div></div>
+            <div class="bulk-field enabled"><label><input type="checkbox" checked><span>Reason</span></label><div><textarea>Quarterly EV provision review — Q4 exception queue</textarea><small>Visible in each record’s log sheet.</small></div></div>
+          </section>
+
+          <aside class="bulk-impact">
+            <div class="impact-card"><span class="impact-label">Impact summary</span><strong>45 will change</strong><div class="impact-row ok"><b>45</b><span>Ready to update</span></div><div class="impact-row warn"><b>2</b><span>Require administrator approval</span></div><div class="impact-row stop"><b>1</b><span>Excluded: archived record</span></div></div>
+            <div class="guardrail-card"><span>Guardrail</span><h4>Conflicts are excluded, never overwritten.</h4><p>RTD-118 was edited 4 minutes ago by J. van Dijk. Its newer values will remain untouched.</p><a href="#">Inspect conflict ↗</a></div>
+          </aside>
+        </div>
+
+        <section class="ops-panel change-preview">
+          <div class="ops-panel-head"><div><h3>Record-level preview</h3><p>What will happen to representative records in this change set.</p></div><button class="btn btn-outline">Download preview</button></div>
+          <table class="ops-table"><thead><tr><th>Record</th><th>Current status</th><th>New status</th><th>Deadline</th><th>Validation</th></tr></thead><tbody>
+            <tr><td><b>AMS-014</b><small>Prins Hendrikkade</small></td><td><span class="pill pill-active">Active</span></td><td><span class="pill bulk-review-pill">Under review</span></td><td>17 Dec 2018</td><td><span class="validation ok">✓ Ready</span></td></tr>
+            <tr><td><b>UTR-031</b><small>Jaarbeursplein</small></td><td><span class="pill pill-active">Active</span></td><td><span class="pill bulk-review-pill">Under review</span></td><td>17 Dec 2018</td><td><span class="validation warn">Approval needed</span></td></tr>
+            <tr class="row-disabled"><td><b>RTD-118</b><small>Schiehaven</small></td><td><span class="pill pill-inactive">Archived</span></td><td>—</td><td>—</td><td><span class="validation stop">Excluded</span></td></tr>
+          </tbody></table>
+        </section>
+        <div class="bulk-confirm-bar"><div><b>45 records ready</b><span>2 will be routed for approval · 1 excluded</span></div><button class="btn btn-outline" onclick="navigateTo('list')">Cancel</button><button class="btn btn-primary">Continue to confirmation →</button></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+         SCREEN 8 — AUDIT HISTORY
+         ═══════════════════════════════════════ -->
+      <div id="view-audit" class="content screen ops-screen">
+        <div class="ops-page-head"><div><span class="ops-kicker">Governance</span><h2>Audit history</h2><p>Every material change is attributable, reviewable and exportable—without exposing sensitive personal data.</p></div><button class="btn btn-outline">Export audit log</button></div>
+        <div class="audit-toolbar"><input class="search-input" placeholder="Search record, person or action"><select><option>All actions</option></select><select><option>All users</option></select><select><option>Last 30 days</option></select><span>1,284 events</span></div>
+        <div class="audit-layout">
+          <section class="ops-panel audit-list">
+            <div class="audit-day">Today · 12 December 2018</div>
+            <button class="audit-event active"><span class="audit-time">09:42</span><span class="audit-icon update">↻</span><span><b>Bulk status update</b><small>Mara de Wit · 45 car parks</small></span><i>→</i></button>
+            <button class="audit-event"><span class="audit-time">09:18</span><span class="audit-icon export">↓</span><span><b>Compliance evidence exported</b><small>Jan van Dijk · Q4 review · CSV</small></span><i>→</i></button>
+            <button class="audit-event"><span class="audit-time">08:56</span><span class="audit-icon assign">+</span><span><b>12 exceptions assigned</b><small>Mara de Wit → K. Peters</small></span><i>→</i></button>
+            <div class="audit-day">11 December 2018</div>
+            <button class="audit-event"><span class="audit-time">16:34</span><span class="audit-icon rule">§</span><span><b>Compliance rule EV-04 updated</b><small>System administrator · v3.2 → v3.3</small></span><i>→</i></button>
+            <button class="audit-event"><span class="audit-time">14:07</span><span class="audit-icon update">↻</span><span><b>AMS-080 allocation edited</b><small>J. van Dijk · EV bays 22 → 25</small></span><i>→</i></button>
+          </section>
+          <aside class="audit-detail ops-panel">
+            <span class="ops-kicker">Event #AU-18442</span><h3>Bulk status update</h3><div class="audit-who"><span class="ops-owner">MD</span><div><b>Mara de Wit</b><small>Parking operations officer · 09:42</small></div><span class="audit-auth">2FA verified</span></div>
+            <dl class="audit-meta"><div><dt>Scope</dt><dd>45 car parks</dd></div><div><dt>Source</dt><dd>Compliance workbench</dd></div><div><dt>Reason</dt><dd>Q4 EV provision review</dd></div><div><dt>Approval</dt><dd>2 pending</dd></div></dl>
+            <h4>Field changes</h4><div class="audit-diff"><div><span>Status</span><del>Active</del><ins>Under review</ins></div><div><span>Review deadline</span><del>—</del><ins>17 Dec 2018</ins></div></div>
+            <div class="audit-integrity"><b>✓ Integrity verified</b><p>This event is immutable and linked to the source records, policy version and approval trail.</p></div>
+          </aside>
         </div>
       </div>
 
@@ -1133,11 +1250,11 @@
               <div class="card-header"><h3>Zones</h3><p>Overall number of car parks categorised by zone</p></div>
               <div class="card-body">
                 <ul class="zone-list">
-                  <li><span class="zone-name"><span class="zone-bar" style="background:#2563EB"></span> Central Zone</span><span class="zone-count">41,806</span></li>
-                  <li><span class="zone-name"><span class="zone-bar" style="background:#0F2044"></span> East Zone</span><span class="zone-count">193,001</span></li>
-                  <li><span class="zone-name"><span class="zone-bar" style="background:#22C55E"></span> North-East Zone</span><span class="zone-count">321,003</span></li>
-                  <li><span class="zone-name"><span class="zone-bar" style="background:#F59E0B"></span> North Zone</span><span class="zone-count">80,002</span></li>
-                  <li><span class="zone-name"><span class="zone-bar" style="background:#9CA3AF"></span> West Zone</span><span class="zone-count">70,008</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#2563EB"></span> Utrecht</span><span class="zone-count">41,806</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#0F2044"></span> South Holland</span><span class="zone-count">193,001</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#22C55E"></span> North Holland</span><span class="zone-count">321,003</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#F59E0B"></span> Groningen</span><span class="zone-count">80,002</span></li>
+                  <li><span class="zone-name"><span class="zone-bar" style="background:#9CA3AF"></span> North Brabant</span><span class="zone-count">70,008</span></li>
                 </ul>
               </div>
             </div>
@@ -1173,10 +1290,10 @@
                   <th>Number ↕</th><th>Location ↕</th><th>Zone ↕</th><th>Type ↕</th><th>Status ↕</th>
                 </tr></thead>
                 <tbody>
-                  <tr><td><input type="checkbox"></td><td>A1</td><td>Blk 315 Ang Mo Kio St 22</td><td>NEZ</td><td>US</td><td><span class="pill pill-active">Active</span></td></tr>
-                  <tr><td><input type="checkbox"></td><td>A10</td><td>Blk 307 Ang Mo Kio St 22</td><td>NEZ</td><td>US</td><td><span class="pill pill-active">Active</span></td></tr>
-                  <tr><td><input type="checkbox"></td><td>A100</td><td>Blk 051 Ang Mo Kio St 81</td><td>NEZ</td><td>US</td><td><span class="pill pill-inactive">Inactive</span></td></tr>
-                  <tr><td><input type="checkbox"></td><td>A11</td><td>Blk 231/232 Ang Mo Kio St 22</td><td>NEZ</td><td>US</td><td><span class="pill pill-active">Active</span></td></tr>
+                  <tr><td><input type="checkbox"></td><td>AMS-014</td><td>Prins Hendrikkade 25, Amsterdam</td><td>NH</td><td>Surface</td><td><span class="pill pill-active">Active</span></td></tr>
+                  <tr><td><input type="checkbox"></td><td>AMS-027</td><td>Oosterdok 3, Amsterdam</td><td>NH</td><td>Surface</td><td><span class="pill pill-active">Active</span></td></tr>
+                  <tr><td><input type="checkbox"></td><td>UTR-031</td><td>Jaarbeursplein 6, Utrecht</td><td>UT</td><td>Surface</td><td><span class="pill pill-inactive">Inactive</span></td></tr>
+                  <tr><td><input type="checkbox"></td><td>RTD-022</td><td>Westblaak 88, Rotterdam</td><td>ZH</td><td>Surface</td><td><span class="pill pill-active">Active</span></td></tr>
                 </tbody>
               </table>
             </div>
@@ -1229,29 +1346,29 @@
               <div class="settings-avatar-row">
                 <div class="settings-avatar">WL</div>
                 <div class="settings-avatar-info">
-                  <strong>Wen Li Tay</strong>
-                  <span>Parking Operations Officer · North-East Zone</span>
+                  <strong>Mara de Wit</strong>
+                  <span>Parking Operations Officer · North Holland</span>
                 </div>
                 <button class="settings-change-photo">Change photo</button>
               </div>
               <div class="settings-row">
                 <div class="settings-field">
                   <label>First name</label>
-                  <input class="settings-input" value="Wen Li" type="text">
+                  <input class="settings-input" value="Mara" type="text">
                 </div>
                 <div class="settings-field">
                   <label>Last name</label>
-                  <input class="settings-input" value="Tay" type="text">
+                  <input class="settings-input" value="de Wit" type="text">
                 </div>
               </div>
               <div class="settings-field">
                 <label>Display name</label>
-                <input class="settings-input" value="Wen Li Tay" type="text">
+                <input class="settings-input" value="Mara de Wit" type="text">
                 <div class="field-hint">Shown in the activity log and team directory.</div>
               </div>
               <div class="settings-field">
                 <label>Email address</label>
-                <input class="settings-input" value="wenli.tay@rvo.nl" type="email">
+                <input class="settings-input" value="mara.dewit@parkbeheer.nl" type="email">
               </div>
               <div class="settings-field">
                 <label>Phone (optional)</label>
@@ -1266,11 +1383,11 @@
                 <div class="settings-field">
                   <label>Primary Zone</label>
                   <select class="settings-select">
-                    <option>North-East Zone (NEZ)</option>
-                    <option>Central Zone (CZ)</option>
-                    <option>East Zone (EZ)</option>
-                    <option>North Zone (NZ)</option>
-                    <option>West Zone (WZ)</option>
+                    <option>North Holland (NH)</option>
+                    <option>Utrecht (UT)</option>
+                    <option>South Holland (ZH)</option>
+                    <option>Groningen (GR)</option>
+                    <option>North Brabant (NB)</option>
                   </select>
                 </div>
               </div>
@@ -1282,8 +1399,8 @@
               <h4>Zone Monitoring Preferences</h4>
               <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;">Select the zones you actively monitor. Dashboard and notification defaults will reflect these choices.</p>
               <div class="settings-tag-list">
-                <span class="settings-tag">North-East Zone</span>
-                <span class="settings-tag">Central Zone</span>
+                <span class="settings-tag">North Holland</span>
+                <span class="settings-tag">Utrecht</span>
                 <span class="settings-tag add-tag">+ Add zone</span>
               </div>
             </div>
@@ -1329,15 +1446,15 @@
                   <div class="settings-member-avatar">JV</div>
                   <div class="settings-member-info">
                     <strong>Jan de Vries</strong>
-                    <span>jan.devries@rvo.nl · Central Zone</span>
+                    <span>jan.vandijk@parkbeheer.nl · Utrecht</span>
                   </div>
                   <span class="settings-role-pill admin">Admin</span>
                 </div>
                 <div class="settings-member-row">
                   <div class="settings-member-avatar">WL</div>
                   <div class="settings-member-info">
-                    <strong>Wen Li Tay</strong>
-                    <span>wenli.tay@rvo.nl · North-East Zone</span>
+                    <strong>Mara de Wit</strong>
+                    <span>mara.dewit@parkbeheer.nl · North Holland</span>
                   </div>
                   <span class="settings-role-pill">Officer</span>
                 </div>
@@ -1345,7 +1462,7 @@
                   <div class="settings-member-avatar" style="background:#1E3A8A;">KP</div>
                   <div class="settings-member-info">
                     <strong>Klara Pietersen</strong>
-                    <span>k.pietersen@rvo.nl · West Zone</span>
+                    <span>k.pietersen@parkbeheer.nl · North Brabant</span>
                   </div>
                   <span class="settings-role-pill">Officer</span>
                 </div>
@@ -1353,7 +1470,7 @@
                   <div class="settings-member-avatar" style="background:#22C55E;color:#fff;">MH</div>
                   <div class="settings-member-info">
                     <strong>Mehmet Haak</strong>
-                    <span>m.haak@rvo.nl · East Zone</span>
+                    <span>m.haak@parkbeheer.nl · South Holland</span>
                   </div>
                   <span class="settings-role-pill">Read only</span>
                 </div>
@@ -1383,7 +1500,7 @@
               <div class="settings-toggle-row" style="border-top:1px solid var(--border);padding-top:16px;margin-top:8px;">
                 <div class="settings-toggle-info">
                   <strong>Scheduled weekly export</strong>
-                  <span>Auto-export zone data every Monday at 06:00 to the shared RVO drive</span>
+                  <span>Auto-export zone data every Monday at 06:00 to the secure operations archive</span>
                 </div>
                 <button class="settings-toggle"></button>
               </div>

@@ -806,13 +806,22 @@ body.case-critical .engagement-flow span {
   body.case-critical .container { width: min(100% - 44px, 1180px); }
   body.case-critical .concept-note { inset: 84px 22px auto auto !important; width: calc(100% - 44px); }
   body.case-critical .hero { padding-top: 158px; }
-  body.case-critical .hero-comp { height: auto; margin-top: 42px; }
+  body.case-critical .hero-comp { display: block; height: auto; margin-top: 42px; }
   body.case-critical .hero-screen.main { position: relative; width: 100%; height: auto; aspect-ratio: 16 / 10; }
   body.chargeur-case .hero-screen.main iframe,
   body.prahari-case .hero-screen.main iframe { width: 160%; height: 160%; transform: scale(.625); }
   body.case-critical .hero-screen.front-right { display: none; }
+  body.case-critical .hero-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 !important;
+  }
   body.case-critical .meta-card,
-  body.case-critical .ops-token-grid { grid-template-columns: repeat(2, 1fr); }
+  body.case-critical .ops-token-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 !important;
+  }
   body.case-critical .meta-card > div:nth-child(3),
   body.case-critical .ops-token:nth-child(3) { border-left: 0; border-top: 1px solid var(--case-line); }
   body.case-critical .meta-card > div:nth-child(4),
@@ -837,7 +846,11 @@ body.case-critical .engagement-flow span {
   body.case-critical .hero-stats,
   body.case-critical .metrics,
   body.case-critical .meta-card,
-  body.case-critical .ops-token-grid { grid-template-columns: 1fr; }
+  body.case-critical .ops-token-grid {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 0 !important;
+  }
   body.case-critical .hero-stats .stat + .stat,
   body.case-critical .metric-card + .metric-card,
   body.case-critical .meta-card > div + div,
@@ -851,6 +864,25 @@ body.case-critical .engagement-flow span {
   body.case-critical .section { padding: 82px 0; }
   body.case-critical .section h2 { font-size: clamp(38px, 12vw, 56px); }
   body.case-critical .incident-block { padding: 28px !important; }
+  body.case-critical .hero-stats .stat { min-height: 100px; padding: 22px 24px; }
+
+  body.case-critical .case-table-scroll {
+    margin: 32px 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--case-muted) transparent;
+  }
+
+  body.case-critical .case-table-scroll:focus-visible {
+    outline: 1px solid var(--case-accent);
+    outline-offset: 4px;
+  }
+
+  body.case-critical .case-table-scroll table {
+    min-width: 560px;
+    margin: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -494,6 +494,7 @@ body.light .g-theme-toggle .icon-moon { display: none; }
   .g-nav-links { display: none; }
   .g-hamburger { display: flex; }
   .g-nav-drawer { display: flex; }
+  .g-hamburger, .g-theme-toggle { width: 44px; height: 44px; }
   
   /* Portfolio global overrides */
   .two-col, .three-col, .four-col, .hero-stats, .cs-metrics-grid, .meta-card, .app-main-grid {
