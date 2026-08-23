@@ -52,14 +52,14 @@
     <section class="hero" data-page="home" data-theme="dark">
       <!--
         Held in a <template> because a display:none <video> still downloads:
-        left as plain markup this poster and 3MB clip were fetched on all four
+        left as plain markup this poster and hero clip were fetched on all four
         routes. Templates are inert, so studio-render.js inflates this one only
         when home is the active route.
       -->
       <template data-media>
         <div class="hero__video-wrap" aria-hidden="true">
-          <video class="hero__video" autoplay muted playsinline preload="auto">
-            <source src="gallery/new her bg video.mp4" type="video/mp4">
+          <video class="hero__video" autoplay muted loop playsinline preload="auto">
+            <source src="gallery/hero-bg-ping-pong.mp4" type="video/mp4">
           </video>
           <div class="hero__video-wash"></div>
           <div class="hero__hud">

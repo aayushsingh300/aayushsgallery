@@ -440,8 +440,7 @@
           '<br><a href="tel:' + esc(C.phoneHref) + '">' + esc(C.phone) + '</a></div>' +
         '<div><span>Based in</span><p>' + esc(C.location) + '<br>' + esc(C.reach) + '</p></div>' +
         '<div><span>Elsewhere</span><p>' +
-          '<a href="' + esc(C.linkedin) + '" target="_blank" rel="noopener noreferrer">LinkedIn</a><br>' +
-          '<a href="index.html">Personal portfolio ↗</a></p></div>' +
+          '<a href="' + esc(C.linkedin) + '" target="_blank" rel="noopener noreferrer">LinkedIn</a></p></div>' +
         '<p>© 2026 ' + esc(C.studioName) + ' studio</p>' +
       '</footer>';
   }
