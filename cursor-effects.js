@@ -1,7 +1,10 @@
 /* ─── CURSOR-EFFECTS.JS ──────────────────────────────────────────────────────
    Shared across all pages:
    1. Cursor fire particles on clickable hover
-   2. Procedural flame sound via Web Audio API on clickable hover
+   2. Procedural flame sound via Web Audio API — NAV / FOOTER ONLY.
+      Particles still trail every clickable; the sound is reserved for site
+      chrome (nav bars, menus, footers, prev/next case-study links) so that
+      reading a page is silent and only moving between pages is audible.
 
    GRAIN STRATEGY (not handled here — see site-globals.css):
    · CSS body::after  z-index 9500, opacity 0.038, mix-blend-mode overlay
@@ -184,25 +187,43 @@
     if (!soundRafId) soundRafId = requestAnimationFrame(updateSound);
   }
 
+  /* ── Sound zones ───────────────────────────────────────
+     Only clickables inside these containers may make noise.
+     Everything else (body copy links, gallery tiles, in-page
+     buttons) still gets fire particles, silently. ────────── */
+  var SOUND_ZONES = [
+    '#gNav', '.g-nav', '.g-nav-drawer',        // portfolio nav + mobile drawer
+    '.rf-pnav', '.rf-menu',                    // studio case-study nav + menu
+    '#nav', '#menu', '.nav__links',            // studio shell nav + menu
+    'footer',                                  // every page footer
+    '.proj-nav', '.project-nav',               // prev / next pairs
+    '.next-project', '.footer-next'            // single "next case study" links
+  ].join(',');
+
+  function inSoundZone(el) {
+    if (!el || el.nodeType !== 1 || !el.closest) return false;
+    return !!el.closest(SOUND_ZONES);
+  }
+
   // Hook into the same isOnClickable state the fire uses
   var _origCheckClickable = checkClickable;
   var hoverTimeout = null;
 
   document.addEventListener('mouseover', function (e) {
     _origCheckClickable(e);
-    if (isOnClickable) {
-      initAudio();
-      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-      targetGain = 0.18;   // subtle – not blasting
+    if (!isOnClickable || !inSoundZone(e.target)) return;
+
+    initAudio();
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    targetGain = 0.18;   // subtle – not blasting
+    kickSoundLoop();
+
+    // Clear any existing timeout and set a new one to turn off the sound very quickly (approx 80ms)
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    hoverTimeout = setTimeout(function () {
+      targetGain = 0;
       kickSoundLoop();
-      
-      // Clear any existing timeout and set a new one to turn off the sound very quickly (approx 80ms)
-      if (hoverTimeout) clearTimeout(hoverTimeout);
-      hoverTimeout = setTimeout(function() {
-        targetGain = 0;
-        kickSoundLoop();
-      }, 80);
-    }
+    }, 80);
   });
 
   document.addEventListener('mouseout', function () {

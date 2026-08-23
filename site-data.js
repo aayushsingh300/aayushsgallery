@@ -47,8 +47,9 @@
         subtitle: 'Clinical Health Data Platform',
         tagLabels: ['Healthcare', 'B2B'],
         blurb: 'A clinical data platform relied on by thousands of clinicians: turning dense patient records into interfaces care teams can act on.',
-        meta: '314e Corporation · 2022',
-        thumb: 'images/portfolio-assets/2uJ7RgaBPFgwEOtqN8tkdt0bYcM.png'
+        meta: '314e Corporation · 2022'
+        /* No `thumb` override: the studio's image is the current one, so both
+           faces show the same latest thumbnail. */
       },
       studio: {
         discipline: 'Clinical intelligence',

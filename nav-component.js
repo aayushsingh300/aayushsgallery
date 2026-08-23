@@ -7,6 +7,12 @@
  * header (studio-nav.js / .rf-pnav). studio-nav.js decides which face is
  * being read and stamps it on <html data-face>; when it says studio, this
  * nav stands down so the page carries one identity, not two.
+ *
+ * The reverse also has to hold: a project opened from the portfolio must
+ * keep Aayush's header, not the studio's. So every link out to a shared
+ * case study leaves here stamped `?face=personal` — the mirror of what
+ * studio-render.js does with `?face=studio` — and the face survives a
+ * copied URL, a new tab, or storage being unavailable.
  */
 (function () {
   'use strict';
@@ -112,6 +118,67 @@
       document.body.style.overflow = '';
     }
   });
+
+  /* ── Carry the personal face onto the shared case studies ── */
+
+  /* The portfolio's own pages need no stamp — reaching one runs this file,
+     which sets the face again. Only the shared project pages do, and the
+     app prototypes carry no header at all, so they are left clean. */
+  var SHELL = {
+    'index.html': true, 'all-works.html': true, 'blogs.html': true,
+    'about.html': true, 'resume.html': true, 'studio.html': true
+  };
+
+  function fileOf(href) {
+    return String(href).split('#')[0].split('?')[0].split('/').pop();
+  }
+
+  /* site-data.js is the truth where it is loaded (all-works, the case studies
+     themselves). index.html and about.html do not load it, so fall back to
+     "a local page that is neither shell nor prototype". */
+  var works = (window.SITE_DATA && window.SITE_DATA.works) || null;
+  var PROJECTS = null;
+  if (works) {
+    PROJECTS = {};
+    works.forEach(function (work) {
+      if (work.href) PROJECTS[fileOf(work.href)] = true;
+    });
+  }
+
+  function isProject(file) {
+    if (!/\.html$/.test(file)) return false;
+    if (PROJECTS) return Boolean(PROJECTS[file]);
+    return !SHELL[file] && !/-app\.html$/.test(file);
+  }
+
+  /* Idempotent: a link that already names a face is left as it is, so this can
+     run again after late-rendered rows arrive without doubling the query. */
+  function stampFace() {
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      if (link.closest('.g-nav, .g-nav-drawer')) return;
+
+      var href = link.getAttribute('href');
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;
+      if (href.indexOf('face=') !== -1) return;
+      if (!isProject(fileOf(href))) return;
+
+      var hash = '';
+      var hashAt = href.indexOf('#');
+      if (hashAt !== -1) {
+        hash = href.slice(hashAt);
+        href = href.slice(0, hashAt);
+      }
+      link.setAttribute('href',
+        href + (href.indexOf('?') === -1 ? '?' : '&') + 'face=personal' + hash);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', stampFace);
+  } else {
+    stampFace();
+  }
+  window.addEventListener('load', stampFace);
 
   /* ── Hide nav on scroll down, show on scroll up ── */
   var lastY   = window.scrollY;

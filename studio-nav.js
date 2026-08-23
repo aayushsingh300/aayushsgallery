@@ -11,10 +11,15 @@
  *                        place in the index, and the way on to the next one
  *
  * WHICH FACE AM I IN?
- *   1. `?face=personal` remains available as an explicit preview escape hatch.
- *   2. Every other visit uses the studio identity. Case studies therefore
- *      keep the same global header whether reached from either portfolio,
- *      from the studio index, or from a direct/shared URL.
+ *   1. An explicit `?face=studio` / `?face=personal` wins, and is remembered
+ *      for the rest of the visit. Both fronts stamp the links they hand out
+ *      (studio-render.js and nav-component.js), so the face a reader arrived
+ *      through is written into the URL of the project they open.
+ *   2. Otherwise the face remembered for this visit: nav-component.js writes
+ *      'personal' on every portfolio page it dresses, so a project reached
+ *      from there keeps Aayush's header even on an unstamped link.
+ *   3. A direct or shared URL has no route behind it. The studio is the public
+ *      front, so an unattributed visit is read as a studio visit.
  *
  * nav-component.js reads the same decision off <html data-face> and stands
  * down when this header is up, so a case study never wears two identities.
@@ -35,12 +40,23 @@
     try { sessionStorage.setItem(FACE_KEY, face); } catch (e) { /* private mode */ }
   }
 
+  function recalled() {
+    try { return sessionStorage.getItem(FACE_KEY); } catch (e) { return null; }
+  }
+
   function detectFace() {
+    /* 1. The route said so outright. */
     var asked = new URLSearchParams(location.search).get('face');
     if (asked === 'studio' || asked === 'personal') {
       remember(asked);
       return asked;
     }
+
+    /* 2. The front this visit came through. */
+    var known = recalled();
+    if (known === 'studio' || known === 'personal') return known;
+
+    /* 3. Nothing to go on — the studio is the front door. */
     return 'studio';
   }
 

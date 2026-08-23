@@ -30,6 +30,7 @@
       --brown: #775445;
       --dark-brn: #442f26;
       --border: rgba(244, 244, 244, 0.28);
+      --page-gutter: clamp(24px, 4.2vw, 80px);
     }
 
     /* scroll-behavior: smooth removed — GSAP ScrollTrigger handles scroll;
@@ -127,9 +128,10 @@
     .hero {
       position: relative;
       width: 100%;
-      min-height: 100vh;
+      min-height: max(760px, 100svh);
       overflow: hidden;
       background: #04060e;
+      isolation: isolate;
     }
 
     /* ── Layer 0: City backdrop — hidden ── */
@@ -330,12 +332,14 @@
     /* ── Layer 2: Glitch/abstract video ── */
     .hero-video {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      inset: -3%;
+      width: 106%;
+      height: 106%;
       object-fit: cover;
-      opacity: 0.55;
+      object-position: center 48%;
+      opacity: 0.58;
       mix-blend-mode: screen;
+      filter: saturate(0.92) contrast(1.06);
       z-index: 3;
       pointer-events: none;
     }
@@ -345,8 +349,9 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(4, 6, 14, 0.0) 0%, rgba(4, 6, 14, 0.55) 100%),
-        linear-gradient(180deg, rgba(4, 6, 14, 0.3) 0%, rgba(4, 6, 14, 0.05) 40%, rgba(4, 6, 14, 0.0) 65%, rgba(4, 6, 14, 0.35) 100%);
+        radial-gradient(ellipse 30% 25% at 100% 100%, rgba(27, 17, 17, 1) 0%, rgba(18, 13, 16, 0.94) 28%, rgba(9, 9, 15, 0.58) 54%, transparent 80%),
+        radial-gradient(ellipse 90% 68% at 50% 100%, transparent 0%, rgba(4, 6, 14, 0.48) 72%, rgba(4, 6, 14, 0.72) 100%),
+        linear-gradient(180deg, rgba(4, 6, 14, 0.42) 0%, rgba(4, 6, 14, 0.06) 38%, transparent 62%, rgba(12, 9, 13, 0.46) 84%, rgba(34, 22, 22, 0.96) 100%);
       z-index: 4;
       pointer-events: none;
     }
@@ -354,10 +359,12 @@
     /* ── Cinematic bridge: hero → stats seamless blend ── */
     .hero-stats-bridge {
       position: relative;
-      z-index: 2;
-      height: 120px;
-      background: linear-gradient(180deg, #04060e 0%, #221616 100%);
+      z-index: 6;
+      height: 72px;
+      margin-top: -72px;
+      background: linear-gradient(180deg, transparent 0%, rgba(34, 22, 22, 0.72) 52%, #221616 100%);
       overflow: hidden;
+      pointer-events: none;
     }
 
     .hero-stats-bridge::after {
@@ -426,8 +433,8 @@
     .hero-inner {
       position: relative;
       z-index: 5;
-      min-height: 900px;
-      padding: 126px 80px 0;
+      min-height: max(760px, 100svh);
+      padding: 112px var(--page-gutter) 0;
       display: flex;
       align-items: flex-end;
     }
@@ -437,7 +444,7 @@
       display: flex;
       align-items: flex-end;
       gap: 0;
-      padding-bottom: 0;
+      padding-bottom: clamp(56px, 7.5vh, 104px);
     }
 
     /* LEFT: big text stack */
@@ -446,7 +453,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding-bottom: 111px;
+      padding-bottom: 0;
       gap: 0;
     }
 
@@ -478,7 +485,7 @@
       letter-spacing: -1px;
       color: var(--ink);
       line-height: 0.94;
-      padding-bottom: 146px;
+      padding-bottom: 0;
       margin-top: 8px;
     }
 
@@ -495,7 +502,7 @@
       display: flex;
       flex-direction: column;
       gap: 73px;
-      padding-bottom: 36px;
+      padding-bottom: 0;
       margin-right: -1.5px;
     }
 
@@ -632,6 +639,7 @@
       background: linear-gradient(180deg, #221616 0%, #1a1010 100%);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
+      padding: 0 var(--page-gutter);
       position: relative;
       z-index: 2;
     }
@@ -649,9 +657,10 @@
     }
 
     .stat-cell {
-      padding: 38px 60px 80px;
+      padding: 48px clamp(16px, 2.8vw, 54px) 68px;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 0;
       border-right: 1px solid rgba(214, 208, 196, 0.06);
       position: relative;
@@ -662,16 +671,15 @@
     }
 
     .stat-cell:first-child {
-      padding-left: 80px;
+      padding-left: clamp(16px, 2.8vw, 54px);
     }
 
     .stat-cell:last-child {
-      padding-right: 80px;
-      align-items: flex-end;
+      padding-right: clamp(16px, 2.8vw, 54px);
     }
 
     .stat-num {
-      font-size: 96px;
+      font-size: clamp(64px, 6vw, 92px);
       font-weight: 300;
       color: rgba(214, 208, 196, 0.47);
       line-height: 1;
@@ -680,7 +688,7 @@
     }
 
     .stat-num sup {
-      font-size: 96px;
+      font-size: 1em;
       line-height: 1;
       letter-spacing: -1.5px;
       font-weight: 300;
@@ -689,17 +697,17 @@
     }
 
     .stat-label {
-      font-size: 15px;
+      font-size: clamp(11px, 0.9vw, 14px);
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.4px;
       color: var(--coral);
       text-align: center;
-      margin-top: -2px;
+      margin-top: 8px;
     }
 
     .stat-cell:last-child .stat-label {
-      text-align: right;
+      text-align: center;
     }
 
     /* ─── ABOUT ─────────────────────────────────── */
@@ -743,65 +751,56 @@
     .about-text-col {
       flex: 1;
       position: relative;
-      padding: 0 80px;
+      padding: clamp(72px, 7vw, 112px) var(--page-gutter);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
       z-index: 1;
     }
 
     .about-label {
-      position: absolute;
-      left: 80px;
-      top: 50%;
-      transform: translateY(calc(-50% - 311px));
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       color: var(--coral);
       letter-spacing: 0.18em;
+      margin-bottom: 30px;
     }
 
     .about-headline {
-      position: absolute;
-      left: 80px;
-      right: 80px;
-      top: 50%;
-      transform: translateY(calc(-50% - 174px));
-      font-size: 33px;
+      font-size: clamp(27px, 2.25vw, 34px);
       font-weight: 400;
       line-height: 1.34;
       color: var(--ink);
+      max-width: 760px;
     }
 
     .about-body {
-      position: absolute;
-      left: 80px;
-      right: 80px;
-      top: 50%;
-      transform: translateY(calc(-50% + 105px));
-      font-size: 32.8px;
+      font-size: clamp(22px, 1.9vw, 30px);
       font-weight: 400;
       line-height: 1.34;
       color: rgba(214, 208, 196, 0.65);
+      max-width: 920px;
+      margin-top: 48px;
     }
 
     .about-tagline {
-      position: absolute;
-      left: 8.33%;
-      right: 36.67%;
-      top: 50%;
-      transform: translateY(calc(-50% + 299px));
       font-size: 16px;
       font-weight: 500;
       color: rgba(214, 208, 196, 0.32);
       line-height: 1.575;
+      max-width: 760px;
+      margin-top: 36px;
     }
 
     /* rotated "Growth" watermark */
     .about-watermark {
       position: absolute;
-      right: -302px;
+      right: calc(clamp(380px, 33vw, 520px) - 92px);
       top: 0;
       bottom: 0;
-      width: 300px;
+      width: 184px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -812,14 +811,14 @@
 
     .about-watermark span {
       transform: rotate(-90deg);
-      font-size: 200px;
+      font-size: 132px;
       font-weight: 600;
-      color: rgba(164, 120, 100, 0.08);
+      color: rgba(164, 120, 100, 0.10);
       white-space: nowrap;
     }
 
     .about-photo-col {
-      width: 480px;
+      width: clamp(380px, 33vw, 520px);
       flex-shrink: 0;
       position: relative;
       background: #1a1010;
@@ -896,12 +895,12 @@
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding: 66px 80px 60px;
+      padding: 76px var(--page-gutter) 60px;
     }
 
     .projects-title-block {
-      width: 768px;
-      flex-shrink: 0;
+      flex: 1 1 620px;
+      min-width: 0;
     }
 
     .projects-year {
@@ -968,7 +967,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
-      padding: 0 80px 80px;
+      padding: 0 var(--page-gutter) 80px;
     }
 
     /* individual card */
@@ -2069,7 +2068,13 @@
     }
 
     body.light .hero-bg-gradient {
-      background: linear-gradient(180deg, #f0ece6 0%, #e8e2da 97%);
+      background:
+        radial-gradient(ellipse 30% 25% at 100% 100%, #e8e2da 0%, rgba(232, 226, 218, 0.96) 35%, rgba(232, 226, 218, 0.64) 58%, transparent 80%),
+        linear-gradient(180deg, rgba(240, 236, 230, 0.34) 0%, rgba(240, 236, 230, 0.06) 58%, rgba(232, 226, 218, 0.94) 100%);
+    }
+
+    body.light .hero-stats-bridge {
+      background: linear-gradient(180deg, transparent 0%, rgba(240, 236, 230, 0.78) 54%, #f0ece6 100%);
     }
 
     body.light .about {
@@ -2199,9 +2204,13 @@
         min-height: 720px;
       }
 
+      .hero-row {
+        padding-bottom: 56px;
+      }
+
       .hero-tagline {
         font-size: 56px;
-        padding-bottom: 80px;
+        padding-bottom: 0;
         letter-spacing: -0.5px;
       }
 
@@ -2220,6 +2229,7 @@
 
       .stats {
         grid-template-columns: repeat(2, 1fr);
+        padding: 0 24px;
       }
 
       .stat-cell {
@@ -2268,6 +2278,7 @@
       .about-tagline {
         position: static;
         transform: none;
+        margin-top: 0;
         margin-bottom: 20px;
       }
 
@@ -2467,6 +2478,17 @@
     }
 
     @media (max-width: 768px) {
+      .hero-video {
+        inset: -5%;
+        width: 110%;
+        height: 110%;
+      }
+
+      .hero-stats-bridge {
+        height: 48px;
+        margin-top: -48px;
+      }
+
       .hero-tagline {
         font-size: clamp(40px, 9vw, 60px) !important;
         padding-bottom: 40px !important;
@@ -2487,6 +2509,7 @@
 
       .stats {
         grid-template-columns: repeat(2, 1fr) !important;
+        padding: 0 !important;
         border-bottom: 1px solid rgba(214, 208, 196, 0.06);
       }
 
@@ -2515,6 +2538,7 @@
 
       .about-text-col {
         padding: 60px 20px 20px !important;
+        min-height: auto !important;
       }
 
       .about-label,
@@ -2537,6 +2561,41 @@
       .services-grid {
         grid-template-columns: 1fr !important;
       }
+
+      #chatbot-fab {
+        right: 18px;
+        bottom: 18px;
+        width: 52px;
+        height: 52px;
+        box-shadow: 0 4px 16px rgba(255, 142, 0, 0.32);
+      }
+
+      #chatbot-window {
+        right: 14px;
+        bottom: 82px;
+        width: calc(100vw - 28px);
+        height: min(500px, calc(100svh - 104px));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .hero-video {
+        display: none;
+      }
+    }
+
+    :where(a, button):focus-visible {
+      outline: 2px solid var(--orange);
+      outline-offset: 4px;
     }
   </style>
 </head>
@@ -2577,7 +2636,7 @@
 
     <!-- Layer 2: Glitch video overlay — opacity boosted -->
     <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto">
-      <source src="images/hero/Video_Generation_With_Glitch_Effect.mp4" type="video/mp4">
+      <source src="images/hero/index-hero-ping-pong.mp4" type="video/mp4">
     </video>
 
     <!-- Layer 3: Gradient vignette -->
@@ -2727,7 +2786,7 @@
 
   <!-- ── ABOUT ──────────────────────────────────────── -->
   <section class="about">
-    <div class="about-text-col" style="min-height: 823px;">
+    <div class="about-text-col">
       <p class="about-label">About Me as a Designer</p>
       <p class="about-headline">
         Surgeons, soldiers, and shoppers:<br>
@@ -2788,7 +2847,7 @@
 
     <div class="projects-grid">
 
-      <!-- Card 1: MUSPELL (Healthcare, shipped) -->
+      <!-- Card 1 — Clinical intelligence: MUSPELL (shipped) -->
       <a href="muspell.html" class="proj-card">
         <div class="proj-card-bg">
           <img src="gallery/muspell-motion/patient-view-poster.jpg" alt="Muspell patient-centric clinical archive">
@@ -2820,7 +2879,7 @@
         </div>
       </a>
 
-      <!-- Card 2: PENKNIFE (Healthcare ATS, shipped) -->
+      <!-- Card 2 — Workforce systems: PENKNIFE (shipped) -->
       <a href="penknife.html" class="proj-card">
         <div class="proj-card-bg">
           <img src="penknife/image%201.jpg" alt="Penknife healthcare recruiting dashboard">
@@ -2851,10 +2910,10 @@
         </div>
       </a>
 
-      <!-- Card 3: Titan Eyeplus (Retail, shipped) -->
+      <!-- Card 3 — Consumer & commerce: Titan Eyeplus (shipped) -->
       <a href="titaneyeplus_casestudy.html" class="proj-card">
         <div class="proj-card-bg">
-          <img src="images/portfolio-assets/eAP1hftLsiBHkOmZfM0MSnB3QRc.webp"
+          <img src="images/portfolio-assets/5FjWGy3WVjOTw0gnaugcHjpZJE.png"
             alt="Titan Eyeplus eyewear retail experience">
         </div>
         <div class="proj-card-overlay">
@@ -2883,11 +2942,12 @@
         </div>
       </a>
 
-      <!-- Card 4: CHARGEUR (consulting, NDA) -->
+      <!-- Card 4 — Mission-critical: CHARGEUR (consulting, NDA) -->
       <a href="chargeur.html" class="proj-card">
         <div class="proj-card-flag">Under NDA · Details altered</div>
         <div class="proj-card-bg">
-          <img src="images/hero/f61d554ae36d575b1da2095e5f27f4f1cbe9268e.png" alt="">
+          <img src="images/project-thumbnails/chargeur-operations.png"
+            alt="Chargeur field operations console">
         </div>
         <div class="proj-card-overlay">
 
@@ -2917,63 +2977,30 @@
         </div>
       </a>
 
-      <!-- Card 3: VIGIL -->
-      <a href="vigil.html" class="proj-card">
+      <!-- Card 5 — Enterprise operations: PARKBEHEER NL (consulting, NDA) -->
+      <a href="parkbeheer.html" class="proj-card">
         <div class="proj-card-flag">Under NDA · Details altered</div>
-        <div class="proj-card-bg" style="background:#0A0E14; display:flex; align-items:center; justify-content:center;">
-          <svg viewBox="0 0 160 160" width="140" height="140" style="opacity:0.85;">
-            <!-- Watch body -->
-            <rect x="52" y="28" width="56" height="104" rx="20" fill="#111827" stroke="#4ADE80" stroke-width="1.5" />
-            <!-- Band top -->
-            <rect x="62" y="10" width="36" height="20" rx="6" fill="#1a2332" />
-            <!-- Band bottom -->
-            <rect x="62" y="130" width="36" height="20" rx="6" fill="#1a2332" />
-            <!-- Screen -->
-            <rect x="58" y="38" width="44" height="52" rx="6" fill="#0A0E14" />
-            <!-- Grid lines -->
-            <line x1="80" y1="42" x2="80" y2="86" stroke="#4ADE80" stroke-width="0.4" stroke-opacity="0.3" />
-            <line x1="58" y1="64" x2="102" y2="64" stroke="#4ADE80" stroke-width="0.4" stroke-opacity="0.3" />
-            <!-- Status bar -->
-            <rect x="62" y="41" width="36" height="6" rx="1" fill="#4ADE80" fill-opacity="0.15" />
-            <text x="80" y="46" font-family="monospace" font-size="4" fill="#4ADE80" text-anchor="middle">VIGIL ·
-              W-01</text>
-            <!-- Compass rose -->
-            <circle cx="80" cy="64" r="14" fill="none" stroke="#4ADE80" stroke-width="0.8" stroke-opacity="0.5" />
-            <polygon points="80,52 83,62 80,60 77,62" fill="#4ADE80" />
-            <polygon points="80,76 83,66 80,68 77,66" fill="#4ADE80" opacity="0.4" />
-            <polygon points="68,64 78,61 76,64 78,67" fill="#4ADE80" opacity="0.4" />
-            <polygon points="92,64 82,61 84,64 82,67" fill="#4ADE80" opacity="0.4" />
-            <text x="80" y="58" font-family="monospace" font-size="3.5" fill="#4ADE80" text-anchor="middle">N</text>
-            <!-- Bottom data row -->
-            <rect x="61" y="90" width="18" height="9" rx="2" fill="#4ADE80" fill-opacity="0.1" stroke="#4ADE80"
-              stroke-width="0.5" />
-            <text x="70" y="96" font-family="monospace" font-size="4" fill="#4ADE80" text-anchor="middle">HR 72</text>
-            <rect x="83" y="90" width="18" height="9" rx="2" fill="#FCD34D" fill-opacity="0.1" stroke="#FCD34D"
-              stroke-width="0.5" />
-            <text x="92" y="96" font-family="monospace" font-size="4" fill="#FCD34D" text-anchor="middle">2.4km</text>
-            <!-- Green dot indicator -->
-            <circle cx="80" cy="108" r="3" fill="#4ADE80" />
-            <text x="80" y="119" font-family="monospace" font-size="5" fill="#4ADE80" text-anchor="middle"
-              opacity="0.7">OPERATIONAL</text>
-          </svg>
+        <div class="proj-card-bg">
+          <img src="images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png"
+            alt="Parkbeheer enforcement operations platform">
         </div>
         <div class="proj-card-overlay">
           <div class="proj-card-gradient-bottom"
-            style="background:linear-gradient(0deg,#0a0e14 0%, rgba(10,14,20,0) 100%);"></div>
+            style="background:linear-gradient(0deg,#1a1310 0%, rgba(26,19,16,0) 100%);"></div>
         </div>
         <div class="proj-card-content">
           <div class="proj-card-header">
-            <div class="proj-card-title">VIGIL</div>
-            <div class="proj-card-subtitle">Tactical Wearable System</div>
+            <div class="proj-card-title">Parkbeheer NL</div>
+            <div class="proj-card-subtitle">Enterprise B2G Platform</div>
           </div>
           <div class="proj-card-body">
             <p class="proj-card-desc">
-              Designing a tactical wearable for NATO infantry who cannot touch a screen, in darkness, under fire, with
-              gloves on. 67 screens. Wear OS 4 + iOS/Android.
+              Replacing a 20-year-old spreadsheet system with an enterprise platform for 120+ parking officers
+              managing 923K spaces across the Netherlands.
             </p>
             <div class="proj-card-cta">
-              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Defense ·
-                2025</span>
+              <span style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--coral);">Government
+                · 2018</span>
               <svg class="proj-card-arrow" viewBox="0 0 39 39" fill="none">
                 <circle cx="19.5" cy="19.5" r="18.5" stroke="#D6D0C4" stroke-width="1" />
                 <path d="M13 19.5h13M20.5 13l6.5 6.5-6.5 6.5" stroke="#D6D0C4" stroke-width="1.5" stroke-linecap="round"
@@ -2984,7 +3011,7 @@
         </div>
       </a>
 
-      <!-- Card 6: ROJNICA (consulting, NDA) -->
+      <!-- Card 6 — Autonomous systems: ROJNICA (consulting, NDA) -->
       <a href="rojnica.html" class="proj-card">
         <div class="proj-card-flag">Under NDA · Details altered</div>
         <div class="proj-card-bg">
@@ -3381,6 +3408,26 @@
     })();
 
     // ─── THEME (handled by nav-component.js) ───────────────
+
+    // The clip itself contains the forward + reverse motion. Explicit play
+    // requests keep that seamless loop reliable in Safari and embedded previews.
+    (function () {
+      var heroVideo = document.getElementById('heroVideo');
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!heroVideo || reduceMotion) return;
+
+      heroVideo.muted = true;
+      heroVideo.playsInline = true;
+      function playHeroVideo() {
+        heroVideo.play().catch(function () { });
+      }
+
+      playHeroVideo();
+      heroVideo.addEventListener('canplay', playHeroVideo, { once: true });
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && heroVideo.paused) playHeroVideo();
+      });
+    })();
 
     // ─── GSAP ──────────────────────────────────────────────
     gsap.registerPlugin(ScrollTrigger);
