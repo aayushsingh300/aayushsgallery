@@ -69,16 +69,86 @@
   }
 
   /* Videos inflated from <template> need an explicit play request in Safari
-     and some embedded previews, even when the autoplay attribute is present. */
+     and some embedded previews, even when the autoplay attribute is present.
+
+     The hero uses a ping-pong loop: native video playback runs forwards, then
+     requestAnimationFrame seeks backwards through the clip. Negative
+     playbackRate is not consistently supported by browsers. */
   const heroVideo = document.querySelector('.hero__video');
   if (heroVideo) {
+    const reverseFrameDuration = 1000 / 30;
+    let direction = 1;
+    let reverseFrame = 0;
+    let reverseStartedAt = 0;
+    let reverseStartedFrom = 0;
+    let reverseLastPaint = 0;
+
     heroVideo.muted = true;
     heroVideo.playsInline = true;
+
     const playHeroVideo = () => heroVideo.play().catch(() => {});
+
+    const playForward = () => {
+      direction = 1;
+      reverseStartedAt = 0;
+      reverseLastPaint = 0;
+      cancelAnimationFrame(reverseFrame);
+      reverseFrame = 0;
+      playHeroVideo();
+    };
+
+    const playReverse = now => {
+      if (direction !== -1) return;
+
+      if (document.hidden) {
+        reverseStartedAt = 0;
+        reverseFrame = requestAnimationFrame(playReverse);
+        return;
+      }
+
+      if (!reverseStartedAt) {
+        reverseStartedAt = now;
+        reverseStartedFrom = heroVideo.currentTime;
+      }
+
+      const nextTime = reverseStartedFrom - (now - reverseStartedAt) / 1000;
+      if (nextTime <= 0) {
+        heroVideo.currentTime = 0;
+        playForward();
+        return;
+      }
+
+      /* Limit seeks to 30fps so the decoder can paint each reverse frame. */
+      if (!reverseLastPaint || now - reverseLastPaint >= reverseFrameDuration) {
+        heroVideo.currentTime = nextTime;
+        reverseLastPaint = now;
+      }
+      reverseFrame = requestAnimationFrame(playReverse);
+    };
+
+    heroVideo.addEventListener('ended', () => {
+      direction = -1;
+      reverseStartedAt = 0;
+      reverseStartedFrom = heroVideo.duration;
+      reverseFrame = requestAnimationFrame(playReverse);
+    });
+
     playHeroVideo();
     heroVideo.addEventListener('canplay', playHeroVideo, { once: true });
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden && heroVideo.paused) playHeroVideo();
+      if (document.hidden && direction === -1) {
+        cancelAnimationFrame(reverseFrame);
+        reverseFrame = 0;
+        reverseStartedAt = 0;
+        return;
+      }
+
+      if (!document.hidden && direction === -1) {
+        reverseStartedFrom = heroVideo.currentTime;
+        reverseFrame = requestAnimationFrame(playReverse);
+      } else if (!document.hidden && heroVideo.paused) {
+        playHeroVideo();
+      }
     });
   }
 

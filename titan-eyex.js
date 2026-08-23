@@ -18,15 +18,46 @@
   }, { passive: true });
   updateProgress();
 
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Keep a designed campaign still visible until YouTube confirms muted playback.
+  var campaignVideo = document.getElementById('eyexCampaignVideo');
+  var campaignFrame = campaignVideo && campaignVideo.closest('.film-frame');
 
-  var hero = document.querySelector('.hero-product');
-  if (hero && !reduced) {
-    window.addEventListener('pointermove', function (event) {
-      if (window.innerWidth < 900) return;
-      var x = (event.clientX / window.innerWidth - .5) * 8;
-      var y = (event.clientY / window.innerHeight - .5) * 6;
-      hero.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
-    }, { passive: true });
+  function startCampaignPlayer() {
+    if (!campaignVideo || !campaignFrame || !window.YT || !window.YT.Player || campaignVideo.dataset.playerReady) return;
+    campaignVideo.dataset.playerReady = 'true';
+
+    new window.YT.Player(campaignVideo, {
+      events: {
+        onReady: function (event) {
+          event.target.mute();
+          event.target.playVideo();
+        },
+        onStateChange: function (event) {
+          if (event.data === window.YT.PlayerState.PLAYING) campaignFrame.classList.add('is-playing');
+        }
+      }
+    });
   }
+
+  if (campaignVideo) {
+    if (window.YT && window.YT.Player) {
+      startCampaignPlayer();
+    } else {
+      var previousYouTubeReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () {
+        if (typeof previousYouTubeReady === 'function') previousYouTubeReady();
+        startCampaignPlayer();
+      };
+
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        var youtubeApi = document.createElement('script');
+        youtubeApi.src = 'https://www.youtube.com/iframe_api';
+        youtubeApi.async = true;
+        document.head.appendChild(youtubeApi);
+      }
+    }
+  }
+
+  // The hero is deliberately static: the frame is presented as an industrial
+  // design specimen, while motion is reserved for the product interactions.
 })();
