@@ -39,7 +39,7 @@
       id: 'muspell',
       title: 'Muspell',
       href: 'muspell.html',
-      image: 'gallery/muspell images/hero-mockup.png',
+      image: 'gallery/muspell-motion/patient-view-poster.jpg',
       imageAlt: 'Muspell clinical intelligence platform',
       tags: ['healthcare', 'b2b', 'saas'],
       status: 'live',
