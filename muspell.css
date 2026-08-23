@@ -40,7 +40,7 @@ a { color: inherit; }
 button, input { font: inherit; }
 
 .shell {
-  width: min(1380px, calc(100% - 80px));
+  width: min(1240px, calc(100% - 80px));
   margin-inline: auto;
 }
 

@@ -34,6 +34,9 @@
             --font-heading: 'Geist', -apple-system, sans-serif;
             --font-body: 'Geist', -apple-system, sans-serif;
             --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
+            --case-shell: 1180px;
+            --case-reading: 760px;
+            --case-gutter: 80px;
         }
 
         html {
@@ -52,13 +55,15 @@
         }
 
         .container {
-            max-width: 1080px;
+            width: min(var(--case-shell), calc(100% - var(--case-gutter)));
+            max-width: none;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0;
         }
 
         .narrow {
-            max-width: 720px;
+            width: min(100%, var(--case-reading));
+            max-width: none;
             margin: 0 auto;
         }
 
@@ -101,7 +106,7 @@
         /* Hero composition: three surfaces, staggered so each one stays readable */
         .hero-comp {
             position: relative;
-            height: 440px;
+            height: 500px;
             margin-top: 44px;
         }
 
@@ -124,22 +129,22 @@
         .hero-screen.main {
             left: 0;
             top: 0;
-            width: 632px;
-            height: 395px;
+            width: 700px;
+            height: 438px;
             z-index: 2;
         }
 
         .hero-screen.main iframe {
             width: 1440px;
             height: 900px;
-            transform: scale(0.4389);
+            transform: scale(0.4861);
         }
 
         .hero-screen.back-left {
             right: 0;
             top: 8px;
-            width: 344px;
-            height: 215px;
+            width: 382px;
+            height: 239px;
             z-index: 1;
             opacity: 0.88;
         }
@@ -147,21 +152,21 @@
         .hero-screen.back-left iframe {
             width: 1440px;
             height: 900px;
-            transform: scale(0.2389);
+            transform: scale(0.2653);
         }
 
         .hero-screen.front-right {
             right: 18px;
             bottom: 0;
-            width: 396px;
-            height: 248px;
+            width: 430px;
+            height: 269px;
             z-index: 3;
         }
 
         .hero-screen.front-right iframe {
             width: 1440px;
             height: 900px;
-            transform: scale(0.275);
+            transform: scale(0.2986);
         }
 
         /* Stats strip */
@@ -228,7 +233,7 @@
 
         /* CHAPTERS */
         .chapter {
-            padding: 100px 0;
+            padding: 124px 0;
             border-bottom: 1px solid var(--border);
         }
 
@@ -247,24 +252,28 @@
 
         .chapter h2 {
             font-family: var(--font-heading);
-            font-size: 36px;
+            max-width: 900px;
+            font-size: clamp(40px, 5.2vw, 64px);
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 16px;
+            line-height: 1.08;
+            letter-spacing: -0.035em;
+            margin-bottom: 28px;
+            text-wrap: balance;
         }
 
         .chapter h3 {
             font-family: var(--font-heading);
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 600;
-            margin: 40px 0 16px;
+            margin: 52px 0 18px;
         }
 
         .chapter p {
             color: var(--text-secondary);
-            font-size: 16px;
-            margin-bottom: 20px;
-            max-width: 680px;
+            font-size: 17px;
+            line-height: 1.75;
+            margin-bottom: 24px;
+            max-width: var(--case-reading);
         }
 
         .chapter p strong {
@@ -836,8 +845,8 @@
 
         /* ── Responsive ── */
         @media (max-width: 860px) {
-            .container { padding: 0 24px; }
-            .narrow { padding: 0 24px; }
+            .container { width: calc(100% - 48px); padding: 0; }
+            .narrow { width: 100%; padding: 0; }
 
             .hero { padding: 72px 0 40px; min-height: auto; }
             .hero h1 { font-size: 36px; line-height: 1.2; }
@@ -905,7 +914,7 @@
         }
 
         @media (max-width: 540px) {
-            .container { padding: 0 16px; }
+            .container { width: calc(100% - 32px); padding: 0; }
             .hero h1 { font-size: 30px; }
             body.rojnica-case .hero-sub { font-size: 16px !important; }
             .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1031,7 +1040,7 @@
             <h2>The aircraft we were designing around</h2>
             <div class="spec-sub">12 units deployed across the Kalisz cooperative fleet</div>
             <div class="drone-hero-wrap">
-                <img src="images/rojnica-drone-spec.png" alt="AG-X12 Agricultural Drone">
+                <img src="images/rojnica-drone-spec-v2.png" alt="Unbranded 40-litre agricultural spray octocopter with RTK antenna, multispectral camera and eight-nozzle spray array">
                 <!-- Left labels -->
                 <div class="spec-label left" style="top:15%;left:0;">
                     <div class="spec-tag"><span class="st-val">2.8m</span><span class="st-key">Wingspan</span></div>
