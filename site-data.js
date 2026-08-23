@@ -122,13 +122,13 @@
         title: 'VIGIL',
         subtitle: 'Tactical Wearable System',
         tagLabels: ['Under NDA', 'Defence', 'Wearable'],
-        blurb: 'Designing a tactical wearable for NATO infantry who cannot touch a screen, in darkness, under fire, with gloves on. 67 screens. Wear OS 4 + iOS/Android.',
+        blurb: 'Designing a tactical wearable for infantry who cannot touch a screen, in darkness, under fire, with gloves on. 67 screens. Wear OS 4 + iOS/Android.',
         meta: 'Defence · Under NDA · 2025'
       },
       studio: {
         discipline: 'Mission-critical',
         blurb: 'A rugged smartwatch and companion system for soldiers working in darkness, rain and poor connectivity. Physical controls, haptics and glanceable alerts keep navigation, team status and health warnings usable with gloves on.',
-        meta: 'NATO programme · 2025',
+        meta: 'Defence programme · 2025',
         accent: '#4ade80',
         accentClass: 'project--green'
       }
