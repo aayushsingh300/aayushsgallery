@@ -132,11 +132,6 @@
 
   /* ── Markup ─────────────────────────────────────────────────────── */
 
-  var MARK =
-    '<svg viewBox="0 0 56 24" aria-hidden="true">' +
-      '<path d="M2 21C12 20 17 14 17 4c7 1 10 7 9 16M16 9C11 2 5 3 2 6c1 7 6 11 14 11M27 19c9 4 19 1 26-9"/>' +
-    '</svg>';
-
   /* The header names the project you are in, not just the studio you are on:
      its number in the index, its title, and the lens it was filed under. */
   var projectHTML = current
@@ -162,8 +157,8 @@
   header.innerHTML =
     '<div class="rf-pnav__bar">' +
       '<a class="rf-pnav__brand" href="' + esc(studioHref(STUDIO)) + '"' +
-        ' aria-label="' + esc(C.studioName) + ' home">' + MARK +
-        '<b>' + esc(C.studioName) + '</b>' +
+        ' aria-label="' + esc(C.studioName) + ' home">' +
+        '<span class="rf-pnav__wordmark">' + esc(C.studioName) + '</span>' +
       '</a>' +
       projectHTML +
       '<div class="rf-pnav__actions">' +

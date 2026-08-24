@@ -40,7 +40,10 @@ http.createServer((request, response) => {
     // Read and serve file
     fs.readFile(filePath, (error, content) => {
         if (error) {
-            if (error.code === 'ENOENT') {
+            // EISDIR: a clean URL such as /penknife matches an asset
+            // directory of the same name. Vercel serves penknife.html there,
+            // so the dev server has to resolve it the same way.
+            if (error.code === 'ENOENT' || error.code === 'EISDIR') {
                 // Try appending .html for extensionless URLs (e.g. /parkbeheer -> /parkbeheer.html)
                 const htmlPath = filePath + '.html';
                 fs.readFile(htmlPath, (err2, htmlContent) => {

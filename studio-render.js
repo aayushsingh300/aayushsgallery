@@ -112,12 +112,12 @@
     about: {
       label: 'About us',
       title: 'About us — rabbitsfoot',
-      description: 'rabbitsfoot is nine senior specialists spanning product, spatial, industrial, creative, technology and business design.',
+      description: 'rabbitsfoot is seven senior specialists spanning product, spatial, industrial, creative, technology, marketing and strategy.',
       contact: {
         lead: 'Want the whole team on it?',
         reply: 'That’s the only way we work.',
         lineOne: 'Meet the',
-        lineTwo: 'nine of us.'
+        lineTwo: 'seven of us.'
       }
     },
     contact: {
@@ -136,9 +136,9 @@
   var ORDER = ['home', 'works', 'about', 'contact'];
   var HERE = ROUTES[route];
 
-  /** Home is the bare file; every other route carries ?p=. */
+  /** Clean URLs. Vercel serves works.html at /works, etc. */
   function href(name) {
-    return name === 'home' ? 'studio.html' : 'studio.html?p=' + name;
+    return name === "home" ? "/" : "/" + name;
   }
 
   /**
@@ -153,6 +153,12 @@
   }
 
   function applyHead() {
+    /* The generated route files (index/works/about/contact) already ship the
+       correct title, description and canonical in the HTML source, where
+       crawlers and link-preview bots read them without running JS. Rewriting
+       them here would silently undo that, so only script the head when this
+       file is opened directly as studio.html, which carries no canonical. */
+    if (document.querySelector('link[rel="canonical"]')) return;
     document.title = HERE.title;
     var meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', HERE.description);
@@ -222,10 +228,7 @@
       '<div class="cursor" aria-hidden="true"><i></i><span>View</span></div>' +
       '<header class="nav" id="nav">' +
         '<a class="nav__brand" href="studio.html" aria-label="' + esc(C.studioName) + ' home">' +
-          '<svg viewBox="0 0 56 24" aria-hidden="true">' +
-            '<path d="M2 21C12 20 17 14 17 4c7 1 10 7 9 16M16 9C11 2 5 3 2 6c1 7 6 11 14 11M27 19c9 4 19 1 26-9"/>' +
-          '</svg>' +
-          '<b>' + esc(C.studioName) + '</b>' +
+          '<span class="brand-wordmark">' + esc(C.studioName) + '</span>' +
         '</a>' +
         '<nav class="nav__links" aria-label="Primary navigation">' + links + '</nav>' +
         '<button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu">' +
@@ -390,13 +393,14 @@
     if (!host) return;
 
     host.className = 'roster';
+    host.dataset.count = DATA.team.length;
     host.removeAttribute('data-render');
     host.innerHTML = DATA.team.map(function (member, index) {
       var accent = member.accent || '#f1ede4';
       var link = member.linkedin
         ? '<a class="member__link" href="' + esc(member.linkedin) + '" target="_blank" rel="noopener noreferrer">' +
           'LinkedIn<b>↗</b></a>'
-        : '<span class="member__link member__link--none">LinkedIn soon</span>';
+        : '';
 
       return '<article class="member reveal" style="--member-accent:' + esc(accent) + '">' +
         '<div class="member__frame">' +
@@ -424,6 +428,10 @@
 
     var copy = HERE.contact;
     var contactHref = route === 'about' ? href('contact') : 'mailto:' + C.email;
+    var elsewhere = route === 'about'
+      ? '<div><span>Studio</span><p>Independent by design</p></div>'
+      : '<div><span>Elsewhere</span><p>' +
+          '<a href="' + esc(C.linkedin) + '" target="_blank" rel="noopener noreferrer">LinkedIn</a></p></div>';
 
     host.className = 'contact';
     host.id = host.id || 'contact';
@@ -439,8 +447,7 @@
         '<div><span>New business</span><a href="mailto:' + esc(C.email) + '">' + esc(C.email) + '</a>' +
           '<br><a href="tel:' + esc(C.phoneHref) + '">' + esc(C.phone) + '</a></div>' +
         '<div><span>Based in</span><p>' + esc(C.location) + '<br>' + esc(C.reach) + '</p></div>' +
-        '<div><span>Elsewhere</span><p>' +
-          '<a href="' + esc(C.linkedin) + '" target="_blank" rel="noopener noreferrer">LinkedIn</a></p></div>' +
+        elsewhere +
         '<p>© 2026 ' + esc(C.studioName) + ' studio</p>' +
       '</footer>';
   }

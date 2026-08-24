@@ -5,6 +5,7 @@
 
   const loaderCount = document.querySelector('.loader__count');
   const progressBar = document.querySelector('.progress i');
+  const nav = document.getElementById('nav');
   const menu = document.getElementById('menu');
   const menuButton = document.querySelector('.nav__menu');
   const menuClose = document.querySelector('.menu__close');
@@ -471,6 +472,20 @@
     heroVideoWrap.style.opacity = `${Math.max(0, 1 - progress * 1.25)}`;
   }
 
+  /* The header's glass firms up once the page has left the hero. Read from the
+     real scrollY rather than the eased scrollCurrent so the state does not lag
+     the content, and keep the two thresholds apart so a scroll that rests near
+     the boundary cannot flicker. */
+  let navScrolled = false;
+  function updateNavGlass() {
+    if (!nav) return;
+    const y = scrollY;
+    if (!navScrolled && y > 48) navScrolled = true;
+    else if (navScrolled && y < 24) navScrolled = false;
+    else return;
+    nav.classList.toggle('is-scrolled', navScrolled);
+  }
+
   function frame(time) {
     scrollCurrent = lerp(scrollCurrent, scrollTarget, reduced ? 1 : .095);
     pointer.x = lerp(pointer.x, pointer.tx, .14);
@@ -480,6 +495,7 @@
     if (progressBar) {
       progressBar.style.transform = `scaleX(${maxScroll > 0 ? scrollCurrent / maxScroll : 0})`;
     }
+    updateNavGlass();
     if (cursor) {
       cursor.style.transform = `translate3d(${pointer.x - 36}px, ${pointer.y - 36}px, 0)`;
     }

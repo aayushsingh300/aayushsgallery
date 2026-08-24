@@ -38,7 +38,7 @@
     {
       id: 'muspell',
       title: 'Muspell',
-      href: 'muspell.html',
+      href: '/muspell',
       image: 'gallery/muspell-motion/patient-view-poster.jpg',
       imageAlt: 'Muspell clinical intelligence platform',
       tags: ['healthcare', 'b2b', 'saas'],
@@ -64,7 +64,7 @@
     {
       id: 'penknife',
       title: 'Penknife',
-      href: 'penknife.html',
+      href: '/penknife',
       image: 'penknife/image%201.jpg',
       imageAlt: 'Penknife white-label healthcare staffing platform',
       tags: ['saas', 'b2b', 'healthcare'],
@@ -87,7 +87,7 @@
     {
       id: 'chargeur',
       title: 'Chargeur',
-      href: 'chargeur.html',
+      href: '/chargeur',
       image: 'images/project-thumbnails/chargeur-operations.png',
       imageAlt: 'Armoured vehicle crew member using the Chargeur ammunition load management interface',
       tags: ['defence', 'b2b', 'concept'],
@@ -112,7 +112,7 @@
     {
       id: 'vigil',
       title: 'Vigil',
-      href: 'vigil.html',
+      href: '/vigil',
       image: 'images/project-thumbnails/vigil-field.png',
       imageAlt: 'Gloved field operator using the Vigil tactical wearable in rain at dusk',
       tags: ['defence', 'b2b', 'concept'],
@@ -138,7 +138,7 @@
     {
       id: 'prahari',
       title: 'Prahari',
-      href: 'prahari.html',
+      href: '/prahari',
       image: 'images/project-thumbnails/prahari-command.png',
       imageAlt: 'Duty officer using the Prahari counter-drone command and control interface',
       tags: ['defence', 'b2b', 'concept'],
@@ -162,7 +162,7 @@
     {
       id: 'rojnica',
       title: 'Rojnica',
-      href: 'rojnica.html',
+      href: '/rojnica',
       image: 'images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png',
       imageAlt: 'Rojnica agricultural drone fleet system',
       tags: ['b2b', 'enterprise', 'concept'],
@@ -187,7 +187,7 @@
     {
       id: 'parkbeheer',
       title: 'Parkbeheer',
-      href: 'parkbeheer.html',
+      href: '/parkbeheer',
       image: 'images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png',
       imageAlt: 'Parkbeheer enforcement operations platform',
       tags: ['b2b', 'enterprise', 'concept'],
@@ -211,7 +211,7 @@
     {
       id: 'titan-eyex',
       title: 'Titan EYEx',
-      href: 'titan-eyex.html',
+      href: '/titan-eyex',
       image: 'images/eyex/eyex-hero.webp',
       imageAlt: 'Titan EyeX smart glasses and companion app experience',
       tags: ['b2c', 'wearable'],
@@ -234,7 +234,7 @@
     {
       id: 'titan-eyeplus',
       title: 'Titan Eyeplus',
-      href: 'titaneyeplus_casestudy.html',
+      href: '/titan-eyeplus',
       image: 'images/portfolio-assets/5FjWGy3WVjOTw0gnaugcHjpZJE.png',
       imageAlt: 'Titan Eyeplus e-commerce experience',
       tags: ['b2c', 'ecommerce'],
@@ -281,7 +281,7 @@
     {
       id: 'klu-pos',
       title: 'KLu POS',
-      href: 'klu-pos.html',
+      href: '/klu-pos',
       image: 'images/klu/pos-product-grid.jpg',
       imageAlt: 'KLu cannabis point-of-sale product grid',
       tags: ['b2b', 'saas'],
@@ -335,8 +335,7 @@
    * `linkedin: null` means "no verified profile URL yet" and the UI simply
    * omits the link. Never guess a LinkedIn URL: it can land on a stranger.
    *
-   * Photos: drop a square-ish portrait at images/team/<id>.jpg and it appears.
-   * Until then the roster falls back to a drawn monogram, so nothing breaks.
+   * Portraits are editorial illustrations, not real team photographs.
    */
   var TEAM = [
     {
@@ -345,9 +344,19 @@
       role: 'Founder · Product Design',
       specialty: 'Systems design & mission-critical interfaces',
       note: 'Starts every project in the field, ends it beside the engineers.',
-      photo: 'images/portfolio-assets/Aayush profile picture.png',
-      linkedin: 'https://www.linkedin.com/in/aayushran/',
+      photo: 'images/team/aayush-illustration.jpg',
+      linkedin: null,
       accent: '#ff5c3f'
+    },
+    {
+      id: 'sai',
+      name: 'Sai',
+      role: 'Co-founder · Marketing Head',
+      specialty: 'Brand, go-to-market strategy & studio growth',
+      note: 'Connects the studio’s point of view with the people and problems it can serve best.',
+      photo: 'images/team/sai-illustration.jpg',
+      linkedin: null,
+      accent: '#4ade80'
     },
     {
       id: 'kashish',
@@ -355,19 +364,9 @@
       role: 'Retail & Spatial Experience',
       specialty: 'Customer journeys, environments & service touchpoints',
       note: 'Connects what people see, touch and do into one coherent experience.',
-      photo: 'images/team/kashish.jpg',
+      photo: 'images/team/kashish-illustration.jpg',
       linkedin: null,
       accent: '#dfff45'
-    },
-    {
-      id: 'alok',
-      name: 'Alok',
-      role: 'Interaction Design',
-      specialty: 'Complex flows, state & edge cases',
-      note: 'Obsessed with the screens that only appear when something goes wrong.',
-      photo: 'images/team/alok.jpg',
-      linkedin: null,
-      accent: '#6d8fff'
     },
     {
       id: 'jovi',
@@ -375,7 +374,7 @@
       role: 'Design & Business Strategy',
       specialty: 'Positioning, product direction & opportunity design',
       note: 'Keeps the creative ambition connected to a viable business move.',
-      photo: 'images/team/jovi.jpg',
+      photo: 'images/team/jovi-illustration.jpg',
       linkedin: null,
       accent: '#c59aff'
     },
@@ -385,7 +384,7 @@
       role: 'Creative & Art Direction',
       specialty: 'Visual worlds, campaigns & cross-medium expression',
       note: 'Builds the visual point of view that lets every medium feel related.',
-      photo: 'images/team/himshikha.jpg',
+      photo: 'images/team/himshikha-illustration.jpg',
       linkedin: null,
       accent: '#f1ede4'
     },
@@ -395,7 +394,7 @@
       role: 'Industrial Design',
       specialty: 'Physical products, form & prototyping',
       note: 'Turns an idea into something that can be held, tested and manufactured.',
-      photo: 'images/team/prashant.jpg',
+      photo: 'images/team/prashant-illustration.jpg',
       linkedin: null
     },
     {
@@ -404,29 +403,9 @@
       role: 'Backend Technology',
       specialty: 'Systems architecture, APIs & dependable infrastructure',
       note: 'Makes sure the experience has a resilient technical spine behind it.',
-      photo: 'images/team/naman.jpg',
+      photo: 'images/team/naman-illustration.jpg',
       linkedin: null,
       accent: '#6d8fff'
-    },
-    {
-      id: 'anand',
-      name: 'Anand',
-      role: 'Marketing',
-      specialty: 'Go-to-market thinking, communication & growth',
-      note: 'Finds the clearest bridge between a strong idea and the people it is for.',
-      photo: 'images/team/anand.jpg',
-      linkedin: null,
-      accent: '#f0b429'
-    },
-    {
-      id: 'sai',
-      name: 'Sai',
-      role: 'Operations & Finance',
-      specialty: 'Delivery, commercial operations & studio finance',
-      note: 'Keeps ambitious work moving with the right structure around it.',
-      photo: 'images/team/sai.jpg',
-      linkedin: null,
-      accent: '#4ade80'
     }
   ];
 

@@ -1,15 +1,13 @@
-# Team portraits
+# Team portrait illustrations
 
-Drop one image per person here, named after their `id` in `site-data.js`:
+The seven active portraits are generated 4:5 editorial illustrations:
 
-    kashish.jpg   alok.jpg   jovi.jpg   himshikha.jpg   prashant.jpg
+    aayush   sai   kashish   jovi   himshikha   prashant   naman
 
-Aayush currently points at `images/portfolio-assets/Aayush profile picture.png`;
-change the `photo` field in `site-data.js` if you want a different one.
+Files use the `<id>-illustration.jpg` convention and are referenced from the
+`TEAM` list in `site-data.js`. Source photographs are identity references only
+and are not shipped with the site.
 
-**Format:** portrait, roughly 4:5 (e.g. 800 × 1000), under ~300 KB.
-The roster renders them greyscale and brings colour back on hover, so
-contrast matters more than colour.
-
-If a file is missing the roster falls back to a drawn monogram in that
-person's accent colour — nothing breaks, so add them as they arrive.
+The roster uses full-colour artwork with a light saturation treatment that
+lifts on hover. If an illustration is missing, its card falls back to a drawn
+monogram in that person's accent colour.

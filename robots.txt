@@ -1,0 +1,63 @@
+# https://www.rabbitsfoot.in/robots.txt
+# rabbitsfoot® — independent design studio, Bengaluru
+
+# ─── Search engines ──────────────────────────────────────────────
+User-agent: *
+Allow: /
+
+# ─── Answer engines / LLM crawlers ───────────────────────────────
+# Explicitly welcomed. These are the crawlers that decide whether the
+# studio gets cited inside ChatGPT, Claude, Perplexity, Copilot and
+# Google's AI Overviews. Silence here reads as "no" to some of them.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# ─── Housekeeping ────────────────────────────────────────────────
+# Legacy ?p= and ?face= URLs are intentionally NOT disallowed: they are
+# 301-redirected / canonicalised, and a crawler must be able to fetch
+# them to see that. Blocking here would freeze the duplicates in place.
+
+Sitemap: https://www.rabbitsfoot.in/sitemap.xml
