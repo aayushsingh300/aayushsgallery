@@ -35,6 +35,10 @@
       document.documentElement.dataset.route = known[p] ? p : 'home';
     })();
   </script>
+<!-- seo:begin -->
+  <link rel="canonical" href="https://www.rabbitsfoot.in/">
+  <meta name="robots" content="noindex, follow">
+<!-- seo:end -->
 </head>
 <body>
   <div class="loader" aria-hidden="true">
@@ -492,9 +496,68 @@
       </aside>
     </section>
 
+
+    <!--
+      Questions people actually ask before writing. Answers are visible on the
+      page, not collapsed — build-seo.mjs mirrors this exact copy into FAQPage
+      structured data, and structured data that does not match what a visitor
+      can read is a penalty rather than a rich result. Edit the copy here and
+      re-run the build; the schema follows.
+    -->
+    <section class="faq" id="questions" data-page="contact" data-theme="dark"
+             aria-labelledby="faq-title">
+      <header class="faq__head">
+        <span class="reveal">Before you write</span>
+        <h2 class="faq__title" id="faq-title">The questions<br><em>we get asked.</em></h2>
+      </header>
+
+      <div class="faq__list">
+        <article class="faq__item reveal">
+          <h3>What kind of work does rabbitsfoot take on?</h3>
+          <p>Product and UX design is our deepest practice — digital products taken end to end, from research and product strategy through interaction, interface and build support. Around that we work in design research, design systems, industrial design and spatial and retail experience. The through-line is not the medium. It is problems where being wrong is expensive.</p>
+        </article>
+
+        <article class="faq__item reveal">
+          <h3>Do you work on defence and other confidential programmes?</h3>
+          <p>Yes. A significant part of the studio's work is mission-critical: counter-drone command and control, drone fleet operations, ammunition and defence logistics, and rugged wearables for the field. That work reaches us through partner agencies and is covered by NDA, so names, programme details and some numbers are altered in the public case studies. The design decisions and the reasoning behind them are described accurately.</p>
+        </article>
+
+        <article class="faq__item reveal">
+          <h3>Where are you based, and can you work with a team elsewhere?</h3>
+          <p>The studio is in Bengaluru, India, and works worldwide. Most of our clients sit three to nine hours behind us, which in practice means a working overlap every afternoon and a finished piece of thinking waiting when your day starts.</p>
+        </article>
+
+        <article class="faq__item reveal">
+          <h3>Who actually does the work?</h3>
+          <p>The people in the first call. The studio is deliberately small and entirely senior — no juniors staffed onto client work, no hand-off between the people who understood the problem and the people who draw the answer. That is the reason we stay this size.</p>
+        </article>
+
+        <article class="faq__item reveal">
+          <h3>How do you scope and price an engagement?</h3>
+          <p>Nothing is priced before the problem is understood. A thirty-minute call, then a short written response with what we think the real problem is and how we would scope it — usually within a week. Engagements are quoted as a whole piece of work rather than by the hour, so the estimate does not move because a question took longer to answer than expected.</p>
+        </article>
+
+        <article class="faq__item reveal">
+          <h3>Can you work alongside our in-house design team?</h3>
+          <p>Often that is the better arrangement. We are used to joining an existing team on the hard part — the system nobody has managed to untangle, the domain that takes months to learn, the design system that needs governance before it needs components — and leaving behind something the in-house team can carry on with.</p>
+        </article>
+
+        <article class="faq__item reveal">
+          <h3>Do you design physical products and spaces as well as software?</h3>
+          <p>Yes, and in the same team rather than through a subcontractor. Industrial design and spatial and retail experience sit inside the studio, which is unusual at this size. It matters when a brief crosses over — a wearable that is a device and an interface and a charging story, or a retail journey that is a space and an app at once.</p>
+        </article>
+
+        <article class="faq__item reveal">
+          <h3>How quickly will you reply?</h3>
+          <p>Within one working day, from a real person who read what you sent. Half-formed is fine — a screenshot of the spreadsheet everyone actually uses is often the most useful thing you can send.</p>
+        </article>
+      </div>
+    </section>
+
   </main>
 
   <script src="site-data.js" defer></script>
+  <script src="studio-markup.js" defer></script>
   <script src="studio-render.js" defer></script>
   <script src="studio.js" defer></script>
 </body>

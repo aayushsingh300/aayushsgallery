@@ -125,12 +125,25 @@
      which sets the face again. Only the shared project pages do, and the
      app prototypes carry no header at all, so they are left clean. */
   var SHELL = {
-    'index.html': true, 'all-works.html': true, 'blogs.html': true,
-    'about.html': true, 'resume.html': true, 'studio.html': true
+    'index': true, 'all-works': true, 'works': true, 'blogs': true,
+    'about': true, 'contact': true, 'resume': true, 'studio': true
   };
 
   function fileOf(href) {
-    return String(href).split('#')[0].split('?')[0].split('/').pop();
+    var file = String(href).split('#')[0].split('?')[0].split('/').pop();
+    return file.replace(/\.html$/i, '') || 'index';
+  }
+
+  function localHref(value) {
+    if (location.protocol !== 'file:' || !value || value.charAt(0) !== '/' || value.slice(0, 2) === '//') {
+      return value;
+    }
+
+    var match = value.match(/^([^?#]*)([?#][\s\S]*)?$/);
+    var path = match[1].replace(/^\/+|\/+$/g, '');
+    var suffix = match[2] || '';
+    if (!path) return 'index.html' + suffix;
+    return path + (/\.html$/i.test(path) ? '' : '.html') + suffix;
   }
 
   /* site-data.js is the truth where it is loaded (all-works, the case studies
@@ -146,9 +159,8 @@
   }
 
   function isProject(file) {
-    if (!/\.html$/.test(file)) return false;
     if (PROJECTS) return Boolean(PROJECTS[file]);
-    return !SHELL[file] && !/-app\.html$/.test(file);
+    return !SHELL[file] && !/-app$/.test(file);
   }
 
   /* Idempotent: a link that already names a face is left as it is, so this can
@@ -159,6 +171,8 @@
 
       var href = link.getAttribute('href');
       if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;
+      href = localHref(href);
+      link.setAttribute('href', href);
       if (href.indexOf('face=') !== -1) return;
       if (!isProject(fileOf(href))) return;
 

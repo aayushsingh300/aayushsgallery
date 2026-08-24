@@ -76,9 +76,22 @@
     return String(n).padStart(2, '0');
   }
 
+  function localHref(value) {
+    if (location.protocol !== 'file:' || !value || value.charAt(0) !== '/' || value.slice(0, 2) === '//') {
+      return value;
+    }
+
+    var match = value.match(/^([^?#]*)([?#][\s\S]*)?$/);
+    var path = match[1].replace(/^\/+|\/+$/g, '');
+    var suffix = match[2] || '';
+    if (!path) return 'index.html' + suffix;
+    return path + (/\.html$/i.test(path) ? '' : '.html') + suffix;
+  }
+
   /** Keep the studio face on every hop, the same way ?p= keeps the route. */
   function studioHref(href) {
     if (!href) return href;
+    href = localHref(href);
     var hash = '';
     var hashAt = href.indexOf('#');
     if (hashAt !== -1) {
@@ -89,13 +102,14 @@
   }
 
   function fileOf(href) {
-    return String(href).split('#')[0].split('?')[0].split('/').pop();
+    var file = String(href).split('#')[0].split('?')[0].split('/').pop();
+    return file.replace(/\.html$/i, '') || 'index';
   }
 
   /* ── Where in the work are we ───────────────────────────────────── */
 
   var DATA = global.SITE_DATA;
-  var page = fileOf(location.pathname) || 'index.html';
+  var page = fileOf(location.pathname);
   var works = DATA ? DATA.works : [];
 
   /* Numbered by position in the full index, so the header agrees with the row
@@ -259,9 +273,12 @@
       var file = fileOf(href);
       var hash = href.indexOf('#') === -1 ? '' : href.slice(href.indexOf('#'));
 
-      if (file === 'index.html') link.setAttribute('href', studioHref(STUDIO + hash));
-      else if (file === 'all-works.html') link.setAttribute('href', studioHref(STUDIO + '?p=works'));
+      if (file === 'index' || file === 'studio') link.setAttribute('href', studioHref(STUDIO + hash));
+      else if (file === 'works' || file === 'all-works') link.setAttribute('href', studioHref(STUDIO + '?p=works'));
+      else if (file === 'about') link.setAttribute('href', studioHref(STUDIO + '?p=about'));
+      else if (file === 'contact') link.setAttribute('href', studioHref(STUDIO + '?p=contact'));
       else if (projects[file] && href.indexOf('face=') === -1) link.setAttribute('href', studioHref(href));
+      else link.setAttribute('href', localHref(href));
     });
   }
 

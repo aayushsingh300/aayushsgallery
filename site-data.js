@@ -489,4 +489,9 @@
     activeDisciplines: activeDisciplines,
     view: view
   };
-})(window);
+
+  /* build-seo.mjs loads this same file in Node to pre-render the work grid,
+     the roster and the footer into static HTML, so one project added here
+     reaches the crawler without a browser in the loop. */
+  if (typeof module === 'object' && module.exports) module.exports = global.SITE_DATA;
+})(typeof window !== 'undefined' ? window : globalThis);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.rabbitsfoot.in/</loc>
     <lastmod>2026-08-24</lastmod>
@@ -11,6 +12,16 @@
     <lastmod>2026-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/project-thumbnails/prahari-command.png</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/project-thumbnails/chargeur-operations.png</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/project-thumbnails/vigil-field.png</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/gallery/muspell-motion/patient-view-poster.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/penknife/image%201.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/klu/pos-product-grid.jpg</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/eyex/eyex-hero.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/portfolio-assets/5FjWGy3WVjOTw0gnaugcHjpZJE.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/about</loc>
@@ -29,60 +40,70 @@
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/project-thumbnails/prahari-command.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/rojnica</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/hero/8e872aef4bda3c9c75e58c3b6bc2fe1e348856b7.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/chargeur</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/project-thumbnails/chargeur-operations.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/vigil</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/project-thumbnails/vigil-field.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/muspell</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/gallery/muspell-motion/patient-view-poster.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/penknife</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/penknife/image%201.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/parkbeheer</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/hero/0f6b5d25704bdb0a6bd7a0f6bab98cbeb3b06450.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/klu-pos</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/klu/pos-product-grid.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/titan-eyex</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/eyex/eyex-hero.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/titan-eyeplus</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image><image:loc>https://www.rabbitsfoot.in/images/portfolio-assets/5FjWGy3WVjOTw0gnaugcHjpZJE.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://www.rabbitsfoot.in/prahari-app</loc>

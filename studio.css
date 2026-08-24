@@ -278,11 +278,11 @@ button {
 }
 
 .brand-wordmark {
-  font-family: RFHalimun, "Brush Script MT", "Segoe Script", cursive;
-  font-size: clamp(27px, 2.35vw, 36px);
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.4vw, 21.4px);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: .015em;
+  letter-spacing: .02em;
   text-transform: none;
   white-space: nowrap;
 }
@@ -3156,5 +3156,88 @@ a.index-row:focus-visible .index-row__mark {
     max-height: none;
     opacity: .7;
     margin-top: 10px;
+  }
+}
+
+/* ── FAQ ─────────────────────────────────────────────────────────────
+   Contact route only. Answers stay visible rather than collapsed: this
+   copy is mirrored verbatim into FAQPage structured data, and Google
+   treats schema that a visitor cannot read as a violation, not a bonus.
+   Two columns on desktop — the head holds the left rail so the questions
+   read as one continuous list rather than a boxed accordion. */
+
+.faq {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr);
+  gap: clamp(40px, 6vw, 110px);
+  padding: 12vh var(--pad);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.faq__head {
+  align-self: start;
+  position: sticky;
+  top: clamp(90px, 12vh, 140px);
+}
+
+.faq__head > span {
+  display: block;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(241, 237, 228, .22);
+  font: 9px/1 var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .55;
+}
+
+.faq__title {
+  margin: 26px 0 0;
+  font: 400 clamp(38px, 4.2vw, 68px)/.94 var(--serif);
+  letter-spacing: -.055em;
+}
+
+.faq__title em {
+  font-style: normal;
+  color: var(--acid);
+}
+
+.faq__list {
+  display: grid;
+  align-content: start;
+}
+
+.faq__item {
+  padding: clamp(24px, 3vh, 34px) 0;
+  border-top: 1px solid rgba(241, 237, 228, .16);
+}
+
+.faq__item:last-child {
+  border-bottom: 1px solid rgba(241, 237, 228, .16);
+}
+
+.faq__item h3 {
+  max-width: 24em;
+  margin: 0;
+  font: 400 clamp(19px, 1.7vw, 26px)/1.28 var(--serif);
+  letter-spacing: -.025em;
+}
+
+.faq__item p {
+  max-width: 44em;
+  margin: 14px 0 0;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.66;
+  opacity: .7;
+}
+
+@media (max-width: 900px) {
+  .faq {
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 5vh, 44px);
+  }
+
+  .faq__head {
+    position: static;
   }
 }
