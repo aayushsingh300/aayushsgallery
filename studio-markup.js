@@ -99,15 +99,20 @@
   }
 
   /**
-   * Case-study pages are shared with the personal portfolio, so a link out of
-   * the studio says which face it is leaving from: studio-nav.js reads
-   * ?face=studio and dresses the page in the studio's header instead of the
-   * portfolio's. Every such page carries a self-canonical without the query,
-   * so the parameter never splits a URL in the index.
+   * Case-study pages are shared with the personal portfolio, and studio-nav.js
+   * has to decide which header to wear. It used to be told in the URL —
+   * every link out of the studio carried ?face=studio — which meant every
+   * internal link on the site pointed at a URL that was not the canonical
+   * one. Crawl budget went on duplicates and the link equity took an extra
+   * hop through a rel=canonical to land where it was already meant to be.
+   *
+   * studio-nav.js's second test reads the face remembered for the visit, so
+   * the studio simply remembers itself on load (see studio-render.js) and
+   * links out cleanly. Same header, canonical URL. Old ?face= links still
+   * resolve — the first test in studio-nav.js has not changed.
    */
   function projectHref(target) {
-    if (!target) return target;
-    return target + (target.indexOf('?') === -1 ? '?' : '&') + 'face=studio';
+    return target;
   }
 
   /* ── Chrome: header, mobile menu, progress bar, overlays ───────── */
@@ -249,7 +254,7 @@
         ' data-preview="' + esc(w.image || '') + '"' +
         ' style="--row-accent:' + esc(w.accent) + '">' +
         '<span class="index-row__num">' + pad(index + 1) + '</span>' +
-        '<span class="index-row__thumb" aria-hidden="true">' + media(DATA, w, false) + '</span>' +
+        '<span class="index-row__thumb" aria-hidden="true">' + media(DATA, w, index < 3) + '</span>' +
         '<h3 class="index-row__title">' + esc(w.title) + '</h3>' +
         '<span class="index-row__disc">' + esc(w.discipline) + '</span>' +
         '<p class="index-row__blurb">' + esc(w.blurb) + '</p>' +

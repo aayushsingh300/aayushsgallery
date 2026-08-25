@@ -53,6 +53,13 @@
   var route = document.documentElement.dataset.route || 'home';
   var HERE = M.ROUTES[route];
 
+  /* Case studies are shared with the personal portfolio and studio-nav.js
+     picks a header from the face remembered for this visit. Recording it here
+     is what lets every link out of the studio stay a clean, canonical URL
+     instead of carrying ?face=studio — see projectHref in studio-markup.js.
+     nav-component.js writes 'personal' the same way on the portfolio pages. */
+  try { sessionStorage.setItem('rf-face', 'studio'); } catch (e) { /* private mode */ }
+
   /* Clean URLs such as /works need a web server. When a page is opened from
      Finder, translate them to the real sibling files instead of accidentally
      pointing at the Mac's filesystem root. HTTP(S) output stays unchanged. */

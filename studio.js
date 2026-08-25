@@ -278,6 +278,35 @@
   }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 
+  /* Below-fold video.
+     `autoplay` is not a hint — a browser fetches the clip during page load
+     whether or not anyone will ever scroll to it, which put 2.4MB on the
+     critical path of both / and /about for a section most visitors never
+     reach. The poster paints immediately at a fraction of the weight; the
+     video itself is only fetched once its section is nearly in view.
+     A browser that refuses to play simply keeps showing the poster. */
+  const deferredVideos = [...document.querySelectorAll('video[data-defer-play]')];
+
+  function playDeferred(video) {
+    video.preload = 'auto';
+    video.load();
+    const attempt = video.play();
+    if (attempt) attempt.catch(() => { /* autoplay blocked — poster stands in */ });
+  }
+
+  if (deferredVideos.length && 'IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries, self) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        playDeferred(entry.target);
+        self.unobserve(entry.target);
+      });
+    }, { rootMargin: '250px 0px' });
+    deferredVideos.forEach(video => videoObserver.observe(video));
+  } else {
+    deferredVideos.forEach(playDeferred);
+  }
+
   function openMenu() {
     menu.classList.add('is-open');
     menu.setAttribute('aria-hidden', 'false');

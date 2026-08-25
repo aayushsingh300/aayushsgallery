@@ -438,7 +438,7 @@ ${socialTags({ url, title: route.title, description: route.description })}
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/images/og/rabbitsfoot-logo.png">
-  <link rel="stylesheet" href="studio.css">
+${route.preload ? `  <link rel="preload" as="image" href="${esc(route.preload)}" fetchpriority="high">\n` : ''}  <link rel="stylesheet" href="studio.css">
 
   <script type="application/ld+json">
 ${JSON.stringify(routeGraph(route, faq), null, 2)}

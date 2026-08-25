@@ -112,6 +112,9 @@ export const ROUTES = [
     title: 'rabbitsfoot — Product Design & UX Studio in Bengaluru',
     description:
       `rabbitsfoot is an independent product design and UX studio in Bengaluru. ${Team_Word} senior designers working on defence, healthcare, enterprise and autonomous-systems interfaces — no hand-offs in thinking.`,
+    /* The hero video's poster frame, and therefore this page's Largest
+       Contentful Paint. Preloaded so it is not queued behind the stylesheet. */
+    preload: '/images/hero/rabbitsfoot-studio-hero-poster.jpg',
     priority: '1.0'
   },
   {

@@ -63,7 +63,15 @@
       -->
       <template data-media>
         <div class="hero__video-wrap" aria-hidden="true">
-          <video class="hero__video" autoplay muted loop playsinline preload="auto">
+          <!--
+            The poster is the Largest Contentful Paint on this page. Without
+            it the hero stayed empty until enough of a 7MB clip had arrived,
+            which is a bad LCP on a fast connection and a terrible one on a
+            phone. The frame is the video's own opening, so nothing changes
+            visually — it just arrives 200KB sooner. The build preloads it.
+          -->
+          <video class="hero__video" autoplay muted loop playsinline preload="auto"
+                 poster="images/hero/rabbitsfoot-studio-hero-poster.jpg">
             <source src="gallery/hero-bg-ping-pong.mp4" type="video/mp4">
           </video>
           <div class="hero__video-wash"></div>
@@ -109,10 +117,9 @@
       </div>
       <div class="belief__stamp" data-stamp="PRODUCT FIRST · CURIOUS ALWAYS · EST. 2017 · " aria-hidden="true"></div>
       <figure class="belief__art reveal">
-        <video autoplay loop muted playsinline preload="auto" poster="images/studio-multidisciplinary-table.png">
+        <video loop muted playsinline preload="none" data-defer-play poster="images/studio-multidisciplinary-table.jpg">
           <source src="images/studio-multidisciplinary-table.mp4" type="video/mp4">
-          <source src="images/studio-multidisciplinary-table.webm" type="video/webm">
-          <img src="images/studio-multidisciplinary-table.png" alt="A multidisciplinary team developing interfaces, physical products, vehicles, sculpture and spaces around one working table" loading="lazy" decoding="async">
+          <img src="images/studio-multidisciplinary-table.jpg" alt="A multidisciplinary team developing interfaces, physical products, vehicles, sculpture and spaces around one working table" loading="lazy" decoding="async">
         </video>
       </figure>
     </section>
@@ -290,10 +297,9 @@
       </div>
       <div class="belief__stamp" data-stamp="SENIOR HANDS · DIRECT ACCESS · NO THEATRE · " aria-hidden="true"></div>
       <figure class="belief__art reveal">
-        <video autoplay loop muted playsinline preload="auto" poster="images/studio-multidisciplinary-table.png">
+        <video loop muted playsinline preload="none" data-defer-play poster="images/studio-multidisciplinary-table.jpg">
           <source src="images/studio-multidisciplinary-table.mp4" type="video/mp4">
-          <source src="images/studio-multidisciplinary-table.webm" type="video/webm">
-          <img src="images/studio-multidisciplinary-table.png" alt="A multidisciplinary team developing interfaces, physical products, vehicles, sculpture and spaces around one working table" loading="lazy" decoding="async">
+          <img src="images/studio-multidisciplinary-table.jpg" alt="A multidisciplinary team developing interfaces, physical products, vehicles, sculpture and spaces around one working table" loading="lazy" decoding="async">
         </video>
       </figure>
     </section>
@@ -356,39 +362,39 @@
       <div class="bts__viewport" data-bts-carousel tabindex="0" aria-label="Candid photographs from studio life">
         <div class="bts__track">
           <figure class="bts__slide bts__slide--panorama">
-            <img src="gallery/studio bts/IMG_0077.jpeg" alt="The extended team together outdoors after Holi" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-team-holi-bengaluru.jpg" alt="The extended team together outdoors after Holi" loading="lazy" decoding="async">
             <figcaption><span>01</span> Holi, and the aftermath</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--portrait">
-            <img src="gallery/studio bts/5FC2402E-3620-4140-989E-9D04C4FD7442.jpg" alt="A hand-painted artwork being held up on a rooftop" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-rooftop-hand-painted-artwork.jpg" alt="A hand-painted artwork being held up on a rooftop" loading="lazy" decoding="async">
             <figcaption><span>02</span> Making things by hand</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--landscape">
-            <img src="gallery/studio bts/34f850c2-dd99-414a-a88c-d9c49c11d1a0.jpg" alt="Team members drawing together on a picnic blanket in a park" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-team-drawing-in-park.jpg" alt="Team members drawing together on a picnic blanket in a park" loading="lazy" decoding="async">
             <figcaption><span>03</span> A park, some pens</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--portrait">
-            <img src="gallery/studio bts/IMG_1722.jpeg" alt="Three team members taking a playful street selfie" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-team-street-selfie.jpg" alt="Three team members taking a playful street selfie" loading="lazy" decoding="async">
             <figcaption><span>04</span> Out in the field</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--landscape">
-            <img src="gallery/studio bts/IMG_3449.JPG" alt="Three team members sharing food at an evening event" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-team-evening-event.jpg" alt="Three team members sharing food at an evening event" loading="lazy" decoding="async">
             <figcaption><span>05</span> After hours</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--landscape">
-            <img src="gallery/studio bts/IMG_6242.jpeg" alt="Team members sitting outside in a park with a dog" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-team-park-with-dog.jpg" alt="Team members sitting outside in a park with a dog" loading="lazy" decoding="async">
             <figcaption><span>06</span> Studio company</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--portrait">
-            <img src="gallery/studio bts/IMG_6255.jpeg" alt="Three team members taking an outdoor selfie" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-team-outdoor-selfie.jpg" alt="Three team members taking an outdoor selfie" loading="lazy" decoding="async">
             <figcaption><span>07</span> On the move</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--landscape">
-            <img src="gallery/studio bts/IMG_2800.jpeg" alt="A busy studio table covered with sketches, laptops and materials" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-studio-table-sketches.jpg" alt="A busy studio table covered with sketches, laptops and materials" loading="lazy" decoding="async">
             <figcaption><span>08</span> The table in use</figcaption>
           </figure>
           <figure class="bts__slide bts__slide--landscape">
-            <img src="gallery/studio bts/edef1aea-323d-4141-8c82-5f5cf266c163.jpg" alt="A crowded and cheerful team selfie inside a car" loading="lazy" decoding="async">
+            <img src="gallery/studio-bts/rabbitsfoot-team-selfie-in-car.jpg" alt="A crowded and cheerful team selfie inside a car" loading="lazy" decoding="async">
             <figcaption><span>09</span> One more for the road</figcaption>
           </figure>
         </div>

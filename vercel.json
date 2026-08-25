@@ -109,6 +109,24 @@
       ]
     },
     {
+      "source": "/(.*).(bak|log|zip|docx)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/(.*).(html)",
       "headers": [
         {
@@ -141,6 +159,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
         }
       ]
     }

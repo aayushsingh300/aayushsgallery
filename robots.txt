@@ -59,5 +59,22 @@ Allow: /
 # Legacy ?p= and ?face= URLs are intentionally NOT disallowed: they are
 # 301-redirected / canonicalised, and a crawler must be able to fetch
 # them to see that. Blocking here would freeze the duplicates in place.
+#
+# The same reasoning applies to the personal-portfolio pages, which carry
+# noindex + canonical rather than a Disallow: a blocked page is a page whose
+# noindex is never read, so it can sit in the index indefinitely.
+#
+# Editor backups and the API are a different case — nothing needs to read
+# them, and there is no tag inside them to honour.
+
+User-agent: *
+Disallow: /*.bak$
+Disallow: /*.bak.html$
+Disallow: /api/
+
+# ─── Where everything is ─────────────────────────────────────────
+# sitemap.xml for search engines; llms.txt is the same map written for
+# answer engines, with the studio's positioning and FAQ in plain prose.
 
 Sitemap: https://www.rabbitsfoot.in/sitemap.xml
+# LLM index: https://www.rabbitsfoot.in/llms.txt
