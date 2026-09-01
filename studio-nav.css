@@ -90,12 +90,18 @@
   justify-self: start;
 }
 
+/* Sized by width: the mark is a drawing at a fixed 6:1 ratio. */
 .rf-pnav__wordmark {
-  font-family: RFHalimun, "Brush Script MT", "Segoe Script", cursive;
-  font-size: clamp(26px, 2.2vw, 34px);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: .015em;
+  display: block;
+  width: clamp(84px, 7vw, 104px);
+  height: auto;
+}
+
+/* Only if site-data.js never arrived and the header fell back to live text. */
+.rf-pnav__wordmark--text {
+  width: auto;
+  font: 400 clamp(15px, 1.3vw, 19px)/1 "Iowan Old Style", Baskerville, "Times New Roman", serif;
+  letter-spacing: .02em;
   white-space: nowrap;
 }
 
@@ -383,7 +389,8 @@
 
 @media (max-width: 560px) {
   /* Down to the essentials: whose site, which project, and the way out. */
-  .rf-pnav__wordmark { font-size: 23px; }
+  .rf-pnav__wordmark { width: 78px; }
+  .rf-pnav__wordmark--text { width: auto; font-size: 15px; }
   .rf-pnav__num,
   .rf-pnav__next { display: none; }
 }

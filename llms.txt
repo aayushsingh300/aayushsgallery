@@ -49,7 +49,7 @@
 - [Home](https://www.rabbitsfoot.in/) — rabbitsfoot is an independent product design and UX studio in Bengaluru. Seven senior designers working on defence, healthcare, enterprise and autonomous-systems interfaces — no hand-offs in thinking.
 - [All works](https://www.rabbitsfoot.in/works) — Case studies from rabbitsfoot: counter-drone command interfaces, drone fleet management, ammunition logistics, clinical data platforms and national-scale parking operations.
 - [About us](https://www.rabbitsfoot.in/about) — rabbitsfoot is seven senior specialists spanning product, spatial, industrial, creative, technology and business design. The people you meet are the people who do the work.
-- [Contact us](https://www.rabbitsfoot.in/contact) — Start a project with rabbitsfoot. Book a 30-minute call, email rabbitsfootep@gmail.com or call +91 93982 25962. Bengaluru-based, working worldwide.
+- [Contact us](https://www.rabbitsfoot.in/contact) — Start a project with rabbitsfoot. Book a 30-minute call, email studio@rabbitsfoot.in or call +91 93982 25962. Bengaluru-based, working worldwide.
 
 ## Frequently asked
 
@@ -87,7 +87,7 @@ Within one working day, from a real person who read what you sent. Half-formed i
 
 ## Contact
 
-- Email: rabbitsfootep@gmail.com
+- Email: studio@rabbitsfoot.in
 - Phone: +91 93982 25962
 - Location: Bengaluru, Karnataka, India — engagements worldwide
 - Founder: Aayush, Founder · Product Design — https://www.linkedin.com/in/aayushran/
@@ -99,4 +99,4 @@ robotics fleet software, defence and military logistics tooling, clinical and
 healthcare data products, and complex enterprise operations software — particularly
 teams who need one senior group across digital, industrial and spatial design.
 
-Last updated: 2026-08-24
+Last updated: 2026-09-01

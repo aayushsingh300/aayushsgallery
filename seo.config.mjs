@@ -27,7 +27,7 @@ export const SITE = {
   name: 'rabbitsfoot',
   legalName: 'rabbitsfoot®',
   founded: '2017',
-  email: 'rabbitsfootep@gmail.com',
+  email: 'studio@rabbitsfoot.in',
   phone: '+91-93982-25962',
   city: 'Bengaluru',
   region: 'Karnataka',
@@ -39,7 +39,7 @@ export const SITE = {
   logo: '/images/og/rabbitsfoot-logo.png',
   booking: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2FssCYTwsJpfsqzieRw1N_hdniZm1YsRg4kS8m1nfhvwExD3rL6XVSRggkpJmAC0TLajuHXp-j?gv=true',
   sameAs: [
-    'https://www.linkedin.com/in/aayushran/',
+    'https://www.linkedin.com/company/rabbitsfoot-studio/',
     'https://www.instagram.com/aayushrajputt__',
     'https://medium.com/@aayushux'
   ],
@@ -141,7 +141,7 @@ export const ROUTES = [
     path: '/contact',
     title: 'Contact — Start a Design Project | rabbitsfoot, Bengaluru',
     description:
-      'Start a project with rabbitsfoot. Book a 30-minute call, email rabbitsfootep@gmail.com or call +91 93982 25962. Bengaluru-based, working worldwide.',
+      'Start a project with rabbitsfoot. Book a 30-minute call, email studio@rabbitsfoot.in or call +91 93982 25962. Bengaluru-based, working worldwide.',
     /* The FAQ block lives on this route; build-seo.mjs lifts the visible
        questions into FAQPage structured data for this URL only. */
     faq: true,

@@ -137,6 +137,13 @@
   var next = nextWork ? DATA.view(nextWork, 'studio') : null;
   var C = DATA ? DATA.contact : { studioName: 'rabbitsfoot', email: '', location: '', reach: '' };
 
+  /* The drawn logotype, or the name as text if site-data.js never arrived. */
+  function mark() {
+    return DATA && DATA.wordmark
+      ? DATA.wordmark('rf-pnav__wordmark')
+      : '<span class="rf-pnav__wordmark rf-pnav__wordmark--text">' + esc(C.studioName) + '</span>';
+  }
+
   var ROUTES = [
     { label: 'Home', href: STUDIO },
     { label: 'All works', href: STUDIO + '?p=works' },
@@ -172,7 +179,7 @@
     '<div class="rf-pnav__bar">' +
       '<a class="rf-pnav__brand" href="' + esc(studioHref(STUDIO)) + '"' +
         ' aria-label="' + esc(C.studioName) + ' home">' +
-        '<span class="rf-pnav__wordmark">' + esc(C.studioName) + '</span>' +
+        mark() +
       '</a>' +
       projectHTML +
       '<div class="rf-pnav__actions">' +

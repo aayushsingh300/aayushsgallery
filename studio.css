@@ -139,9 +139,12 @@ button {
   transition: none;
 }
 
+/* The logotype is a drawing at a fixed 6:1 ratio, so it is sized by width and
+   lets height follow — a height would make the ratio fight the box. */
 .loader__word {
-  font: 400 clamp(58px, 9vw, 132px)/1 RFHalimun, "Brush Script MT", "Segoe Script", cursive;
-  letter-spacing: .015em;
+  display: block;
+  width: min(62vw, 460px);
+  height: auto;
 }
 
 .loader__line {
@@ -278,13 +281,9 @@ button {
 }
 
 .brand-wordmark {
-  font-family: var(--serif);
-  font-size: clamp(16px, 1.4vw, 21.4px);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: .02em;
-  text-transform: none;
-  white-space: nowrap;
+  display: block;
+  width: clamp(80px, 6.6vw, 100px);
+  height: auto;
 }
 
 .nav__links {

@@ -78,7 +78,7 @@
     contact: {
       label: 'Contact us',
       title: 'Contact us — rabbitsfoot',
-      description: 'Start a project with rabbitsfoot — book a 30-minute call, email rabbitsfootep@gmail.com or call +91 93982 25962.',
+      description: 'Start a project with rabbitsfoot — book a 30-minute call, email studio@rabbitsfoot.in or call +91 93982 25962.',
       contact: {
         lead: 'Prefer the direct route?',
         reply: 'It lands in a real inbox.',
@@ -157,7 +157,7 @@
       '<div class="cursor" aria-hidden="true"><i></i><span>View</span></div>' +
       '<header class="nav" id="nav">' +
         '<a class="nav__brand" href="/" aria-label="' + esc(C.studioName) + ' home">' +
-          '<span class="brand-wordmark">' + esc(C.studioName) + '</span>' +
+          DATA.wordmark('brand-wordmark') +
         '</a>' +
         '<nav class="nav__links" aria-label="Primary navigation">' + links + '</nav>' +
         '<button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu">' +
