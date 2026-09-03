@@ -230,7 +230,7 @@ export const CASE_STUDIES = [
     name: 'Penknife — Healthcare Staffing Platform',
     description:
       'One hiring platform replacing four disconnected tools, so recruiters, managers and candidates move from an open role to a filled shift without losing context.',
-    about: ['Recruitment software', 'Healthcare staffing', 'Enterprise product design'],
+    about: ['Recruitment software', 'Healthcare staffing', 'Enterprise product design', 'Browser extension design'],
     priority: '0.7'
   },
   {

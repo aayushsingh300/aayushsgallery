@@ -3733,9 +3733,13 @@
         {
           "@type": "Thing",
           "name": "Enterprise product design"
+        },
+        {
+          "@type": "Thing",
+          "name": "Browser extension design"
         }
       ],
-      "keywords": "Recruitment software, Healthcare staffing, Enterprise product design",
+      "keywords": "Recruitment software, Healthcare staffing, Enterprise product design, Browser extension design",
       "creator": {
         "@id": "https://www.rabbitsfoot.in/#studio"
       },
@@ -3807,6 +3811,7 @@
         <span class="hero-chip">Information Architecture</span>
         <span class="hero-chip">Design Tokens</span>
         <span class="hero-chip">Multi-tenant SaaS</span>
+        <span class="hero-chip">Browser Extension</span>
         <span class="hero-chip live">Live — US hospital networks</span>
       </div>
     </div>
@@ -3824,8 +3829,8 @@
           end-to-end</span></div>
       <div class="meta-cell"><span class="meta-label">Year</span><span class="meta-value">2021 — still in
           production</span></div>
-      <div class="meta-cell"><span class="meta-label">Platform</span><span class="meta-value">Desktop-primary web
-          app</span></div>
+      <div class="meta-cell"><span class="meta-label">Platform</span><span class="meta-value">Desktop web app +
+          Chrome extension</span></div>
       <div class="meta-cell"><span class="meta-label">Scope</span><span class="meta-value">Research, service design, IA,
           UI system</span></div>
       <div class="meta-cell"><span class="meta-label">Operating modes</span><span class="meta-value">Staffing +
@@ -4599,6 +4604,8 @@
             Sometimes you know the name. Sometimes you know the shape of the person but not the name. Sometimes you have
             220 applicants and one afternoon. We built a different instrument for each rather than one search box
             pretending to cover all three.</p>
+          <p>All three assume the person is already in the database. The fourth register — the one where they aren't —
+            turned out not to belong inside Penknife at all. That's section 08.</p>
         </div>
 
         <!-- DIAGRAM 6 — three instruments -->
@@ -5327,7 +5334,7 @@
             the funnel leaks, whether we're meeting the review SLA we contractually promised. That gap became the
             loudest post-launch request on the project, and we iterated it under pressure.</p>
           <p>The screen below is where Insights landed. We're showing it because it's the honest end state, not because it
-            was the launch design — it wasn't, and section 10 says so plainly.</p>
+            was the launch design — it wasn't, and section 11 says so plainly.</p>
         </div>
 
         <div class="annotated-screen">
@@ -5375,10 +5382,324 @@
     </div>
   </section>
 
-  <!-- 08 MOBILE ────────────────────────── -->
+  <!-- 08 THE EXTENSION ─────────────────── -->
   <section class="section alt">
     <div class="container">
-      <p class="section-label">08 / Mobile</p>
+      <p class="section-label">08 / Outside The Product</p>
+      <h2>The record starts on somebody else's page</h2>
+      <div class="prose">
+        <p>Every surface in section 07 assumes the person is already in Penknife. On a staffing desk, most of them
+          aren't. Sourcing happens on LinkedIn, and on DiscoverOrg for the sales side — two tabs that belong to other
+          companies.</p>
+        <p>What we watched was a recruiter with a profile open in one window and a Penknife form in another, retyping a
+          name, a job title, a phone number and a city, then pasting the profile URL into a field literally called
+          <em>LinkedIn Id</em>. Per person. During a hiring push, dozens of times a day.</p>
+        <p>The copy-paste is the visible cost. The expensive one is the duplicate. An ATS is only worth what its
+          one-record-per-person promise is worth, and every hand-retyped profile is a chance to create a second
+          <em>Yash Janoria</em> with a different phone number. Once there are two, the activity spine from section 06
+          splits across both — and neither half can be trusted to answer “when did we last talk to this person?”</p>
+        <p>So Penknife grew a second front end: a Chrome extension that puts the database on the page you're sourcing
+          from. And we gave it the opposite priority from the one everyone asks for. It leads with recognition, not
+          capture.</p>
+      </div>
+
+      <blockquote class="pull-quote">
+        The extension's first job is not to add a person. <strong>It's to stop you adding one twice.</strong>
+      </blockquote>
+
+      <!-- DIAGRAM — the ladder -->
+      <figure class="diagram">
+        <svg class="dgm" viewBox="0 0 1040 452" role="img"
+          aria-label="Four-stage table of the Chrome extension's behaviour: announce, disambiguate, capture and hand back — each row listing the exact on-screen wording, what the extension offers at that stage, and what it deliberately withholds">
+          <rect width="1040" height="452" fill="#0E1117" />
+          <text class="d-h" x="40" y="42" fill="#A78BFA">FOUR STAGES · AND WHAT EACH ONE REFUSES TO DO</text>
+          <line x1="40" y1="58" x2="1000" y2="58" stroke="#222938" />
+
+          <text class="d-m" x="40" y="88">STAGE</text>
+          <text class="d-m" x="246" y="88">WHAT IT SAYS, VERBATIM</text>
+          <text class="d-m" x="588" y="88">WHAT IT OFFERS</text>
+          <text class="d-m" x="794" y="88">WHAT IT WITHHOLDS</text>
+          <line x1="40" y1="98" x2="1000" y2="98" stroke="#2A3140" />
+
+          <!-- row bands -->
+          <rect x="40" y="180" width="960" height="76" fill="rgba(229,165,92,0.05)" />
+          <rect x="40" y="332" width="960" height="76" fill="rgba(255,255,255,0.018)" />
+          <g stroke="#20263A">
+            <line x1="40" y1="180" x2="1000" y2="180" />
+            <line x1="40" y1="256" x2="1000" y2="256" />
+            <line x1="40" y1="332" x2="1000" y2="332" />
+            <line x1="40" y1="408" x2="1000" y2="408" />
+          </g>
+
+          <!-- 01 ANNOUNCE -->
+          <text class="d-h" x="40" y="132" fill="#6FB2D8">01 · ANNOUNCE</text>
+          <text class="d-s" x="40" y="152">A 35px bar, top of the page</text>
+          <text class="d-i" x="246" y="132">“Multiple Records Found In</text>
+          <text class="d-i" x="246" y="152">The Database”</text>
+          <text class="d-i" x="588" y="132">View · Add</text>
+          <text class="d-s" x="588" y="152">in that order</text>
+          <text class="d-s" x="794" y="132">Nothing. It answers before</text>
+          <text class="d-s" x="794" y="152">you've asked a question.</text>
+
+          <!-- 02 DISAMBIGUATE -->
+          <text class="d-h" x="40" y="208" fill="#E5A55C">02 · DISAMBIGUATE</text>
+          <text class="d-s" x="40" y="228">The duplicate-risk moment</text>
+          <text class="d-i" x="246" y="208">“Matching records 03”</text>
+          <text class="d-i" x="246" y="228">“Not The Correct Match?”</text>
+          <text class="d-i" x="588" y="208">Open each record</text>
+          <text class="d-s" x="588" y="228">name · title · phone</text>
+          <text class="d-s" x="794" y="208">Merging. That decision</text>
+          <text class="d-s" x="794" y="228">belongs in the platform.</text>
+
+          <!-- 03 CAPTURE -->
+          <text class="d-h" x="40" y="284" fill="#A78BFA">03 · CAPTURE</text>
+          <text class="d-s" x="40" y="304">When the match is not the person</text>
+          <text class="d-i" x="246" y="284">“Add” →</text>
+          <text class="d-i" x="246" y="304">Candidates · Contact · Company</text>
+          <text class="d-i" x="588" y="284">A pre-filled form</text>
+          <text class="d-s" x="588" y="304">+ résumé upload</text>
+          <text class="d-s" x="794" y="284">A guess at which of the</text>
+          <text class="d-s" x="794" y="304">three this profile is.</text>
+
+          <!-- 04 HAND BACK -->
+          <text class="d-h" x="40" y="360" fill="#6FB2D8">04 · HAND BACK</text>
+          <text class="d-s" x="40" y="380">The sourcing run continues</text>
+          <text class="d-i" x="246" y="360">“Candidate Successfully added !”</text>
+          <text class="d-i" x="246" y="380">“Add Another Record”</text>
+          <text class="d-i" x="588" y="360">“View in Penknife”</text>
+          <text class="d-s" x="588" y="380">a link, not a redirect</text>
+          <text class="d-s" x="794" y="360">Your tab. You are still</text>
+          <text class="d-s" x="794" y="380">on the profile.</text>
+
+          <text class="d-m" x="40" y="434" fill="rgba(167,139,250,0.7)">EVERY QUOTED STRING ABOVE IS READ OFF THE SHIPPED EXTENSION</text>
+        </svg>
+        <figcaption>The design work here is the right-hand column. An extension that only knew how to add records would
+          have been half the build and most of the damage.</figcaption>
+      </figure>
+
+      <!-- 08a — THE BAR -->
+      <div class="feature-block">
+        <div class="feature-header">
+          <span class="feature-num">08a</span>
+          <h3>One line, on a page we don't own <span class="side-flag staff">Sourcing</span></h3>
+        </div>
+        <div class="prose">
+          <p>The extension's entire resting state is a bar across the top of the profile. It doesn't float over the
+            photo, it doesn't open a panel by itself, and it doesn't ask to be dismissed. A recruiter reading a profile
+            is doing the real work — the job is to sit next to that, not on top of it.</p>
+        </div>
+
+        <div class="annotated-screen">
+          <div class="ann-col">
+            <div class="ann-screen">
+              <img src="penknife/extension/ext-01-match-bar.jpg"
+                alt="Penknife Chrome extension resting state — a single bar across the top of a LinkedIn profile reading “Multiple Records Found In The Database”, with View and Add controls"
+                loading="lazy">
+            </div>
+            <p class="ann-caption">Resting state — the profile is untouched; the bar has already answered</p>
+          </div>
+          <div class="ann-rail">
+            <div class="ann-card">
+              <span class="ann-num">The first word is a warning</span>
+              <strong class="ann-title">“Multiple Records Found In The Database”</strong>
+              <p class="ann-body">Before <em>Add</em> is offered at all, the bar has told you the answer probably
+                already exists. This is the single most consequential sentence in the extension, and it is the only
+                thing on screen we contributed until the recruiter acts.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">View sits left of Add</span>
+              <strong class="ann-title">Reading order is the safety mechanism</strong>
+              <p class="ann-body">Two controls, in the order we want them considered. There's no confirm dialog on
+                <em>Add</em> and no warning modal — the ordering does that work, every time, for free, on a surface
+                where a modal would have been an intrusion onto someone else's page.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">It's a state, not a trigger</span>
+              <strong class="ann-title">You never click to find out</strong>
+              <p class="ann-body">The bar's text changes with what the lookup returned, so the duplicate check has
+                already run by the time the recruiter has finished reading the headline. Making the check an action
+                would have made it optional, and an optional duplicate check is not one.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 08b — DISAMBIGUATION -->
+      <div class="feature-block">
+        <div class="feature-header">
+          <span class="feature-num">08b</span>
+          <h3>Three names that are nearly the same name <span class="side-flag staff">Sourcing</span></h3>
+        </div>
+        <div class="prose">
+          <p>This is the panel the whole extension exists for. Three records come back for one profile — <em>John
+              Doe</em>, <em>Johnny Doe</em>, <em>Joh Doen</em>, all Senior Software Engineer. That isn't a contrived
+            demo; it's what a recruiting database looks like after a few years of hand entry, and it's precisely the
+            state we were trying to stop growing.</p>
+          <p>No algorithm was going to resolve it. But the one person who can is sitting right there with the source
+            profile open — which is the argument for putting the panel here rather than in a data-hygiene screen
+            somebody visits quarterly.</p>
+        </div>
+
+        <div class="annotated-screen ann-left">
+          <div class="ann-rail">
+            <div class="ann-card">
+              <span class="ann-num">Phone number, on purpose</span>
+              <strong class="ann-title">+01 · +91 · +91</strong>
+              <p class="ann-body">Each row shows name, title and phone. Name and title are the fields that collide;
+                the phone number is the one that usually separates two similar records. It's in the list so the
+                recruiter can decide without opening anything.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">Openable, not selectable</span>
+              <strong class="ann-title">The arrow leaves for Penknife</strong>
+              <p class="ann-body">Rows have no radio buttons and no <em>Link</em> action. Binding a profile to the
+                wrong record, or merging two, is destructive and hard to unwind — we weren't going to let it happen
+                from a bar on a page we don't control. The arrow takes you to the record, in the platform, where that
+                decision has proper surroundings.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">The escape hatch is a question</span>
+              <strong class="ann-title">“Not The Correct Match?”</strong>
+              <p class="ann-body">It sits in the header, in the bar itself, phrased as the doubt the recruiter is
+                already having. The one case where the extension is wrong is the case where a duplicate gets born — so
+                it's the case that got the most visible affordance, not the most buried one.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">Count in the title</span>
+              <strong class="ann-title">Matching records <em>03</em></strong>
+              <p class="ann-body">Zero-padded, beside the heading. “Some records matched” asks you to scan; a number
+                tells you immediately whether this is a quick confirmation or a judgement call.</p>
+            </div>
+          </div>
+          <div class="ann-col">
+            <div class="ann-screen">
+              <img src="penknife/extension/ext-02-matching-records.jpg"
+                alt="Penknife extension matching-records panel — three near-duplicate candidates named John Doe, Johnny Doe and Joh Doen, each with title and phone number and an open-in-Penknife arrow"
+                loading="lazy">
+            </div>
+            <p class="ann-caption">Matching records — three near-duplicates, and no way to merge them from here</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 08c — CAPTURE -->
+      <div class="feature-block">
+        <div class="feature-header">
+          <span class="feature-num">08c</span>
+          <h3>A profile is three different things <span class="side-flag both">Both sides</span></h3>
+        </div>
+        <div class="prose">
+          <p>Once the recruiter has decided none of the matches are the person, <em>Add</em> becomes the answer — and
+            its first question isn't a field, it's a classification: <strong>Candidates · Contact ·
+              Company</strong>.</p>
+          <p>One LinkedIn page has three legitimate readings. To a staffing recruiter, a clinician is a candidate. To
+            an account manager, a hospital's director of nursing is a contact, and the hospital group is a company.
+            Those are the five people from section 04 looking at the same URL and meaning different things. File it
+            wrong and it lands in the wrong half of the object model, where nobody will look for it again — so the
+            extension asks rather than infers, in one click, before any typing.</p>
+        </div>
+
+        <div class="annotated-screen">
+          <div class="ann-col">
+            <div class="ann-screen">
+              <img src="penknife/extension/ext-03-add-candidate.jpg"
+                alt="Penknife extension Add Candidate drawer — first name, last name, job title, phone, primary email, city, state, country and LinkedIn Id pre-filled from the profile, with a résumé upload and a single Save button"
+                loading="lazy">
+            </div>
+            <p class="ann-caption">Add Candidate — the profile, already read, with one thing left to do</p>
+          </div>
+          <div class="ann-rail">
+            <div class="ann-card">
+              <span class="ann-num">The form arrives finished</span>
+              <strong class="ann-title">Name, title, phone, city, state, country, LinkedIn Id</strong>
+              <p class="ann-body">Every field the page can supply is filled before the drawer opens — including the
+                profile URL into <em>LinkedIn Id</em>, which was the specific paste we watched recruiters do by hand.
+                City, state and country come through as resolved selects rather than free text, so the record is
+                filterable in the platform on day one.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">One field left blank, deliberately</span>
+              <strong class="ann-title">Primary Email is empty</strong>
+              <p class="ann-body">LinkedIn doesn't publish it. We could have guessed a
+                first.last@company pattern and been right often enough to feel clever — but a plausible wrong email in
+                an ATS gets used, by the broadcast tooling in section 07g. An empty field is the honest one.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">The one thing the page can't give you</span>
+              <strong class="ann-title">“Click or drag to Upload”, last</strong>
+              <p class="ann-body">A profile is not a CV. The résumé upload is the final control before Save, pinned
+                with it, because it's the only part of this form that requires the recruiter to actually have
+                something. Everything above it was free.</p>
+            </div>
+            <div class="ann-card">
+              <span class="ann-num">One primary, full width</span>
+              <strong class="ann-title">Save, and nothing competing with it</strong>
+              <p class="ann-body">No <em>Save and add another</em>, no <em>Save and open</em>. In roughly 440px of
+                drawer on a page we don't own, the platform's density argument doesn't apply — everything section 07
+                earns from a wide screen had to be re-earned here from sequence.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 08d — HAND BACK -->
+      <div class="feature-block">
+        <div class="feature-header">
+          <span class="feature-num">08d</span>
+          <h3>Confirm, then get out of the way <span class="side-flag both">Both sides</span></h3>
+        </div>
+        <div class="prose">
+          <p>The last screen is the one most likely to be designed badly, because it's the one where a product is
+            tempted to celebrate. A recruiter in a sourcing run has twelve more tabs to get through.</p>
+        </div>
+
+        <div class="shot-row c2">
+          <figure class="shot-fig">
+            <div class="shot"><img src="penknife/extension/ext-04-candidate-added.jpg"
+                alt="Penknife extension confirmation — “Candidate Successfully added !” with a View in Penknife link, and the bar now reading Add Another Record"
+                loading="lazy"></div>
+            <figcaption><b>“Candidate Successfully added !”</b>The confirmation is one sentence and one link. <em>View
+                in Penknife</em> is underlined text, not a button — the extension doesn't take the tab you were working
+              in. The record is filed; you keep sourcing.</figcaption>
+          </figure>
+          <figure class="shot-fig">
+            <div class="shot"><img src="penknife/extension/ext-05-contact-added.jpg"
+                alt="Penknife extension confirmation for a contact — the same success component and View in Penknife link, proving one component serves all three object types"
+                loading="lazy"></div>
+            <figcaption><b>Same component, different object</b>Contacts confirm identically to candidates. Three object
+              types, one success state, one sentence to translate — the same instinct that kept eleven objects on one
+              record anatomy in section 07e.</figcaption>
+          </figure>
+        </div>
+        <p class="ann-caption">The banner also changes: once you've filed one record it reads <b>“Add Another
+            Record”</b>, not the original match warning. The bar knows a sourcing run when it's in one.</p>
+
+        <div class="decisions-grid" style="margin-top:44px">
+          <div class="decision-card">
+            <p class="decision-tag">Cost we took knowingly</p>
+            <h4>A second runtime, a second release cycle, a third-party review queue</h4>
+            <p>The extension is a separate codebase shipping on Google's timetable rather than ours, and it carries the
+              declared data handling that comes with it — the store listing states plainly that it handles personally
+              identifiable information and authentication data. We accepted all of that because the alternative was a
+              form nobody would fill in.</p>
+          </div>
+          <div class="decision-card">
+            <p class="decision-tag">Where it's publicly verifiable</p>
+            <h4>Chrome Web Store · v2.0.13 · updated November 2024</h4>
+            <p>Listed publicly under Workflow &amp; Planning, published by 314e — <a
+                href="https://chromewebstore.google.com/detail/penknife/hnbnkioepackpgmdppegkkjkebdoaeil"
+                target="_blank" rel="noopener">see the listing</a>. The captures above are the store's own screenshots
+              and span two releases of the extension; the header colour changed between them, the flow didn't.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 MOBILE ────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">09 / Mobile</p>
       <h2>A deliberate, defended no</h2>
       <div class="prose">
         <p>Penknife is a desktop tool. Recruiters work at desks, across wide screens, in long sessions, holding a lot of
@@ -5387,6 +5708,8 @@
         <p>What we designed instead was a constrained surface for the people who genuinely need to act away from a desk
           — hospital hiring managers and account managers. View submitted candidates, leave feedback, approve or reject.
           Nothing else. The mobile experience is less capable by design, and that was the right call.</p>
+        <p>That surface shipped as its own Android app rather than a responsive squeeze of the recruiter workspace —
+          Penknife is publicly listed on Google Play, free, published by 314e Corporation.</p>
       </div>
       <figure class="scope-visual" id="mobile-scope"
         aria-label="Desktop-first product strategy: 94 percent of sessions were desktop, while mobile was limited to three approval tasks">
@@ -5424,15 +5747,15 @@
     </div>
   </section>
 
-  <!-- 09 DECISIONS ─────────────────────── -->
-  <section class="section">
+  <!-- 10 DECISIONS ─────────────────────── -->
+  <section class="section alt">
     <div class="container">
-      <p class="section-label">09 / Decisions &amp; Trade-offs</p>
+      <p class="section-label">10 / Decisions &amp; Trade-offs</p>
       <h2>The calls we would still make</h2>
       <div class="prose"><p>The useful part of a trade-off is not the polished rationale. It is the line we drew, what
           we knowingly gave up, and whether that cost still looks acceptable after launch.</p></div>
       <figure class="decision-notebook" aria-labelledby="decision-notebook-title">
-        <figcaption id="decision-notebook-title"><span>Working page / 09</span>Decision log — choice on the left, cost
+        <figcaption id="decision-notebook-title"><span>Working page / 10</span>Decision log — choice on the left, cost
           in the margin</figcaption>
         <ol>
           <li><span class="decision-index">01</span><div><small>Fork the product?</small><strong>One schema; permissions
@@ -5445,10 +5768,13 @@
           <li><span class="decision-index">04</span><div><small>What authority should AI have?</small><strong>Let the
                 score narrow the pool; let the recruiter set the line.</strong></div><p>Cost accepted: one extra action
               before seeing recommendations.</p></li>
-          <li class="decision-warn"><span class="decision-index">05</span><div><small>Dedicated client parent?</small><strong>We
+          <li><span class="decision-index">05</span><div><small>Where should a record begin?</small><strong>On the
+                sourcing page — behind a duplicate check nobody can skip.</strong></div><p>Cost accepted: a second
+              codebase, on Google's release timetable.</p></li>
+          <li class="decision-warn"><span class="decision-index">06</span><div><small>Dedicated client parent?</small><strong>We
                 folded client context into the existing framework.</strong></div><p>Debt taken: the client-facing view
               has a structural ceiling.</p></li>
-          <li class="decision-warn"><span class="decision-index">06</span><div><small>Who did research represent?</small><strong>314e
+          <li class="decision-warn"><span class="decision-index">07</span><div><small>Who did research represent?</small><strong>314e
                 recruiters deeply; hiring managers mostly by proxy.</strong></div><p>Blind spot: approval flows carried
               more inference than evidence.</p></li>
         </ol>
@@ -5457,10 +5783,10 @@
     </div>
   </section>
 
-  <!-- 10 WHAT WE'D DO DIFFERENTLY ───────── -->
-  <section class="section alt">
+  <!-- 11 WHAT WE'D DO DIFFERENTLY ───────── -->
+  <section class="section">
     <div class="container">
-      <p class="section-label">10 / What We'd Do Differently</p>
+      <p class="section-label">11 / What We'd Do Differently</p>
       <h2>The honest parts</h2>
       <div class="prose">
         <p>This is a live product we're genuinely proud of. It also has real seams. These are the ones we'd change.</p>
@@ -5531,17 +5857,17 @@
     </div>
   </section>
 
-  <!-- 11 OUTCOMES ──────────────────────── -->
-  <section class="section">
+  <!-- 12 OUTCOMES ──────────────────────── -->
+  <section class="section alt">
     <div class="container">
-      <p class="section-label">11 / Outcomes</p>
+      <p class="section-label">12 / Outcomes</p>
       <h2>What we can actually defend</h2>
       <div class="prose">
         <p>Penknife is live, but the commercial metrics belong to 314e and most are not public. So this is an evidence
           page rather than a victory lap: direct facts, observed signals, and the claims we are deliberately not making.</p>
       </div>
       <figure class="evidence-notebook" aria-labelledby="evidence-title">
-        <figcaption id="evidence-title"><span>Project receipts / 11</span>What survived contact with production</figcaption>
+        <figcaption id="evidence-title"><span>Project receipts / 12</span>What survived contact with production</figcaption>
         <div class="evidence-grid">
           <article class="evidence-note direct"><span>Direct fact</span><strong>Still in production</strong><p>The
               product launched in 2021 and continues to serve US healthcare recruiting workflows.</p><small>Confidence
@@ -5555,6 +5881,14 @@
           <article class="evidence-note observed"><span>Observed signal</span><strong>AI scoring entered the sales
               story</strong><p>Account managers began leading demos with recruiter-set thresholds and visible score
               freshness.</p><small>Confidence · team observation, not analytics</small></article>
+          <article class="evidence-note direct"><span>Distribution proof</span><strong>The sourcing surface is publicly
+              listed</strong><p>Penknife ships as a Chrome extension on the Chrome Web Store — v2.0.13, last updated
+              November 2024, published by 314e under Workflow &amp; Planning.</p><small>Confidence · public store
+              listing</small></article>
+          <article class="evidence-note direct"><span>Scope proof</span><strong>The mobile call held as a separate
+              app</strong><p>The away-from-desk surface exists as its own Android app on Google Play rather than a
+              responsive reflow of the recruiter workspace — section 09's argument, still standing in a store
+              listing.</p><small>Confidence · public store listing</small></article>
         </div>
         <aside class="evidence-gap"><span>Not published ≠ free to invent</span><p>We do not have defensible public
             numbers for time-to-fill, onboarding time or client satisfaction. Those may have improved; this case study
